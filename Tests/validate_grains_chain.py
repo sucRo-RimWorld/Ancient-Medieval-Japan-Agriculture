@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from zipfile import ZipFile
 from amj_profile_xml import ROOT, profile_xml
+from stack_graphics import stack_textures
 
 SHARED_NAMES = {
     'AMJC_BuckwheatFlour','AMJC_MilletFlour','AMJC_Houtou','AMJC_Sobagaki',
@@ -94,10 +95,9 @@ def validate(root=ROOT):
             tex = food.findtext('graphicData/texPath')
             assert tex == meal_graphics[suffix], 'Unexpected temporary meal graphic: ' + suffix
             assert food.findtext('graphicData/graphicClass') == 'Graphic_StackCount'
-            # Validate *all* variants used for stack size changes, not just
-            # one representative PNG. Paths must be deployable in both Base/MO.
-            assert all((root/'Textures'/tex/(Path(tex).name + '_' + variant + '.png')).is_file()
-                       for variant in 'abc'), 'Missing packaged meal graphic family: ' + suffix
+            # One _a is sufficient; any optional _b/_c must be contiguous,
+            # packaged, and have valid PNG dimensions.
+            stack_textures(root, tex)
             assert food.findtext('ingestible/tasteThought') == 'AMJC_AteFlourFood'
             assert food.findtext('ingestible/preferability') == 'MealSimple'
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
