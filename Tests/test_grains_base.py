@@ -32,6 +32,18 @@ class BaseBoundaryTests(unittest.TestCase):
     def test_current_payload(self):
         self.validate()
 
+    def test_one_a_sheaf_texture_is_enough(self):
+        folder = self.root / 'Textures/Things/Item/Resource/AMJC_Barley/RawBarleyDense'
+        for suffix in 'bc':
+            (folder / ('RawBarleyDense_' + suffix + '.png')).unlink()
+        self.validate()
+
+    def test_a_sheaf_texture_is_required(self):
+        path = self.root / 'Textures/Things/Item/Resource/AMJC_Barley/RawBarleyDense/RawBarleyDense_a.png'
+        path.unlink()
+        with self.assertRaisesRegex(AssertionError, 'missing _a'):
+            self.validate()
+
     def test_unapproved_plant_description_rejected(self):
         path = self.root / 'Defs/ThingDefs_Plants/Plants_StageA.xml'
         tree = ET.parse(path)
