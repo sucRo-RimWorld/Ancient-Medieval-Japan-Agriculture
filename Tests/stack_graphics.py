@@ -4,7 +4,7 @@ import struct
 
 
 def stack_textures(root, tex_path):
-    """Require a valid _a PNG; accept optional contiguous _b/_c PNGs.
+    """Require a valid 128/256px _a PNG; accept optional contiguous _b/_c PNGs.
 
     RimWorld handles 1, 2, or 3 Graphic_StackCount subgraphics. Do not
     require identical placeholder copies or forbid distinct count artwork.
@@ -25,7 +25,7 @@ def stack_textures(root, tex_path):
         header = path.read_bytes()[:24]
         assert (len(header) == 24 and header[:8] == b"\x89PNG\r\n\x1a\n"
                 and header[12:16] == b"IHDR"), f"invalid PNG header: {path}"
-        assert struct.unpack(">II", header[16:24]) == (256, 256), (
+        assert struct.unpack(">II", header[16:24]) in ((128, 128), (256, 256)), (
             f"wrong stack texture size: {path}"
         )
     return available
