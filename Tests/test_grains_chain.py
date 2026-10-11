@@ -7,6 +7,7 @@ import unittest
 import xml.etree.ElementTree as ET
 from amj_profile_xml import ROOT
 from validate_grains_chain import validate, validate_mo_source
+from stack_graphics import stack_textures
 
 
 class ChainRegressionTests(unittest.TestCase):
@@ -44,10 +45,26 @@ class ChainRegressionTests(unittest.TestCase):
         self.mutate('Defs/ThingDefs_Items/Items_GrainsFood.xml',
                     'ThingDef/graphicData/graphicClass', 'Graphic_Single')
 
-    def test_meal_must_include_every_stack_variant(self):
-        path = self.root/'Textures/Things/Item/Resource/AMJC_Buckwheat/Buckwheat/Buckwheat_c.png'
+    def test_meal_must_have_a_texture(self):
+        path = self.root/'Textures/Things/Item/Resource/AMJC_Buckwheat/Buckwheat/Buckwheat_a.png'
         path.unlink()
-        with self.assertRaises(AssertionError):
+        with self.assertRaisesRegex(AssertionError, 'missing _a'):
+            validate(self.root)
+
+    def test_meal_can_use_only_a_texture(self):
+        for tex in ('Things/Item/Resource/AMJC_Millet/Millet',
+                    'Things/Item/Resource/AMJC_Buckwheat/Buckwheat'):
+            folder = self.root/'Textures'/tex
+            for suffix in 'bc':
+                (folder/(Path(tex).name + '_' + suffix + '.png')).unlink(missing_ok=True)
+        validate(self.root)
+
+    def test_meal_rejects_a_c_without_b(self):
+        tex = 'Things/Item/Resource/AMJC_Buckwheat/Buckwheat'
+        folder = self.root/'Textures'/tex
+        (folder/'Buckwheat_b.png').unlink(missing_ok=True)
+        (folder/'Buckwheat_c.png').write_bytes((folder/'Buckwheat_a.png').read_bytes())
+        with self.assertRaisesRegex(AssertionError, 'noncontiguous'):
             validate(self.root)
 
     def test_meal_recipe_graphic_paths_are_source_backed(self):
@@ -56,9 +73,8 @@ class ChainRegressionTests(unittest.TestCase):
             texture = food.findtext('graphicData/texPath')
             self.assertTrue(texture.startswith('Things/Item/Resource/AMJC_'))
             self.assertEqual(food.findtext('graphicData/graphicClass'), 'Graphic_StackCount')
-            for variant in 'abc':
-                self.assertTrue((ROOT/'Textures'/texture/(Path(texture).name + '_' + variant + '.png')).is_file(),
-                                (food.findtext('defName'),variant))
+            self.assertGreaterEqual(len(stack_textures(ROOT, texture)), 1,
+                                    food.findtext('defName'))
 
 
     def test_mood_memory_must_have_stage_description(self):
