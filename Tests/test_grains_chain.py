@@ -56,12 +56,14 @@ class ChainRegressionTests(unittest.TestCase):
                     'Things/Item/Resource/AMJC_Buckwheat/Buckwheat'):
             folder = self.root/'Textures'/tex
             for suffix in 'bc':
-                (folder/(Path(tex).name + '_' + suffix + '.png')).unlink()
+                (folder/(Path(tex).name + '_' + suffix + '.png')).unlink(missing_ok=True)
         validate(self.root)
 
     def test_meal_rejects_a_c_without_b(self):
         tex = 'Things/Item/Resource/AMJC_Buckwheat/Buckwheat'
-        (self.root/'Textures'/tex/'Buckwheat_b.png').unlink()
+        folder = self.root/'Textures'/tex
+        (folder/'Buckwheat_b.png').unlink(missing_ok=True)
+        (folder/'Buckwheat_c.png').write_bytes((folder/'Buckwheat_a.png').read_bytes())
         with self.assertRaisesRegex(AssertionError, 'noncontiguous'):
             validate(self.root)
 
