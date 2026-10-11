@@ -121,7 +121,54 @@ namespace AncientMedievalJapanCore.E2E
                         "Rice must retain the CCTO -1 C cold-death threshold.");
                 }
                 new StageASteps().AssertSimpleMealAcceptsMillet(ctx);
+                AssertLoadedGrainIcons(ctx);
             });
+        }
+
+
+        // Verify real loaded textures and stack materials on Unity's main thread.
+        // One _a PNG is enough for these grain states; no production bytes are pinned.
+        private static void AssertLoadedGrainIcons(PickleContext ctx)
+        {
+            string[][] icons = {
+                new[] { "AMJC_MilletInHull", "Things/Item/Resource/AMJC_Millet/MilletInHull" },
+                new[] { "AMJC_Millet", "Things/Item/Resource/AMJC_Millet/Millet" },
+                new[] { "AMJC_BuckwheatInHull", "Things/Item/Resource/AMJC_Buckwheat/BuckwheatInHull" },
+                new[] { "AMJC_Buckwheat", "Things/Item/Resource/AMJC_Buckwheat/Buckwheat" },
+                new[] { "AMJC_BarleyInHull", "Things/Item/Resource/AMJC_Barley/BarleyInHull" },
+                new[] { "AMJC_Barley", "Things/Item/Resource/AMJC_Barley/Barley" },
+                new[] { "AMJC_Wheat", "Things/Item/Resource/AMJC_Wheat/Wheat" },
+                new[] { "AMJC_RiceInHull", "Things/Item/Resource/AMJC_Rice/RiceInHull" },
+                new[] { "RawRice", "Things/Item/Resource/AMJC_Rice/Rice" }
+            };
+            foreach (string[] pair in icons)
+            {
+                string defName = pair[0];
+                string path = pair[1];
+                ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+                ctx.Require(def != null && def.graphicData != null, defName + " must have loaded graphic data.");
+                ctx.Assert(def.graphicData.texPath == path, defName + " must use its grain texture path.");
+                ctx.Assert(def.graphicData.graphicClass == typeof(Graphic_StackCount),
+                    defName + " must use Graphic_StackCount for _a grain graphics.");
+                string filename = path.Substring(path.LastIndexOf('/') + 1) + "_a";
+                UnityEngine.Texture2D texture = ContentFinder<UnityEngine.Texture2D>.Get(path + "/" + filename, false);
+                ctx.Require(texture != null && texture != BaseContent.BadTex,
+                    defName + " must load its _a PNG via Unity.");
+                ctx.Assert(texture.width == texture.height && (texture.width == 128 || texture.width == 256),
+                    defName + " must load a supported square grain icon.");
+
+                Graphic_StackCount graphic = def.graphicData.Graphic as Graphic_StackCount;
+                ctx.Require(graphic != null, defName + " must resolve Graphic_StackCount.");
+                foreach (int count in new[] { 1, 2, def.stackLimit })
+                {
+                    Graphic subGraphic = graphic.SubGraphicForStackCount(count, def);
+                    ctx.Require(subGraphic != null, defName + " is missing a subgraphic at count " + count);
+                    UnityEngine.Material material = subGraphic.MatSingle;
+                    ctx.Require(material != null && material.mainTexture != null
+                        && material.mainTexture != BaseContent.BadTex,
+                        defName + " needs a valid material at count " + count);
+                }
+            }
         }
 
         [Then("the Grains wheat flour and minimum food chains resolve")]
