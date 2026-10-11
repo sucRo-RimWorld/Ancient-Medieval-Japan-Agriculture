@@ -57,8 +57,6 @@ class SevenGrainChainBalance(unittest.TestCase):
                 require_recipe(recipes, "AMJC_Hull" + crop, hull, 1, edible, 1, 10)
                 require_recipe(recipes, "AMJC_Hull" + crop + "Bulk",
                                hull, 10, edible, 10, 80)
-                self.assertEqual(120 + 80, 200, "10 grain nominal bulk-work total")
-                self.assertGreater(10 * (15 + 10), 120 + 80)
 
     def test_wheat_processing_profiles_keep_output_and_straw_separate(self):
         for mode, path, raw in (

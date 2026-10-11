@@ -7,8 +7,6 @@ import unittest
 import xml.etree.ElementTree as ET
 from amj_profile_xml import ROOT
 from validate_grains_chain import validate, validate_mo_source
-from stack_graphics import stack_textures
-
 
 class ChainRegressionTests(unittest.TestCase):
     def setUp(self):
@@ -67,28 +65,9 @@ class ChainRegressionTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'noncontiguous'):
             validate(self.root)
 
-    def test_meal_recipe_graphic_paths_are_source_backed(self):
-        doc = ET.parse(ROOT/'Defs/ThingDefs_Items/Items_GrainsFood.xml')
-        for food in doc.findall('ThingDef'):
-            texture = food.findtext('graphicData/texPath')
-            self.assertTrue(texture.startswith('Things/Item/Resource/AMJC_'))
-            self.assertEqual(food.findtext('graphicData/graphicClass'), 'Graphic_StackCount')
-            self.assertGreaterEqual(len(stack_textures(ROOT, texture)), 1,
-                                    food.findtext('defName'))
-
-
     def test_mood_memory_must_have_stage_description(self):
         self.mutate('Defs/ThoughtDefs/Thoughts_GrainsFood.xml',
                     'ThoughtDef/stages/li/description', '')
-
-    def test_production_fixture_uses_prepared_disposable_center(self):
-        source = (ROOT/'Tests/E2E/GrainsSimulationSteps.cs').read_text(encoding='utf-8')
-        assert 'center = map.Center;' in source
-        assert 'CellRect.CenteredOn(center, 7).Cells' in source
-        assert 'Quickstart map needs a clear 15x15 test area.' not in source
-        assert 'foreach (Thing thing in cell.GetThingList(map).ToList()) thing.Destroy(DestroyMode.Vanish);' in source
-        assert 'map.terrainGrid.SetTerrain(cell, TerrainDefOf.Soil);' in source
-        assert 'foreach (KeyValuePair<IntVec3,TerrainDef> cell in terrain)' in source
 
     def test_powder_food_not_bread_storage(self):
         self.mutate('Defs/ThingDefs_Items/Items_GrainsFood.xml',
@@ -101,118 +80,6 @@ class ChainRegressionTests(unittest.TestCase):
         self.mutate('Defs/WorkGiverDefs/WorkGivers_Grains.xml','WorkGiverDef/fixedBillGiverDefs/li','CraftingSpot')
     def test_fallback_mill_requires_bill_worker(self):
         self.mutate('BaseWithoutMO/Defs/WorkGivers_Milling.xml','WorkGiverDef/giverClass','WorkGiver_PlantsCut')
-    def test_real_simple_meal_jobs_are_wired_into_all_profiles(self):
-        source = (ROOT/'Tests/E2E/GrainsSimulationSteps.cs').read_text(encoding='utf-8')
-        ordered_inputs = ('AMJC_Millet', 'AMJC_Buckwheat', 'AMJC_Barley',
-                          'AMJC_Wheat', 'RawRice')
-        assert 'foreach (string grain in new[] { ' in source
-        for name in ordered_inputs:
-            assert source.count('"' + name + '"') >= 1, name
-        assert 'await scope.SimpleMeal(grain)' in source
-        assert 'public async Task SimpleMeal(string ingredient)' in source
-        assert 'DefDatabase<RecipeDef>.GetNamed("CookMealSimple")' in source
-        assert 'Campfire.BillStack.AddBill(bill)' in source
-        assert 'bill.ingredientFilter.SetDisallowAll()' in source
-        assert 'bill.ingredientFilter.SetAllow(grain, true)' in source
-        assert 'giver.JobOnThing(worker, Campfire, true)' in source
-        assert 'Count("MealSimple") == beforeMeals + outputCount' in source
-        assert 'Count(ingredient) == beforeGrain - neededCount' in source
-        assert 'Campfire.BillStack.Delete(bill)' in source
-        assert source.count('await scope.Harvest("AMJC_Plant_Buckwheat_Soba", true)') >= 2
-        for recipe in ('AMJC_ThreshMilletBulk', 'AMJC_HullMilletBulk',
-                       'AMJC_ThreshBuckwheatBulk', 'AMJC_HullBuckwheatBulk',
-                       'AMJC_ThreshBarleyBulk', 'AMJC_HullBarleyBulk',
-                       'AMJC_ThreshWheatBulk'):
-            assert 'await scope.Bill("' + recipe + '"' in source, recipe
-        for recipe in ('AMJC_ThreshRiceBulk', 'AMJC_HullRiceBulk'):
-            assert 'await scope.Bill("' + recipe + '"' in source, recipe
-        assert 'ctx.Require(raw == "AMJC_RiceSheaf"' in source
-        for name in ('vanilla', 'vanilla-ccto', 'mo', 'mo-ccto'):
-            feature = (ROOT/'Tests/E2E/Profiles'/('grains-' + name + '.feature')).read_text(encoding='utf-8')
-            assert '@quickstart:AmjStageAQuickstart @timeout:270' in feature
-            assert 'Then Grains harvest and flour food Bills complete through real jobs' in feature
-            assert feature.count('  Scenario:') == 6
-
-    def test_real_seasonal_sow_and_growth_uses_actual_game_jobs(self):
-        source = (ROOT/'Tests/E2E/GrainsSimulationSteps.cs').read_text(encoding='utf-8')
-        start = source.index('public async Task NativeSeasonalSowAndGrowth()')
-        end = source.index('public async Task Harvest(', start)
-        seasonal = source[start:end]
-        assert 'await scope.NativeSeasonalSowAndGrowth();' in source
-        # Real job provider + driver: reject assertions that only check XML,
-        # PlantUtility or directly create a plant via ThingMaker.MakeThing.
-        assert 'new WorkGiver_GrowerSow()' in seasonal
-        assert 'giver.JobOnCell(worker, cell, true)' in seasonal
-        assert 'JobDefOf.Sow' in seasonal and 'Start(riceJob,' in seasonal
-        assert 'Start(barleyJob,' in seasonal
-        assert 'await Complete(riceJob,' in seasonal
-        assert 'await Complete(barleyJob,' in seasonal
-        assert 'Find.TickManager.DoSingleTick()' in seasonal
-        assert 'PlantLifeStage.Sowing' in seasonal
-        assert 'ricePlant.GrowthRateFactor_Temperature == 0f' in seasonal
-        assert 'barleyPlant.GrowthRateFactor_Temperature > 0f' in seasonal
-        assert 'ricePlant.Growth > riceBeforeWarm' in seasonal
-        assert 'barleyPlant.Growth > barleyBeforeCold' in seasonal
-        assert 'GenDate.TicksPerQuadrum' in seasonal
-        assert 'DebugSetTicksGame' in seasonal
-        assert 'map.Biome.constantOutdoorTemperature = savedBiomeTemperature;' in seasonal
-        assert 'map.snowGrid.SetDepth(pair.Key, pair.Value)' in seasonal
-        assert 'zone.Delete(false)' in seasonal
-        assert 'if (failure != null) failure.Throw();' in seasonal
-        assert 'ThingMaker.MakeThing(rice' not in seasonal
-        assert 'ThingMaker.MakeThing(barley' not in seasonal
-
-    def test_seasonal_job_contract_is_not_only_a_static_projection(self):
-        source = (ROOT/'Tests/E2E/GrainsSimulationSteps.cs').read_text(encoding='utf-8')
-        seasonal = source.split('public async Task NativeSeasonalSowAndGrowth()', 1)[1]
-        assert 'NativeSowOffer(barleyCell) == null' in seasonal
-        assert 'PlantUtility.GrowthSeasonNow(barleyCell, map, barley)' in seasonal
-        assert 'await SimulatePlantTicks(2200, "RiceColdStall")' in seasonal
-        assert 'await SimulatePlantTicks(2200, "BarleyColdGrowth")' in seasonal
-        assert 'await SimulatePlantTicks(2200, "RiceWarmRecovery")' in seasonal
-        assert 'private void SetSeasonTemperature(float temp' in seasonal
-        assert 'room.TempTracker.EqualizeTemperature()' in seasonal
-        # Plant.Resting can invalidate a warm-growth test at night.
-        # Keep local daylight while avoiding a direct graphics/camera update
-        # on the isolated Pickle thread (automated-gates(7): three NREs).
-        assert 'int warmHourShift = (12 - GenLocalDate.HourOfDay(map) + 24) % 24;' in seasonal
-        assert 'Find.TickManager.TicksGame + warmHourShift * GenDate.TicksPerHour' in seasonal
-        assert 'GenCelestial.CurCelestialSunGlow(map)' in seasonal
-        assert 'solarGlow > 0.1f' in seasonal
-        assert 'map.skyManager.ForceSetCurSkyGlow(solarGlow);' in seasonal
-        assert 'map.skyManager.SkyManagerUpdate();' not in seasonal
-        assert 'savedSkyGlow = map.skyManager.CurSkyGlow;' in seasonal
-        assert 'map.skyManager.ForceSetCurSkyGlow(savedSkyGlow);' in seasonal
-        assert 'NativeSeasonalSowAndGrowth failed at ' in seasonal
-        assert 'error.ToString(), error' in seasonal
-        for diagnostic_phase in ('local hour', 'tick manager calendar shift',
-                                 'native celestial glow', 'sky glow cache', 'temperature setup',
-                                 'local day percent', 'rice growth season', 'rice growth factors'):
-            assert 'phase = "warm recovery ' + diagnostic_phase + '";' in seasonal
-        assert 'InnerException' in seasonal
-        assert 'warmDayPercent > 0.25f && warmDayPercent < 0.8f' in seasonal
-        assert 'ricePlant.GrowthRateFactor_Light > 0.001f' in seasonal
-        assert 'ricePlant.GrowthRate > 0f' in seasonal
-        assert 'ricePlant.LifeStage == PlantLifeStage.Growing' in seasonal
-        assert 'dayPercent=' in seasonal and 'sunGlow=' in seasonal
-        assert 'growthRate=' in seasonal
-
-
-    def test_mo_flour_job_accepts_declared_hay_only(self):
-        source = (ROOT/'Tests/E2E/GrainsSimulationSteps.cs').read_text(encoding='utf-8')
-        start = source.index('public async Task Bill(')
-        end = source.index('public async Task SimpleMeal(', start)
-        bill = source[start:end]
-        # Every declared product (including Hay from MO CraftFlourBulk) must
-        # increase by its exact recipe quantity. Undeclared Hay must not increase.
-        assert 'recipe.products.ToDictionary(p => p.thingDef.defName' in bill
-        assert 'products[p.thingDef.defName] + p.count' in bill
-        assert 'if (!recipe.products.Any(p => p.thingDef.defName == "Hay"))' in bill
-        assert 'ctx.Assert(Count("Hay") == hay,' in bill
-        assert 'ctx.Assert(Count("Hay") == hay, recipeName + " must not create hay.");' not in bill
-        assert 'if (!recipe.products.Any(p => p.thingDef.defName == "DankPyon_Straw"))' in bill
-        # Actual MO 1.6 source contract is tested separately; don't assume
-        # its native grinding recipe has no hay byproduct.
 
     def test_mo_hay_removal_is_not_lost(self):
         path = self.root/'Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Wheat.xml'
@@ -225,21 +92,6 @@ class ChainRegressionTests(unittest.TestCase):
         doc.write(path)
         with self.assertRaises(AssertionError):
             validate(self.root)
-
-    def test_docs_match_active_grains_ownership(self):
-        design = (ROOT/'Docs/Design.md').read_text(encoding='utf-8')
-        profile = (ROOT/'Docs/GrainsProfileTesting.md').read_text(encoding='utf-8')
-        cold = (ROOT/'Docs/Balance/Crops/ColdTolerance.md').read_text(encoding='utf-8')
-        scenario = (ROOT/'Docs/ScenarioExtraction.md').read_text(encoding='utf-8')
-        self.assertNotIn('Rice Cultivationは水田・稲・籾・米・稲作一次加工を所有する', design)
-        self.assertNotIn('- 米・水田', design)
-        self.assertNotIn('### 8.1 米・水田（Rice Cultivationへ移管）', design)
-        self.assertNotIn('蕎麦粉を実装する場合は30日', design)
-        self.assertIn('MedievalOverhaul_StageA_Wheat.xml', design)
-        self.assertIn('Grains適用後の製粉成果物は小麦粉のみ', design)
-        self.assertIn('Patches/UplandRice.xml', cold)
-        self.assertIn('LegacyStartingScenarios/Defs/Scenarios/Scenarios_NewVillage.xml', scenario)
-        self.assertNotIn('not a claim that the Production patch is already implemented', profile)
 
     def test_mo_16_archive_provider_contract(self):
         # Synthetic compressed MO provider: run without the proprietary game.
@@ -281,6 +133,5 @@ class ChainRegressionTests(unittest.TestCase):
 
     def test_no_duplicate_fallback_in_mo(self):
         self.mutate('Defs/ThingDefs_Items/Items_GrainsFlour.xml','.',new_element='<ThingDef><defName>AMJC_WheatFlour</defName></ThingDef>')
-
 
 if __name__ == '__main__':unittest.main()

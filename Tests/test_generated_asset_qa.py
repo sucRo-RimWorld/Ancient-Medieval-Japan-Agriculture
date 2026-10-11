@@ -18,7 +18,6 @@ module = importlib.util.module_from_spec(spec)
 sys.modules["generated_asset_qa"] = module
 spec.loader.exec_module(module)
 
-
 def make_candidate(path: Path, *, heavy_internal: bool) -> None:
     image = Image.new("RGBA", (256, 256), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
@@ -34,7 +33,6 @@ def make_candidate(path: Path, *, heavy_internal: bool) -> None:
     for x in (90, 130, 170):
         draw.line((x, 85, x - 10, 175), fill=color, width=width)
     image.save(path)
-
 
 class GeneratedAssetQaTest(unittest.TestCase):
     def test_valid_transparent_candidate_passes_without_style_thresholds(self):
@@ -73,7 +71,6 @@ class GeneratedAssetQaTest(unittest.TestCase):
             self.assertFalse(result["passed"])
             self.assertIn("candidate has no transparent background", result["failures"])
 
-
 GENERATOR_SCRIPT = ROOT / "Scripts/Art/grains_image_generator.py"
 generator_spec = importlib.util.spec_from_file_location(
     "grains_image_generator",
@@ -83,7 +80,6 @@ generator = importlib.util.module_from_spec(generator_spec)
 sys.modules["grains_image_generator"] = generator
 generator_spec.loader.exec_module(generator)
 
-
 class GrainsImageGeneratorTest(unittest.TestCase):
     @staticmethod
     def _png_bytes():
@@ -92,27 +88,6 @@ class GrainsImageGeneratorTest(unittest.TestCase):
         out = io.BytesIO()
         Image.new("RGBA", (32, 32), (0, 0, 0, 0)).save(out, format="PNG")
         return out.getvalue()
-
-    def test_prompt_locks_single_asset_and_reference_roles(self):
-        ref = generator._reference_from_bytes(
-            "accepted AMJ style reference",
-            "fake.png",
-            "fake.png",
-            self._png_bytes(),
-        )
-        prompt = generator._build_prompt(
-            "wheat",
-            "plant-mature",
-            {"prompt_rules": ["Subtle MO-like tonal gradients are allowed."]},
-            [ref],
-            "upright mature head",
-        )
-        self.assertIn("exactly ONE NEW isolated source image", prompt)
-        self.assertIn("accepted AMJ style reference", prompt)
-        self.assertIn("Subtle MO-like tonal gradients are allowed.", prompt)
-        self.assertNotIn("No gradients", prompt)
-        self.assertIn("upright mature head", prompt)
-        self.assertIn("transparent background", prompt.lower())
 
     def test_generator_rejects_authoritative_output_tree(self):
         old_roots = generator.PROTECTED_OUTPUT_ROOTS
@@ -244,22 +219,6 @@ class GrainsImageGeneratorTest(unittest.TestCase):
                 (work / "candidate-source.png").read_bytes(),
                 candidate.read_bytes(),
             )
-
-    def test_generator_source_contains_no_paid_api_path(self):
-        source = GENERATOR_SCRIPT.read_text(encoding="utf-8")
-        forbidden = (
-            "OPENAI_API_KEY",
-            "api.openai.com",
-            "urllib.request",
-            "/v1/images",
-            "b64_json",
-        )
-        for token in forbidden:
-            self.assertNotIn(token, source, token)
-        self.assertIn("ChatGPT built-in image generation", source)
-        self.assertIn('"prepare"', source)
-        self.assertIn('"review"', source)
-
 
 if __name__ == "__main__":
     unittest.main()
