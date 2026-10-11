@@ -228,7 +228,7 @@
     <label>barley</label>
     <description>Edible barley grain with its hull removed. A durable staple grain that can be cooked directly and can support additional barley-based processing in later content.</description>
     <graphicData>
-      <texPath>Things/Item/Resource/AMJC_Millet/Millet</texPath>
+      <texPath>Things/Item/Resource/AMJC_Barley/Barley</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases>
@@ -252,14 +252,14 @@
     Processed MO wheat grain. DankPyon_RawWheat remains the harvested sheaf;
     this edible state is the only Stage A wheat item placed in DankPyon_Cereal,
     so MO milling/brewing routes cannot bypass threshing.
-    TEMP graphic: shared AMJ edible-grain art until Art/graphics supplies wheat grain.
+    Grain graphic uses the dedicated AMJ wheat icon.
   -->
   <ThingDef ParentName="PlantFoodRawBase">
     <defName>AMJC_Wheat</defName>
     <label>wheat grain</label>
     <description>Edible wheat grain separated from the harvested stalks by threshing. It can be cooked directly or used by Medieval Overhaul cereal-processing recipes such as milling.</description>
     <graphicData>
-      <texPath>Things/Item/Resource/AMJC_Millet/Millet</texPath>
+      <texPath>Things/Item/Resource/AMJC_Wheat/Wheat</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases>
@@ -278,7 +278,7 @@
     </comps>
   </ThingDef>
 
-  <!-- Temporary shared AMJ textures; final rice art follows runtime checks. -->
+  <!-- Grains-owned rice sheaf and husk art; Vanilla RawRice remains the edible output. -->
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_RiceSheaf</defName>
     <label>rice sheaf</label>
@@ -293,7 +293,7 @@
     <defName>AMJC_RiceInHull</defName>
     <label>rice in hull</label>
     <description>Rice grains after threshing, still enclosed in their husks. Remove the husks to obtain edible Vanilla rice.</description>
-    <graphicData><texPath>Things/Item/Resource/AMJC_Millet/MilletInHull</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
+    <graphicData><texPath>Things/Item/Resource/AMJC_Rice/RiceInHull</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
     <statBases><MarketValue>1.1</MarketValue></statBases>
     <ingestible><foodType>Seed</foodType><preferability>NeverForNutrition</preferability></ingestible>
     <comps><li Class="CompProperties_Rottable"><daysToRotStart>120</daysToRotStart><rotDestroys>true</rotDestroys></li></comps>

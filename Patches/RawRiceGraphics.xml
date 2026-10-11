@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Reuse Vanilla RawRice. Replace only its graphic with the Grains single-stack rice icon. -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="RawRice"]/graphicData/texPath</xpath>
+        <value><texPath>Things/Item/Resource/AMJC_Rice/Rice</texPath></value>
+      </li>
+      <li Class="PatchOperationConditional">
+        <xpath>/Defs/ThingDef[defName="RawRice"]/graphicData/graphicClass</xpath>
+        <match Class="PatchOperationReplace">
+          <xpath>/Defs/ThingDef[defName="RawRice"]/graphicData/graphicClass</xpath>
+          <value><graphicClass>Graphic_StackCount</graphicClass></value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="RawRice"]/graphicData</xpath>
+          <value><graphicClass>Graphic_StackCount</graphicClass></value>
+        </nomatch>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

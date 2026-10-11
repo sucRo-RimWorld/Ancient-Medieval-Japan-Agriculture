@@ -145,6 +145,8 @@ PR #20 integrates immature/mature crops and bundled sheaves: 7/7/5. The 2026-10-
 
 **Implementation / verification boundary:** Image production and existing author acceptance are not runtime PASS. Reconcile only affected art/source manifest entries and `Tests/test_grains_art_source_archive.py` when creating distinct sheaf stack variants. Since PR #38, tests accept a single `_a` or contiguous `_a/_b/_c` without enforcing duplicate images; the goal of three distinct sheaf/flour appearances remains OPEN. Preserve accepted originals in `Art/Sources`; do not relax unrelated author-accepted asset checks. Validate PNG integrity and all relevant `texPath` variants, then loaded normal-zoom appearance in Vanilla/MO. This coordination update changes no production image, Def, Recipe or game rendering; PR #38 changed only tests/CI/design. No loaded-game graphics PASS is claimed. Old-save migration is out of scope (Grains was never installed).
 
+**2026-10-11 grain icon wiring:** Author-pushed single 128px `_a` textures are present for millet, buckwheat, barley, wheat, rice-in-hull and edible rice. `AMJC_Barley`, `AMJC_Wheat`, `AMJC_RiceInHull` now select dedicated graphics; Vanilla `RawRice` is retextured via a visual-only patch while retaining its original Def. Earlier pending-production-icon/placeholder statements above are superseded for these four references. Pending: verify/commit corresponding high-resolution sources and inspect loaded Vanilla/MO game visuals; no runtime PASS or balance change is claimed. An obsolete fixed barley production PNG blob assertion was dropped; Def-path and PNG validation remain.
+
 ### ART-TEMPLATE-001 — Pixel-exact shared component policy
 
 **Owner:** shared art/tooling
