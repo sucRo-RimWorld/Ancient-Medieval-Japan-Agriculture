@@ -108,7 +108,7 @@ def validate():
         defs = {node.findtext('defName'): node for node in projected if node.findtext('defName')}
         for name, graphic in (
             ('AMJC_RiceSheaf', 'Things/Item/Resource/AMJC_Rice/RiceSheafDense'),
-            ('AMJC_RiceInHull', 'Things/Item/Resource/AMJC_Millet/MilletInHull'),
+            ('AMJC_RiceInHull', 'Things/Item/Resource/AMJC_Rice/RiceInHull'),
         ):
             item = defs[name]
             assert item.findtext('ingestible/preferability') == 'NeverForNutrition'
@@ -130,6 +130,25 @@ def validate():
                     expected.append(('DankPyon_Straw', count))
                 assert products == expected, (profile, op, bulk, products)
                 assert recipe.get('ParentName') == 'AMJC_RiceProcessingBase'
+    # Retexture Vanilla RawRice without introducing a duplicate edible-rice Def.
+    rice_icon = 'Things/Item/Resource/AMJC_Rice/Rice'
+    stack_textures(ROOT, rice_icon)
+    raw_patch = ET.parse(ROOT / 'Patches/RawRiceGraphics.xml').getroot().find('Operation')
+    assert raw_patch is not None and raw_patch.get('Class') == 'PatchOperationSequence'
+    steps = raw_patch.findall('operations/li')
+    assert len(steps) == 2
+    tex, graphic = steps
+    assert tex.get('Class') == 'PatchOperationReplace'
+    assert tex.findtext('xpath') == '/Defs/ThingDef[defName="RawRice"]/graphicData/texPath'
+    assert tex.findtext('value/texPath') == rice_icon
+    assert graphic.get('Class') == 'PatchOperationConditional'
+    assert graphic.findtext('xpath') == '/Defs/ThingDef[defName="RawRice"]/graphicData/graphicClass'
+    assert graphic.find('match').get('Class') == 'PatchOperationReplace'
+    assert graphic.findtext('match/value/graphicClass') == 'Graphic_StackCount'
+    assert graphic.find('nomatch').get('Class') == 'PatchOperationAdd'
+    assert graphic.findtext('nomatch/xpath') == '/Defs/ThingDef[defName="RawRice"]/graphicData'
+    assert graphic.findtext('nomatch/value/graphicClass') == 'Graphic_StackCount'
+    assert 'RawRice' not in [n.findtext('defName') for n in projected.findall('ThingDef')]
     for name in ('AMJC_RiceSheaf', 'AMJC_RiceInHull'):
         jp = ET.parse(ROOT / 'Languages/Japanese/DefInjected/ThingDef/AMJC_RiceProcessing.xml').getroot()
         assert jp.findtext(name + '.label') and jp.findtext(name + '.description')

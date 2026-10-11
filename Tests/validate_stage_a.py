@@ -394,6 +394,15 @@ assert_stack_graphic(
     "Buckwheat",
 )
 
+for node, path in (
+    (barley_in_hull, "Things/Item/Resource/AMJC_Barley/BarleyInHull"),
+    (barley_grain, "Things/Item/Resource/AMJC_Barley/Barley"),
+    (wheat_grain, "Things/Item/Resource/AMJC_Wheat/Wheat"),
+    (find_def(items, "ThingDef", "AMJC_RiceSheaf"), "Things/Item/Resource/AMJC_Rice/RiceSheafDense"),
+    (find_def(items, "ThingDef", "AMJC_RiceInHull"), "Things/Item/Resource/AMJC_Rice/RiceInHull"),
+):
+    assert_stack_graphic(node, path, f"Textures/{path}", Path(path).name)
+
 def rot_days(node):
     for comp in node.findall("./comps/li"):
         if comp.attrib.get("Class") == "CompProperties_Rottable":

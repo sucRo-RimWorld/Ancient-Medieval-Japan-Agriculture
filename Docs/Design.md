@@ -1423,6 +1423,8 @@ PNG全53枚の構造検査と生成原本／書き出しの機械QAは合格。�
 
 殻なし雑穀、殻なし大麦・小麦の加工後画像、籾の専用画像、Vanilla `RawRice` の食用米リテクスチャ、粉・料理・加工設備の未完成は引き続き別件で管理する。殻付き大麦（`AMJC_BarleyInHull`）は作者採用の元画像を `Art/Sources/Things/Item/Resource/AMJC_Barley/BarleyInHull/BarleyInHull.png` に保存し、専用 `Things/Item/Resource/AMJC_Barley/BarleyInHull` パスの256pxスタック画像3枚へ反映済み（ゲーム内表示は未検証）。食用米はGrainsが担当し、既存の `RawRice` DefName・料理互換性・数値を維持して画像参照だけをAMJ画風へ差し替える（画像制作・実装・ゲーム表示検証は未完了）。
 
+2026-10-11 画像参照更新：作者がmainに追加した128×128の穀粒単一_a画像を使用し、AMJC_Barley、AMJC_Wheat、AMJC_RiceInHullのtexPathをそれぞれ大麦・小麦・籾専用に切り替えた。Vanilla RawRiceは新しいDefを作らず、Patches/RawRiceGraphics.xmlで描画パスのみGrainsのRice_aへ切り替え、Graphic_StackCountによる1種類の外観とする。雑穀とソバの既存参照は変更なし。原本のArt/Sourcesへの保全と実ゲームでの表示検証は別途OPEN。栄養・Recipe・農業数値は不変。
+
 #### 12.1.4 穀物・製粉品のスタック画像（2026-10-10確定）
 
 作者がMO 1.6の小麦束・小麦粉とVanilla `RawRice` の実Def／画像構成を比較し、Grainsの制作単位を次のように確定した。**数量別の本番画像制作は未実施**であり、この仕様確定だけで現行テクスチャ・Def・テストは変更しない。

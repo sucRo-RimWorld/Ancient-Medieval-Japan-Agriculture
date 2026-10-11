@@ -49,6 +49,12 @@ AMJ_GRAPHICS = {
     "AMJC_BarleyInHull": {
         "graphicData/texPath": ("Things/Item/Resource/AMJC_Barley/BarleyInHull", "Things/Item/Resource/AMJC_Millet/MilletInHull"),
     },
+    "AMJC_Barley": {
+        "graphicData/texPath": ("Things/Item/Resource/AMJC_Barley/Barley", "Things/Item/Resource/AMJC_Millet/Millet"),
+    },
+    "AMJC_Wheat": {
+        "graphicData/texPath": ("Things/Item/Resource/AMJC_Wheat/Wheat", "Things/Item/Resource/AMJC_Millet/Millet"),
+    },
     "AMJC_GrainProcessingSpot": {
         "graphicData/texPath": ("Things/Building/Production/TableStonecutter", "Things/Building/Production/StonecuttingSpot"),
     },
