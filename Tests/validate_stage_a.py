@@ -324,9 +324,9 @@ def assert_stack_graphic(node, tex_path, rel_dir, stem):
 
 assert_stack_graphic(
     raw,
-    "Things/Item/Resource/AMJC_Millet/MixedMilletSheafDense",
-    "Textures/Things/Item/Resource/AMJC_Millet/MixedMilletSheafDense",
-    "MixedMilletSheafDense",
+    "Things/Item/Resource/AMJC_Millet/MilletSheaf",
+    "Textures/Things/Item/Resource/AMJC_Millet/MilletSheaf",
+    "MilletSheaf",
 )
 assert_stack_graphic(
     in_hull,
@@ -343,9 +343,9 @@ assert_stack_graphic(
 
 assert_stack_graphic(
     raw_buckwheat,
-    "Things/Item/Resource/AMJC_Buckwheat/RawBuckwheatDense",
-    "Textures/Things/Item/Resource/AMJC_Buckwheat/RawBuckwheatDense",
-    "RawBuckwheatDense",
+    "Things/Item/Resource/AMJC_Buckwheat/BuckwheatSheaf",
+    "Textures/Things/Item/Resource/AMJC_Buckwheat/BuckwheatSheaf",
+    "BuckwheatSheaf",
 )
 
 assert_stack_graphic(
@@ -366,7 +366,7 @@ for node, path in (
     (barley_in_hull, "Things/Item/Resource/AMJC_Barley/BarleyInHull"),
     (barley_grain, "Things/Item/Resource/AMJC_Barley/Barley"),
     (wheat_grain, "Things/Item/Resource/AMJC_Wheat/Wheat"),
-    (find_def(items, "ThingDef", "AMJC_RiceSheaf"), "Things/Item/Resource/AMJC_Rice/RiceSheafDense"),
+    (find_def(items, "ThingDef", "AMJC_RiceSheaf"), "Things/Item/Resource/AMJC_Rice/RiceSheaf"),
     (find_def(items, "ThingDef", "AMJC_RiceInHull"), "Things/Item/Resource/AMJC_Rice/RiceInHull"),
 ):
     assert_stack_graphic(node, path, f"Textures/{path}", Path(path).name)

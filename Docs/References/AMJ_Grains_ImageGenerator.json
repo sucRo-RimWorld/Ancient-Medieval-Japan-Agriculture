@@ -47,7 +47,7 @@
       "require_subject_reference": true,
       "require_mo_reference": false,
       "accepted_references": [
-        "Textures/Things/Item/Resource/AMJC_Millet/RawMillet/RawMillet_a.png",
+        "Textures/Things/Item/Resource/AMJC_Millet/MilletSheaf/MilletSheaf_a.png",
         "Textures/Things/Item/Resource/AMJC_Millet/MilletInHull/MilletInHull_a.png"
       ],
       "mo_reference_filenames": [
@@ -81,7 +81,7 @@
       "require_subject_reference": true,
       "require_mo_reference": false,
       "accepted_references": [
-        "Textures/Things/Item/Resource/AMJC_Millet/RawMillet/RawMillet_a.png",
+        "Textures/Things/Item/Resource/AMJC_Millet/MilletSheaf/MilletSheaf_a.png",
         "Textures/Things/Item/Resource/AMJC_Millet/MilletInHull/MilletInHull_a.png"
       ],
       "mo_reference_filenames": [

@@ -137,7 +137,7 @@ def build_cases(master: Image.Image, representative: Image.Image) -> dict[str, I
     contact_shadow(overlap, (45, 108, 213, 160))
     grain = MILLET_ROOT / "Millet/Millet_a.png"
     place(overlap, transformed(grain, 168, 0), (128, 110))
-    sheaf = MILLET_ROOT / "RawMillet/RawMillet_a.png"
+    sheaf = MILLET_ROOT / "MilletSheaf/MilletSheaf_a.png"
     place(overlap, transformed(sheaf, 105, -18), (132, 105))
     cases["03_strong_over_rim"] = overlap
 

@@ -27,11 +27,11 @@
 | Barley | mature | `Things/Plants/FullGrown/AMJC_Barley/AMJC_Barley_Mature.png` |
 | Wheat | mature | `Things/Plants/FullGrown/AMJC_Wheat/AMJC_Wheat_Mature.png` |
 | Rice | mature | `Things/Plants/FullGrown/AMJC_Rice/AMJC_Rice_Mature.png` |
-| Millet | sheaf | `Things/Item/Resource/AMJC_Millet/MixedMilletSheafDense/MixedMilletSheafDense.png` |
-| Soba | sheaf | `Things/Item/Resource/AMJC_Buckwheat/RawBuckwheatDense/RawBuckwheatDense.png` |
-| Barley | sheaf | `Things/Item/Resource/AMJC_Barley/RawBarleyDense/RawBarleyDense.png` |
-| Wheat | sheaf | `Things/Item/Resource/AMJC_Wheat/RawWheatDense/RawWheatDense.png` |
-| Rice | sheaf | `Things/Item/Resource/AMJC_Rice/RiceSheafDense/RiceSheafDense.png` |
+| Millet | sheaf | `Things/Item/Resource/AMJC_Millet/MilletSheaf/MilletSheaf.png` |
+| Soba | sheaf | `Things/Item/Resource/AMJC_Buckwheat/BuckwheatSheaf/BuckwheatSheaf.png` |
+| Barley | sheaf | `Things/Item/Resource/AMJC_Barley/BarleySheaf/BarleySheaf.png` |
+| Wheat | sheaf | `Things/Item/Resource/AMJC_Wheat/WheatSheaf/WheatSheaf.png` |
+| Rice | sheaf | `Things/Item/Resource/AMJC_Rice/RiceSheaf/RiceSheaf.png` |
 
 **確認範囲：** 原本ファイルの重複整理のみ。実ゲーム描画、収穫物スタック数別画像、未完成の食用穀粒・粉・料理・設備の制作状況は変わらない。以下は2026-10-07の旧Core回収履歴であり、古いハッシュ・元パスを現行採用原本の検証基準として扱わない。
 

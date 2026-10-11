@@ -38,13 +38,13 @@ AMJ_GRAPHICS = {
         "plant/immatureGraphicPath": ("Things/Plants/Immature/AMJC_Barley", "Things/Plants/Immature/WheatPlant"),
     },
     "AMJC_RawMillet": {
-        "graphicData/texPath": ("Things/Item/Resource/AMJC_Millet/MixedMilletSheafDense", "Things/Item/Resource/AMJC_Millet/RawMillet"),
+        "graphicData/texPath": ("Things/Item/Resource/AMJC_Millet/MilletSheaf", "Things/Item/Resource/AMJC_Millet/RawMillet"),
     },
     "AMJC_RawBuckwheat": {
-        "graphicData/texPath": ("Things/Item/Resource/AMJC_Buckwheat/RawBuckwheatDense", "Things/Item/Resource/AMJC_Buckwheat/RawBuckwheat"),
+        "graphicData/texPath": ("Things/Item/Resource/AMJC_Buckwheat/BuckwheatSheaf", "Things/Item/Resource/AMJC_Buckwheat/RawBuckwheat"),
     },
     "AMJC_RawBarley": {
-        "graphicData/texPath": ("Things/Item/Resource/AMJC_Barley/RawBarleyDense", "Things/Item/Resource/AMJC_Millet/RawMillet"),
+        "graphicData/texPath": ("Things/Item/Resource/AMJC_Barley/BarleySheaf", "Things/Item/Resource/AMJC_Millet/RawMillet"),
     },
     "AMJC_BarleyInHull": {
         "graphicData/texPath": ("Things/Item/Resource/AMJC_Barley/BarleyInHull", "Things/Item/Resource/AMJC_Millet/MilletInHull"),
@@ -213,10 +213,10 @@ def validate():
         stem = wheat.findtext(element)
         assert stem == "Things/Plants/" + folder + "/AMJC_Wheat"
         assert any((ROOT / "Textures" / stem).glob("*.png"))
-    for name, folder, stem in (("AMJC_RawMillet", "AMJC_Millet", "MixedMilletSheafDense"),
-                               ("AMJC_RawBuckwheat", "AMJC_Buckwheat", "RawBuckwheatDense"),
-                               ("AMJC_RawBarley", "AMJC_Barley", "RawBarleyDense"),
-                               ("AMJC_RawWheat", "AMJC_Wheat", "RawWheatDense")):
+    for name, folder, stem in (("AMJC_RawMillet", "AMJC_Millet", "MilletSheaf"),
+                               ("AMJC_RawBuckwheat", "AMJC_Buckwheat", "BuckwheatSheaf"),
+                               ("AMJC_RawBarley", "AMJC_Barley", "BarleySheaf"),
+                               ("AMJC_RawWheat", "AMJC_Wheat", "WheatSheaf")):
         path = "Things/Item/Resource/" + folder + "/" + stem
         assert get(name).findtext("graphicData/texPath") == path
         stack_textures(ROOT, path)

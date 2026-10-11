@@ -1363,13 +1363,13 @@ Medieval Overhaulと並べても違和感が少ない、**ベクター画像的�
 
 2026-10-09に作者が「では一旦これでFixとする」と最終採用。`Art/Candidates/MilletSimplification-20261009/` にプロンプト、256px書き出し、比較画像、検査結果を保存し、採用した7枚の生成原本は新しい画像パスに対応する `Art/Sources/` 配下へ同一バイトで保存した。過去の採用済み原本は上書きしない。ローカル反映済みであり、Gitコミット・公開・実ゲーム表示確認は未実施。
 
-3種は `Things/Plants/{FullGrown,Immature}/AMJC_{Awa,Hie,Kibi}`、雑穀束は `Things/Item/Resource/AMJC_Millet/MixedMilletSheaf` を参照する。2026-10-09当時は大麦・稲の仮画像を維持するため `_Simple` という別パスを作成したが、各作物に専用画像が統合された現在、その区別は不要。本番は通常の `AMJC_<作物>` パスに統一し、旧本番PNGを重複保持しない。束の3スタックスロットは同一PNGとし、作物・収穫量・加工・食品数値は変更しない。
+3種は `Things/Plants/{FullGrown,Immature}/AMJC_{Awa,Hie,Kibi}`、雑穀束は `Things/Item/Resource/AMJC_Millet/MilletSheaf` を参照する。2026-10-09当時は大麦・稲の仮画像を維持するため `_Simple` という別パスを作成したが、各作物に専用画像が統合された現在、その区別は不要。本番は通常の `AMJC_<作物>` パスに統一し、旧本番PNGを重複保持しない。制作当時は束の3スタックスロットを同一PNGとしていたが、現在は `_a` 1枚に集約（§12.1.4）。作物・収穫量・加工・食品数値は変更しない。
 
 #### ソバ・大麦・AMJ小麦および密集した束への拡張（2026-10-09）
 
 作者の追加依頼により、ソバ・大麦・AMJ小麦の未熟／成熟を同じ葉なし・輪郭主体の画風で制作。ソバは三角形の実と赤みのある成熟茎、大麦は長い芒、小麦は短い先端を持つ太い穂で区別する。参照先は `Things/Plants/{FullGrown,Immature}/AMJC_{Soba,Barley,Wheat}`。AMJ小麦は `BaseWithoutMO` の独自作物に適用する。MO併用時も `WheatGraphics.xml` でMO小麦の未熟・成熟・束を同じAMJ画像へ割り当て、MOのDef識別子・ゲーム仕様は維持する。
 
-さらに「雑穀束、ソバ束、大麦束、AMJ小麦束はよりMO小麦束に似せてほしい／よりたくさんの穂が束ねられてるようにする」という作者指示により、束4種を幅広く密集した穂・実の塊、単純な帯、太く短い裾へ改稿。雑穀束はアワ・ヒエ・キビの特徴を外周に残す。現在のローカル参照は `AMJC_Millet/MixedMilletSheafDense`、`AMJC_Buckwheat/RawBuckwheatDense`、`AMJC_Barley/RawBarleyDense`、`AMJC_Wheat/RawWheatDense`（共通接頭辞 `Things/Item/Resource/`）。各3スタックスロットは同一PNG。
+さらに「雑穀束、ソバ束、大麦束、AMJ小麦束はよりMO小麦束に似せてほしい／よりたくさんの穂が束ねられてるようにする」という作者指示により、束4種を幅広く密集した穂・実の塊、単純な帯、太く短い裾へ改稿。雑穀束はアワ・ヒエ・キビの特徴を外周に残す。現在のローカル参照は `AMJC_Millet/MilletSheaf`、`AMJC_Buckwheat/BuckwheatSheaf`、`AMJC_Barley/BarleySheaf`、`AMJC_Wheat/WheatSheaf`（共通接頭辞 `Things/Item/Resource/`）。制作当時は3スロットを同一PNGで埋めていたが、現在は `_a` 1枚に集約（§12.1.4）。
 
 新規栽培画像の生成原本・プロンプト・QAは `Art/Candidates/GrainSimplification-20261009/`、最新の密集束4種は `Art/Candidates/DenseSheaves-20261009/` に保存。これらはローカル確認用 `review` であり、先に採用された雑穀栽培6枚と区別する。旧原本・旧束は保持。加工後の穀粒・粉・料理・稲・収穫量などのゲーム仕様は変更しない。
 
@@ -1381,7 +1381,7 @@ PNG全53枚の構造検査と生成原本／書き出しの機械QAは合格。�
 
 さらに未熟7種（アワ・ヒエ・キビ・ソバ・大麦・AMJ小麦・陸稲）の輪郭を、MO小麦未熟の暗い灰緑色を基準に変更した。MO実画像から測定した代表輪郭RGBは `(80,83,69)` / `#505345`。ImageGenによる色合わせであり、全輪郭ピクセルのRGB完全一致や元画像とのピクセル単位の形状不変を保証する処理ではない。成熟・他の束はこの輪郭色変更の対象外。
 
-所有者はGrains、元DefはCoreの `Plant_Rice`、全構成で有効。`Patches/UplandRiceGraphics.xml` は `graphicData/texPath` と `plant/immatureGraphicPath` だけを `Things/Plants/{FullGrown,Immature}/AMJC_Rice` に置換し、Graphic_Random・サイズ・植生設定を維持する。稲束は `Things/Item/Resource/AMJC_Rice/RiceSheafDense`、3スタックスロット同一PNG。インストール済みCoreの両対象フィールドを確認し、MO 1.6配下のXMLにはこれらを上書きする競合を検出しなかった。全Modのロード後競合・実描画は未確認。
+所有者はGrains、元DefはCoreの `Plant_Rice`、全構成で有効。`Patches/UplandRiceGraphics.xml` は `graphicData/texPath` と `plant/immatureGraphicPath` だけを `Things/Plants/{FullGrown,Immature}/AMJC_Rice` に置換し、Graphic_Random・サイズ・植生設定を維持する。稲束は `Things/Item/Resource/AMJC_Rice/RiceSheaf`、現在は `_a` 1枚（§12.1.4）。インストール済みCoreの両対象フィールドを確認し、MO 1.6配下のXMLにはこれらを上書きする競合を検出しなかった。全Modのロード後競合・実描画は未確認。
 
 生成原本・プロンプト・QA・比較画像は `Art/Candidates/UplandRice-20261009/` と `Art/Candidates/ImmatureOutline-20261009/` に保存。既存の採用原本を保持し、変更前のゲーム用未熟画像も後者の `Before/` に保存。今回の画像はローカル確認用 `review`。PNG全58枚、陸稲の7作物比較27条件／構成の静的回帰、隔離コピーでのStage A・Base/MO契約が合格（`TestResults/RiceArtStatic-20261009/static-result.txt`）。隔離コピーでは未変更移管ファイルのCRLFだけをGit原本バイトへ戻して検査した。実ゲーム表示・作者の最終採用・コミット／公開は未実施。
 
@@ -1438,9 +1438,11 @@ PNG全53枚の構造検査と生成原本／書き出しの機械QAは合格。�
 
 アワ・ヒエ・キビは収穫後に同一ThingDefへ統合するため、雑穀束・殻付き雑穀・可食雑穀はそれぞれ共有画像とし、品種別の重複画像は作らない。MO併用時の小麦束・小麦粉・石臼は、既存のMO ThingDef／設備を条件付きで再利用する。Grainsは製粉工程の仕様と非MO製粉・蕎麦粉・雑穀粉の資産を所有する（§2.8、§5.2）。
 
-過去の制作記録にある穀束「3スタックスロット同一PNG」は**現行本番ファイルの状態**を指し、本節の確定目標ではない。既存の採用済み密集束・枡原本を保持し、穀束は採用済みの大量用画像を基に不足する少量・中量を制作する。粉についても数量別の画像を完成させる。穀粒については `Graphic_StackCount` を維持しても、同一外観なら `_a.png` の1枚だけで表示でき、`_b.png`／`_c.png` の同一画像複製は不要。穀束・粉も数量別の差分画像が未完成の間は `_a.png` のみで表示可能だが、少量・中量・大量の3種類を完成させる目標は維持する。テストでは `_a` 必須、`_b`／`_c` 任意（欠番なし、存在すればPNG整合性を確認）とし、画像の同一性を強制しない。現在混在する128×128・256×256の資源アイコンをともに検証対象とし、PNG全体の妥当性は既存の `Tests/validate_png_assets.py` で引き続き検証する。既存の重複ファイルは別途整理対象であり、今回のテスト修正では画像を削除しない。Vanilla `RawRice` は独立Defを新設せず、リテクスチャ時に元の単一画像表示を維持する。
+過去の制作記録にある穀束「3スタックスロット同一PNG」は**当時の仮配置**を指し、本節の確定目標ではない。既存の採用済み密集束・枡原本を保持し、穀束は採用済みの大量用画像を基に不足する少量・中量を制作する。粉についても数量別の画像を完成させる。穀粒については `Graphic_StackCount` を維持しても、同一外観なら `_a.png` の1枚だけで表示でき、`_b.png`／`_c.png` の同一画像複製は不要。穀束・粉も数量別の差分画像が未完成の間は `_a.png` のみで表示可能だが、少量・中量・大量の3種類を完成させる目標は維持する。テストでは `_a` 必須、`_b`／`_c` 任意（欠番なし、存在すればPNG整合性を確認）とし、画像の同一性を強制しない。現在混在する128×128・256×256の資源アイコンをともに検証対象とし、PNG全体の妥当性は既存の `Tests/validate_png_assets.py` で引き続き検証する。2026-10-11に穀束5種は各 `_a` 1枚へ集約し、同一画像の `_b`／`_c` と参照されない旧名の9 PNGを削除した。Vanilla `RawRice` は独立Defを新設せず、リテクスチャ時に元の単一画像表示を維持する。
 
 差分画像の導入時には `Docs/References/GrainsCropSourceManifest.json` の対象画像に関する原本対応・採用状態を更新し、原本保全・PNG整合性・通常ズームでのスタック表示を検証する。テストは本番の参照切れ・破損・加工やロード条件の不具合を検出する。特定画像の旧ハッシュ・原画寸法・候補コピーの恒久的同一性、説明書の定型句、C#テストソースの文字列、テスト内の定数計算は合否条件にしない。実ジョブの成否は既存のPickleで確認する。
+
+穀束の現行パスは `Things/Item/Resource/AMJC_<Family>/<Family>Sheaf`（Family: Millet / Buckwheat / Barley / Wheat / Rice）。`Dense` は制作時の改稿名であり、別Def・数量段階ではないため本番・原本パスから除去した。穀粒は `<Family>`、殻付き穀粒は `<Family>InHull`、穀束は `<Family>Sheaf` で区別する。採用原本とゲームPNGは再生成・再圧縮せず同一バイトで移動し、原本対応表・Base/MOのDef参照・既存のパス検証も揃える。歴史的候補フォルダ名は制作記録として保持する。
 
 ### 12.2 制作環境
 
