@@ -48,6 +48,10 @@ class StackGraphicsTests(unittest.TestCase):
         self.put("c", png(2))
         self.assertEqual(len(stack_textures(self.root, TEX_PATH)), 3)
 
+    def test_128_texture_is_valid(self):
+        self.put("a", png(size=128))
+        self.assertEqual(len(stack_textures(self.root, TEX_PATH)), 1)
+
     def test_existing_identical_copies_are_not_a_failure(self):
         for suffix in "abc":
             self.put(suffix)
@@ -68,7 +72,7 @@ class StackGraphicsTests(unittest.TestCase):
         p = self.put("a", b"invalid")
         with self.assertRaisesRegex(AssertionError, "invalid PNG"):
             stack_textures(self.root, TEX_PATH)
-        p.write_bytes(png(size=128))
+        p.write_bytes(png(size=64))
         with self.assertRaisesRegex(AssertionError, "wrong stack texture size"):
             stack_textures(self.root, TEX_PATH)
 
