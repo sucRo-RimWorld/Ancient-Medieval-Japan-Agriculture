@@ -5,6 +5,7 @@ import zlib
 
 ROOT = Path(__file__).resolve().parents[1]
 from amj_profile_xml import profile_xml
+from stack_graphics import stack_textures
 MO_XML = profile_xml("mo")
 
 def validate_powershell_encoding(path):
@@ -350,13 +351,8 @@ wheat_grain = find_def(items, "ThingDef", "AMJC_Wheat")
 def assert_stack_graphic(node, tex_path, rel_dir, stem):
     assert text(node, "graphicData/graphicClass") == "Graphic_StackCount"
     assert text(node, "graphicData/texPath") == tex_path
-    for suffix in ("a", "b", "c"):
-        p = ROOT / rel_dir / f"{stem}_{suffix}.png"
-        assert p.is_file(), f"missing stack texture {p}"
-        png = p.read_bytes()
-        assert png[:8] == b"\x89PNG\r\n\x1a\n"
-        assert int.from_bytes(png[16:20], "big") == 256
-        assert int.from_bytes(png[20:24], "big") == 256
+    assert rel_dir == f"Textures/{tex_path}" and stem == Path(tex_path).name
+    stack_textures(ROOT, tex_path)
 
 assert_stack_graphic(
     raw,
