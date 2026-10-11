@@ -24,6 +24,27 @@ class ChainRegressionTests(unittest.TestCase):
         with self.assertRaises(AssertionError):validate(self.root)
 
     def test_current_chain(self):validate(self.root)
+    def test_flour_uses_dedicated_art(self):
+        self.mutate('Defs/ThingDefs_Items/Items_GrainsFlour.xml',
+                    'ThingDef[defName="AMJC_BuckwheatFlour"]/graphicData/texPath',
+                    'Things/Item/Resource/AMJC_Millet/Millet')
+
+    def test_fallback_wheat_flour_uses_dedicated_art(self):
+        self.mutate('BaseWithoutMO/Defs/Items_Flour.xml',
+                    'ThingDef/graphicData/texPath',
+                    'Things/Item/Resource/AMJC_Millet/Millet')
+
+    def test_flour_requires_a_stack_texture(self):
+        path = self.root/'Textures/Things/Item/Resource/AMJC_Millet/MilletFlour/MilletFlour_a.png'
+        path.unlink()
+        with self.assertRaisesRegex(AssertionError, 'missing _a'):
+            validate(self.root)
+
+    def test_mo_flour_retexture_must_reuse_wheat_art(self):
+        self.mutate('Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_FlourGraphics.xml',
+                    'Operation/value/texPath',
+                    'Things/Item/Resource/AMJC_Millet/MilletFlour')
+
     def test_flour_does_not_multiply_nutrition(self):
         self.mutate('BaseWithoutMO/Defs/Items_Flour.xml','ThingDef/statBases/Nutrition','0.1')
     def test_milling_does_not_create_straw(self):

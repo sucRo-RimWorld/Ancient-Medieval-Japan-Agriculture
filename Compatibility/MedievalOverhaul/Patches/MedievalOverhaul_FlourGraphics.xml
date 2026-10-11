@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Preserve MO's flour Def and recipes; replace only the texture reference. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Flour"]/graphicData/texPath</xpath>
+    <value>
+      <texPath>Things/Item/Resource/AMJC_Wheat/WheatFlour</texPath>
+    </value>
+  </Operation>
+</Patch>

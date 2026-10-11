@@ -64,6 +64,17 @@ def validate(root=ROOT):
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
             assert float(defs[flour].findtext('comps/li/daysToRotStart')) == 60
             assert defs[flour].findtext('ingestible/preferability') == 'NeverForNutrition'
+        flour_graphics = {
+            'AMJC_BuckwheatFlour': 'Things/Item/Resource/AMJC_Buckwheat/BuckwheatFlour',
+            'AMJC_MilletFlour': 'Things/Item/Resource/AMJC_Millet/MilletFlour',
+        }
+        if profile == 'vanilla':
+            flour_graphics['AMJC_WheatFlour'] = 'Things/Item/Resource/AMJC_Wheat/WheatFlour'
+        for name, tex in flour_graphics.items():
+            graphic = defs[name].find('graphicData')
+            assert graphic is not None and graphic.findtext('texPath') == tex, 'Flour graphic path: ' + name
+            assert graphic.findtext('graphicClass') == 'Graphic_StackCount', 'Flour graphic class: ' + name
+            stack_textures(root, tex)
         # These temporary meal sprites are shipped by Grains. Never regress
         # to a guessed Vanilla texPath: those failed real-game Texture2D loads
         # despite matching older public Vanilla XML examples.
@@ -125,6 +136,14 @@ def validate(root=ROOT):
                     if op.get('Class') == 'PatchOperationRemove'
                     and (op.findtext('xpath') or '').endswith('/products/Hay')}
     assert hay_removals == expected_hay_removals, 'AMJ MO grinding must remove upstream Hay for all three recipes'
+    flour_tex = 'Things/Item/Resource/AMJC_Wheat/WheatFlour'
+    flour_patch = ET.parse(root/'Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_FlourGraphics.xml')
+    mo_flour_ops = flour_patch.getroot().findall('Operation')
+    assert len(mo_flour_ops) == 1, 'MO flour graphics patch must only change one texture'
+    assert mo_flour_ops[0].get('Class') == 'PatchOperationReplace', 'MO flour graphic override'
+    assert mo_flour_ops[0].findtext('xpath') == '/Defs/ThingDef[defName="DankPyon_Flour"]/graphicData/texPath'
+    assert mo_flour_ops[0].findtext('value/texPath') == flour_tex, 'MO flour texture path'
+    stack_textures(root, flour_tex)
     print('Grains Base/MO wheat/flour/milling/minimum-food static contracts: PASS')
 
 
