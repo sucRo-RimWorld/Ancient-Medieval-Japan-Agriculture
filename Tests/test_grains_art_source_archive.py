@@ -57,7 +57,7 @@ def main():
     assert struct.unpack(">II", source_bytes[16:24]) == (1429, 1100)
     base = ROOT / "Textures/Things/Item/Resource/AMJC_Millet/MilletInHull"
     millet_png = stack_textures(ROOT, base.relative_to(ROOT / "Textures"))[0].read_bytes()
-    assert git_blob_sha1(millet_png) == "039c6f11bbe5426d169b011a706cfcb3e6802c2f", "hulled millet production drift"
+    assert git_blob_sha1(millet_png) == "87346c67d58671d5d22150bd376be2ac7534775e", "hulled millet production drift"
     xml = (ROOT / "Defs/ThingDefs_Items/Items_StageA_Grains.xml").read_text(encoding="utf-8")
     assert xml.count("<defName>AMJC_MilletInHull</defName>") == 1
     graphic = xml.split("<defName>AMJC_MilletInHull</defName>", 1)[1].split("</ThingDef>", 1)[0]
