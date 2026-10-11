@@ -41,8 +41,8 @@ class ChainRegressionTests(unittest.TestCase):
             validate(self.root)
 
     def test_mo_flour_retexture_must_reuse_wheat_art(self):
-        self.mutate('Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Wheat.xml',
-                    'Operation[last()]/value/texPath',
+        self.mutate('Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_FlourGraphics.xml',
+                    'Operation/value/texPath',
                     'Things/Item/Resource/AMJC_Millet/MilletFlour')
 
     def test_flour_does_not_multiply_nutrition(self):

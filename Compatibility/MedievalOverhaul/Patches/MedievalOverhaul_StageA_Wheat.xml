@@ -65,12 +65,4 @@
     <xpath>/Defs/RecipeDef[defName="DankPyon_CraftFlourBulk"]/products/Hay</xpath>
   </Operation>
 
-  <!-- Reuse MO's flour Def and recipes, changing only its appearance. -->
-  <Operation Class="PatchOperationReplace">
-    <xpath>/Defs/ThingDef[defName="DankPyon_Flour"]/graphicData/texPath</xpath>
-    <value>
-      <texPath>Things/Item/Resource/AMJC_Wheat/WheatFlour</texPath>
-    </value>
-  </Operation>
-
 </Patch>

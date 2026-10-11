@@ -137,9 +137,11 @@ def validate(root=ROOT):
                     and (op.findtext('xpath') or '').endswith('/products/Hay')}
     assert hay_removals == expected_hay_removals, 'AMJ MO grinding must remove upstream Hay for all three recipes'
     flour_tex = 'Things/Item/Resource/AMJC_Wheat/WheatFlour'
-    mo_flour_ops = [op for op in wheat_patch.getroot().findall('Operation')
-                    if op.findtext('xpath') == '/Defs/ThingDef[defName="DankPyon_Flour"]/graphicData/texPath']
-    assert len(mo_flour_ops) == 1 and mo_flour_ops[0].get('Class') == 'PatchOperationReplace', 'MO flour graphic override'
+    flour_patch = ET.parse(root/'Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_FlourGraphics.xml')
+    mo_flour_ops = flour_patch.getroot().findall('Operation')
+    assert len(mo_flour_ops) == 1, 'MO flour graphics patch must only change one texture'
+    assert mo_flour_ops[0].get('Class') == 'PatchOperationReplace', 'MO flour graphic override'
+    assert mo_flour_ops[0].findtext('xpath') == '/Defs/ThingDef[defName="DankPyon_Flour"]/graphicData/texPath'
     assert mo_flour_ops[0].findtext('value/texPath') == flour_tex, 'MO flour texture path'
     stack_textures(root, flour_tex)
     print('Grains Base/MO wheat/flour/milling/minimum-food static contracts: PASS')
