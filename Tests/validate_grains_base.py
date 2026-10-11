@@ -5,6 +5,7 @@ import re
 import xml.etree.ElementTree as ET
 from copy import deepcopy
 from amj_profile_xml import ROOT, MO_FOLDER, profile_xml, contract_signature
+from stack_graphics import stack_textures
 
 MO_GRAPHIC_PATHS = {
     "Things/Plants/FullGrown/WheatPlant",
@@ -212,8 +213,7 @@ def validate():
                                ("AMJC_RawWheat", "AMJC_Wheat", "RawWheatDense")):
         path = "Things/Item/Resource/" + folder + "/" + stem
         assert get(name).findtext("graphicData/texPath") == path
-        slots = [(ROOT / "Textures" / path / (stem + "_" + suffix + ".png")).read_bytes() for suffix in "abc"]
-        assert slots[0] == slots[1] == slots[2], "Unexpected sheaf stack-variant mismatch: " + name
+        stack_textures(ROOT, path)
     table = get("AMJC_GrainProcessingTable")
     assert table.findtext("costList/Steel") == "30" and table.find("researchPrerequisites") is None
     assert [n.text for n in get("AMJC_GrainProcessingSpot").findall("stuffCategories/li")] == ["Woody"]

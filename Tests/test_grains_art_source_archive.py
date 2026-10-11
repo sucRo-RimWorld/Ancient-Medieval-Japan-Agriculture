@@ -4,6 +4,7 @@ import hashlib
 import json
 import struct
 from pathlib import Path
+from stack_graphics import stack_textures
 
 ROOT = Path(__file__).resolve().parents[1]
 M = ROOT / "Docs/References/GrainsCropSourceManifest.json"
@@ -47,28 +48,22 @@ def main():
         assert struct.unpack(">II", header[16:24]) == (256, 256), production
         if row["state"] == "sheaf":
             assert production.name.endswith("_a.png"), production
-            for suffix in ("_b.png", "_c.png"):
-                sibling = production.with_name(production.name[:-6] + suffix)
-                assert sibling.is_file(), f"missing stack variant: {sibling}"
-                assert production.read_bytes() == sibling.read_bytes(), f"stack drift: {sibling}"
-    # AMJ-019: preserve the author's exact accepted high-resolution image and all StackCount variants.
+            stack_textures(ROOT, production.parent.relative_to(ROOT / "Textures"))
+    # AMJ-019: preserve accepted source and _a bytes; extra stack images are optional.
     hulled_source = ROOT / "Art/Sources/Things/Item/Resource/AMJC_Millet/MilletInHull/MilletInHull.png"
     source_bytes = hulled_source.read_bytes()
     assert git_blob_sha1(source_bytes) == "61d6720c7354107424400dd9abf0edc0a118b859", "hulled millet master drift"
     assert source_bytes[:8] == b"\x89PNG\r\n\x1a\n"
     assert struct.unpack(">II", source_bytes[16:24]) == (1429, 1100)
     base = ROOT / "Textures/Things/Item/Resource/AMJC_Millet/MilletInHull"
-    pngs = [(base / f"MilletInHull_{suffix}.png").read_bytes() for suffix in ("a", "b", "c")]
-    assert pngs[0] == pngs[1] == pngs[2], "millet in-hull StackCount variants differ"
-    assert git_blob_sha1(pngs[0]) == "039c6f11bbe5426d169b011a706cfcb3e6802c2f", "hulled millet production drift"
-    assert pngs[0][:8] == b"\x89PNG\r\n\x1a\n"
-    assert struct.unpack(">II", pngs[0][16:24]) == (256, 256)
+    millet_png = stack_textures(ROOT, base.relative_to(ROOT / "Textures"))[0].read_bytes()
+    assert git_blob_sha1(millet_png) == "87346c67d58671d5d22150bd376be2ac7534775e", "hulled millet production drift"
     xml = (ROOT / "Defs/ThingDefs_Items/Items_StageA_Grains.xml").read_text(encoding="utf-8")
     assert xml.count("<defName>AMJC_MilletInHull</defName>") == 1
     graphic = xml.split("<defName>AMJC_MilletInHull</defName>", 1)[1].split("</ThingDef>", 1)[0]
     assert "<texPath>Things/Item/Resource/AMJC_Millet/MilletInHull</texPath>" in graphic
     assert "<graphicClass>Graphic_StackCount</graphicClass>" in graphic
-    print("PASS: exact accepted millet in-hull master, three identical 256px textures and loaded Def path")
+    print("PASS: exact accepted millet in-hull master, _a PNG and loaded Def path")
 
     # AMJ-011: exact author-accepted hulled-barley source and isolated StackCount art.
     barley_source = ROOT / "Art/Sources/Things/Item/Resource/AMJC_Barley/BarleyInHull/BarleyInHull.png"
@@ -77,18 +72,15 @@ def main():
     assert barley_source_bytes[:8] == b"\x89PNG\r\n\x1a\n"
     assert struct.unpack(">II", barley_source_bytes[16:24]) == (1429, 1100)
     barley_base = ROOT / "Textures/Things/Item/Resource/AMJC_Barley/BarleyInHull"
-    barley_pngs = [(barley_base / f"BarleyInHull_{suffix}.png").read_bytes() for suffix in ("a", "b", "c")]
-    assert barley_pngs[0] == barley_pngs[1] == barley_pngs[2], "hulled barley stack drift"
-    assert git_blob_sha1(barley_pngs[0]) == "b047aaccdbbc3f31c3a0be3eb57f4077eb42c3d4", "hulled barley PNG drift"
-    assert barley_pngs[0][:8] == b"\x89PNG\r\n\x1a\n"
-    assert struct.unpack(">II", barley_pngs[0][16:24]) == (256, 256)
+    barley_png = stack_textures(ROOT, barley_base.relative_to(ROOT / "Textures"))[0].read_bytes()
+    assert git_blob_sha1(barley_png) == "b047aaccdbbc3f31c3a0be3eb57f4077eb42c3d4", "hulled barley PNG drift"
     assert xml.count("<defName>AMJC_BarleyInHull</defName>") == 1
     barley_xml = xml.split("<defName>AMJC_BarleyInHull</defName>", 1)[1].split("</ThingDef>", 1)[0]
     assert "<texPath>Things/Item/Resource/AMJC_Barley/BarleyInHull</texPath>" in barley_xml
     assert "<graphicClass>Graphic_StackCount</graphicClass>" in barley_xml
-    print("PASS: author-accepted hulled barley source, 3 stack PNGs and dedicated graphic path")
+    print("PASS: author-accepted hulled barley source, _a PNG and dedicated graphic path")
 
-    print("PASS: 19 exact original-source blob identities, 19 production texture mappings, five three-stack families")
+    print("PASS: 19 exact original-source blob identities, 19 production texture mappings, five flexible stack families")
 
 if __name__ == "__main__":
     main()

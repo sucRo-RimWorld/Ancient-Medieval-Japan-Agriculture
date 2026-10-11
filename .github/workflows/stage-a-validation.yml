@@ -46,6 +46,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v5
 
+      - name: Regression-test stack image counts (1/2/3) and invalid paths
+        run: python Tests/test_stack_graphics.py
+
       - name: Verify current grain image source provenance and installed textures
         run: python Tests/test_grains_art_source_archive.py
 

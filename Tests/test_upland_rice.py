@@ -4,6 +4,7 @@ from collections import Counter
 import json
 import xml.etree.ElementTree as ET
 from amj_profile_xml import profile_xml
+from stack_graphics import stack_textures
 
 ROOT = Path(__file__).resolve().parents[1]
 NAME = 'Plant_Rice'
@@ -28,9 +29,7 @@ def validate():
         path = 'Things/Plants/' + folder + '/AMJC_Rice'
         assert len(op.find('value')) == 1 and op.findtext('value/' + tag) == path
         assert (ROOT / 'Textures' / path / ('AMJC_Rice_' + state + '.png')).is_file()
-    rice_slots = [(ROOT / 'Textures/Things/Item/Resource/AMJC_Rice/RiceSheafDense' /
-                   ('RiceSheafDense_' + suffix + '.png')).read_bytes() for suffix in 'abc']
-    assert rice_slots[0] == rice_slots[1] == rice_slots[2]
+    stack_textures(ROOT, 'Things/Item/Resource/AMJC_Rice/RiceSheafDense')
     operations = ET.parse(PATCH).getroot().findall('./Operation/operations/li')
     assert len(operations) == 12, 'Six replaces and six guarded additions'
     values, guarded, replaced = {}, set(), set()
