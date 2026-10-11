@@ -4,6 +4,12 @@
 
 The four-profile harness was established before changing production dependency metadata. The production `About.xml` now declares **no mandatory MO or other Mod**, while `loadAfter` retains an optional MO ordering hint. The MO conditional and BaseWithoutMO fallback paths remain exclusive. A successful metadata/static tooling test is not a real-game test or public-release clearance.
 
+## Loaded grain-icon check (2026-10-11)
+
+The existing real-provider primary-loop Pickle scenario checks the **nine current grain states**: hulled/edible millet, hulled/edible buckwheat, hulled/edible barley, edible wheat, rice in hull and Vanilla `RawRice`. For all four existing profiles (Vanilla, Vanilla+CCTO, MO, MO+CCTO), it resolves the loaded `ThingDef` graphic path/class, checks each `_a` PNG with Unity `ContentFinder<Texture2D>`, and resolves `Graphic_StackCount.SubGraphicForStackCount` materials for low, middle and high counts. It rejects missing/null/BadTex assets. This runs inside the existing Unity-main-thread `RuntimeThread.Run` entry point, retains six scenarios per profile, and does not pin production PNG bytes or require redundant `_b/_c` PNGs.
+
+A successful C# compile and installed-game four-profile Pickle run with complete ERROR-zero logs are required to call this a runtime PASS. The check confirms loaded texture/material selection, **not** visual quality or framing at normal zoom. The author has temporarily deferred high-resolution source archival; no source-master or normal-zoom acceptance is implied.
+
 ## Windows entry point
 
 From the development checkout, with Steam running and the test helpers installed:

@@ -131,10 +131,12 @@ Canonical graphics/state policy: `Docs/Design.md §12.1.2–12.1.4`; current cro
 
 Author-pushed 128px single `_a` grain icons are integrated for millet, buckwheat, barley, wheat, rice-in-hull and edible rice. Dedicated barley/wheat/rice-in-hull Def paths and a visual-only Vanilla `RawRice` patch were integrated in PR #40, main `73b1ee429fb5690a333abbcef2857dba69d47456`. No recipe, nutrient, crop value or gameplay identifier changed.
 
+**2026-10-11 graphics runtime test preparation:** The existing real-provider primary-loop Pickle scenario now checks all nine grain icons on the Unity main thread, including loaded `RawRice` and low/middle/high `Graphic_StackCount` materials. This is a real loaded-game test added to the source, not a Python simulation; exact-head game build, four profiles, ERROR-zero and normal-zoom visuals remain unverified. The six-scenario count and existing runner are unchanged.
+
 **Remaining work:**
 - Vanilla/MO normal-zoom review of the 14 crop stages, five sheaves and grain icons; no current loaded-game graphics PASS is claimed.
 - Three distinct appearances per harvested sheaf family and per flour family. Preserve adopted high-count artwork. MO wheat remains `DankPyon_RawWheat`, with Grains graphics; MO flour remains `DankPyon_Flour`.
-- Corresponding high-resolution sources for the newly author-pushed grain icons must be verified/committed; do not relabel production derivatives as original masters.
+- High-resolution sources for the newly author-pushed grain icons: **temporarily deferred by the author**; do not relabel production derivatives as original masters or block independent loaded-texture tests on this archival task.
 - Dedicated millet/buckwheat/non-MO wheat flour, three finished foods (`AMJC_Houtou`, `AMJC_Sobagaki`, `AMJC_MilletDumplings`), and Grains processing spot/table/non-MO manual millstone imagery. Source-work folders are placeholders only, not completed art.
 - Source/runtime/UI/release evidence must retain its actual revision and profile scope. Old-save migration is out of scope because Grains was never installed.
 
