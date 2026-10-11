@@ -32,7 +32,7 @@ The following empty source directories are reserved for confirmed missing images
 - Resource families: edible millet, barley and wheat; rice husks and Vanilla `RawRice` retexture; millet, buckwheat and non-MO wheat flour.
 - Prepared foods: `AMJC_Houtou`, `AMJC_Sobagaki`, `AMJC_MilletDumplings`.
 - AMJ-owned equipment: `AMJC_GrainProcessingSpot`, `AMJC_GrainProcessingTable`, and non-MO `AMJC_ManualMillstone`.
-- Harvested sheaves: `Low/` and `Medium/` source-work directories within each of the five currently adopted dense sheaf families. The adopted high-stack masters remain untouched.
+- Harvested sheaves: `Low/` and `Medium/` source-work directories within each of the five canonical `<Family>Sheaf` families. The adopted high-stack masters remain untouched.
 
 See `Docs/Design.md §12.1.3–12.1.4` and `main:Docs/Coordination.md` (AMJ-018) for final image-state quantities and pending visual approval. These are source-work slots, **not** new production texture paths or new image-state rules. Replace/remove `.gitkeep` when a real master is committed.
 
@@ -166,3 +166,5 @@ The repository-root `Art/` tree is development-only material and must **never** 
 - `_PublisherPlus.xml` excludes `Art` when publishing through RimWorld's PublisherPlus workflow.
 - The fail-closed publication path is `Scripts/Prepare-WorkshopContent.ps1` / `prepare-workshop.bat`, which creates a clean `git archive` staging tree and verifies that the entire `Art/` tree is absent before manual Steam publication.
 - Do not publish the repository working directory through any path that bypasses these exclusions.
+
+Production sheaves and their exact-byte masters use `MilletSheaf`, `BuckwheatSheaf`, `BarleySheaf`, `WheatSheaf`, and `RiceSheaf`. Each currently has one `_a.png`; quantity variants remain pending. `Dense` was a revision label, not a game state. Unused identical `RawMillet`, `RawBuckwheat`, and `MixedMilletSheaf` texture aliases were removed. Historical candidate bundles and logs retain their original names.

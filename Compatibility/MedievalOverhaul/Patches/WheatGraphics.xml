@@ -11,6 +11,6 @@
   </Operation>
   <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[defName="DankPyon_RawWheat"]/graphicData/texPath</xpath>
-    <value><texPath>Things/Item/Resource/AMJC_Wheat/RawWheatDense</texPath></value>
+    <value><texPath>Things/Item/Resource/AMJC_Wheat/WheatSheaf</texPath></value>
   </Operation>
 </Patch>

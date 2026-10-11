@@ -33,13 +33,13 @@ class BaseBoundaryTests(unittest.TestCase):
         self.validate()
 
     def test_one_a_sheaf_texture_is_enough(self):
-        folder = self.root / 'Textures/Things/Item/Resource/AMJC_Barley/RawBarleyDense'
+        folder = self.root / 'Textures/Things/Item/Resource/AMJC_Barley/BarleySheaf'
         for suffix in 'bc':
-            (folder / ('RawBarleyDense_' + suffix + '.png')).unlink()
+            (folder / ('BarleySheaf_' + suffix + '.png')).unlink(missing_ok=True)
         self.validate()
 
     def test_a_sheaf_texture_is_required(self):
-        path = self.root / 'Textures/Things/Item/Resource/AMJC_Barley/RawBarleyDense/RawBarleyDense_a.png'
+        path = self.root / 'Textures/Things/Item/Resource/AMJC_Barley/BarleySheaf/BarleySheaf_a.png'
         path.unlink()
         with self.assertRaisesRegex(AssertionError, 'missing _a'):
             self.validate()

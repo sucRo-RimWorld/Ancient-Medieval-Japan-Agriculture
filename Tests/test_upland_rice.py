@@ -29,7 +29,7 @@ def validate():
         path = 'Things/Plants/' + folder + '/AMJC_Rice'
         assert len(op.find('value')) == 1 and op.findtext('value/' + tag) == path
         assert (ROOT / 'Textures' / path / ('AMJC_Rice_' + state + '.png')).is_file()
-    stack_textures(ROOT, 'Things/Item/Resource/AMJC_Rice/RiceSheafDense')
+    stack_textures(ROOT, 'Things/Item/Resource/AMJC_Rice/RiceSheaf')
     operations = ET.parse(PATCH).getroot().findall('./Operation/operations/li')
     assert len(operations) == 12, 'Six replaces and six guarded additions'
     values, guarded, replaced = {}, set(), set()
@@ -107,7 +107,7 @@ def validate():
         projected = profile_xml(profile)
         defs = {node.findtext('defName'): node for node in projected if node.findtext('defName')}
         for name, graphic in (
-            ('AMJC_RiceSheaf', 'Things/Item/Resource/AMJC_Rice/RiceSheafDense'),
+            ('AMJC_RiceSheaf', 'Things/Item/Resource/AMJC_Rice/RiceSheaf'),
             ('AMJC_RiceInHull', 'Things/Item/Resource/AMJC_Rice/RiceInHull'),
         ):
             item = defs[name]

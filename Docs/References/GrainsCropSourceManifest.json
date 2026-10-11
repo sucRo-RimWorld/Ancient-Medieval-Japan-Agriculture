@@ -121,40 +121,40 @@
       "crop": "Millet",
       "state": "sheaf",
       "candidate": "Art/Candidates/DenseSheaves-20261009/Sources/Millet_Sheaf.png",
-      "source": "Art/Sources/Things/Item/Resource/AMJC_Millet/MixedMilletSheafDense/MixedMilletSheafDense.png",
-      "production": "Textures/Things/Item/Resource/AMJC_Millet/MixedMilletSheafDense/MixedMilletSheafDense_a.png",
+      "source": "Art/Sources/Things/Item/Resource/AMJC_Millet/MilletSheaf/MilletSheaf.png",
+      "production": "Textures/Things/Item/Resource/AMJC_Millet/MilletSheaf/MilletSheaf_a.png",
       "git_blob_sha1": "2f3f336d30c5533c803bd0932e9b5d0d8c0cc943"
     },
     {
       "crop": "Soba",
       "state": "sheaf",
       "candidate": "Art/Candidates/DenseSheaves-20261009/Sources/Soba_Sheaf.png",
-      "source": "Art/Sources/Things/Item/Resource/AMJC_Buckwheat/RawBuckwheatDense/RawBuckwheatDense.png",
-      "production": "Textures/Things/Item/Resource/AMJC_Buckwheat/RawBuckwheatDense/RawBuckwheatDense_a.png",
+      "source": "Art/Sources/Things/Item/Resource/AMJC_Buckwheat/BuckwheatSheaf/BuckwheatSheaf.png",
+      "production": "Textures/Things/Item/Resource/AMJC_Buckwheat/BuckwheatSheaf/BuckwheatSheaf_a.png",
       "git_blob_sha1": "1bd7882c8510d41a8b3afe60be1f1bfd56448193"
     },
     {
       "crop": "Barley",
       "state": "sheaf",
       "candidate": "Art/Candidates/DenseSheaves-20261009/Sources/Barley_Sheaf.png",
-      "source": "Art/Sources/Things/Item/Resource/AMJC_Barley/RawBarleyDense/RawBarleyDense.png",
-      "production": "Textures/Things/Item/Resource/AMJC_Barley/RawBarleyDense/RawBarleyDense_a.png",
+      "source": "Art/Sources/Things/Item/Resource/AMJC_Barley/BarleySheaf/BarleySheaf.png",
+      "production": "Textures/Things/Item/Resource/AMJC_Barley/BarleySheaf/BarleySheaf_a.png",
       "git_blob_sha1": "5e69cd3682e6060b2e623d90894f427382525626"
     },
     {
       "crop": "Wheat",
       "state": "sheaf",
       "candidate": "Art/Candidates/DenseSheaves-20261009/Sources/Wheat_Sheaf.png",
-      "source": "Art/Sources/Things/Item/Resource/AMJC_Wheat/RawWheatDense/RawWheatDense.png",
-      "production": "Textures/Things/Item/Resource/AMJC_Wheat/RawWheatDense/RawWheatDense_a.png",
+      "source": "Art/Sources/Things/Item/Resource/AMJC_Wheat/WheatSheaf/WheatSheaf.png",
+      "production": "Textures/Things/Item/Resource/AMJC_Wheat/WheatSheaf/WheatSheaf_a.png",
       "git_blob_sha1": "cd800dbf063d7dc912082a3d11ee5f2cb376878b"
     },
     {
       "crop": "Rice",
       "state": "sheaf",
       "candidate": "Art/Candidates/UplandRice-20261009/Sources/Rice_Sheaf.png",
-      "source": "Art/Sources/Things/Item/Resource/AMJC_Rice/RiceSheafDense/RiceSheafDense.png",
-      "production": "Textures/Things/Item/Resource/AMJC_Rice/RiceSheafDense/RiceSheafDense_a.png",
+      "source": "Art/Sources/Things/Item/Resource/AMJC_Rice/RiceSheaf/RiceSheaf.png",
+      "production": "Textures/Things/Item/Resource/AMJC_Rice/RiceSheaf/RiceSheaf_a.png",
       "git_blob_sha1": "d9590247ffd8d738d0c82776a2da4aac605248f6"
     }
   ]
