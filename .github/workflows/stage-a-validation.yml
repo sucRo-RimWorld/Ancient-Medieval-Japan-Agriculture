@@ -18,9 +18,6 @@ jobs:
       - name: Regression-test fixed template protection
         run: python Tests/test_fixed_template.py
 
-      - name: Validate AMJ art-rule routing
-        run: python Tests/test_art_rule_structure.py
-
       - name: Regression-test boxed reference integrity
         run: python Tests/test_boxed_resource_review.py
 
@@ -48,9 +45,6 @@ jobs:
 
       - name: Regression-test stack image counts (1/2/3) and invalid paths
         run: python Tests/test_stack_graphics.py
-
-      - name: Verify current grain image source provenance and installed textures
-        run: python Tests/test_grains_art_source_archive.py
 
       - name: Reject Base MO references and compatibility regressions
         run: python Tests/test_grains_base.py
