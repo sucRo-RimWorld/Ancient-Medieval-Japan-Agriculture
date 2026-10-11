@@ -133,11 +133,13 @@ Author-pushed 128px single `_a` grain icons are integrated for millet, buckwheat
 
 **2026-10-11 graphics runtime test preparation:** The existing real-provider primary-loop Pickle scenario now checks all nine grain icons on the Unity main thread, including loaded `RawRice` and low/middle/high `Graphic_StackCount` materials. This is a real loaded-game test added to the source, not a Python simulation; exact-head game build, four profiles, ERROR-zero and normal-zoom visuals remain unverified. The six-scenario count and existing runner are unchanged.
 
+**2026-10-11 flour texture wiring:** Five author-pushed `_a` flour images exist. AMJC_MilletFlour and AMJC_BuckwheatFlour now use their dedicated sprites in both profiles; Base AMJC_WheatFlour and MO-owned DankPyon_Flour use the dedicated wheat-flour sprite without creating a duplicate MO flour Def. BarleyFlour/RiceFlour artwork is retained as unreferenced until those resources/recipes are independently approved. No game balance, new flour items, or artwork bytes changed. Runtime visual/load verification and future quantity variants remain OPEN.
+
 **Remaining work:**
 - Vanilla/MO normal-zoom review of the 14 crop stages, five sheaves and grain icons; no current loaded-game graphics PASS is claimed.
 - Three distinct appearances per harvested sheaf family and per flour family. Preserve adopted high-count artwork. MO wheat remains `DankPyon_RawWheat`, with Grains graphics; MO flour remains `DankPyon_Flour`.
 - High-resolution sources for the newly author-pushed grain icons: **temporarily deferred by the author**; do not relabel production derivatives as original masters or block independent loaded-texture tests on this archival task.
-- Dedicated millet/buckwheat/non-MO wheat flour, three finished foods (`AMJC_Houtou`, `AMJC_Sobagaki`, `AMJC_MilletDumplings`), and Grains processing spot/table/non-MO manual millstone imagery. Source-work folders are placeholders only, not completed art.
+- Three finished foods (`AMJC_Houtou`, `AMJC_Sobagaki`, `AMJC_MilletDumplings`), and Grains processing spot/table/non-MO manual millstone imagery. Source-work folders are placeholders only, not completed art.
 - Source/runtime/UI/release evidence must retain its actual revision and profile scope. Old-save migration is out of scope because Grains was never installed.
 
 **Verification for sheaf cleanup:** PNG integrity, existing Base/MO reference and historical-contract checks, upland rice, Stage A, source mapping and subscriber-payload checks passed locally. Exact-head PR and push checks are separate merge evidence. No image generation or RimWorld runtime was performed.
