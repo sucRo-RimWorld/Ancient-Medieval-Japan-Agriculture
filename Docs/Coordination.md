@@ -117,7 +117,9 @@ The two buildings should remain visually related but clearly communicate the exi
 
 `AMJC_Millet`（殻なし・可食雑穀）は旧テクスチャのままで、作者採用済みの新画像がないため引き続きOPEN。アワ・ヒエ・キビの加工後状態は同一ThingDefを共有し、種別ごとの重複画像は不要。19種の栽培・束画像とは別計上する。正本: `Docs/Design.md §12.1.3`。
 
-**Next:** 殻なし雑穀の採用・原画保存・3枚書き出し後、両方の通常ズームでの実ゲーム表示を確認。
+**2026-10-11 current status:** Main commit `5111980e13983125fc50b1368b4800fa61429090` replaced the hulled-millet production family with a single 128×128 `_a.png` and removed its duplicate `_b/_c` PNGs; this supersedes the earlier PR #31 three-file inventory, not the accepted high-resolution source/master. PR #38 (main merge `a27c19544e86375e7aa6ac108b63ef9129ce4a85`) updated the art/processing tests and `Docs/Design.md §12.1.4` so one `_a` is valid; optional `_b/_c` must be contiguous and valid and may differ. Main push checks all passed. No new grain image was authored by PR #38.
+
+**Next:** 殻なし雑穀の採用・原画保存・実際に必要な数量別PNGの書き出し後、両方の通常ズームでの実ゲーム表示を確認。
 
 ### AMJ-018 — Current private-play and eventual public readiness
 
@@ -141,7 +143,7 @@ PR #20 integrates immature/mature crops and bundled sheaves: 7/7/5. The 2026-10-
 
 **2026-10-11 missing-art folders prepared:** 24 source-work directories under `Art/Sources` have `.gitkeep` only: 14 pending image families (3 edible grains, 2 rice states, 3 flours, 3 foods, 3 buildings) and 10 low/medium source-work folders for the five harvested sheaves. Adopted high-stack masters and all production PNG/XML remain unchanged. These directory markers are not adopted assets; real image creation, approval, export, and in-game display are still OPEN. See `Art/Sources/README.md` and `Docs/Design.md §12.1.4`.
 
-**Implementation / verification boundary:** Image production and existing author acceptance are not runtime PASS. Reconcile only affected art/source manifest entries and `Tests/test_grains_art_source_archive.py` when creating distinct sheaf stack variants: the current validator explicitly requires `_a=_b=_c` for the five sheaf families, which conflicts with the *new target*, not with existing accepted source bytes. Preserve accepted originals in `Art/Sources`; do not relax unrelated author-accepted asset checks. Validate PNG integrity and all relevant `texPath` variants, then loaded normal-zoom appearance in Vanilla/MO. No image/Def/Recipe/test changes or game-rendering PASS are claimed by this checklist update. Old-save migration is out of scope (Grains was never installed).
+**Implementation / verification boundary:** Image production and existing author acceptance are not runtime PASS. Reconcile only affected art/source manifest entries and `Tests/test_grains_art_source_archive.py` when creating distinct sheaf stack variants. Since PR #38, tests accept a single `_a` or contiguous `_a/_b/_c` without enforcing duplicate images; the goal of three distinct sheaf/flour appearances remains OPEN. Preserve accepted originals in `Art/Sources`; do not relax unrelated author-accepted asset checks. Validate PNG integrity and all relevant `texPath` variants, then loaded normal-zoom appearance in Vanilla/MO. This coordination update changes no production image, Def, Recipe or game rendering; PR #38 changed only tests/CI/design. No loaded-game graphics PASS is claimed. Old-save migration is out of scope (Grains was never installed).
 
 ### ART-TEMPLATE-001 — Pixel-exact shared component policy
 
