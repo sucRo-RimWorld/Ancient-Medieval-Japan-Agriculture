@@ -50,19 +50,19 @@ jobs:
         run: python Tests/test_grains_base.py
 
       - name: Reject flour-chain balance and provider regressions
-        run: python Tests/test_grains_chain.py
+        run: python Tests/Production/test_grains_chain.py
 
       - name: Audit Japanese localization and approval gates
         run: python Tests/Production/test_grains_localization.py
 
       - name: Reject environmental crop-choice regressions
-        run: python Tests/test_grains_environment.py
+        run: python Tests/Production/test_grains_environment.py
 
       - name: Validate upland rice and seven-crop choice
-        run: python Tests/test_upland_rice.py
+        run: python Tests/Production/test_upland_rice.py
 
       - name: Audit seven-grain harvest-to-meal balance
-        run: python Tests/test_grains_balance_chain.py
+        run: python Tests/Production/test_grains_balance_chain.py
 
       - name: Validate independent scenario extraction prototypes
         run: python Tests/test_scenario_extraction.py

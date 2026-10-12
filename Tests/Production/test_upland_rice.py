@@ -3,10 +3,12 @@ from pathlib import Path
 from collections import Counter
 import json
 import xml.etree.ElementTree as ET
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from amj_profile_xml import profile_xml
 from stack_graphics import stack_textures
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 NAME = 'Plant_Rice'
 PATCH = ROOT / 'Patches/UplandRice.xml'
 FIELDS = {'growDays': 5, 'harvestYield': 11, 'fertilityMin': .7,
