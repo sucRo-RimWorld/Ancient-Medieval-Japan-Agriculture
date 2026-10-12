@@ -81,7 +81,7 @@ jobs:
         run: python Tests/validate_stage_a.py
 
       - name: Verify Grains saved-game conservation contract (synthetic XML only)
-        run: python Tests/test_grains_save_contract.py
+        run: python Tests/Production/test_grains_save_contract.py
 
   validate-windows-powershell:
     runs-on: windows-latest
