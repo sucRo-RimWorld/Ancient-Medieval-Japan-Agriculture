@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from PIL import Image, ImageDraw
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / 'Docs/References/AMJ_Masu_Template.json'
 spec = importlib.util.spec_from_file_location('fixed_template', ROOT / 'Scripts/Art/fixed_template.py')
 module = importlib.util.module_from_spec(spec)
