@@ -7,7 +7,7 @@ import unittest
 
 from PIL import Image, ImageDraw
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "Scripts/Art/prepare_boxed_resource_candidate.py"
 
 spec = importlib.util.spec_from_file_location("prepare_boxed_resource_candidate", SCRIPT)

@@ -6,7 +6,7 @@ import unittest
 
 from PIL import Image
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "Scripts/Art/boxed_resource_review.py"
 MANIFEST = ROOT / "Docs/References/AMJ_Masu_Template.json"
 

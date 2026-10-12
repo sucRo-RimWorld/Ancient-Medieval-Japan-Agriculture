@@ -16,19 +16,19 @@ jobs:
         run: python -m pip install --timeout 60 --retries 5 Pillow==12.3.0
 
       - name: Regression-test fixed template protection
-        run: python Tests/test_fixed_template.py
+        run: python Tests/ArtValidation/test_fixed_template.py
 
       - name: Regression-test boxed reference integrity
-        run: python Tests/test_boxed_resource_review.py
+        run: python Tests/ArtValidation/test_boxed_resource_review.py
 
       - name: Regression-test masu contents normalization
-        run: python Tests/test_normalize_masu_contents.py
+        run: python Tests/ArtValidation/test_normalize_masu_contents.py
 
       - name: Regression-test generated candidate QA
-        run: python Tests/test_generated_asset_qa.py
+        run: python Tests/ArtValidation/test_generated_asset_qa.py
 
       - name: Regression-test boxed candidate preparation
-        run: python Tests/test_prepare_boxed_resource_candidate.py
+        run: python Tests/ArtValidation/test_prepare_boxed_resource_candidate.py
 
       - name: Regression-test PNG validator
         run: python Tests/test_validate_png_assets.py
