@@ -17,9 +17,7 @@ New features cannot enter implementation before the Project [existing-Mod audit 
 
 ## PNG asset integrity gate
 
-Every committed production PNG must pass `python Tests/validate_png_assets.py`. The validator checks every `Textures/**/*.png` for complete chunk boundaries, CRCs, a complete IDAT/zlib stream, valid scanlines, and a final IEND. It reports all broken PNGs found in one run rather than stopping after the first file.
-
-The GitHub Actions `validate-png-assets` job is a prerequisite for Stage A validation. For binary writes made through automation or Git/GitHub APIs, treat the committed/checked-out bytes as authoritative: do not report the image write as successful until the repository-side PNG integrity gate passes. A valid PNG signature, dimensions, or successful viewer open is not sufficient.
+For production PNG writes and image-validation tests, follow `Tests/AGENTS.md`. The `validate-png-assets` gate remains required before Stage A validation; verify actual repository-side bytes before claiming success.
 
 ## CCTO framework and crop-data ownership
 
@@ -27,21 +25,4 @@ AMJC owns its custom crops' temperature values, design/balance tables (including
 
 ## Art / image work
 
-Keep this file as a routing layer; do not duplicate asset-family procedures here.
-
-For AMJ art, resolve rules in this order:
-
-1. Project `Docs/ArtStyle.md` — project-wide visual language and precedence.
-2. The owning asset-class specification — adds subject-specific visual rules only.
-3. Project `Docs/GoldenPaths/TextureAssetPipeline.md` — source preservation, generation permission, export, and validation.
-4. Project `Docs/GoldenPaths/FixedImageTemplates.md` — only when visible parts are intentionally reused pixel-exactly.
-
-Current asset-class specifications:
-- grain/crop source generation: `Docs/GoldenPaths/GrainImageGeneration.md` (entry point: `Scripts/Art/grains_image_generator.py`);
-- boxed resources / masu: `Docs/GoldenPaths/BoxedResourceIconPipeline.md`;
-- Workshop covers: Project `Docs/WorkshopCoverStyle.md` + Project `Docs/GoldenPaths/WorkshopCoverPipeline.md`;
-- prerequisite-Mod retextures: Project `Docs/RetextureImplementationGuidelines.md` plus the owning repository's art specification.
-
-A family-specific document may narrow the shared style for its asset class, but it must not silently replace the AMJ-wide visual language. Any real exception belongs in the owning style specification, not in chat history or AGENTS.
-
-For generation intent and ImageGen use, follow Project `Docs/GoldenPaths/TextureAssetPipeline.md`. Interpret the user's requested image action semantically; do not use an exact-keyword gate, and never regenerate accepted fixed/shared parts merely because new image work was requested.
+For work under `Art/`, follow `Art/AGENTS.md` and its canonical asset-family procedures. For production texture changes outside `Art/`, apply the same Project asset-preservation and fixed-component protections; `Tests/AGENTS.md` governs PNG integrity verification.
