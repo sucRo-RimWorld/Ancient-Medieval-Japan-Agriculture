@@ -1,6 +1,8 @@
 """Project actual Grains + separate Scenarios explicit XML (not engine/save tests)."""
 import argparse
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent / 'Production'))
 import test_scenario_extraction as contracts
 
 def validate(scenario):
