@@ -53,7 +53,7 @@ jobs:
         run: python Tests/test_grains_chain.py
 
       - name: Audit Japanese localization and approval gates
-        run: python Tests/test_grains_localization.py
+        run: python Tests/Production/test_grains_localization.py
 
       - name: Reject environmental crop-choice regressions
         run: python Tests/test_grains_environment.py

@@ -3,7 +3,7 @@ import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SHARED_THINGS = {
     'AMJC_BuckwheatFlour', 'AMJC_MilletFlour', 'AMJC_Houtou',
     'AMJC_Sobagaki', 'AMJC_MilletDumplings',
