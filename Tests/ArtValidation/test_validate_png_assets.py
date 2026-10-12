@@ -4,6 +4,8 @@ import tempfile
 import unittest
 import zlib
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from validate_png_assets import PngValidationError, validate_png
 
 
