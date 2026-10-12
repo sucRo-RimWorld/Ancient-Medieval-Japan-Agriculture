@@ -5,6 +5,8 @@ from pathlib import Path
 from zipfile import ZipFile
 import unittest
 import xml.etree.ElementTree as ET
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from amj_profile_xml import ROOT
 from validate_grains_chain import validate, validate_mo_source
 

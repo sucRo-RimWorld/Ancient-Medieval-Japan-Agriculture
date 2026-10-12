@@ -9,6 +9,8 @@ import xml.etree.ElementTree as ET
 from collections import Counter
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from amj_profile_xml import ROOT
 from validate_grains_environment import output
 
