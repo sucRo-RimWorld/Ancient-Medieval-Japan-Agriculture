@@ -7,6 +7,8 @@ import tempfile
 import unittest
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import validate_grains_base as gate
 from amj_profile_xml import ROOT, MO_FOLDER, profile_xml
 

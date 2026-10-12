@@ -11,6 +11,7 @@ import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from amj_profile_xml import ROOT, profile_xml, contract_signature
 sys.path.insert(0,str(ROOT/'Scripts'))
 from prepare_scenario_extraction import build, LEGACY
