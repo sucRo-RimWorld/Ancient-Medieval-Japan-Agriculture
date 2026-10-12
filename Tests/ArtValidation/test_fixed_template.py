@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from PIL import Image
 
-spec = importlib.util.spec_from_file_location('fixed_template', Path(__file__).resolve().parents[1] / 'Scripts/Art/fixed_template.py')
+spec = importlib.util.spec_from_file_location('fixed_template', Path(__file__).resolve().parents[2] / 'Scripts/Art/fixed_template.py')
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 

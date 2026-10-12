@@ -5,7 +5,7 @@ import unittest
 
 from PIL import Image, ImageDraw
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "Scripts/Art/normalize_masu_contents.py"
 
 spec = importlib.util.spec_from_file_location("normalize_masu_contents", SCRIPT)

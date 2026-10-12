@@ -10,7 +10,7 @@ import zipfile
 
 from PIL import Image, ImageDraw
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "Scripts/Art/generated_asset_qa.py"
 
 spec = importlib.util.spec_from_file_location("generated_asset_qa", SCRIPT)
