@@ -16,6 +16,6 @@
   <AMJC_RiceFlourDumplings.label>米粉団子</AMJC_RiceFlourDumplings.label>
   <AMJC_BarleyFlour.description>大麦粉（おおむぎこ）。殻を取り除いた大麦穀粒を挽いた粉。麦粉粥の材料にする。</AMJC_BarleyFlour.description>
   <AMJC_RiceFlour.description>米粉（こめこ）。米を挽いた粉。AMJGrainsではうるち米粉ともち米粉を一つにまとめ、米粉団子の材料にする。</AMJC_RiceFlour.description>
-  <AMJC_BarleyFlourGruel.description>麦粉粥（むぎこがゆ）。大麦粉を湯で煮てつくる簡単な粉食。焙煎した麦を挽く「はったい粉」とは別の調理法。</AMJC_BarleyFlourGruel.description>
+  <AMJC_BarleyFlourGruel.description>麦粉粥（むぎこがゆ）。大麦粉を湯で煮てつくる簡単な粉食。</AMJC_BarleyFlourGruel.description>
   <AMJC_RiceFlourDumplings.description>米粉団子（こめこだんご）。米粉を水で練り、加熱した団子。うるち米粉ともち米粉はゲーム内で共通の材料として扱う。</AMJC_RiceFlourDumplings.description>
 </LanguageData>
