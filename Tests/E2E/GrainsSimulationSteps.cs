@@ -104,6 +104,17 @@ namespace AncientMedievalJapanCore.E2E
                 await scope.Bill("AMJC_HullRiceBulk", scope.Processing, "AMJC_RiceInHull", 10);
                 foreach (string grain in new[] { "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley", "AMJC_Wheat", "RawRice" })
                     await scope.SimpleMeal(grain);
+                // Extra real harvests prevent consumption of prior simple-meal inputs.
+                await scope.Harvest("AMJC_Plant_Barley", true);
+                await scope.Bill("AMJC_ThreshBarleyBulk", scope.Processing, "AMJC_RawBarley", 10);
+                await scope.Bill("AMJC_HullBarleyBulk", scope.Processing, "AMJC_BarleyInHull", 10);
+                await scope.Bill("AMJC_MillBarley", scope.Mill, "AMJC_Barley", 10);
+                await scope.Bill("AMJC_CookBarleyFlourGruel", scope.Campfire, "AMJC_BarleyFlour", 10);
+                await scope.Harvest("Plant_Rice", true);
+                await scope.Bill("AMJC_ThreshRiceBulk", scope.Processing, "AMJC_RiceSheaf", 10);
+                await scope.Bill("AMJC_HullRiceBulk", scope.Processing, "AMJC_RiceInHull", 10);
+                await scope.Bill("AMJC_MillRice", scope.Mill, "RawRice", 10);
+                await scope.Bill("AMJC_CookRiceFlourDumplings", scope.Campfire, "AMJC_RiceFlour", 10);
                 // Keep the established six-scenario suite. This is an
                 // additional native sow + cold/warm grow integration assertion,
                 // not a seventh synthetic/static scenario.
