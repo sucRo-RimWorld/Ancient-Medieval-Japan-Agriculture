@@ -107,6 +107,18 @@ class ChainRegressionTests(unittest.TestCase):
         self.mutate('Compatibility/MedievalOverhaul/Defs/Recipes_MOWheat.xml',
                     'RecipeDef[@Name="AMJC_WheatProcessingBase"]/recipeUsers/li[4]', 'Campfire')
 
+    def test_v1_beta_shared_mill_requires_fueled_stove(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
+                    'RecipeDef[defName="AMJC_MillRice"]/recipeUsers/li[2]', 'Campfire')
+
+    def test_v1_beta_wheat_mill_requires_electric_stove(self):
+        self.mutate('BaseWithoutMO/Defs/Recipes_Milling.xml',
+                    'RecipeDef[defName="AMJC_MillWheat"]/recipeUsers/li[3]', 'Campfire')
+
+    def test_v1_beta_stove_provider_must_not_leak_to_mo(self):
+        self.mutate('Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_GrainsFlour.xml',
+                    'Operation[1]/value/recipeUsers/li', 'FueledStove')
+
     def test_milling_does_not_create_straw(self):
         self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml','RecipeDef/products',new_element='<AMJC_Millet>1</AMJC_Millet>')
     def test_meal_must_replace_inherited_comp_list(self):

@@ -95,7 +95,12 @@ def validate(root=ROOT):
             grain_nutrition = 0.05 if grain == 'RawRice' else float(defs[grain].findtext('statBases/Nutrition'))
             # RawRice belongs to Vanilla: loaded-game assertions check its actual stat.
             assert amount * grain_nutrition == output * float(defs[flour].findtext('statBases/Nutrition'))
-            assert rec.findtext('recipeUsers/li') == ('DankPyon_Millstone' if profile == 'mo' else 'AMJC_ManualMillstone')
+            # Grains V1 beta: only non-MO mills on Vanilla stove Bill givers.
+            # MO conditional patches must completely replace the user list.
+            assert [n.text for n in rec.findall('recipeUsers/li')] == (
+                ['DankPyon_Millstone'] if profile == 'mo' else
+                ['AMJC_ManualMillstone', 'FueledStove', 'ElectricStove']
+            ), ('Milling bench providers', profile, recipe)
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
             assert float(defs[flour].findtext('comps/li/daysToRotStart')) == 60
             assert defs[flour].findtext('ingestible/preferability') == 'NeverForNutrition'
