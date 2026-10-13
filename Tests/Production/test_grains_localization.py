@@ -295,7 +295,13 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         self.assertIn('水稲', japanese['Plant_Rice'])
         self.assertIn('陸稲', japanese['Plant_Rice'])
         self.assertIn('同じイネ', japanese['Plant_Rice'])
+        self.assertIn('弥生時代', japanese['Plant_Rice'])
+        self.assertIn('古代から中世', japanese['Plant_Rice'])
+        self.assertIn('年貢', japanese['Plant_Rice'])
         self.assertIn('same rice species', english['Plant_Rice'])
+        self.assertIn('Yayoi period', english['Plant_Rice'])
+        self.assertIn('ancient through medieval times', english['Plant_Rice'])
+        self.assertIn('estate rents', english['Plant_Rice'])
         for forbidden in ('V1', '未実装', '別Mod'):
             self.assertNotIn(forbidden, japanese['Plant_Rice'],
                              'Release stage / ownership must not appear in player prose')
