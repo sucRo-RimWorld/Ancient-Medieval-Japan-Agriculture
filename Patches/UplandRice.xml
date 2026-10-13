@@ -5,11 +5,11 @@
     <operations>
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="Plant_Rice"]/label</xpath>
-        <value><label>upland rice plant</label></value>
+        <value><label>rice plant</label></value>
       </li>
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="Plant_Rice"]/description</xpath>
-        <value><description>Upland rice (okabo, rikuto). Rice grown in dry fields rather than flooded paddies. It has been cultivated in Japan alongside paddy rice, but its cultivation declined sharply after the middle of the twentieth century. In AMJGrains Vanilla rice is treated as upland rice and requires warm temperatures and sufficiently fertile soil. After threshing and hulling the harvest, the existing Vanilla rice item is obtained; paddy cultivation belongs to a separate mod.</description></value>
+        <value><description>Rice (ine). In Japan, paddy rice (suito) is cultivated in flooded fields, while upland rice (okabo, rikuto) is grown in dry fields. Both belong to the same rice species, but varieties adapted to different water conditions are generally used. Upland rice cultivation declined sharply after the mid-twentieth century.\n\nAMJGrains represents upland and paddy rice as a single rice crop, without separate plant types. In V1 it can be grown in dry fields and requires warm temperatures and sufficiently fertile soil. After harvest, threshing and hulling yield the existing rice item. Paddy cultivation and water management belong to another mod and are not implemented in V1.</description></value>
       </li>
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="Plant_Rice"]/plant/growDays</xpath>
