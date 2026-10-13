@@ -294,9 +294,26 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         self.assertEqual(localizations['Plant_Rice.label'], '稲')
         self.assertIn('水稲', japanese['Plant_Rice'])
         self.assertIn('陸稲', japanese['Plant_Rice'])
-        self.assertIn('V1では未実装', japanese['Plant_Rice'])
+        self.assertIn('同じイネ', japanese['Plant_Rice'])
+        self.assertIn('弥生時代', japanese['Plant_Rice'])
+        self.assertIn('古代から中世', japanese['Plant_Rice'])
+        self.assertIn('年貢', japanese['Plant_Rice'])
         self.assertIn('same rice species', english['Plant_Rice'])
-        self.assertIn('not implemented in V1', english['Plant_Rice'])
+        self.assertIn('Yayoi period', english['Plant_Rice'])
+        self.assertIn('ancient through medieval', english['Plant_Rice'])
+        self.assertIn('estate rent', english['Plant_Rice'])
+        self.assertIn('貨幣の役割', japanese['Plant_Rice'])
+        self.assertIn('白米', japanese['Plant_Rice'])
+        self.assertIn('戦後の経済成長', japanese['Plant_Rice'])
+        self.assertIn('Edo', english['Plant_Rice'])
+        self.assertIn('commodity money', english['Plant_Rice'])
+        self.assertIn('postwar economic growth', english['Plant_Rice'])
+        for forbidden in ('V1', '未実装', '別Mod'):
+            self.assertNotIn(forbidden, japanese['Plant_Rice'],
+                             'Release stage / ownership must not appear in player prose')
+        for forbidden in ('V1', 'not implemented', 'another mod'):
+            self.assertNotIn(forbidden, english['Plant_Rice'],
+                             'Release stage / ownership must not appear in player prose')
         self.assertIn('霜への強さまで保証するものではない',
                       japanese['AMJC_Plant_BarnyardMillet_Hie'])
         self.assertIn('does not guarantee greater resistance to frost',
