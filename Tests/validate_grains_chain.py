@@ -6,8 +6,9 @@ from amj_profile_xml import ROOT, profile_xml
 from stack_graphics import stack_textures
 
 SHARED_NAMES = {
-    'AMJC_BuckwheatFlour','AMJC_MilletFlour','AMJC_Houtou','AMJC_Sobagaki',
+    'AMJC_BuckwheatFlour','AMJC_MilletFlour','AMJC_BarleyFlour','AMJC_RiceFlour','AMJC_Houtou','AMJC_Sobagaki',
     'AMJC_MilletDumplings','AMJC_AteFlourFood','AMJC_MillBuckwheat','AMJC_MillMillet',
+    'AMJC_MillBarley','AMJC_MillRice',
     'AMJC_CookHoutou','AMJC_CookSobagaki','AMJC_CookMilletDumplings','AMJC_DoGrainProcessing',
 }
 FALLBACK_NAMES = {'AMJC_Plant_Wheat','AMJC_RawWheat','AMJC_WheatFlour','AMJC_ManualMillstone','AMJC_MillWheat','AMJC_DoGrainsMilling'}
@@ -51,7 +52,9 @@ def validate(root=ROOT):
             assert int(rec.findtext('products/AMJC_Wheat')) == count
             assert [n.tag for n in rec.findall('products/*')] == (['AMJC_Wheat','DankPyon_Straw'] if profile == 'mo' else ['AMJC_Wheat'])
         chains = [('AMJC_MillBuckwheat','AMJC_Buckwheat','AMJC_BuckwheatFlour'),
-                  ('AMJC_MillMillet','AMJC_Millet','AMJC_MilletFlour')]
+                  ('AMJC_MillMillet','AMJC_Millet','AMJC_MilletFlour'),
+                  ('AMJC_MillBarley','AMJC_Barley','AMJC_BarleyFlour'),
+                  ('AMJC_MillRice','RawRice','AMJC_RiceFlour')]
         if profile == 'vanilla':chains += [('AMJC_MillWheat','AMJC_Wheat','AMJC_WheatFlour')]
         for recipe, grain, flour in chains:
             rec = defs[recipe]
@@ -59,7 +62,13 @@ def validate(root=ROOT):
             amount = float(rec.findtext('ingredients/li/count'))
             output = float(rec.findtext('products/'+flour))
             assert len(rec.findall('products/*')) == 1
-            assert amount * float(defs[grain].findtext('statBases/Nutrition')) == output * float(defs[flour].findtext('statBases/Nutrition'))
+            if grain != 'RawRice':
+                assert amount * float(defs[grain].findtext('statBases/Nutrition')) == output * float(defs[flour].findtext('statBases/Nutrition'))
+            else:
+                # Vanilla RawRice is external to our static AMJ projection.
+                # Real loaded-game testing must verify its nutrition value.
+                assert grain == 'RawRice' and amount == output == 10
+                assert float(defs[flour].findtext('statBases/Nutrition')) == 0.05
             assert rec.findtext('recipeUsers/li') == ('DankPyon_Millstone' if profile == 'mo' else 'AMJC_ManualMillstone')
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
             assert float(defs[flour].findtext('comps/li/daysToRotStart')) == 60
@@ -67,6 +76,8 @@ def validate(root=ROOT):
         flour_graphics = {
             'AMJC_BuckwheatFlour': 'Things/Item/Resource/AMJC_Buckwheat/BuckwheatFlour',
             'AMJC_MilletFlour': 'Things/Item/Resource/AMJC_Millet/MilletFlour',
+            'AMJC_BarleyFlour': 'Things/Item/Resource/AMJC_Barley/BarleyFlour',
+            'AMJC_RiceFlour': 'Things/Item/Resource/AMJC_Rice/RiceFlour',
         }
         if profile == 'vanilla':
             flour_graphics['AMJC_WheatFlour'] = 'Things/Item/Resource/AMJC_Wheat/WheatFlour'
