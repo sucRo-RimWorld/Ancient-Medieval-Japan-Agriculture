@@ -14,6 +14,21 @@ A standalone grain-growing and food-processing Mod inspired by agriculture in pr
 
 The balancing model and crops are specified in [Design](Docs/Design.md) and [cultivation balance](Docs/Balance/Crops/Millet_Cultivation_Balance.md).
 
+## V1 food options
+
+The same harvested grains can be used in mixed meals or processed into flour. Mixed dishes remain available for combining leftover cereals even after ingredient-specific recipes are expanded; recipes requiring a particular flour have a small advantage.
+
+| Dish | Accepted ingredients | Cooking work (1 serving) | Room-temperature spoilage | Mood on eating |
+|---|---|---:|---:|---|
+| Mixed grain meal | 5 edible grain types (mixing allowed) | 240 | 3 days | No mood bonus |
+| Mixed grain porridge | 5 edible grain types (mixing allowed) | 200 | 1.5 days | No mood bonus |
+| Mixed flour food | 5 cereal flours (mixing allowed) | 300 | 2 days | No mood bonus |
+| 5 ingredient-specific flour dishes | Each recipe's designated flour | 300 | 2.5 days | Mood +2 after eating |
+
+All eight dishes consume 0.5 ingredient nutrition to make one meal worth 0.9 nutrition. Each also has a four-serving cooking Bill, with four times the inputs and work. The five specific flour dishes are *hakutaku (houtou), sobagaki, millet dumplings, barley-flour gruel and rice-flour dumplings*. Grains does not automatically prioritize ingredients by time remaining before spoilage; players can use Bill ingredient filters to select available leftovers.
+
+These values are implemented in the current Defs. Four-profile loaded-game validation of actual mixed-ingredient cooking Bills is still outstanding; this development build is not a publicly verified release.
+
 ## Dependencies and compatibility
 
 **Required:** RimWorld 1.6. **No mandatory additional Mods or DLC.**
