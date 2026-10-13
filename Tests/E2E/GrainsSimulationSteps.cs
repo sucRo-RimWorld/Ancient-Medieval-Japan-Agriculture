@@ -61,6 +61,33 @@ namespace AncientMedievalJapanCore.E2E
             });
         }
 
+        // Separate real-job scenario: use disposable, explicitly staged inputs to
+        // test recipe ingredient mixing. The harvest chain is verified by the
+        // existing ProductionJobs scenario; this scenario does not claim its
+        // fabricated starting stacks were harvested.
+        [Then("Grains common food single and mixed Bills complete through real jobs")]
+        public async Task CommonFoodJobs(PickleContext ctx)
+        {
+            ProductionScope scope = null;
+            ExceptionDispatchInfo failure = null;
+            try
+            {
+                await RuntimeThread.Run(delegate { scope = new ProductionScope(ctx); });
+                foreach (string family in new[] { "MixedGrainMeal", "MixedGrainPorridge", "MixedFlourFood" })
+                foreach (bool bulk in new[] { false, true })
+                foreach (bool mix in new[] { false, true })
+                    await scope.CommonFoodBill(family, bulk, mix);
+            }
+            catch (Exception error) { failure = ExceptionDispatchInfo.Capture(error); }
+            try { if (scope != null) await RuntimeThread.Run(scope.Dispose); }
+            catch (Exception cleanup)
+            {
+                if (failure != null) throw new AggregateException(failure.SourceException, cleanup);
+                throw;
+            }
+            if (failure != null) failure.Throw();
+        }
+
         [Then("Grains harvest and flour food Bills complete through real jobs")]
         public async Task ProductionJobs(PickleContext ctx)
         {
@@ -651,6 +678,99 @@ namespace AncientMedievalJapanCore.E2E
                     if (!recipe.products.Any(p => p.thingDef.defName == "Hay"))
                         ctx.Assert(Count("Hay") == hay, recipeName + " must not create undeclared hay.");
                     bench.BillStack.Delete(bill);
+                });
+            }
+
+            // This is an actual Cook DoBill with one or two distinct loaded
+            // ThingDefs. Starting ingredient stacks are generated ONLY within
+            // the disposable test map, explicitly separating this coverage
+            // from the native harvest-through-processing chain above.
+            public async Task CommonFoodBill(string family, bool bulk, bool mixed)
+            {
+                string recipeName = "AMJC_Cook" + family + (bulk ? "Bulk" : "");
+                string productName = "AMJC_" + family;
+                bool flour = family == "MixedFlourFood";
+                string firstName = flour ? "AMJC_MilletFlour" : "AMJC_Millet";
+                string secondName = flour ? (MO ? "DankPyon_Flour" : "AMJC_WheatFlour") : "AMJC_Barley";
+                string[] materials = mixed ? new[] { firstName, secondName } : new[] { firstName };
+                Job job = null;
+                Bill_Production bill = null;
+                RecipeDef recipe = null;
+                int[] starting = new int[materials.Length];
+                int[] amounts = new int[materials.Length];
+                int productBefore = 0;
+                int output = bulk ? 4 : 1;
+                string label = recipeName + (mixed ? "/two-input" : "/single-input");
+
+                await RuntimeThread.Run(delegate
+                {
+                    recipe = DefDatabase<RecipeDef>.GetNamed(recipeName);
+                    ThingDef product = DefDatabase<ThingDef>.GetNamed(productName);
+                    ctx.Require(recipe.products.Count == 1 && recipe.products[0].thingDef == product
+                        && recipe.products[0].count == output, label + " output contract differs.");
+                    ctx.Require(recipe.allowMixingIngredients && recipe.ingredients.Count == 1,
+                        label + " must allow mixed input in one ingredient requirement.");
+                    ctx.Require(Campfire.def.AllRecipes.Contains(recipe),
+                        label + " must be offered at the standard campfire.");
+                    float required = recipe.ingredients[0].GetBaseCount();
+                    ctx.Require(Math.Abs(required - (bulk ? 2f : 0.5f)) < 0.001f,
+                        label + " ingredient Nutrition differs.");
+                    int requiredUnits = 0;
+                    for (int i = 0; i < materials.Length; i++)
+                    {
+                        ThingDef ingredient = DefDatabase<ThingDef>.GetNamed(materials[i]);
+                        float nutrition = ingredient.GetStatValueAbstract(StatDefOf.Nutrition);
+                        ctx.Require(Math.Abs(nutrition - 0.05f) < 0.0001f,
+                            label + " unexpected input Nutrition: " + ingredient.defName);
+                        ctx.Require(recipe.fixedIngredientFilter.Allows(ingredient)
+                            && recipe.ingredients[0].filter.Allows(ingredient),
+                            label + " does not allow designated input " + ingredient.defName);
+                        amounts[i] = (int)Math.Round(required / nutrition / materials.Length);
+                        requiredUnits += amounts[i];
+                    }
+                    ctx.Require(Math.Abs(requiredUnits * 0.05f - required) < 0.001f,
+                        label + " must use exact Nutrition, not partial extra stacks.");
+                    productBefore = Count(productName);
+                    for (int i = 0; i < materials.Length; i++)
+                    {
+                        starting[i] = Count(materials[i]);
+                        Thing input = ThingMaker.MakeThing(DefDatabase<ThingDef>.GetNamed(materials[i]));
+                        input.stackCount = amounts[i];
+                        created.Add(input);
+                        GenSpawn.Spawn(input, center + new IntVec3(i, 0, -2), map);
+                    }
+                    bill = (Bill_Production)recipe.MakeNewBill();
+                    bill.repeatMode = BillRepeatModeDefOf.RepeatCount;
+                    bill.repeatCount = 1;
+                    bill.SetStoreMode(BillStoreModeDefOf.DropOnFloor);
+                    bill.ingredientSearchRadius = 10f;
+                    bill.ingredientFilter.SetDisallowAll();
+                    foreach (string material in materials)
+                        bill.ingredientFilter.SetAllow(DefDatabase<ThingDef>.GetNamed(material), true);
+                    Campfire.BillStack.AddBill(bill);
+                    foreach (WorkGiverDef def in DefDatabase<WorkGiverDef>.AllDefsListForReading)
+                    {
+                        if (def.giverClass == null || !typeof(WorkGiver_DoBill).IsAssignableFrom(def.giverClass)) continue;
+                        WorkGiver_DoBill giver = def.Worker as WorkGiver_DoBill;
+                        if (giver == null || !giver.ThingIsUsableBillGiver(Campfire)) continue;
+                        Job offered = giver.JobOnThing(worker, Campfire, true);
+                        if (offered != null && offered.def == JobDefOf.DoBill && offered.bill == bill)
+                        { job = offered; break; }
+                    }
+                    Start(job, label);
+                });
+                await Complete(job, () => bill.repeatCount == 0
+                    && Count(productName) == productBefore + output, label);
+                await RuntimeThread.Run(delegate
+                {
+                    for (int i = 0; i < materials.Length; i++)
+                        ctx.Assert(Count(materials[i]) == starting[i],
+                            label + " must consume every unit of input: " + materials[i]
+                            + ", expected=" + amounts[i]);
+                    ctx.Assert(Count(productName) == productBefore + output,
+                        label + " must produce " + output + " servings.");
+                    ctx.Assert(bill.repeatCount == 0, label + " must complete exactly one DoBill.");
+                    Campfire.BillStack.Delete(bill);
                 });
             }
 
