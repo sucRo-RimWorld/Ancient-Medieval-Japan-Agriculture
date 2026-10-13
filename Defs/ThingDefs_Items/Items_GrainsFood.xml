@@ -90,7 +90,7 @@
   <ThingDef ParentName="MealFineBase">
     <defName>AMJC_BarleyFlourGruel</defName>
     <label>barley-flour gruel</label>
-    <description>A simple gruel made by cooking barley flour with hot water. This is not the roasted-grain preparation used for hattaiko.</description>
+    <description>A simple gruel made by cooking barley flour with hot water.</description>
     <!-- Existing grain sprite used as a temporary meal graphic; no new PNG assets. -->
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Barley/Barley</texPath>
