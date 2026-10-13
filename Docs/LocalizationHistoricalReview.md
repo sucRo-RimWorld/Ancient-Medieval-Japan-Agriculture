@@ -120,7 +120,7 @@ The following descriptions and jobStrings are the approved Japanese-first implem
 | `AMJC_Plant_ProsoMillet_Kibi` | **黍（きび）。** 米・麦・粟などと並び、「五穀」の一つに数えられることもある雑穀。AMJGrainsではアワ・ヒエより早く成熟し、肥沃度の影響も比較的小さい一方、一度の収穫量は少ない。収穫後は脱穀と殻取りを行う。 | 5日／収量11／肥沃度感応0.3。「五穀」には黍に代えて稗を含める異説あり。 |
 | `AMJC_Plant_Buckwheat_Soba` | **蕎麦（そば）。** 古代には凶作に備える作物として栽培を勧められ、山間部や痩せた土地でも育てられてきた。AMJGrainsでは短期栽培に向くが霜には弱く、収穫後に脱穀・殻取りを行う。古い蕎麦の食べ方と、江戸期に広まる麺状の蕎麦切りは区別する。 | 4日／収量8／最低肥沃度0.4。農水省の救荒作物・蕎麦切り史。 |
 | `AMJC_Plant_Barley` | **大麦（おおむぎ）。** 弥生時代に日本へ伝わり、奈良時代にも栽培が確認される麦類。米とともに食生活を支えてきた。AMJGrainsでは冷涼な気温での栽培に向き、雑穀より生育期間は長いが収量が多い。収穫後は脱穀と殻取りを行う。 | 10日／収量22／成長最低0℃。農水省「特集1 麦(1)」。 |
-| `Plant_Rice` | **稲（いね）。**日本では水を張った田で育てる水稲（すいとう）と、畑で育てる陸稲（おかぼ・りくとう）が栽培されてきた。両者は同じイネに属するが、一般に水への適応などが異なる品種が用いられる。陸稲の栽培は20世紀半ば以降、大幅に縮小した。\n\nAMJGrainsでは陸稲と水稲を別の作物として区別せず、共通の「稲」として扱う。温暖な気温と一定以上の肥沃度を必要とし、収穫後は脱穀と籾摺りを経て米になる。 | Vanilla `Plant_Rice` Patch：5日／収量11／最低肥沃度0.7／成長10～42℃。陸稲の古代の普及割合は確定していない。水田栽培はV1未実装。 |
+| `Plant_Rice` | **稲（いね）。**日本列島では弥生時代に水田稲作が各地へ広まり、古代から中世にかけて米は食料として利用され、地域によっては租税や荘園の年貢としても納められた。水を張った田で育てる水稲（すいとう）と、畑で育てる陸稲（おかぼ・りくとう）があり、同じイネでも水への適応が異なる品種が用いられる。陸稲の栽培は20世紀半ば以降、大幅に縮小した。\n\nAMJGrainsでは陸稲と水稲を別の作物として区別せず、共通の「稲」として扱う。温暖な気温と一定以上の肥沃度を必要とし、収穫後は脱穀と籾摺りを経て米になる。 | Vanilla `Plant_Rice` Patch：5日／収量11／最低肥沃度0.7／成長10～42℃。陸稲の古代の普及割合は確定していない。水田栽培はV1未実装。 |
 
 ### 根拠・留保
 
@@ -130,6 +130,9 @@ The following descriptions and jobStrings are the approved Japanese-first implem
 - 蕎麦の救荒作物としての歴史と蕎麦切り：https://www.maff.go.jp/j/pr/aff/1811/characterinformation.html
 - 大麦の日本への伝来と奈良時代の栽培：https://www.maff.go.jp/j/pr/aff/1602/spe1_01.html
 - 陸稲・水稲の歴史と1955年頃以降の陸稲減少：https://www.maff.go.jp/j/syouan/keikaku/soukatu/okome_summary/07/environ_ment_03.html
+- 弥生期の水田稲作の広がり（国立歴史民俗博物館「第1展示室」）：https://www.rekihaku.ac.jp/exhibitions/room1/
+- 中世西日本と東国の年貢品目の違い（農林水産省・関東農政局「武蔵七党の活躍」）：https://www.maff.go.jp/kanto/nouson/sekkei/kokuei/kanna/rekishi/02.html
+- 1185年の史料にみる荘園の年貢米（国立歴史民俗博物館「元暦二年七月日某注進状」）：https://khirin.rekihaku.ac.jp/pid/nmjh_collection/H-73-31.html
 - 畑の陸稲と水田の水稲の定義（農研機構）：https://www.naro.go.jp/laboratory/tarc/rice_faq/growing/025127.html
 - 栽培環境に適したイネの品種差（農研機構）：https://www.naro.go.jp/laboratory/tarc/rice_faq/kind/025069.html
 - 陸稲と水稲の品種・形態的な差（茨城県農業総合センター研究報告第17号）：https://www.pref.ibaraki.jp/nourinsuisan/nosose/cont/img/seikouken_kennkyu_17.pdf
@@ -150,7 +153,7 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 | `AMJC_Plant_ProsoMillet_Kibi` | Proso millet (kibi). A millet sometimes counted among the traditional five grains, together with rice, mugi and awa. In AMJGrains it matures sooner than awa or hie and is relatively less affected by soil fertility, but yields less grain per harvest. It must be threshed and dehulled after harvest. |
 | `AMJC_Plant_Buckwheat_Soba` | Buckwheat (soba). In ancient Japan it was recommended as a crop to guard against poor harvests, and it has been grown in mountain regions and on less fertile land. In AMJGrains it grows quickly but is vulnerable to frost, and requires threshing and dehulling. Older ways of eating buckwheat are distinct from cut soba noodles, which became widespread in the Edo period. |
 | `AMJC_Plant_Barley` | Barley (omugi). A cereal introduced to Japan in the Yayoi period and known to have been cultivated during the Nara period. It has long contributed to diets alongside rice. In AMJGrains it grows well in cooler conditions, takes longer to mature than the millets, and yields a larger harvest. Harvested grain must be threshed and dehulled. |
-| `Plant_Rice` | Rice (ine). In Japan, paddy rice (suito) is cultivated in flooded fields, while upland rice (okabo, rikuto) is grown in dry fields. Both belong to the same rice species, but varieties adapted to different water conditions are generally used. Upland rice cultivation declined sharply after the mid-twentieth century.\n\nAMJGrains represents upland and paddy rice as a single rice crop, without separate plant types. It requires warm temperatures and sufficiently fertile soil. After harvest, threshing and hulling yield rice. |
+| `Plant_Rice` | Rice (ine). Paddy-field rice cultivation spread across the Japanese archipelago during the Yayoi period, with regional differences. From ancient through medieval times, rice was used as food and, in some regions, paid as taxes or estate rents. Paddy rice (suito) is grown in flooded fields, while upland rice (okabo, rikuto) is grown in dry fields. Both belong to the same rice species, although varieties adapted to different water conditions are generally used. Upland rice cultivation declined sharply after the mid-twentieth century.\n\nAMJGrains represents upland and paddy rice as a single rice crop, without separate plant types. It requires warm temperatures and sufficiently fertile soil. After harvest, threshing and hulling yield rice. |
 
 **Static verification:** `Tests/test_grains_localization.py` checks approved Japanese/English text against loaded-source XML/DefInjected and verifies the `Plant_Rice` description Patch. Game-loaded language switching, UI readability and four-profile ERROR 0 are still pending.
 
