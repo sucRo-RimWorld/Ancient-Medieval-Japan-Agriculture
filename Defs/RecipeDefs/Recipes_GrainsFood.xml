@@ -362,9 +362,9 @@
   </RecipeDef>
   <RecipeDef>
     <defName>AMJC_CookMixedGrainMeal</defName>
-    <label>cook mixed grain meal</label>
-    <description>Cook 1 serving of mixed grain meal from 0.5 nutrition of available cereal grains.</description>
-    <jobString>Cooking mixed grain meal.</jobString>
+    <label>cook one serving of cooked grains</label>
+    <description>Cook 1 serving of cooked grains using 0.5 nutrition from one grain or a mixture of grains.</description>
+    <jobString>Cooking grains.</jobString>
     <workAmount>240</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
     <workSkill>Cooking</workSkill>
@@ -396,9 +396,9 @@
   </RecipeDef>
   <RecipeDef>
     <defName>AMJC_CookMixedGrainMealBulk</defName>
-    <label>cook four servings of mixed grain meal</label>
-    <description>Cook 4 servings of mixed grain meal from 2 nutrition of available cereal grains.</description>
-    <jobString>Cooking mixed grain meal.</jobString>
+    <label>cook four servings of cooked grains</label>
+    <description>Cook 4 servings of cooked grains using 2 nutrition from one grain or a mixture of grains.</description>
+    <jobString>Cooking grains.</jobString>
     <workAmount>960</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
     <workSkill>Cooking</workSkill>
@@ -430,9 +430,9 @@
   </RecipeDef>
   <RecipeDef>
     <defName>AMJC_CookMixedGrainPorridge</defName>
-    <label>cook mixed grain porridge</label>
-    <description>Cook 1 serving of mixed grain porridge from 0.5 nutrition of available cereal grains.</description>
-    <jobString>Cooking mixed grain porridge.</jobString>
+    <label>cook one serving of porridge</label>
+    <description>Cook 1 serving of porridge using 0.5 nutrition from one grain or a mixture of grains.</description>
+    <jobString>Cooking porridge.</jobString>
     <workAmount>200</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
     <workSkill>Cooking</workSkill>
@@ -464,9 +464,9 @@
   </RecipeDef>
   <RecipeDef>
     <defName>AMJC_CookMixedGrainPorridgeBulk</defName>
-    <label>cook four servings of mixed grain porridge</label>
-    <description>Cook 4 servings of mixed grain porridge from 2 nutrition of available cereal grains.</description>
-    <jobString>Cooking mixed grain porridge.</jobString>
+    <label>cook four servings of porridge</label>
+    <description>Cook 4 servings of porridge using 2 nutrition from one grain or a mixture of grains.</description>
+    <jobString>Cooking porridge.</jobString>
     <workAmount>800</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
     <workSkill>Cooking</workSkill>
@@ -498,9 +498,9 @@
   </RecipeDef>
   <RecipeDef>
     <defName>AMJC_CookMixedFlourFood</defName>
-    <label>cook mixed flour food</label>
-    <description>Cook 1 serving of mixed flour food from 0.5 nutrition of available cereal flours.</description>
-    <jobString>Cooking mixed flour food.</jobString>
+    <label>prepare one serving of flour dish</label>
+    <description>Prepare 1 serving of flour dish using 0.5 nutrition from one flour or a mixture of flours.</description>
+    <jobString>Cooking a flour dish.</jobString>
     <workAmount>300</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
     <workSkill>Cooking</workSkill>
@@ -532,9 +532,9 @@
   </RecipeDef>
   <RecipeDef>
     <defName>AMJC_CookMixedFlourFoodBulk</defName>
-    <label>cook four servings of mixed flour food</label>
-    <description>Cook 4 servings of mixed flour food from 2 nutrition of available cereal flours.</description>
-    <jobString>Cooking mixed flour food.</jobString>
+    <label>prepare four servings of flour dish</label>
+    <description>Prepare 4 servings of flour dish using 2 nutrition from one flour or a mixture of flours.</description>
+    <jobString>Cooking a flour dish.</jobString>
     <workAmount>1200</workAmount>
     <workSpeedStat>CookSpeed</workSpeedStat>
     <workSkill>Cooking</workSkill>
