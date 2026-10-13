@@ -59,6 +59,16 @@ def validate(root=ROOT):
             amount = float(rec.findtext('ingredients/li/count'))
             output = float(rec.findtext('products/'+flour))
             assert len(rec.findall('products/*')) == 1
+            # A balanced ratio alone allows an unintended 1:1, 5:5 or 20:20
+            # batch, so preserve the authored 10-unit recipe and job costs.
+            assert amount == 10 and output == 10, ('Milling batch size', recipe)
+            assert rec.findtext('targetCountAdjustment') == '10', ('Bill count step', recipe)
+            assert float(rec.findtext('workAmount')) == 300, ('Milling labor', recipe)
+            assert rec.findtext('workSpeedStat') == 'GeneralLaborSpeed', ('Milling work stat', recipe)
+            assert rec.findtext('workSkill') == 'Crafting', ('Milling skill', recipe)
+            assert rec.findtext('allowMixingIngredients') == 'false', ('Milling mixed inputs', recipe)
+            assert rec.findtext('fixedIngredientFilter/thingDefs/li') == grain, ('Fixed milling ingredient', recipe)
+            assert rec.findtext('fixedIngredientFilter/specialFiltersToDisallow/li') == 'AllowRotten', ('Rotten grain filter', recipe)
             assert amount * float(defs[grain].findtext('statBases/Nutrition')) == output * float(defs[flour].findtext('statBases/Nutrition'))
             assert rec.findtext('recipeUsers/li') == ('DankPyon_Millstone' if profile == 'mo' else 'AMJC_ManualMillstone')
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
