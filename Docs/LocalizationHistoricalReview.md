@@ -209,9 +209,9 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 `AMJC_AteFlourFood` の心情付与は+2（0.5日、重複1回）のまま維持する。実機ログでStageの説明が空であるため、英語 `I ate a dish made from ground grain.`、日本語ラベル「粉食を食べた」、日本語説明「挽いた穀物から作った料理を食べた。」を追加。歴史的な新説や未実装の調理法を主張せず、実装済みの粉食心情だけを説明する。
 
 
-## 12. 大麦粉・米粉の追加食用途候補（2026-10-13、未承認・未実装）
+## 12. 大麦粉・米粉の追加食用途候補（2026-10-13、実装前の史料調査記録）
 
-この節は新規ThingDef／RecipeDefを作者が承認したものではない。§2／§6／§7／§8／§10の承認済み日本語と英語は変更しない。既定の雑穀粉・蕎麦粉・小麦粉の3経路は変更せず、追加する大麦粉・米粉の消費先だけを選定するための史料整理。
+本節は**候補比較を行った時点の履歴**である。後続の§13に記録されたとおり、大麦粉・米粉と麦粉粥・米粉団子は**材料・方法を表す機能的総称としてソース実装済み**。以下の「未承認・不採用」はその時点の**史実上の固有料理名としての採否**を指し、現在のThingDef・RecipeDefの実装状況ではない。§2／§6／§7／§8／§10の承認済み日本語と英語は維持する。
 
 | 候補 | 史料で確認できる点 | ゲーム実装での留保 | 判断 |
 |---|---|---|---|
@@ -243,3 +243,13 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 - `AMJC_CookBarleyFlourGruel` / `AMJC_CookRiceFlourDumplings` — 粉Nutrition 0.5相当から料理1個へ
 
 この8件の日本語・英語は現在の機能操作を説明するものであり、未承認の特定時代・地域の由緒を追加しない。元の§2/§6/§7/§8/§10承認済み文言と料理3品は変更しない。画像制作・RimWorld実機での四プロファイル実ジョブPASSは別ゲートのまま。
+
+## 14. V1史実・日英の静的校閲（2026-10-13）
+
+**対象:** 既存の稲／稲束／籾／食用米の承認済み段階別本文、追加された大麦粉・米粉と麦粉粥・米粉団子の本番ThingDef/RecipeDefの機能説明。承認済みの日本語と英語、およびDefName・Recipe・数値は今回変更しない。
+
+- **米粉団子:** `AMJC_RiceFlourDumplings` は米粉を水と練って加熱する一般的な調理法の**ゲーム上の総称**。農林水産省「米粉」（https://www.maff.go.jp/j/keikaku/syokubunka/traditional-foods/menu/komeko.html）および「米粉の種類と用途」（https://www.maff.go.jp/tokai/seisan/shinko/komeko/type.html）は米粉と団子の利用を記す。しかし、特定のAMJ Recipeが中世日本において単一の正式料理名として確立していたことまでは証明しない。
+- **うるち・もちの抽象化:** `AMJC_RiceFlour` は一つのアイテムとして両原料の粉を代表するが、澱粉特性や用途は実際には異なる。農水省「米粉の種類と特性」（https://www.maff.go.jp/j/syouan/keikaku/soukatu/okome_summary/08/rice_flour_charac_teristic_01.html）参照。白玉粉など個別の製法、搗き餅、菓子の時代差は本Recipeに付与しない。
+- **麦粉粥:** `AMJC_BarleyFlourGruel` は大麦粉を湯で煮る**材料・調理法に基づく一般名**。古代・中世日本の全地域で同名の定型料理があったと断定しない。挽き割り大麦の粥を細挽き大麦粉の粥と同一視しない。麦こがし／はったい粉は穀粒を**先に焙煎してから製粉**するため、通常の製粉から煮る現在のRecipeとは異なる（https://appie.or.jp/column/%E3%81%AF%E3%81%A3%E3%81%9F%E3%81%84%E7%B2%89/）。
+- **史実上の未承認箇所:** 追加2食品の歴史的固有名称・時代への結び付けの**作者による日本語最終校閲は未了**。今回の監査は既存の材料・方法説明の範囲を確認しただけで、新しい日本語史実叙述を採用・英訳・公開したものではない。
+- **表示確認の延期:** 稲 `Plant_Rice`、`AMJC_RiceSheaf`、`AMJC_RiceInHull`、Vanilla `RawRice` の日英4組と2/2/2/4段落、他の食品のUI表示、パッチ競合・料理Billは `Docs/GrainsProfileTesting.md` の一括実機検証へ含める。CIの文字列整合は実表示の代替ではない。

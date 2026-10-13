@@ -14,3 +14,11 @@ Title and About name: `Ancient & Medieval Japan - Grains（中世日本 - 穀類
 ## Language divider and optional MO ordering
 
 Place one Steam `[hr][/hr]` after the complete English description and before the Japanese section, and a second `[hr][/hr]` before the single shared bilingual comparison image placed after the Japanese section. The Production `About.xml` has **no hard MO dependency** and retains MO and CCTO in optional `loadAfter`; `loadFolders.xml` selects MO compatibility only when present. This metadata decision does not certify final graphics or completed fresh-start public-release testing. Historical-save/provider-removal tests are out of scope because no Grains saves exist. Preserve the stable packageId.
+
+## V1非公開配布の準備・残ゲート（2026-10-13）
+
+- 説明本文には共通の畑地「稲」、7穀、5種の穀粉、共通3料理と指定5料理、調理台を使う暫定加工を正確に記載。水田機能やMO必須依存は宣伝しない。
+- 英語欄に日英併記を一度だけ掲載する。承認済み比較PNGは一度だけ参照し、画像・キャプションの内容や元ファイルは変更しない。
+- `About/About.xml` と `About/Manifest.xml` のバージョンは `0.1.0-dev` のまま。作者管理の `About/Changelog.txt`・既存 `PublishedFileId.txt` を勝手に置換しない。
+- 実際に作者が非公開アップロードを行う前に、Workshop用のローカルインストール場所・加入者向けフィルタ・About/Manifest/Changelog・MO条件付き`loadFolders.xml`・承認済み画像・Workshop IDを確認する。正規の `Tests/Release/validate_workshop_payload.py` と `Tests/Release/validate_add_changenote.py` を使用する。
+- **HOLD:** 配布対象の現行1.6一括実機・日英UI・見た目・プレイバランス、実際のWorkshopアップロードと再ダウンロードの確認は未実施。本書やCI成功をSteam反映済み・公開可能と解釈しない。非公開状態で作者本人が通常プレイした後、公開可否を判断する。

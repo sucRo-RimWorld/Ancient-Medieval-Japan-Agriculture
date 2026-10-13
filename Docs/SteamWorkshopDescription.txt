@@ -5,8 +5,8 @@
 [h2]Features[/h2]
 [list]
 [*]Awa (foxtail millet), Hie (Japanese barnyard millet) and Kibi (proso millet), with different growing-season, temperature, fertility and harvest trade-offs
-[*]Soba (buckwheat), barley and wheat as additional grain choices
-[*]Grain harvesting, primary processing and milling into flour as a basis for simple food production
+[*]Soba (buckwheat), barley, wheat and the shared rice plant for ordinary fields (no paddy mechanics)
+[*]Threshing, hulling and five grain flours; existing Vanilla stoves also handle processing while dedicated equipment is being developed
 [*]Gameplay-oriented differences between grains rather than interchangeable crop statistics
 [/list]
 
@@ -19,7 +19,7 @@ Mixed dishes can use leftover grain kernels or flours. Ingredient-specific flour
 [b]RimWorld 1.6[/b]. [b]No additional Mod is required.[/b] Medieval Overhaul (MO) is optional: with MO, Grains reuses its wheat, flour, millstone and straw integration; without MO, Grains provides its own wheat and milling path. Grains' own crop and processing rules take priority in both configurations. [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul (CCTO)[/url] is also optional for crop-specific cold behavior.
 
 [h2]Development status[/h2]
-[b]Development build, not ready for public release.[/b] The hard MO requirement has been removed. Current-version fresh-start Vanilla/MO/CCTO runtime verification and final production artwork remain under review.
+[b]Development build, not ready for public release.[/b] The hard MO requirement has been removed. A previous-source 1.7 four-profile native check passed; the current 1.6 subscriber build, translated UI, equipment variants, balance and final graphics are still unverified.
 
 Documentation: [url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains]GitHub README[/url]
 
@@ -32,8 +32,8 @@ Documentation: [url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Gra
 [h2]主な特徴[/h2]
 [list]
 [*]アワ・ヒエ・キビを追加し、生育期間・気温・肥沃度・収量の違いで作物を選べるようにする
-[*]ソバ・大麦・小麦なども畑作穀物として扱う
-[*]穀物の収穫・一次加工・製粉と、粉を食料として利用するための基本的な加工経路
+[*]ソバ・大麦・小麦と、共通の「稲」を畑地で栽培する（水田機能は含まない）
+[*]脱穀・殻取り・5種の穀粉への製粉ができる。暫定的に既存調理台も加工に利用する
 [*]単純な上位互換ではなく、土地や季節に応じて穀物を植え分ける農業
 [/list]
 
@@ -46,7 +46,7 @@ AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う�
 [b]RimWorld 1.6対応。追加の必須Modはありません。[/b] Medieval Overhaul（MO）は任意です。MO併用時はMOの小麦・小麦粉・石臼・藁を連携利用し、MOなしではGrains側の小麦・製粉を利用します。いずれもGrains所有の作物・加工設定を優先します。[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul（CCTO）[/url]も任意です。
 
 [h2]開発状況[/h2]
-[b]開発ビルドであり、公開準備は完了していません。[/b] MO必須指定は解除しました。現行版の新規開始4構成実機テストと専用画像等の確認を継続しています。
+[b]開発ビルドであり、公開準備は完了していません。[/b] MO必須指定は解除しました。旧ソースのRimWorld 1.7四構成実機検証には合格記録がありますが、現行1.6の配布版・日英UI・設備別の実動作・バランス・専用画像は未確認です。
 
 詳細：[url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains]GitHub README[/url]
 
