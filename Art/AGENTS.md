@@ -11,7 +11,6 @@ Resolve rules in this order:
 Asset-class routes:
 - Grain/crop sources: `Docs/GoldenPaths/GrainImageGeneration.md` (`Scripts/Art/grains_image_generator.py`).
 - Boxed resources/masu: `Docs/GoldenPaths/BoxedResourceIconPipeline.md`.
-- Covers: Project `Docs/WorkshopCoverStyle.md` and `Docs/GoldenPaths/WorkshopCoverPipeline.md`.
 - Prerequisite-Mod retextures: Project `Docs/RetextureImplementationGuidelines.md` and the owner's art specification.
 
 An asset-class document may narrow, but not silently replace, AMJ-wide style. Put a real exception in the owning style specification, not chat history or AGENTS. Follow Project's texture pipeline for generation intent and ImageGen; interpret requested image actions semantically, not via exact-keyword gates. Never regenerate accepted fixed/shared parts solely because new image work is requested.
