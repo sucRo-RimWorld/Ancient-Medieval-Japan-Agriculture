@@ -337,7 +337,7 @@ class JapaneseLocalizationAudit(unittest.TestCase):
             self.assertEqual(recipe.findtext('label'), expected)
             self.assertIn('hakutaku', recipe.findtext('description').lower())
             self.assertNotIn('houtou', recipe.findtext('label').lower())
-        self.assertIn('current Yamanashi hoto', item.findtext('description'))
+        self.assertIn('present-day Yamanashi hoto', item.findtext('description'))
 
     def test_generic_meal_names_and_optional_ingredient_bills(self):
         """Display names and recipe wording must match the approved 3 meal families."""
