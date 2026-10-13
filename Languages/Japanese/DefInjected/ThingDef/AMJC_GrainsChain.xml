@@ -20,8 +20,8 @@
   <AMJC_RiceFlourDumplings.description>米粉団子（こめこだんご）。米粉を水で練り、加熱した団子。うるち米粉ともち米粉はゲーム内で共通の材料として扱う。</AMJC_RiceFlourDumplings.description>
   <AMJC_MixedGrainMeal.label>飯</AMJC_MixedGrainMeal.label>
   <AMJC_MixedGrainMeal.description>米・麦・雑穀などの可食穀粒を炊いた飯。一種類だけでも、複数を混ぜても作れる。米以外の穀物も主食に取り入れてきた食生活を表現し、粥より日持ちする一方、調理にはやや手間がかかる。</AMJC_MixedGrainMeal.description>
-  <AMJC_MixedGrainPorridge.label>混合穀物粥</AMJC_MixedGrainPorridge.label>
-  <AMJC_MixedGrainPorridge.description>米・麦・雑穀などの可食穀粒を水分多めに煮た粥。一種類だけでも、複数を混ぜても作れる。混合穀物飯より少ない作業量で調理できるが、常温では傷みやすい。</AMJC_MixedGrainPorridge.description>
-  <AMJC_MixedFlourFood.label>混合粉食</AMJC_MixedFlourFood.label>
-  <AMJC_MixedFlourFood.description>雑穀粉・蕎麦粉・大麦粉・小麦粉・米粉などを使う簡素な粉食。一種類の粉でも複数の粉を混ぜても作れる。麺に限らない穀粉食を表現し、材料を指定した粉食より常温での保存期間は短い。</AMJC_MixedFlourFood.description>
+  <AMJC_MixedGrainPorridge.label>粥</AMJC_MixedGrainPorridge.label>
+  <AMJC_MixedGrainPorridge.description>米・麦・雑穀などの可食穀粒を水分多めに煮た粥。一種類だけでも、複数を混ぜても作れる。飯より少ない作業量で調理できるが、常温では傷みやすい。</AMJC_MixedGrainPorridge.description>
+  <AMJC_MixedFlourFood.label>粉食</AMJC_MixedFlourFood.label>
+  <AMJC_MixedFlourFood.description>雑穀粉・蕎麦粉・大麦粉・小麦粉・米粉などを使う簡素な粉食。一種類の粉でも複数の粉を混ぜても作れる。麺に限らない穀粉食を表現し、餺飥やそばがきなどに比べ、常温では少し傷みやすい。</AMJC_MixedFlourFood.description>
 </LanguageData>
