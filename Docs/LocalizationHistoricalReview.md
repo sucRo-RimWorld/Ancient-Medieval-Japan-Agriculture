@@ -183,3 +183,25 @@ These six English strings are translations of the author-approved Japanese §7 d
 ## 11. 粉食心情の実機エラー修正（2026-10-08）
 
 `AMJC_AteFlourFood` の心情付与は+2（0.5日、重複1回）のまま維持する。実機ログでStageの説明が空であるため、英語 `I ate a dish made from ground grain.`、日本語ラベル「粉食を食べた」、日本語説明「挽いた穀物から作った料理を食べた。」を追加。歴史的な新説や未実装の調理法を主張せず、実装済みの粉食心情だけを説明する。
+
+
+## 12. 大麦粉・米粉の追加食用途候補（2026-10-13、未承認・未実装）
+
+この節は新規ThingDef／RecipeDefを作者が承認したものではない。§2／§6／§7／§8／§10の承認済み日本語と英語は変更しない。既定の雑穀粉・蕎麦粉・小麦粉の3経路は変更せず、追加する大麦粉・米粉の消費先だけを選定するための史料整理。
+
+| 候補 | 史料で確認できる点 | ゲーム実装での留保 | 判断 |
+|---|---|---|---|
+| **米粉団子** | 農林水産省「米粉」は奈良時代から米粉を菓子に利用したと説明。「串だんご」は米の粉を丸めて茹でる団子を説明し、串団子については室町まで遡るとする | 砂糖・串・甘味タレ・後世の製品名を基本レシピに導入しない。うるち・もち米粉は既定どおり `RawRice` 由来の単一米粉で抽象化。粒を蒸して搗く餅とは別製法 | **有力候補、未承認** |
+| **はったい（麦こがし系）** | 大麦食品資料が『和名類聚抄』の米麦乾燥・焙煎・製粉して湯水に溶く記述を紹介。現代の「はったい粉」は煎った大麦を挽いたもの | **焙煎は必須の製法差。** 単に生の `AMJC_Barley` → `AMJC_BarleyFlour` を石臼で挽いた工程だけで、生成物を「はったい粉」と呼ぶのは不正確。乾煎りを料理工程側で表現する案などを比較する必要がある | **条件付き候補、未承認** |
+| **一般の粉食・麦粉粥** | 日本の大麦に粥食の歴史はあるが、確認した説明は主として挽き割り大麦を粥にする方法 | 挽き割り大麦の粥を、細挽きの大麦粉の料理と無条件に同一視できない | **典拠不足、現時点では不採用** |
+
+資料：
+- 農林水産省「米粉」 https://www.maff.go.jp/j/keikaku/syokubunka/traditional-foods/menu/komeko.html
+- 農林水産省「串だんご」 https://www.maff.go.jp/j/keikaku/syokubunka/k_ryouri/search_menu/menu/34_29_tokyo.html
+- 農林水産省「米粉の利用」 https://www.maff.go.jp/j/syouan/keikaku/soukatu/okome_summary/08/rice_flour_charac_teristic_04.html
+- はくばく「知られざる大麦の歴史」 https://www.hakubaku.co.jp/omugi-lab/hyakka/oomugi-history/
+- 日本粉体工業技術協会「はったい粉」 https://appie.or.jp/column/%E3%81%AF%E3%81%A3%E3%81%9F%E3%81%84%E7%B2%89/
+
+既存Mod比較（2026-10-13、限定調査）：VEの `VanillaCookingExpanded` 1.6 `Items_RawPlant.xml` は `VCE_Flour` という小麦粉を所有し、`Recipes_Bakes.xml` の製菓Recipeはそれを明示指定。VE `VanillaPlantsExpanded-MorePlants` 1.6では複数の別穀類栽培があるが、そのことだけでAMJの大麦粉・米粉の供給を置換できない。非VEではMO 1.6の `DankPyon_Flour` が小麦粉として既にGrainsの条件付き供給元。さらに Progression: Agriculture の公開説明ではMO・VCE双方の粉を統合し、VPE More Plantsの大麦等を一般穀物へ接続する互換がある。ただし同Modの1.6実ソースは今回未取得・未検証のため、全Modとの最終互換を証明しない。
+
+**残ゲート:** 追加2種の粉を単に作れる状態で完了扱いしない。工程・用途・画像パス・ローカライズ、VE・非VEの具体的な競合Patch、Vanilla/MO×CCTO四構成での実ゲームBills／ERROR 0を揃える。料理候補の正式採否と歴史説明文の承認は別途必要であり、未承認の本番文字列を作らない。
