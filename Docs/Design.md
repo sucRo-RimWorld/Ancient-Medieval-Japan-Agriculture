@@ -15,7 +15,7 @@
 中心領域:
 - アワ・ヒエ・キビ・ソバ・大麦・小麦の乾田栽培
 - 穀束、脱穀、殻取り等の一次加工
-- 雑穀粉・蕎麦粉・大麦粉・小麦粉・米粉の5種を対象とする製粉経路（大麦粉・米粉の本番Def/Recipeは未実装）
+- 雑穀粉・蕎麦粉・大麦粉・小麦粉・米粉の5種を対象とする製粉経路（大麦粉・米粉も本番Def/Recipeへ追加済み。新経路の実ゲーム検証は未完）
 - 粉を無用途にしないための研究不要・低設備の最低限粉食
 - 作物ごとの肥沃度・温度・生育日数・収量・加工価値の差
 - MO導入時の小麦・小麦粉・石臼・Straw等の公式互換
@@ -213,7 +213,7 @@ MOで確認済みの参考例:
 
 > **料理バフはTier基準ではなく、材料・手間・研究・保存価値を含む総コストに対して付与する。**
 
-米は水田・温度要求・栽培期間・一次加工など雑穀より重い生産条件を持つため、AMJで米専用料理を追加する場合は、**同程度の料理工程なら米系料理を雑穀系料理よりやや高価値にする**ことを許容する。ただし「米だから無条件に強い」のではなく、栽培・加工を含む総コスト差を根拠に調整する。
+米は畑でも栽培可能で、水田の整備・管理は将来導入される任意の生産コストである。米専用料理の価値は**米という名称や水田必須との誤認ではなく、実際の栽培条件・期間・一次加工・調理負担に応じて**決める。同程度の料理工程でも、投入資源と労働が実際に重い場合は米系料理をやや高価値にすることを許容する。ただし「米だから無条件に強い」のではなく、栽培・加工を含む総コスト差を根拠に調整する。
 
 また、**酒などの嗜好品は日常食より工程・研究を複雑にしてよい**。生存に必須な主食や日常料理は管理負荷を抑える一方、任意の高付加価値品は、追加精製・選別・発酵・濾過・温度管理・複数研究段階などをゲーム上の遊びとして許容する。複雑さは嗜好品としての価値・希少性・強い一時効果へつながる場合に採用し、単なる作業数の水増しにはしない。
 
@@ -263,10 +263,10 @@ Base XMLにはMO DefNameへの無条件参照を残さない。MO固有PatchはM
 
 現時点の方向性:
 - Grains / 現Core: Vanilla単体で乾田穀物・一次加工・製粉・最低限粉食を成立させる。MOは推奨・公式任意互換
-- Fermentation: Grainsを必須依存にしない。単独の発酵ループを持たせ、Grains導入時に雑穀等、Rice Cultivation導入時にAMJ米等を追加接続する
+- Fermentation: Grainsを必須依存にしない。単独の発酵ループを持たせ、Grains導入時に雑穀・共通米等を追加接続し、Rice Cultivation導入時には水田に固有の機能だけを条件付きで扱う
 - Brewing: Grains / Waterworks / Rice Cultivationのいずれも自動的な必須依存にせず、存在時だけ対応原料・工程を追加接続する
 - Ironmaking: Vanilla単体で鉄器加工・砂鉄供給・古代～中世製鉄を成立させる。MO / Environment / Waterworksは公式任意互換。詳細は [IronmakingDesign.md](IronmakingDesign.md)
-- Waterworks / Rice Cultivation / Hot Springs / Environment / Events / Factions / Backgrounds等: 責務上必要な前提だけを持ち、Grainsを共通必須基盤にはしない。Waterworksは水利、Rice Cultivationは水田・水管理・水稲栽培を所有し、陸稲と共通穀物加工・製粉はGrainsが所有する
+- Waterworks / Rice Cultivation / Hot Springs / Environment / Events / Factions / Backgrounds等: 責務上必要な前提だけを持ち、Grainsを共通必須基盤にはしない。Waterworksは水利、Rice Cultivationは水田・水管理と**共通の稲Plant**に対する栽培条件の拡張を所有し、稲Plant本体・共通穀物加工・製粉はGrainsが所有する
 
 #### Hot Springs / 温泉 Addon
 
@@ -344,11 +344,11 @@ MO導入時は、既存の農業・研究・設備・素材を可能な限り再
 
 ##### Agriculture / Waterworks / Rice Cultivation境界
 
-- Grainsは、畑作穀物に加えてVanilla `Plant_Rice` を**陸稲**として再定義し、穀物の収穫後加工・製粉までを所有する。`RawRice` はVanilla Defを再利用し、新しい陸稲専用米Defを増やさない。
+- Grainsは、畑作穀物に加えてVanilla `Plant_Rice` をV1では**畑地向けの共通稲Plant**として再定義し、穀物の収穫後加工・製粉までを所有する。水田・畑でPlantDefは分けず、`RawRice` はVanilla Defを再利用する。
 - WaterworksはGrains非依存のまま、自然取水・開渠・暗渠・分水・温泉引湯等の**水利基盤だけ**を自己完結して所有する。
 - 将来のRice Cultivationは、水田・水管理・田植え・共通 `Plant_Rice` の水田栽培条件を所有する。水稲専用Plantを増やさず、Grains併用時は同一Plantから共通の稲束・籾・米／製粉経路へ接続する。
 - Waterworks + Rice Cultivation併用時だけ、水田をWaterworksの有効な水路ネットワークへ接続する公式互換を行う。GrainsはWaterworksを要求しない。
-- Rice Cultivationの単独時フォールバック、稲架掛け等の水稲固有工程、Waterworksとの接続詳細は、専用所有先ができるまではProject側で管理し、Grainsに重複設計を置かない。
+- Rice Cultivationの単独時フォールバック、稲架掛け等の水田向け任意工程、Waterworksとの接続詳細は、専用所有先ができるまではProject側で管理し、Grainsに重複設計を置かない。
 
 ##### 紙・塩・Processor Framework
 
@@ -399,8 +399,8 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 | 小麦Plant / 小麦束 | Grains所有の非MO小麦Plant・穀束を供給 | MOの DankPyon_Plant_Wheat / DankPyon_RawWheat を可視の供給元として使い、AMJフォールバックは重複表示しない | **概念・バランスはGrains、MO時の実Def供給元はMO** |
 | 脱穀後の小麦穀粒 | 既存 AMJC_Wheat | MO小麦束をGrains脱穀工程へ通し、同じ AMJC_Wheat へ合流 | **Grains**。既存DefName維持 |
 | 小麦粉 | Grains所有のフォールバック小麦粉 | DankPyon_Flour を唯一の標準小麦粉として利用し、AMJ小麦粉を二重表示しない | **Base概念はGrains、MO時の実Def供給元はMO** |
-| 蕎麦粉 / 雑穀粉 / 大麦粉 / 米粉 | Grains所有（大麦粉・米粉は実装待ち） | Grains所有の専用粉とし、MO generic flourへ自動統合しない | **Grains** |
-| 製粉Recipe | 5種の穀粉を最終対象とし、Grainsが各Base Recipeを所有（現行実装は小麦・蕎麦・雑穀）。製粉では総栄養を保存 | 小麦はMO既存製粉経路へ接続。他4種はGrains RecipeをMO石臼へ追加（大麦・米は未実装） | **工程仕様はGrains** |
+| 蕎麦粉 / 雑穀粉 / 大麦粉 / 米粉 | Grains所有（大麦粉・米粉もソース実装済み、実機未検証） | Grains所有の専用粉とし、MO generic flourへ自動統合しない | **Grains** |
+| 製粉Recipe | 5種の穀粉を対象とし、Grainsが各Base Recipeをソース実装。製粉では総栄養を保存 | 小麦はMO既存製粉経路へ接続。他4種はGrains RecipeをMO石臼へ追加（新規の大麦・米経路は実機未検証） | **工程仕様はGrains** |
 | 石臼 / 最低限の製粉設備 | Grains単体で使えるAMJ所有の手動石臼を持つ。最低限経路はMO研究なしで成立 | MOの DankPyon_Millstone を標準設備として再利用し、AMJ石臼は重複表示しない | **BaseはGrains、MO時の実Def供給元はMO** |
 | DankPyon_Cereal | 存在しない前提。Base主要ループに使わない | MO既存製粉/醸造へ参加させる対象だけ登録。未脱穀束・ソバ・雑穀を一律登録しない | **MO互換専用** |
 | Straw | **AMJ Straw ThingDefを作らない。** Base脱穀では茎葉残渣を非アイテム化 | 脱穀時だけ DankPyon_Straw を副産物として追加。収穫時Hay・製粉時Hay/Strawは出さない | **MO時のみMO所有資産を利用** |
@@ -460,7 +460,7 @@ Scenarioの旧具体値表は移行中のMOプロファイル互換契約とす�
 **移行順序**
 1. About.xmlを変えず、MOなしBase XMLをロードできるテスト用プロファイルを先に作る。
 2. Base XMLからMO研究・素材・カテゴリ・Straw・Scenario参照を除去する。
-3. 非MO小麦Plant/穀束、手動石臼、最低限粉食と穀粉の初期3種（小麦粉・蕎麦粉・雑穀粉）をBaseへ追加する。大麦粉・米粉は2026-10-13の穀粉全般方針補正で追加対象と確定したが、実装は別途行う。
+3. 非MO小麦Plant/穀束、手動石臼、最低限粉食と穀粉の初期3種（小麦粉・蕎麦粉・雑穀粉）をBaseへ追加する。大麦粉・米粉は2026-10-13の穀粉全般方針補正後に本番Def/Recipeと最低限の食用途をソース追加済みであり、実機検証を残す。
 4. MO互換を条件化し、MO小麦/RawWheat/Flour/Millstone/Strawへ上表どおり収束させる。
 5. MO仮テクスチャをGrains所有Production画像へ置換する。2026-10-08の作者指示により、MO有無にかかわらずAMJ側の共有画像設定を優先する。現在は既存AMJ/Vanilla仮参照で、MO時の旧画像復元は廃止した。専用Production画像・実描画は未完了（`GrainsDependencyAudit.md`）。
 6. Vanilla + Grains / Vanilla + Grains + CCTO / MO + Grains / MO + Grains + CCTO の恒久マトリクスに、環境別穀物選択回帰を加えて通す。
@@ -523,12 +523,12 @@ Vanilla Expanded Frameworkなども、必要な機能が小さい限り必須依
 
 ### 2.9 Grainsと別Modの境界
 
-Grainsの責務は、**乾田穀物（陸稲を含む）の栽培・収穫と、穀物の一次加工・製粉・最低限の穀物食を一つのゲームループとして成立させること**に限定する。
+Grainsの責務は、**乾田穀物および畑地・水田に共通する稲Plantの所有とV1畑地栽培、穀物の一次加工・製粉・最低限の穀物食を一つのゲームループとして成立させること**に限定する。水田での生育条件・水管理はRice Cultivation側の拡張とする。
 
 #### Grainsに入れる基準
 
 - アワ・ヒエ・キビ・ソバ・大麦・小麦
-- Vanilla `Plant_Rice` を再利用して表現する陸稲と、収穫物の稲束・籾の共通加工を経て得る `RawRice`
+- Vanilla `Plant_Rice` を再利用する共通稲（V1の畑地栽培）と、収穫物の稲束・籾の共通加工を経て得る `RawRice`
 - 穀束・殻付き中間物・可食穀粒
 - 脱穀・殻取り・製粉と、その最小設備
 - 雑穀粉・蕎麦粉・大麦粉・小麦粉・米粉の5種（5種の製粉と食用途をソース実装。追加2種は実機検証待ち）
@@ -539,7 +539,7 @@ Grainsの責務は、**乾田穀物（陸稲を含む）の栽培・収穫と、
 
 #### Grainsに入れない基準
 
-- 水田・水稲栽培・田植え等の水田固有工程・稲作水利
+- 水田・同一稲Plantの水田栽培条件・田植え等の水田固有工程・稲作水利
 - 小豆・大豆等の豆類
 - 大麻・カラムシ等の繊維作物、紡績、製紙
 - 里芋・大根等の根菜・一般野菜
@@ -603,7 +603,7 @@ Salt Preservation、Fermentation / Brewing、Sake等の専用リポジトリ作�
 
 - Repository: `sucRo-RimWorld/Ancient-Medieval-Japan-Environment`
 - EnvironmentはAMJ Coreを必須にしない
-- Grains側は乾田穀物と、その作物固有の成長温度・肥沃度感応度・収量・一次加工・製粉を所有する。水田・稲・米は独立したRice Cultivation Modが所有する
+- Grains側は乾田穀物と**畑・水田に共通する稲Plant・米**、それらの基準生育値・一次加工・製粉を所有する。**水田地形・給排水・水田での生育／収量補正**は独立したRice Cultivation Modが所有する
 - Environment側は、それらが置かれる外部環境である気候・標高/Hilliness・河川・海岸線・バイオーム・野生植生等を所有する
 - AMJ Core / CCTO / MO等との接続は必要に応じて任意互換とする
 
@@ -858,7 +858,7 @@ Stage Aの穀物は、加工前後の保存性も作物選択と備蓄判断に�
 
 - 雑穀粉 `AMJC_MilletFlour` は実装済み。保存期間60日で、雑穀団子に使用する。
 - 蕎麦粉 `AMJC_BuckwheatFlour` はそばがきとともに実装済み。保存期間60日。蕎麦切りは初期範囲外とする。
-- 大麦粉は穀粉全般を扱う方針により追加対象とする。現行の製品・Recipeは未実装で、既存の可食大麦穀粒・加工経路・栄養は変更しない。
+- 大麦粉は穀粉全般を扱う方針により本番ThingDef・製粉Recipeと最低限料理をソース実装済み（実機未検証）。既存の可食大麦穀粒・加工経路・栄養は変更しない。
 - Straw副産物は製粉ではなく脱穀段階へ統一する。ただし `DankPyon_Straw` はMO併用時だけ出力し、BaseではStraw ThingDefを所有しない。
 - **MO併用時は** `DankPyon_Plant_Wheat` / `DankPyon_RawWheat` を可視供給元として再利用し、`DankPyon_RawWheat` を未脱穀の小麦束として `DankPyon_Cereal` から外す。脱穀後の `AMJC_Wheat` だけをMO製粉へ接続する。BaseではGrains所有の小麦Plant/穀束を同じ `AMJC_Wheat` へ合流させる。
 - MO 1.6の**上流原本**では小麦収穫時の `Plant_SecondaryDrop` と製粉Recipe3種でHayが生じる。GrainsのMO条件付き `MedievalOverhaul_StageA_Wheat.xml` は収穫時副産物拡張を除去し、`DankPyon_CraftFlour_Manual` / `DankPyon_CraftFlour` / `DankPyon_CraftFlourBulk` の `products/Hay` を削除する。したがって**Grains適用後の製粉成果物は小麦粉のみ**であり、`DankPyon_Straw` はAMJ脱穀Recipeでのみ生じる。上流MOのHay存在とGrains適用後の製粉仕様を混同しない。
@@ -877,7 +877,7 @@ GrainsではVanillaの `Plant_Rice` を削除・複製せず、**V1では畑地�
 - `RawRice` は籾摺り**後**の共通米食材として再利用する。畑地・水田・うるち・もちの違いで最終食材を分けない。現行では収穫先とRecipe・E2Eのソースを二段階加工へ更新済み（実ゲームテストは未実行）。
 - CCTO導入時はCCTOが既に `Plant_Rice` へ設定する最低生育10℃・固定枯死-1℃を利用し、Grains側に重複したColdToleranceExtensionを追加しない。
 - Vanilla Riceの現行3日成長・収量6は採用せず、初期実装値を **growDays 5、harvestYield 11、fertilityMin 0.7、fertilitySensitivity 0.8、成長10～42℃・最適18～32℃** とする。既存六穀との七穀27セル分析で全作物の勝利条件と単一作物の支配防止を確認し、実機挙動は未検証とする。
-- 米粉は穀粉全般を扱う方針によりGrainsの追加対象とする。可食米は引き続きVanilla `RawRice` とし、そこから米粉に製粉する経路を実装対象とする（現行Def/Recipeは未実装）。
+- 米粉は穀粉全般を扱う方針により本番ThingDef・製粉Recipeと最低限料理をソース実装済み（実機未検証）。可食米はVanilla `RawRice` を維持し、製粉入力とする。
 - **米粉の品種統合（2026-10-13作者確定）:** Grainsの「米粉」はうるち米由来の粉と、もち米（糯米）由来の粉を概念上ひとつに含める。ゲーム上はVanilla `RawRice`を共通の製粉入力とし、うるち米／もち米の作物・精米穀粒・米粉ThingDefを別々には追加しない。両者の粘り等が現実にも同じという意味ではない。米粉を練る団子・餅菓子等のRecipe候補はこの米粉で表現できるが、蒸したもち米を搗く餅と、粉を練る料理は歴史的な製法を区別する。どの完成料理を実装するかは史料調査・料理の重複監査・個別Recipe設計で決める。
 
 **2026-10-13 作者確定の共通稲方針:** うるち米・もち米を分けないのと同様に、陸稲・水稲も独立したPlantDefに分けない。畑・水田の違いは同一 `Plant_Rice` に対する水管理・栽培環境・生育速度・収量で表現する。現実の品種や乾湿適性が同じという主張ではない。水田対応はRice Cultivationの責務とし、Grains併用時は畑・水田とも `AMJC_RiceSheaf → AMJC_RiceInHull → RawRice` を共用する。Vanillaの肥沃度は主に生育速度へ作用するため、株当たり収量や生育期間の水分履歴を反映するなら別途ロジックが必要。数値・干ばつ判定・田植えJob等はVEと非VEの先行Mod比較と実機検証を経てRice Cultivation側で確定する。Rice Cultivation単独時はVanilla `Plant_Rice` / `RawRice` を使い、Grains固有の中間物に無条件依存しない食料経路を持つ。Waterworksは任意の水利基盤のままとする。
@@ -945,7 +945,7 @@ Baseでは脱穀時のStrawをThingDef化しない。MO併用時のみ上記脱�
 
 Grainsが対象とする穀粉は**雑穀粉・蕎麦粉・大麦粉・小麦粉・米粉の5種**。2026-10-13、大麦粉・米粉のThingDef／製粉Recipeと、最低限の消費先となる料理2品を本番ソースに追加した。追加2経路の実ゲームロードは未検証。Baseの小麦粉はGrains所有、MO併用時だけ `DankPyon_Flour` を実Def供給元として利用する。他4種の専用穀粉はMO generic flourへ自動統合しない。大麦・米の既存可食穀粒Defと先行加工工程は維持する。
 
-**米粉の実装単位:** うるち米粉・もち米粉を別の製粉産物に分けず、追加予定の単一米粉ThingDef/Recipeが双方を概念上表す。製粉入力はVanilla `RawRice`であり、もち米専用の穀粒Def・石臼・栽培系統は追加しない。製粉時の栄養保存と米の共通一次加工を維持する。
+**米粉の実装単位:** うるち米粉・もち米粉を別の製粉産物に分けず、ソース実装済みの単一米粉ThingDef/Recipeが双方を概念上表す。製粉入力はVanilla `RawRice`であり、もち米専用の穀粒Def・石臼・栽培系統は追加しない。製粉時の栄養保存と米の共通一次加工を維持する。
 
 可食穀粒→粉の製粉では総栄養を原則保存し、製粉そのもので食料を増加させない。粉を作れるだけの状態にはせず、§5.3の最低限粉食へ接続する。
 
@@ -1049,7 +1049,7 @@ MO併用時は、Grains Baseと同じ目的の設備・素材を二重に並べ�
 - 小麦粉: MO DankPyon_Flour
 - 石臼: MO DankPyon_Millstone
 - Straw: MO DankPyon_Straw
-- ソバ・大麦・雑穀および蕎麦粉・雑穀粉・大麦粉・米粉: Grains所有（大麦粉・米粉は未実装）
+- ソバ・大麦・雑穀および蕎麦粉・雑穀粉・大麦粉・米粉: Grains所有（大麦粉・米粉もソース実装済み、実機未検証）
 
 MO資産を使っても、Grainsの工程順・七穀（陸稲を含む）のバランス・粉食バランスは維持する。MO固有PatchはMO存在時だけ適用し、Base XMLからMO DefNameを参照しない。
 
@@ -1082,7 +1082,7 @@ GrainsはBase主要ループに必要なDefを自分で所有し、MO併用時�
 - Vanilla `Plant_Rice` の陸稲化Patchと、`RawRice` への穀物側接続
 - 各穀束・殻付き中間物・可食穀粒
 - AMJC_Wheat
-- 雑穀粉・蕎麦粉・大麦粉・米粉（後二者は未実装）
+- 雑穀粉・蕎麦粉・大麦粉・米粉（後二者もソース実装済み、実機未検証）
 - 脱穀・殻取りRecipe
 - Base用製粉Recipe・最低限粉食Recipe
 - Base用穀物加工設備

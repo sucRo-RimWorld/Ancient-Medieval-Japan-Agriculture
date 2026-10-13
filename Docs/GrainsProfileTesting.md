@@ -265,7 +265,7 @@ The real-provider suite retains **six named scenarios per profile**, but its C# 
 - the analytical and loaded-Def environment regressions are extended from six crops to seven and still reject a single crop dominating the representative cells;
 - the real-profile matrix exercises at least one native upland-rice sow/harvest path and retains the strict runtime ERROR gate.
 
-Future Rice Cultivation integration is not part of the Grains standalone matrix. That owner must test its water-rice crop converging on `RawRice` or the then-current Grains rice-processing path when Grains is present, without duplicating the Grains milling/food chain.
+Future Rice Cultivation integration is not part of the Grains standalone matrix. **It must reuse the same Vanilla `Plant_Rice` rather than define a separate water-rice crop.** Its owner must test normal-field and paddy-field sowability, field-water growth/yield modifiers, absence of duplicate rice Plant/food/flour Defs, and retention of the Grains `AMJC_RiceSheaf → AMJC_RiceInHull → RawRice` chain when Grains is present; standalone Rice Cultivation must use Vanilla `Plant_Rice`/`RawRice` without Grains intermediate dependencies. Include MO/CCTO/Waterworks optional-provider and save/load regressions.
 
 
 ### Seven-crop Pickle regression (2026-10-08)
