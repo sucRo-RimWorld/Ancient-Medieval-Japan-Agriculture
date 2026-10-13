@@ -127,6 +127,24 @@ class JapaneseLocalizationAudit(unittest.TestCase):
                 self.assertTrue((found[0].findtext(key) or '').strip(),name+'.'+key)
                 self.assertTrue((ja.findtext(name+'.'+key) or '').strip(),name+'.'+key)
 
+    def test_bulk_flour_recipes_have_functional_japanese_and_english(self):
+        japanese = labels('Languages/Japanese/DefInjected/RecipeDef/AMJC_GrainsChain.xml')
+        source = ET.parse(ROOT/'Defs/RecipeDefs/Recipes_GrainsFood.xml').getroot()
+        foods = ('Houtou','Sobagaki','MilletDumplings','BarleyFlourGruel','RiceFlourDumplings')
+        self.assertEqual(len([n for n in source.findall('RecipeDef')
+                              if (n.findtext('defName') or '').endswith('Bulk')]), 5)
+        for suffix in foods:
+            name = 'AMJC_Cook'+suffix+'Bulk'
+            rec = source.find('RecipeDef[defName="' + name + '"]')
+            self.assertIsNotNone(rec, name)
+            for field in ('label', 'description', 'jobString'):
+                self.assertTrue((rec.findtext(field) or '').strip(), name+'.'+field)
+                self.assertTrue((japanese.findtext(name+'.'+field) or '').strip(),
+                                name+'.'+field)
+            self.assertIn('4食', japanese.findtext(name+'.label'))
+            self.assertIn('栄養2.0', japanese.findtext(name+'.description'))
+            self.assertEqual(rec.findtext('products/AMJC_'+suffix), '4')
+
     def test_base_facts_match_real_recipe_outputs(self):
         shared = labels('Languages/Japanese/DefInjected/RecipeDef/AMJC_StageA.xml')
         base = labels('BaseWithoutMO/Languages/Japanese/DefInjected/RecipeDef/AMJC_MOWheat.xml')

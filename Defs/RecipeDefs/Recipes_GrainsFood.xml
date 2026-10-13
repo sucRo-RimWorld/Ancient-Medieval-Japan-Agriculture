@@ -180,4 +180,184 @@
       <AMJC_RiceFlourDumplings>1</AMJC_RiceFlourDumplings>
     </products>
   </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookHoutouBulk</defName>
+    <label>cook four hakutaku</label>
+    <description>Prepare four servings of hakutaku using 2 nutrition of wheat flour.</description>
+    <jobString>Cooking four hakutaku.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>ElectricStove</li>
+      <li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>AMJC_WheatFlour</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_WheatFlour</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products>
+      <AMJC_Houtou>4</AMJC_Houtou>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookSobagakiBulk</defName>
+    <label>cook four sobagaki</label>
+    <description>Prepare four servings of sobagaki using 2 nutrition of buckwheat flour.</description>
+    <jobString>Cooking four sobagaki.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>ElectricStove</li>
+      <li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>AMJC_BuckwheatFlour</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_BuckwheatFlour</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products>
+      <AMJC_Sobagaki>4</AMJC_Sobagaki>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookMilletDumplingsBulk</defName>
+    <label>cook four millet dumplings</label>
+    <description>Prepare four servings of millet dumplings using 2 nutrition of millet flour.</description>
+    <jobString>Cooking four millet dumplings.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>ElectricStove</li>
+      <li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>AMJC_MilletFlour</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_MilletFlour</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products>
+      <AMJC_MilletDumplings>4</AMJC_MilletDumplings>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookBarleyFlourGruelBulk</defName>
+    <label>cook four barley-flour gruel</label>
+    <description>Prepare four servings of barley-flour gruel using 2 nutrition of barley flour.</description>
+    <jobString>Cooking four barley-flour gruel.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>ElectricStove</li>
+      <li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>AMJC_BarleyFlour</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_BarleyFlour</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products>
+      <AMJC_BarleyFlourGruel>4</AMJC_BarleyFlourGruel>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookRiceFlourDumplingsBulk</defName>
+    <label>cook four rice-flour dumplings</label>
+    <description>Prepare four servings of rice-flour dumplings using 2 nutrition of rice flour.</description>
+    <jobString>Cooking four rice-flour dumplings.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>ElectricStove</li>
+      <li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>AMJC_RiceFlour</li>
+          </thingDefs>
+        </filter>
+        <count>2</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_RiceFlour</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products>
+      <AMJC_RiceFlourDumplings>4</AMJC_RiceFlourDumplings>
+    </products>
+  </RecipeDef>
 </Defs>

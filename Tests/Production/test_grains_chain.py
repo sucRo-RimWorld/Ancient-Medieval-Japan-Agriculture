@@ -200,6 +200,35 @@ class ChainRegressionTests(unittest.TestCase):
         package(worker.replace('DankPyon_Millstone</li>','OtherMillstone</li>'))
         with self.assertRaises(AssertionError):validate_mo_source(archive)
 
+    def test_bulk_flour_cost_cannot_be_reduced(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsFood.xml',
+                    'RecipeDef[defName="AMJC_CookRiceFlourDumplingsBulk"]/ingredients/li/count',
+                    '0.5')
+
+    def test_bulk_food_output_must_be_four(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsFood.xml',
+                    'RecipeDef[defName="AMJC_CookMilletDumplingsBulk"]/products/AMJC_MilletDumplings',
+                    '5')
+
+    def test_bulk_cooking_work_must_equal_four_single_meals(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsFood.xml',
+                    'RecipeDef[defName="AMJC_CookBarleyFlourGruelBulk"]/workAmount',
+                    '1000')
+
+    def test_bulk_cannot_use_different_ingredient(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsFood.xml',
+                    'RecipeDef[defName="AMJC_CookSobagakiBulk"]/fixedIngredientFilter/thingDefs/li',
+                    'AMJC_RiceFlour')
+
+    def test_mo_bulk_houtou_uses_mo_flour(self):
+        self.mutate('Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_GrainsFlour.xml',
+                    'Operation[last()]/value/li', 'AMJC_WheatFlour')
+
+    def test_bulk_recipes_remain_research_free(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsFood.xml',
+                    'RecipeDef[defName="AMJC_CookHoutouBulk"]',
+                    new_element='<researchPrerequisite>Cooking</researchPrerequisite>')
+
     def test_no_duplicate_fallback_in_mo(self):
         self.mutate('Defs/ThingDefs_Items/Items_GrainsFlour.xml','.',new_element='<ThingDef><defName>AMJC_WheatFlour</defName></ThingDef>')
 

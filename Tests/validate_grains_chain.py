@@ -11,6 +11,8 @@ SHARED_NAMES = {
     'AMJC_CookHoutou','AMJC_CookSobagaki','AMJC_CookMilletDumplings','AMJC_DoGrainProcessing',
     'AMJC_BarleyFlour','AMJC_RiceFlour','AMJC_BarleyFlourGruel','AMJC_RiceFlourDumplings',
     'AMJC_MillBarley','AMJC_MillRice','AMJC_CookBarleyFlourGruel','AMJC_CookRiceFlourDumplings',
+    'AMJC_CookHoutouBulk','AMJC_CookSobagakiBulk','AMJC_CookMilletDumplingsBulk',
+    'AMJC_CookBarleyFlourGruelBulk','AMJC_CookRiceFlourDumplingsBulk',
 }
 FALLBACK_NAMES = {'AMJC_Plant_Wheat','AMJC_RawWheat','AMJC_WheatFlour','AMJC_ManualMillstone','AMJC_MillWheat','AMJC_DoGrainsMilling'}
 
@@ -134,6 +136,27 @@ def validate(root=ROOT):
             assert food.findtext('ingestible/preferability') == 'MealSimple'
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
             assert [n.text for n in rec.findall('recipeUsers/li')] == ['Campfire','ElectricStove','FueledStove']
+            # Vanilla 4-meal behavior: one Bill yields four meals, with four
+            # times the inputs AND four times the cooking work; savings are
+            # fewer jobs/ingredient fetches, not free nutrition or work.
+            bulk = defs['AMJC_Cook'+suffix+'Bulk']
+            assert bulk.tag == 'RecipeDef', suffix
+            assert bulk.findtext('ingredientValueGetterClass') == 'IngredientValueGetter_Nutrition'
+            assert bulk.findtext('ingredients/li/filter/thingDefs/li') == flour
+            assert bulk.findtext('fixedIngredientFilter/thingDefs/li') == flour
+            assert bulk.findtext('fixedIngredientFilter/specialFiltersToDisallow/li') == 'AllowRotten'
+            assert float(bulk.findtext('ingredients/li/count')) == 2.0, ('Bulk flour nutrition', suffix)
+            assert [n.tag for n in bulk.findall('products/*')] == ['AMJC_'+suffix]
+            assert bulk.findtext('products/AMJC_'+suffix) == '4', ('Bulk meal quantity', suffix)
+            assert float(rec.findtext('workAmount')) == 300
+            assert float(bulk.findtext('workAmount')) == 1200, ('Bulk cooking work', suffix)
+            assert bulk.findtext('workSpeedStat') == rec.findtext('workSpeedStat') == 'CookSpeed'
+            assert bulk.findtext('workSkill') == rec.findtext('workSkill') == 'Cooking'
+            assert [n.text for n in bulk.findall('recipeUsers/li')] == ['Campfire','ElectricStove','FueledStove']
+            assert bulk.find('researchPrerequisite') is None and bulk.find('researchPrerequisites') is None
+            assert bulk.findtext('ingredientValueGetterClass') == rec.findtext('ingredientValueGetterClass')
+            assert bulk.find('skillRequirements') is None
+            assert bulk.find('targetCountAdjustment') is None
         assert float(defs['AMJC_AteFlourFood'].findtext('stages/li/baseMoodEffect')) == 2
     mood = ET.parse(root/'Defs/ThoughtDefs/Thoughts_GrainsFood.xml').getroot()
     stage = mood.find("ThoughtDef[defName='AMJC_AteFlourFood']/stages/li")

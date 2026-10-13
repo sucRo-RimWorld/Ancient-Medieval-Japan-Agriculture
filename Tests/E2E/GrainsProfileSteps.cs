@@ -259,6 +259,20 @@ namespace AncientMedievalJapanCore.E2E
                     ctx.Assert(rec.recipeUsers.Any(u => u.defName == "Campfire") && rec.researchPrerequisite == null
                         && (rec.researchPrerequisites == null || rec.researchPrerequisites.Count == 0),
                         "Minimum powder food must be research-free and available at a campfire.");
+                    RecipeDef bulk = DefDatabase<RecipeDef>.GetNamed("AMJC_Cook" + foods[index] + "Bulk");
+                    ctx.Assert(bulk.ingredients.Count == 1 && bulk.ingredients[0].filter.Allows(powder)
+                        && bulk.fixedIngredientFilter.Allows(powder)
+                        && Math.Abs(bulk.ingredients[0].GetBaseCount() - 2f) < 0.001f,
+                        "Bulk powder meal must consume 2 Nutrition from the same flour.");
+                    ctx.Assert(bulk.products.Count == 1 && bulk.products[0].thingDef == food
+                        && bulk.products[0].count == 4 && Math.Abs(bulk.workAmount - 1200f) < 0.001f,
+                        "Four-meal production must output 4 servings for 1200 work.");
+                    ctx.Assert(bulk.recipeUsers.Any(u => u.defName == "Campfire")
+                        && bulk.recipeUsers.Any(u => u.defName == "FueledStove")
+                        && bulk.recipeUsers.Any(u => u.defName == "ElectricStove")
+                        && bulk.researchPrerequisite == null
+                        && (bulk.researchPrerequisites == null || bulk.researchPrerequisites.Count == 0),
+                        "Bulk powder food must be research-free and available at standard cook stations.");
                     ctx.Assert(Math.Abs(food.GetStatValueAbstract(StatDefOf.Nutrition) - 0.9f) < 0.001f
                         && food.ingestible.tasteThought.defName == "AMJC_AteFlourFood", "Food nutrition/thought differs.");
                     var rottable = food.comps.OfType<CompProperties_Rottable>().ToList();
