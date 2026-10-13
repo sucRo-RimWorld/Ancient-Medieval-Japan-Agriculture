@@ -44,4 +44,16 @@
       </recipeUsers>
     </value>
   </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookHoutouBulk"]/ingredients/li/filter/thingDefs/li</xpath>
+    <value>
+      <li>DankPyon_Flour</li>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookHoutouBulk"]/fixedIngredientFilter/thingDefs/li</xpath>
+    <value>
+      <li>DankPyon_Flour</li>
+    </value>
+  </Operation>
 </Patch>
