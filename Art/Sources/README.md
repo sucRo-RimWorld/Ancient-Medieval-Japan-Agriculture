@@ -42,6 +42,8 @@ The complete Core source-recovery inventory is [Inventory.md](Inventory.md): 19 
 
 ## Current authoritative sources
 
+- `Workshop/GrainsV1FoodComparison_EN-JA.png` — exact 1672×941 approved V1 bilingual meal comparison PNG, also copied byte-identically to `Docs/Media/GrainsV1FoodComparison_EN-JA.png` for Workshop BBCode hosting. No new or invented food icons. Git blob `18957f3c0d7f4283ab6b3cafd8a50891087db466`.
+
 - `Shared/Containers/AMJ_Masu_Empty_Master.png`
 - `Shared/Containers/AMJ_Masu_Empty_Master.xcf`
 - `Things/Item/Resource/AMJC_Buckwheat/Buckwheat/Buckwheat.png`
