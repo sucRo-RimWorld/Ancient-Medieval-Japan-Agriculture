@@ -305,6 +305,57 @@ namespace AncientMedievalJapanCore.E2E
                     ctx.Assert(rottable.Count == 1 && rottable[0].daysToRotStart == 2.5f,
                         "Powder meals must contain exactly one 2.5-day rottable comp.");
                 }
+                // Shared fallback foods must accept mixed cereal stacks but
+                // must never silently cross grain and flour input families.
+                string[] rawGrains = { "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley",
+                    "AMJC_Wheat", "RawRice" };
+                string[] mixedPowders = { "AMJC_MilletFlour", "AMJC_BuckwheatFlour",
+                    "AMJC_BarleyFlour", "AMJC_RiceFlour",
+                    mo ? "DankPyon_Flour" : "AMJC_WheatFlour" };
+                string[] commonFoods = { "MixedGrainMeal", "MixedGrainPorridge", "MixedFlourFood" };
+                float[] commonWork = { 240f, 200f, 300f };
+                float[] commonRotDays = { 3f, 1.5f, 2f };
+                for (int index = 0; index < commonFoods.Length; index++)
+                {
+                    ThingDef food = DefDatabase<ThingDef>.GetNamed("AMJC_" + commonFoods[index]);
+                    ThingDef[] accepted = (index == 2 ? mixedPowders : rawGrains)
+                        .Select(s => DefDatabase<ThingDef>.GetNamed(s)).ToArray();
+                    ThingDef[] forbidden = (index == 2 ? rawGrains : mixedPowders)
+                        .Select(s => DefDatabase<ThingDef>.GetNamed(s)).ToArray();
+                    for (int batchIndex = 0; batchIndex < 2; batchIndex++)
+                    {
+                        int servings = batchIndex == 0 ? 1 : 4;
+                        RecipeDef recipe = DefDatabase<RecipeDef>.GetNamed("AMJC_Cook"
+                            + commonFoods[index] + (servings == 4 ? "Bulk" : ""));
+                        ctx.Assert(recipe.allowMixingIngredients && recipe.ingredients.Count == 1
+                            && Math.Abs(recipe.ingredients[0].GetBaseCount() - 0.5f * servings) < 0.001f
+                            && Math.Abs(recipe.workAmount - commonWork[index] * servings) < 0.001f,
+                            "Generic food recipe must allow mixed inputs at fixed nutrition and work.");
+                        ctx.Assert(recipe.products.Count == 1 && recipe.products[0].thingDef == food
+                            && recipe.products[0].count == servings,
+                            "Generic food Bill output quantity or product differs.");
+                        foreach (ThingDef ing in accepted)
+                            ctx.Assert(recipe.ingredients[0].filter.Allows(ing)
+                                && recipe.fixedIngredientFilter.Allows(ing),
+                                "Generic food excludes an eligible grain or flour: " + ing.defName);
+                        foreach (ThingDef ing in forbidden)
+                            ctx.Assert(!recipe.ingredients[0].filter.Allows(ing)
+                                && !recipe.fixedIngredientFilter.Allows(ing),
+                                "Generic food erroneously crosses flour/grain boundary: " + ing.defName);
+                        ctx.Assert(recipe.recipeUsers.Any(t => t.defName == "Campfire")
+                            && recipe.recipeUsers.Any(t => t.defName == "FueledStove")
+                            && recipe.recipeUsers.Any(t => t.defName == "ElectricStove")
+                            && recipe.researchPrerequisite == null
+                            && (recipe.researchPrerequisites == null || recipe.researchPrerequisites.Count == 0),
+                            "Common food must be research-free and available at ordinary cook stations.");
+                    }
+                    ctx.Assert(Math.Abs(food.GetStatValueAbstract(StatDefOf.Nutrition) - 0.9f) < 0.001f,
+                        "Generic cooked food must match one simple meal nutrition.");
+                    var commonRottable = food.comps.OfType<CompProperties_Rottable>().ToList();
+                    ctx.Assert(commonRottable.Count == 1
+                        && Math.Abs(commonRottable[0].daysToRotStart - commonRotDays[index]) < 0.001f,
+                        "Shared food rotting interval or inherited comps drifted.");
+                }
                 ctx.Assert(DefDatabase<ThoughtDef>.GetNamed("AMJC_AteFlourFood").stages[0].baseMoodEffect == 2f,
                     "The extra flour processing reward must remain +2 mood.");
             });
