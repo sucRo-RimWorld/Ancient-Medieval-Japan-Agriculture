@@ -205,3 +205,17 @@ These six English strings are translations of the author-approved Japanese §7 d
 既存Mod比較（2026-10-13、限定調査）：VEの `VanillaCookingExpanded` 1.6 `Items_RawPlant.xml` は `VCE_Flour` という小麦粉を所有し、`Recipes_Bakes.xml` の製菓Recipeはそれを明示指定。VE `VanillaPlantsExpanded-MorePlants` 1.6では複数の別穀類栽培があるが、そのことだけでAMJの大麦粉・米粉の供給を置換できない。非VEではMO 1.6の `DankPyon_Flour` が小麦粉として既にGrainsの条件付き供給元。さらに Progression: Agriculture の公開説明ではMO・VCE双方の粉を統合し、VPE More Plantsの大麦等を一般穀物へ接続する互換がある。ただし同Modの1.6実ソースは今回未取得・未検証のため、全Modとの最終互換を証明しない。
 
 **残ゲート:** 追加2種の粉を単に作れる状態で完了扱いしない。工程・用途・画像パス・ローカライズ、VE・非VEの具体的な競合Patch、Vanilla/MO×CCTO四構成での実ゲームBills／ERROR 0を揃える。料理候補の正式採否と歴史説明文の承認は別途必要であり、未承認の本番文字列を作らない。
+
+
+## 13. 五粉への機能追加（2026-10-13、史実校閲・実機未完）
+
+§12の調査を踏まえ、米粉を練って加熱する米粉団子と、大麦粉を湯で煮る汎用的な麦粉粥を追加。特定の中世郷土料理名が史料で確認されたという意味ではなく、材料と基本操作を表すゲーム内の説明名。「はったい」は麦を**先に炒ってから挽く**製法のため、先に通常製粉する麦粉粥を「はったい」とは呼ばない。史実・表示名称の最終校閲は未了。
+
+- `AMJC_BarleyFlour` — 大麦粉、`AMJC_Barley` から10→10。既存の `BarleyFlour_a` を参照
+- `AMJC_RiceFlour` — 米粉、Vanilla `RawRice` から10→10。うるち・もち米を単一粉で抽象化し、既存の `RiceFlour_a` を参照
+- `AMJC_MillBarley` / `AMJC_MillRice` — Base手動石臼／MO既存石臼に条件付きで割当
+- `AMJC_BarleyFlourGruel` — 麦粉粥、既存大麦の穀粒画像を一時流用
+- `AMJC_RiceFlourDumplings` — 米粉団子、既存米の穀粒画像を一時流用
+- `AMJC_CookBarleyFlourGruel` / `AMJC_CookRiceFlourDumplings` — 粉Nutrition 0.5相当から料理1個へ
+
+この8件の日本語・英語は現在の機能操作を説明するものであり、未承認の特定時代・地域の由緒を追加しない。元の§2/§6/§7/§8/§10承認済み文言と料理3品は変更しない。画像制作・RimWorld実機での四プロファイル実ジョブPASSは別ゲートのまま。

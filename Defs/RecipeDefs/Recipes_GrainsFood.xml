@@ -108,4 +108,76 @@
       <AMJC_MilletDumplings>1</AMJC_MilletDumplings>
     </products>
   </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookBarleyFlourGruel</defName>
+    <label>cook barley-flour gruel</label>
+    <description>Prepare one barley-flour gruel from barley flour.</description>
+    <jobString>Cooking barley-flour gruel.</jobString>
+    <workAmount>300</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>ElectricStove</li>
+      <li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>AMJC_BarleyFlour</li>
+          </thingDefs>
+        </filter>
+        <count>0.5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_BarleyFlour</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products>
+      <AMJC_BarleyFlourGruel>1</AMJC_BarleyFlourGruel>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookRiceFlourDumplings</defName>
+    <label>cook rice-flour dumplings</label>
+    <description>Prepare one serving of rice-flour dumplings from rice flour.</description>
+    <jobString>Cooking rice-flour dumplings.</jobString>
+    <workAmount>300</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li>
+      <li>ElectricStove</li>
+      <li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>AMJC_RiceFlour</li>
+          </thingDefs>
+        </filter>
+        <count>0.5</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_RiceFlour</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products>
+      <AMJC_RiceFlourDumplings>1</AMJC_RiceFlourDumplings>
+    </products>
+  </RecipeDef>
 </Defs>

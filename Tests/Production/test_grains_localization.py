@@ -105,6 +105,28 @@ class JapaneseLocalizationAudit(unittest.TestCase):
             self.assertIn(name + '.description', vanilla)
             self.assertIn(name + '.description', medieval)
 
+    def test_new_flour_functional_localizations_present(self):
+        item_ja = labels('Languages/Japanese/DefInjected/ThingDef/AMJC_GrainsChain.xml')
+        recipe_ja = labels('Languages/Japanese/DefInjected/RecipeDef/AMJC_GrainsChain.xml')
+        sources = [
+            ET.parse(ROOT/'Defs/ThingDefs_Items/Items_GrainsFlour.xml').getroot(),
+            ET.parse(ROOT/'Defs/ThingDefs_Items/Items_GrainsFood.xml').getroot(),
+            ET.parse(ROOT/'Defs/RecipeDefs/Recipes_GrainsMilling.xml').getroot(),
+            ET.parse(ROOT/'Defs/RecipeDefs/Recipes_GrainsFood.xml').getroot(),
+        ]
+        items = ('AMJC_BarleyFlour','AMJC_RiceFlour',
+                 'AMJC_BarleyFlourGruel','AMJC_RiceFlourDumplings')
+        recs = ('AMJC_MillBarley','AMJC_MillRice',
+                'AMJC_CookBarleyFlourGruel','AMJC_CookRiceFlourDumplings')
+        for name in items + recs:
+            found = [n for group in sources for n in group if n.findtext('defName') == name]
+            self.assertEqual(len(found),1,name)
+            ja = item_ja if name in items else recipe_ja
+            keys = ('label','description') if name in items else ('label','description','jobString')
+            for key in keys:
+                self.assertTrue((found[0].findtext(key) or '').strip(),name+'.'+key)
+                self.assertTrue((ja.findtext(name+'.'+key) or '').strip(),name+'.'+key)
+
     def test_base_facts_match_real_recipe_outputs(self):
         shared = labels('Languages/Japanese/DefInjected/RecipeDef/AMJC_StageA.xml')
         base = labels('BaseWithoutMO/Languages/Japanese/DefInjected/RecipeDef/AMJC_MOWheat.xml')

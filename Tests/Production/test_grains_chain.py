@@ -49,6 +49,26 @@ class ChainRegressionTests(unittest.TestCase):
 
     def test_flour_does_not_multiply_nutrition(self):
         self.mutate('BaseWithoutMO/Defs/Items_Flour.xml','ThingDef/statBases/Nutrition','0.1')
+    def test_barley_flour_nutrition_stays_conserved(self):
+        self.mutate('Defs/ThingDefs_Items/Items_GrainsFlour.xml',
+                    'ThingDef[defName="AMJC_BarleyFlour"]/statBases/Nutrition', '0.1')
+
+    def test_rice_milling_uses_vanilla_edible_rice(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
+                    'RecipeDef[defName="AMJC_MillRice"]/ingredients/li/filter/thingDefs/li', 'AMJC_RiceInHull')
+
+    def test_rice_milling_uses_correct_fixed_filter(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
+                    'RecipeDef[defName="AMJC_MillRice"]/fixedIngredientFilter/thingDefs/li', 'AMJC_RiceInHull')
+
+    def test_barley_food_uses_own_flour(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsFood.xml',
+                    'RecipeDef[defName="AMJC_CookBarleyFlourGruel"]/fixedIngredientFilter/thingDefs/li', 'AMJC_RiceFlour')
+
+    def test_rice_flour_missing_asset_is_rejected(self):
+        (self.root/'Textures/Things/Item/Resource/AMJC_Rice/RiceFlour/RiceFlour_a.png').unlink()
+        with self.assertRaisesRegex(AssertionError, 'missing _a'): validate(self.root)
+
     def test_milling_batch_count_cannot_shrink_while_ratio_stays_valid(self):
         target = self.root/'Defs/RecipeDefs/Recipes_GrainsMilling.xml'
         xml = ET.parse(target)

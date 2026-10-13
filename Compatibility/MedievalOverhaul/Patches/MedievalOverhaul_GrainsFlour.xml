@@ -28,4 +28,20 @@
       <li>DankPyon_Flour</li>
     </value>
   </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/RecipeDef[defName="AMJC_MillBarley"]/recipeUsers</xpath>
+    <value>
+      <recipeUsers>
+        <li>DankPyon_Millstone</li>
+      </recipeUsers>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/RecipeDef[defName="AMJC_MillRice"]/recipeUsers</xpath>
+    <value>
+      <recipeUsers>
+        <li>DankPyon_Millstone</li>
+      </recipeUsers>
+    </value>
+  </Operation>
 </Patch>
