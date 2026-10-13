@@ -111,7 +111,7 @@ The following descriptions and jobStrings are the approved Japanese-first implem
 
 ## 7. 既存六作物の承認済み歴史説明（2026-10-08）
 
-**本節の六作物は日本語説明を作者承認済みです。** 先に確定した§2の15件とは別に、§7の日本語を正本として日本語DefInjectedへ反映し、対応する英語を§8に収録して本番XMLへ反映しました。labelは既存の「アワ・ヒエ・キビ・ソバ・大麦・陸稲」を維持し、ゲーム挙動・栽培数値・料理・DefNameは変更していません。
+**本節の六作物は2026-10-08に日本語説明を作者承認済みです。** ただし`Plant_Rice`のみ2026-10-13の作者指定によりV1表示名を「陸稲」から「稲」に改め、陸稲・水稲の品種／栽培法の違いとAMJでの統合方針を明示した。§7の日本語を正本として日本語DefInjectedへ、対応する英語を§8と本番Patchへ反映する。他5作物の承認済み文言、ゲーム挙動・栽培数値・Recipe・DefNameは変更しない。
 
 | DefName | 承認済み日本語description | 設計値の照合 |
 |---|---|---|
@@ -120,7 +120,7 @@ The following descriptions and jobStrings are the approved Japanese-first implem
 | `AMJC_Plant_ProsoMillet_Kibi` | **黍（きび）。** 米・麦・粟などと並び、「五穀」の一つに数えられることもある雑穀。AMJGrainsではアワ・ヒエより早く成熟し、肥沃度の影響も比較的小さい一方、一度の収穫量は少ない。収穫後は脱穀と殻取りを行う。 | 5日／収量11／肥沃度感応0.3。「五穀」には黍に代えて稗を含める異説あり。 |
 | `AMJC_Plant_Buckwheat_Soba` | **蕎麦（そば）。** 古代には凶作に備える作物として栽培を勧められ、山間部や痩せた土地でも育てられてきた。AMJGrainsでは短期栽培に向くが霜には弱く、収穫後に脱穀・殻取りを行う。古い蕎麦の食べ方と、江戸期に広まる麺状の蕎麦切りは区別する。 | 4日／収量8／最低肥沃度0.4。農水省の救荒作物・蕎麦切り史。 |
 | `AMJC_Plant_Barley` | **大麦（おおむぎ）。** 弥生時代に日本へ伝わり、奈良時代にも栽培が確認される麦類。米とともに食生活を支えてきた。AMJGrainsでは冷涼な気温での栽培に向き、雑穀より生育期間は長いが収量が多い。収穫後は脱穀と殻取りを行う。 | 10日／収量22／成長最低0℃。農水省「特集1 麦(1)」。 |
-| `Plant_Rice` | **陸稲（おかぼ・りくとう）。** 水田で育てる水稲と異なり、畑に作付けする稲。日本でも水稲と併せて栽培されてきたが、20世紀半ば以降は栽培が大幅に縮小した。AMJGrainsではバニラの稲を陸稲として扱い、温暖な気温と一定以上の肥沃度を必要とする。収穫後は脱穀と籾摺りを経て従来の米を得る。水田栽培は別Modに委ねる。 | Vanilla `Plant_Rice` Patch：5日／収量11／最低肥沃度0.7／成長10～42℃。陸稲の古代の普及割合は確定していない。 |
+| `Plant_Rice` | **稲（いね）。**日本では水を張った田で育てる水稲（すいとう）と、畑で育てる陸稲（おかぼ・りくとう）が栽培されてきた。両者は同じイネに属するが、一般に水への適応などが異なる品種が用いられる。陸稲の栽培は20世紀半ば以降、大幅に縮小した。\n\nAMJGrainsでは陸稲と水稲を別の作物として区別せず、共通の「稲」として扱う。V1では畑で栽培でき、温暖な気温と一定以上の肥沃度を必要とする。収穫した稲は脱穀と籾摺りを経て米になる。水田での栽培・水管理は別Modが担当し、V1では未実装。 | Vanilla `Plant_Rice` Patch：5日／収量11／最低肥沃度0.7／成長10～42℃。陸稲の古代の普及割合は確定していない。水田栽培はV1未実装。 |
 
 ### 根拠・留保
 
@@ -130,13 +130,18 @@ The following descriptions and jobStrings are the approved Japanese-first implem
 - 蕎麦の救荒作物としての歴史と蕎麦切り：https://www.maff.go.jp/j/pr/aff/1811/characterinformation.html
 - 大麦の日本への伝来と奈良時代の栽培：https://www.maff.go.jp/j/pr/aff/1602/spe1_01.html
 - 陸稲・水稲の歴史と1955年頃以降の陸稲減少：https://www.maff.go.jp/j/syouan/keikaku/soukatu/okome_summary/07/environ_ment_03.html
+- 畑の陸稲と水田の水稲の定義（農研機構）：https://www.naro.go.jp/laboratory/tarc/rice_faq/growing/025127.html
+- 栽培環境に適したイネの品種差（農研機構）：https://www.naro.go.jp/laboratory/tarc/rice_faq/kind/025069.html
+- 陸稲と水稲の品種・形態的な差（茨城県農業総合センター研究報告第17号）：https://www.pref.ibaraki.jp/nourinsuisan/nosose/cont/img/seikouken_kennkyu_17.pdf
 
-**史実・ゲーム値の線引き:** ゲームで設定した最低生育温度を史実の絶対的な耐霜性とは解釈しません。地域の郷土食の記録を古代から全国一律の慣習とすることも避けます。表示名を「アワ」から「粟」等へ改めるかは本節では決めず、現行labelを維持しています。追加機能（稲の田植えや酒造等）も予告しません。
+**分類上の補足（2026-10-13）：** 陸稲と水稲は生物学的に別種ではなく、栽培形態や環境適応に差のある稲の品種群。水田Mod未導入のV1に水田作業が存在するような説明はしない。
+
+**史実・ゲーム値の線引き:** ゲームで設定した最低生育温度を史実の絶対的な耐霜性とは解釈しません。地域の郷土食の記録を古代から全国一律の慣習とすることも避けます。アワ・ヒエ等の表示名変更は本節では決めず現行labelを維持します。ただし稲の表示名は2026-10-13の作者指定によりV1から「稲」へ変更します。追加機能（稲の田植えや酒造等）も予告しません。
 
 
 ## 8. English descriptions translated from §7 approved Japanese (2026-10-08)
 
-These six English strings are translations of the author-approved Japanese §7 descriptions. The five shared plants use `Defs/ThingDefs_Plants/Plants_StageA.xml`; the reused Vanilla `Plant_Rice` is patched by `Patches/UplandRice.xml`. Earlier §2/§6 approved food, milling, and non-MO wheat descriptions remain unchanged.
+These six English strings follow the Japanese §7 descriptions; only Plant_Rice was revised under the 2026-10-13 author instruction. The five shared plants use `Defs/ThingDefs_Plants/Plants_StageA.xml`; the reused Vanilla `Plant_Rice` is patched by `Patches/UplandRice.xml`. Earlier §2/§6 approved food, milling, and non-MO wheat descriptions remain unchanged.
 
 | DefName | English description |
 |---|---|
@@ -145,7 +150,7 @@ These six English strings are translations of the author-approved Japanese §7 d
 | `AMJC_Plant_ProsoMillet_Kibi` | Proso millet (kibi). A millet sometimes counted among the traditional five grains, together with rice, mugi and awa. In AMJGrains it matures sooner than awa or hie and is relatively less affected by soil fertility, but yields less grain per harvest. It must be threshed and dehulled after harvest. |
 | `AMJC_Plant_Buckwheat_Soba` | Buckwheat (soba). In ancient Japan it was recommended as a crop to guard against poor harvests, and it has been grown in mountain regions and on less fertile land. In AMJGrains it grows quickly but is vulnerable to frost, and requires threshing and dehulling. Older ways of eating buckwheat are distinct from cut soba noodles, which became widespread in the Edo period. |
 | `AMJC_Plant_Barley` | Barley (omugi). A cereal introduced to Japan in the Yayoi period and known to have been cultivated during the Nara period. It has long contributed to diets alongside rice. In AMJGrains it grows well in cooler conditions, takes longer to mature than the millets, and yields a larger harvest. Harvested grain must be threshed and dehulled. |
-| `Plant_Rice` | Upland rice (okabo, rikuto). Rice grown in dry fields rather than flooded paddies. It has been cultivated in Japan alongside paddy rice, but its cultivation declined sharply after the middle of the twentieth century. In AMJGrains Vanilla rice is treated as upland rice and requires warm temperatures and sufficiently fertile soil. After threshing and hulling the harvest, the existing Vanilla rice item is obtained; paddy cultivation belongs to a separate mod. |
+| `Plant_Rice` | Rice (ine). In Japan, paddy rice (suito) is cultivated in flooded fields, while upland rice (okabo, rikuto) is grown in dry fields. Both belong to the same rice species, but varieties adapted to different water conditions are generally used. Upland rice cultivation declined sharply after the mid-twentieth century.\n\nAMJGrains represents upland and paddy rice as a single rice crop, without separate plant types. In V1 it can be grown in dry fields and requires warm temperatures and sufficiently fertile soil. After harvest, threshing and hulling yield the existing rice item. Paddy cultivation and water management belong to another mod and are not implemented in V1. |
 
 **Static verification:** `Tests/test_grains_localization.py` checks approved Japanese/English text against loaded-source XML/DefInjected and verifies the `Plant_Rice` description Patch. Game-loaded language switching, UI readability and four-profile ERROR 0 are still pending.
 
