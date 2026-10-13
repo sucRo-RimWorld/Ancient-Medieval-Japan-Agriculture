@@ -17,6 +17,9 @@ Place one Steam `[hr][/hr]` after the complete English description and before th
 
 ## V1非公開配布の準備・残ゲート（2026-10-13）
 
+**2026-10-13 tracked-content filter audit (static, not installed payload):** `main` tracked inventory had 462 blobs; `.rimignore` basename rules select **93 subscriber-oriented files** (About 4, BaseWithoutMO 12, Compatibility 9, Defs 10, LICENSE 1, Languages 9, LegacyStartingScenarios 9, Patches 5, Textures 33, `loadFolders.xml` 1), and exclude 369 including all Art/Docs/Tests. No non-runtime leakage or missing listed required metadata/loader/conditional Recipe XML was found by the independent path check. The approved Workshop comparison image is **not** a packaged Texture; Art source and Docs/Media Git blobs are identical and remain source-only. `Tests/Release/validate_workshop_payload.py` remains the authoritative CI payload filter gate; 93 is an inventory snapshot, not an actual YADA zip install or Steam upload. About+Manifest both retain `0.1.0-dev`, without MO hard dependency; optional `loadAfter` and `loadFolders.xml` are preserved. Final local installation, subscriber re-download, rendered BBCode and private-play results remain OPEN.
+
+
 - 説明本文には共通の畑地「稲」、7穀、5種の穀粉、共通3料理と指定5料理、調理台を使う暫定加工を正確に記載。水田機能やMO必須依存は宣伝しない。
 - 英語欄に日英併記を一度だけ掲載する。承認済み比較PNGは一度だけ参照し、画像・キャプションの内容や元ファイルは変更しない。
 - `About/About.xml` と `About/Manifest.xml` のバージョンは `0.1.0-dev` のまま。作者管理の `About/Changelog.txt`・既存 `PublishedFileId.txt` を勝手に置換しない。

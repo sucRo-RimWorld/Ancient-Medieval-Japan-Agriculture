@@ -18,3 +18,7 @@ Feature: Grains real-provider migration smoke - mo-ccto
   @quickstart:AmjStageAQuickstart @timeout:270
   Scenario: Grains mo-ccto real harvest and flour food Bills complete
     Then Grains harvest and flour food Bills complete through real jobs
+
+  @quickstart:AmjStageAQuickstart @timeout:270
+  Scenario: Grains mo-ccto common food single and mixed Bills complete
+    Then Grains common food single and mixed Bills complete through real jobs

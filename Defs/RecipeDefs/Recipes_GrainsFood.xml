@@ -2,7 +2,7 @@
 <Defs>
   <RecipeDef>
     <defName>AMJC_CookHoutou</defName>
-    <label>cook houtou</label>
+    <label>cook hakutaku</label>
     <description>Prepare one serving of hakutaku using wheat flour.</description>
     <jobString>Cooking hakutaku.</jobString>
     <workAmount>300</workAmount>

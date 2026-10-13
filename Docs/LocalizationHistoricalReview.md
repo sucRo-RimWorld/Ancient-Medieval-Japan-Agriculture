@@ -300,3 +300,10 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 **根拠の境界:** 雑穀が日本の主食を補ってきたことは§7のアワ・ヒエ・キビの承認済み説明と文化庁「にし阿波地域の雑穀食」（https://www.bunka.go.jp/seisaku/bunkazai/joseishien/syokubunka_story/93727709.html）に基づくが、特定地域の近代まで続いた慣習を中世全国の標準食と断定しない。蕎麦の粒食・粥食・そばがきと後の蕎麦切りの区別は農林水産省「特集2 新そば」（https://www.maff.go.jp/j/pr/aff/1811/characterinformation.html）。大麦が米・雑穀との混食や粥に利用されたことは農林水産省中国四国農政局「大麦について」（https://www.maff.go.jp/chushi/seisan/mugi/attach/pdf/project-41.pdf）。ゲームの腐敗期間・調理Workは `Docs/Balance/Crops/SevenGrainFoodChainAudit.md §3` の実装値であり歴史時代の実際の保存日数を断定しない。
 
 **静的確認対象:** 12組の日英本文がThingDefと完全一致、異種穀粒・異種穀粉を混ぜられるが単一原料も可、飯はWork240/腐敗3日、粥はWork200/腐敗1.5日、共通粉食はWork300/腐敗2日、既存指定粉食5品は不変、石臼は日本語/英語名とBaseの5製粉Recipeに対応、MOがいる場合はBase石臼を重複しない。ロード済みUI・実調理Bill・グラフィックは後日の一括実機確認に残す。
+
+
+## 17. 餺飥の英語表示名・訳語整合（2026-10-13）
+
+**作者承認済みの日本語:** ThingDef `AMJC_Houtou` は「餺飥（はくたく）」であり、平安期の文献上の料理と現代山梨の「ほうとう」は同一と断定できない（§2・§3）。本番英語descriptionも既に `Hakutaku (餺飥).` と始まり、1食Billのdescription・jobStringと4食Billのlabel・description・jobStringは `hakutaku` を使用していた。一方、ThingDefの英語labelのみ `houtou`、1食Bill英語labelのみ `cook houtou` と食い違っていた。
+
+**翻訳の機械的修正:** 英語ThingDef labelを `hakutaku`、英語RecipeDef `AMJC_CookHoutou` labelを `cook hakutaku` に統一する。4食Bill英語label `cook four hakutaku`、説明本体、日本語の「餺飥」およびDefName `AMJC_Houtou` は変更しない。新しい歴史主張、Recipe/栄養/画像/互換変更はない。`Tests/Production/test_grains_localization.py` で受入名・英語ラベルを固定する。

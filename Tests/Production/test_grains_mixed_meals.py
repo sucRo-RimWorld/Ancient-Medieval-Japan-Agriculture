@@ -1,4 +1,4 @@
-"""Contracts for V1 shared grain/porridge/flour meals; no live Bill execution."""
+"""Contracts for V1 meals and wiring of deferred native Bill execution."""
 import hashlib
 import json
 import sys
@@ -142,6 +142,39 @@ class MixedCookingRegression(unittest.TestCase):
             file = ROOT/evidence['path']
             self.assertEqual(hashlib.sha256(file.read_bytes()).hexdigest(),
                              evidence['sha256'])
+
+    def test_real_common_bill_scenarios_are_wired_in_all_profiles(self):
+        # Static harness guard only: real in-game outcomes are a separate gate.
+        body = (ROOT/'Tests/E2E/GrainsSimulationSteps.cs').read_text(
+            encoding='utf-8')
+        self.assertIn('[Then("Grains common food single and mixed Bills complete through real jobs")]', body)
+        self.assertIn('await scope.CommonFoodBill(family, bulk, mix)', body)
+        self.assertIn('foreach (string family in new[] { "MixedGrainMeal", "MixedGrainPorridge", "MixedFlourFood" })', body)
+        self.assertIn('foreach (bool bulk in new[] { false, true })', body)
+        self.assertIn('foreach (bool mix in new[] { false, true })', body)
+        for code in ('recipe.allowMixingIngredients', 'recipe.MakeNewBill()',
+                     'typeof(WorkGiver_DoBill)', 'giver.JobOnThing(worker, Campfire, true)',
+                     'offered.def == JobDefOf.DoBill', 'await Complete(job',
+                     'Count(materials[i]) == starting[i]', 'productBefore + output'):
+            self.assertIn(code, body)
+        self.assertIn('MO ? "DankPyon_Flour" : "AMJC_WheatFlour"', body)
+        self.assertIn('bill.ingredientFilter.SetDisallowAll()', body)
+        self.assertIn('bill.ingredientFilter.SetAllow(', body)
+        self.assertIn('ThingMaker.MakeThing(', body)  # isolated inputs, not harvested evidence
+        self.assertIn('created.Add(input)', body)
+        self.assertIn('if (scope != null) await RuntimeThread.Run(scope.Dispose)', body)
+
+        profile_file = (ROOT/'Scripts/GrainsTestProfiles.ps1').read_text(encoding='utf-8')
+        self.assertIn('Grains $Name common food single and mixed Bills complete', profile_file)
+        for profile in ('vanilla','vanilla-ccto','mo','mo-ccto'):
+            feat = (ROOT/'Tests/E2E/Profiles'/('grains-'+profile+'.feature')).read_text(
+                encoding='utf-8')
+            self.assertEqual(feat.count('  Scenario:'), 7, profile)
+            self.assertEqual(feat.count('@quickstart:AmjStageAQuickstart'), 2)
+            self.assertIn('Scenario: Grains '+profile+' common food single and mixed Bills complete', feat)
+            self.assertIn('Then Grains common food single and mixed Bills complete through real jobs', feat)
+        self.assertIn('$spec.Scenarios.Count', (ROOT/'Scripts/Run-17Tests.ps1').read_text(
+            encoding='utf-8'))
 
     def test_generic_ja_and_english_functional_text_present(self):
         recipes = ET.parse(ROOT/'Defs/RecipeDefs/Recipes_GrainsFood.xml').getroot()

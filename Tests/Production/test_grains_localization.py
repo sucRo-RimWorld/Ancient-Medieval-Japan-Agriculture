@@ -318,6 +318,27 @@ class JapaneseLocalizationAudit(unittest.TestCase):
                 str(rot).rstrip('0').rstrip('.'))
             self.assertEqual(recipe.findtext('allowMixingIngredients'), 'true')
 
+    def test_hakutaku_english_player_names_follow_approved_japanese(self):
+        # Approved Japanese 餺飥（はくたく） is historically distinguished
+        # from present-day Yamanashi hoto in the item's own description.
+        items = labels('Defs/ThingDefs_Items/Items_GrainsFood.xml')
+        recipes = labels('Defs/RecipeDefs/Recipes_GrainsFood.xml')
+        jp = labels('Languages/Japanese/DefInjected/ThingDef/AMJC_GrainsChain.xml')
+        self.assertEqual(jp.findtext('AMJC_Houtou.label'), '餺飥')
+        item = items.find('ThingDef[defName="AMJC_Houtou"]')
+        self.assertIsNotNone(item)
+        self.assertEqual(item.findtext('label'), 'hakutaku')
+        self.assertTrue(item.findtext('description').startswith('Hakutaku (餺飥).'))
+        for postfix, expected in (('', 'cook hakutaku'),
+                                  ('Bulk', 'cook four hakutaku')):
+            recipe = recipes.find('RecipeDef[defName="AMJC_CookHoutou' +
+                                  postfix + '"]')
+            self.assertIsNotNone(recipe)
+            self.assertEqual(recipe.findtext('label'), expected)
+            self.assertIn('hakutaku', recipe.findtext('description').lower())
+            self.assertNotIn('houtou', recipe.findtext('label').lower())
+        self.assertIn('present-day Yamanashi hoto', item.findtext('description'))
+
     def test_generic_meal_names_and_optional_ingredient_bills(self):
         """Display names and recipe wording must match the approved 3 meal families."""
         jp = labels('Languages/Japanese/DefInjected/ThingDef/AMJC_GrainsChain.xml')
