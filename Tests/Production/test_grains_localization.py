@@ -318,6 +318,44 @@ class JapaneseLocalizationAudit(unittest.TestCase):
                 str(rot).rstrip('0').rstrip('.'))
             self.assertEqual(recipe.findtext('allowMixingIngredients'), 'true')
 
+    def test_generic_meal_names_and_optional_ingredient_bills(self):
+        """Display names and recipe wording must match the approved 3 meal families."""
+        jp = labels('Languages/Japanese/DefInjected/ThingDef/AMJC_GrainsChain.xml')
+        en = labels('Defs/ThingDefs_Items/Items_GrainsFood.xml')
+        jp_recipes = labels('Languages/Japanese/DefInjected/RecipeDef/AMJC_GrainsChain.xml')
+        en_recipes = labels('Defs/RecipeDefs/Recipes_GrainsFood.xml')
+        family = {
+            'MixedGrainMeal': ('飯', 'cooked grains'),
+            'MixedGrainPorridge': ('粥', 'porridge'),
+            'MixedFlourFood': ('粉食', 'flour dish'),
+        }
+        for suffix, (ja_name, en_name) in family.items():
+            with self.subTest(family=suffix):
+                food_name = 'AMJC_' + suffix
+                self.assertEqual(jp.findtext(food_name + '.label'), ja_name)
+                food = en.find('ThingDef[defName="' + food_name + '"]')
+                self.assertIsNotNone(food)
+                self.assertEqual(food.findtext('label'), en_name)
+                for postfix, count in (('', 1), ('Bulk', 4)):
+                    recipe_name = 'AMJC_Cook' + suffix + postfix
+                    recipe = en_recipes.find('RecipeDef[defName="' + recipe_name + '"]')
+                    self.assertIsNotNone(recipe)
+                    self.assertEqual(recipe.findtext('allowMixingIngredients'), 'true')
+                    self.assertIn(en_name, recipe.findtext('label'))
+                    self.assertIn('one ', recipe.findtext('description').lower())
+                    self.assertIn('mixture', recipe.findtext('description').lower())
+                    self.assertIn(ja_name, jp_recipes.findtext(recipe_name + '.label'))
+                    self.assertIn('1種類でも複数種類でも',
+                                  jp_recipes.findtext(recipe_name + '.description'))
+                    self.assertNotIn('混合', jp_recipes.findtext(recipe_name + '.label'))
+                    self.assertEqual(recipe.findtext('products/' + food_name), str(count))
+        self.assertIn('餺飥やそばがきなどに比べ',
+                      jp.findtext('AMJC_MixedFlourFood.description'))
+        self.assertNotIn('材料を指定した粉食より',
+                         jp.findtext('AMJC_MixedFlourFood.description'))
+        self.assertIn('hakutaku or sobagaki',
+                      en.findtext('ThingDef[defName="AMJC_MixedFlourFood"]/description'))
+
     def test_stone_mill_display_name_and_five_flour_paths(self):
         """UI label changes; preserve savegame DefName and Base/MO split."""
         lang = labels('BaseWithoutMO/Languages/Japanese/DefInjected/ThingDef/AMJC_WheatFallback.xml')
