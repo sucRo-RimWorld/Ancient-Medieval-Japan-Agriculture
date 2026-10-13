@@ -54,7 +54,7 @@ try {
         $owned = $true
         foreach ($path in @($target, $test)) {
             Set-Content -LiteralPath (Join-Path $path '.AMJG-17-OWNED') -Value 'sucro.ancientmedievaljapan.core.e2e17' -Encoding Ascii
-            [xml]$about = Get-Content -LiteralPath (Join-Path $path 'About/About.xml') -Raw
+            [xml]$about = Read-RimWorldTestXml (Join-Path $path 'About/About.xml')
             $supported = $about.SelectSingleNode('/ModMetaData/supportedVersions')
             if ($null -eq $supported) { throw "Missing test-only supportedVersions: $path" }
             if (@($supported.li | ForEach-Object { [string]$_ }) -notcontains '1.7') {
@@ -67,7 +67,7 @@ try {
         # Add v1.7 only to the disposable Grains test target's conditional loader.
         # Source loadFolders.xml stays byte-identical in the repository.
         $loader = Join-Path $target 'loadFolders.xml'
-        [xml]$xml = Get-Content -LiteralPath $loader -Raw
+        [xml]$xml = Read-RimWorldTestXml $loader
         $v16 = $xml.SelectSingleNode('/loadFolders/v1.6')
         if ($null -eq $v16 -or $null -ne $xml.SelectSingleNode('/loadFolders/v1.7')) {
             throw 'Unexpected source v1.6/v1.7 loader contract'
@@ -93,10 +93,10 @@ try {
         New-Item -ItemType Directory -Force -Path $report | Out-Null
         & (Join-Path $PSScriptRoot 'Prepare-TestSaveData.ps1') -OutputRoot $save -Profile $name -RimWorldRoot $game.Root
         if ($LASTEXITCODE -ne 0) { throw "Failed to prepare isolated Grains 1.7 profile $name" }
-        [xml]$config = Get-Content -LiteralPath (Join-Path $save 'Config/ModsConfig.xml') -Raw
+        [xml]$config = Read-RimWorldTestXml (Join-Path $save 'Config/ModsConfig.xml')
         $config.ModsConfigData.version = $game.Version.Split(' ')[0]
         $config.Save((Join-Path $save 'Config/ModsConfig.xml'))
-        [xml]$prefs = Get-Content -LiteralPath (Join-Path $save 'Config/Prefs.xml') -Raw
+        [xml]$prefs = Read-RimWorldTestXml (Join-Path $save 'Config/Prefs.xml')
         foreach ($pair in @(@('resetModsConfigOnCrash','False'), @('fullscreen','False'), @('runInBackground','True'))) {
             $node = $prefs.DocumentElement.SelectSingleNode($pair[0])
             if ($null -eq $node) {

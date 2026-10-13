@@ -16,7 +16,7 @@ namespace AncientMedievalJapanCore.E2E
         public static Task Run(Action assertion)
         {
             var completion = new TaskCompletionSource<bool>();
-            RimWorks.Pickle.Runtime.PickleDriver.Post(delegate
+            Action dispatch = delegate
             {
                 try
                 {
@@ -26,7 +26,17 @@ namespace AncientMedievalJapanCore.E2E
                     completion.SetResult(true);
                 }
                 catch (Exception error) { completion.SetException(error); }
-            });
+            };
+#if AMJ_TEST_WAYLITH
+            // The installed 1.6 provider's driver inherits a legacy Unity type.
+            // Resolve the real loaded Post method without a compile-time base-type reference.
+            var driver = typeof(PickleContext).Assembly.GetType("RimWorks.Pickle.Runtime.PickleDriver", true);
+            var post = driver.GetMethod("Post", new[] { typeof(Action) });
+            if (post == null) throw new MissingMethodException(driver.FullName, "Post(Action)");
+            post.Invoke(null, new object[] { dispatch });
+#else
+            RimWorks.Pickle.Runtime.PickleDriver.Post(dispatch);
+#endif
             return completion.Task;
         }
     }
