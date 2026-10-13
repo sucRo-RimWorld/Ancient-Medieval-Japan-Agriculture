@@ -259,7 +259,7 @@ class JapaneseLocalizationAudit(unittest.TestCase):
             'AMJC_Plant_ProsoMillet_Kibi': '黍（きび）',
             'AMJC_Plant_Buckwheat_Soba': '蕎麦（そば）',
             'AMJC_Plant_Barley': '大麦（おおむぎ）',
-            'Plant_Rice': '陸稲（おかぼ・りくとう）',
+            'Plant_Rice': '稲（いね）',
         }
         self.assertEqual(set(japanese), set(names))
         self.assertEqual(set(english), set(names))
@@ -286,7 +286,17 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         matched = [node.findtext('value/description') for node in patches.findall('.//li')
                    if node.findtext('xpath') == rice_target]
         self.assertEqual(matched, [english['Plant_Rice']],
-                         'English upland rice Patch description drift')
+                         'English shared rice Patch description drift')
+        rice_label_target = '/Defs/ThingDef[defName="Plant_Rice"]/label'
+        rice_labels = [node.findtext('value/label') for node in patches.findall('.//li')
+                       if node.findtext('xpath') == rice_label_target]
+        self.assertEqual(rice_labels, ['rice plant'])
+        self.assertEqual(localizations['Plant_Rice.label'], '稲')
+        self.assertIn('水稲', japanese['Plant_Rice'])
+        self.assertIn('陸稲', japanese['Plant_Rice'])
+        self.assertIn('V1では未実装', japanese['Plant_Rice'])
+        self.assertIn('same rice species', english['Plant_Rice'])
+        self.assertIn('not implemented in V1', english['Plant_Rice'])
         self.assertIn('霜への強さまで保証するものではない',
                       japanese['AMJC_Plant_BarnyardMillet_Hie'])
         self.assertIn('does not guarantee greater resistance to frost',
