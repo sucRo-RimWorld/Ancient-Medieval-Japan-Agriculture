@@ -72,7 +72,7 @@ The author clarified that limiting Grains to wheat, buckwheat and mixed-millet f
 
 **2026-10-13 β thresh/hull stove fallback (author-confirmed):** On Vanilla **and MO**, all 18 Grains thresh/hull Recipes also accept `FueledStove` and `ElectricStove`, retaining both AMJ processing benches and MO-only thresh Straw. Source implementation uses five abstract processing parents (four shared and MO/Base wheat); quantities, work, milling recipes, foods and graphics are unchanged. Formal design: `Docs/Design.md` Base/MO boundary. Loaded stove Bill execution for four real-provider profiles remains OPEN.
 
-**Next:** validate static CI and real-game native Bill/cooking jobs on Vanilla/MO × CCTO; author-side historical copy approval and final real-view assessment remain release gates. Barley-flour gruel is *not* hattaiko; a roast-before-milling hattai chain remains out of scope. Source implementation does not establish a runtime PASS.
+**2026-10-13 V1料理方針:** 作者はどの穀類も共通の飯・粥・粉食の3系統へ接続し、後の更新で必要な料理だけ分化させる方針を許容。現行XMLは5粉食ThingDef/1食・4食Recipeであり、V1共通出力は未実装。各穀類の差別化はまず既存の栽培・収穫・脱穀・保存・製粉で表現する。将来固有料理の史実/ゲーム役割/候補数値/移行リスクは `Docs/Research/GrainMealRoadmap.md` に記録。数値・固有料理の採否・古いセーブの処理は未承認。\n\n**Next:** validate static CI and real-game native Bill/cooking jobs on Vanilla/MO × CCTO; author-side historical copy approval and final real-view assessment remain release gates. Barley-flour gruel is *not* hattaiko; a roast-before-milling hattai chain remains out of scope. Source implementation does not establish a runtime PASS.
 
 ### DES-IRONMAKING-001 — standalone ancient / medieval Ironmaking
 
