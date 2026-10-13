@@ -1,0 +1,15 @@
+# Grains V1 mixed grain meal source audit, 2026-10-13
+
+Scope: 3 shared meals, raw grain and flour kept separate, optional MO powder provider, future superior special dishes. Existing five special Grains flour meals and saves are preserved.
+
+Vanilla/MO. Vanilla CookMealSimple uses the generic nutrient ingredient getter and broad FoodRaw input, so raw edible grains are already possible. It cannot serve as a Grains-only specific grain meal, flour gruel, and grain porridge without replacing global meal behavior. MO 1.6 provider source and conditional flour ownership were audited in Grains Docs/Design.md and Docs/Balance/Crops/SevenGrainFoodChainAudit.md. Standard MO DankPyon_Flour differs from Base AMJC_WheatFlour. Current investigation did not refresh every MO provider recipe.
+
+AMJ. In Defs/RecipeDefs/Recipes_GrainsFood.xml there are five special flour foods with strict item input, 0.5 nutrition, output 1 meal, work 300, Mood +2 and 2.5-day spoilage. The five Base/MO powder inputs do not have a generic mixed-powder meal. Existing ThingDefs/Recipes must remain stable for saves and configured Bills.
+
+VE. Source inspected: https://github.com/Vanilla-Expanded/VanillaCookingExpanded/blob/main/1.6/Defs/RecipeDefs/Recipes_Soups.xml . VCE_CookSoupSimple is a CookMealBase RecipeDef with allowMixingIngredients=true, IngredientValueGetter_Nutrition, FoodRaw nutrition count 4, output VCE_UncookedSoupSimple, and SoupCooking research. https://github.com/Vanilla-Expanded/VanillaCookingExpanded/blob/main/1.6/Defs/RecipeDefs/Recipes_Meals.xml has a mixed gourmet meal using the VE nutrition-extra-ingredient getter. Both are broader cooking packs and do not directly implement five AMJ grain/flour inputs; VCE is not a baseline dependency.
+
+Non-VE. Source inspected: https://github.com/gitChaoslord/Bulk-Cooking-Recipes/blob/master/Defs/RecipeDefs/Recipes_Meals.xml . Its CookMealSimpleBulk has allowMixingIngredients=true, IngredientValueGetter_Nutrition, FoodRaw 2.5 to MealSimple 5, workAmount 1350. This repo was archived in June 2023 and its recipe quantities and cooking scope differ from V1; 1.6 runtime compatibility was not verified. Recipe mixing is prior art but using this mod is not warranted for three small AMJ foods.
+
+Bounded search: RimWorld Vanilla Cooking Expanded 1.6 mixed soup recipes; Bulk Cooking Recipes source and 1.6; medieval overhaul wheat flour; current Grains food design. No claim of inspecting every Workshop mod. Compared mechanics, historical scope, dependencies, unrelated content retained, progression/balance, reuse opportunities, maintenance/licensing feasibility. No external code is copied.
+
+Decision: independent small Grains-owned generic grain-food recipes using Vanilla RecipeDef mechanics. No new C# framework, no new dependency, no patch to general Vanilla/MO/VCE cooking. MO patch only swaps the Grains common flour input for DankPyon_Flour. Generic food must allow mixed edible grain items or mixed flour items without raw/flour crossover; specific meals retain strict ingredient and Mood +2 advantage. New recipe values require static plus four-profile loaded Bill and old-save tests.
