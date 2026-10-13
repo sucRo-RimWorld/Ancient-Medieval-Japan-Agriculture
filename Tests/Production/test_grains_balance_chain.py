@@ -120,7 +120,8 @@ class SevenGrainChainBalance(unittest.TestCase):
         ):
             with self.subTest(grain=grain):
                 rec = require_recipe(mills, bill, grain, 10, powder, 10, 300)
-                self.assertEqual(rec.findtext("recipeUsers/li"), "AMJC_ManualMillstone")
+                self.assertEqual([n.text for n in rec.findall("recipeUsers/li")],
+                                 ["AMJC_ManualMillstone", "FueledStove", "ElectricStove"])
                 self.assertEqual(flours[powder].findtext("ingestible/preferability"), "NeverForNutrition")
                 self.assertEqual(float(flours[powder].findtext("statBases/Nutrition")), 0.05)
                 self.assertEqual(float(flours[powder].findtext("comps/li/daysToRotStart")), 60)

@@ -238,6 +238,14 @@ namespace AncientMedievalJapanCore.E2E
                     ThingDef powder = DefDatabase<ThingDef>.GetNamed(powders[index]);
                     ctx.Assert(rec.ingredients.Any(i => i.filter.Allows(grain)) && rec.recipeUsers.Contains(mill),
                         "Grain must connect to the standard mill: " + grains[index]);
+                    // Beta Base stoves must not leak to the MO milling provider.
+                    ThingDef fueledStove = DefDatabase<ThingDef>.GetNamed("FueledStove");
+                    ThingDef electricStove = DefDatabase<ThingDef>.GetNamed("ElectricStove");
+                    ctx.Assert(mo
+                        ? rec.recipeUsers.Count == 1 && rec.recipeUsers[0] == mill
+                        : rec.recipeUsers.Count == 3 && rec.recipeUsers.Contains(fueledStove)
+                            && rec.recipeUsers.Contains(electricStove),
+                        "Stove milling is Base beta-only; MO must use its millstone: " + recipes[index]);
                     ctx.Assert(rec.products.Count == 1 && rec.products[0].thingDef == powder,
                         "Milling must yield only the designated powder: " + recipes[index]);
                     ctx.Assert(Math.Abs(rec.ingredients[0].GetBaseCount() * grain.GetStatValueAbstract(StatDefOf.Nutrition)

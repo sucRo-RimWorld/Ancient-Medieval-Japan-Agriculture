@@ -393,7 +393,7 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 | 小麦粉 | Grains所有のフォールバック小麦粉 | DankPyon_Flour を唯一の標準小麦粉として利用し、AMJ小麦粉を二重表示しない | **Base概念はGrains、MO時の実Def供給元はMO** |
 | 蕎麦粉 / 雑穀粉 / 大麦粉 / 米粉 | Grains専用粉として製粉ThingDef/Recipeを所有（後二者は2026-10-13ソース追加・実機未検証） | MO generic flourへ統合せず、Grains製粉Recipeは条件付きでMO石臼へ接続 | **Grains** |
 | 製粉Recipe | 5種の穀粉を対象とする。製粉の総栄養保存（小麦・蕎麦・雑穀・大麦・米のソースあり。米の外部RawRice栄養は実機で検証） | 小麦はMO製粉経路へ接続。他4種のGrains RecipeをMO石臼へ条件付き接続 | **工程仕様はGrains** |
-| 石臼 / 最低限の製粉設備 | Grains単体で使えるAMJ所有の手動石臼を持つ。最低限経路はMO研究なしで成立 | MOの DankPyon_Millstone を標準設備として再利用し、AMJ石臼は重複表示しない | **BaseはGrains、MO時の実Def供給元はMO** |
+| 石臼 / 最低限の製粉設備 | AMJ手動石臼Defは維持するが完成用の専用画像・設備は未実装。β暫定措置としてVanillaの燃料式・電気式調理台でも製粉できる（MO不要）。 | MOの DankPyon_Millstone を標準設備として再利用し、AMJ石臼は重複表示しない | **BaseはGrains、MO時の実Def供給元はMO** |
 | DankPyon_Cereal | 存在しない前提。Base主要ループに使わない | MO既存製粉/醸造へ参加させる対象だけ登録。未脱穀束・ソバ・雑穀を一律登録しない | **MO互換専用** |
 | Straw | **AMJ Straw ThingDefを作らない。** Base脱穀では茎葉残渣を非アイテム化 | 脱穀時だけ DankPyon_Straw を副産物として追加。収穫時Hay・製粉時Hay/Strawは出さない | **MO時のみMO所有資産を利用** |
 | 作物・加工研究 | Grains所有の大麦・一次加工台は初期利用可能。手動製粉をMO研究で止めない | MO併用時もGrains所有の大麦・一次加工台にMO研究条件を追加しない。MO所有小麦Plant側の研究条件は維持 | **Grains所有Defの解禁はGrains優先** |
@@ -405,6 +405,8 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 | 豆類 | 所有しない | 所有しない | **Grains外。将来所有先を用途と合わせて決定** |
 | 繊維・紡績・製紙 | 所有しない | Grains-MO互換にも置かない | **Grains外。将来のMaterials/Textiles等で決定** |
 | 根菜・一般野菜 | 所有しない | 所有しない | **Grains外。将来所有先を決定** |
+
+**β暫定製粉経路（2026-10-13 作者確定）:** AMJ専用石臼の正式実装が完了するまで、**MO非導入**では5種類（雑穀・蕎麦・大麦・小麦・米）の製粉Recipeを既存 `AMJC_ManualMillstone` に加え、Vanillaの `FueledStove` / `ElectricStove` にも登録する。専用石臼DefおよびWorkGiverは既存セーブ・Def参照の保護のため残すが、仮の石切り台画像を完成設備として扱わない。**MO導入時**は `MedievalOverhaul_GrainsFlour.xml` が共有Recipeの `recipeUsers` 全体を `DankPyon_Millstone` に差し替え、MO既存小麦製粉Recipeも従来どおりMO経路を使用する。製粉量10→10、作業量300、原料・栄養・副産物なし・研究不要の条件は変更しない。調理台経路は完成AMJ石臼導入時に再評価して撤去する暫定対応であり、調理台用の追加ThingDef/WorkGiverやMO用の重複Recipeは増やさない。ロード済みの実ゲームで調理台のBill追加と製粉ジョブ完了を確認するまでは、実機動作確認済みと記載しない。
 
 **小麦統合の固定ルール**
 

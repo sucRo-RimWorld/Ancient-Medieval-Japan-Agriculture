@@ -69,7 +69,11 @@ def validate(root=ROOT):
                 # Real loaded-game testing must verify its nutrition value.
                 assert grain == 'RawRice' and amount == output == 10
                 assert float(defs[flour].findtext('statBases/Nutrition')) == 0.05
-            assert rec.findtext('recipeUsers/li') == ('DankPyon_Millstone' if profile == 'mo' else 'AMJC_ManualMillstone')
+            # Only the Base beta profile allows Vanilla stove milling; MO patches replace the list.
+            assert [n.text for n in rec.findall('recipeUsers/li')] == (
+                ['DankPyon_Millstone'] if profile == 'mo' else
+                ['AMJC_ManualMillstone', 'FueledStove', 'ElectricStove']
+            ), 'Milling bench provider: ' + recipe
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
             assert float(defs[flour].findtext('comps/li/daysToRotStart')) == 60
             assert defs[flour].findtext('ingestible/preferability') == 'NeverForNutrition'
