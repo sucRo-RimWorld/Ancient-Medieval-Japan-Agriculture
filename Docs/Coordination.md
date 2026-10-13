@@ -60,6 +60,15 @@ Use whichever label best fits the task:
 
 ## Current coordination items
 
+### GRAINS-V1-PHASE-20261013 — simplified first release
+
+**Owner:** Grains design/processing, equipment, and testing. **Status:** DONE — V1 scope policy integrated in Docs/Design.md; the equipment-specialization work remains OPEN for later releases.
+
+**Author decision (2026-10-13):** Keep Grains V1 focused on a working harvest→thresh→hull→mill→food loop using available benches, rather than completing all originally planned purpose-built worktables before the first version. Specialized processing-station/millstone assignments and final building art are deferred to later Grains versions, without dropping intermediate grain-processing stages or relaxing load/native-Bill/ERROR-0 checks. 'V1' refers to the Grains release phase, not RimWorld game version or a promised numerical semver.
+
+**Implementation distinction:** Both Base and MO already allow thresh/hull at FueledStove and ElectricStove (main PR #66, commit 9c323595ea1919f3986318a0b627bfbecc0b94c4), while keeping existing AMJ processing benches. Non-MO stove milling is still held in draft PR #62 and is not in main; MO milling remains on MO's millstone. Existing production Defs, recipe yields/ingredients, WorkGivers, art and release metadata were not changed by this design-only decision.
+
+**Later work:** Once equipment and images are designed, deliberately reallocate recipeUsers/WorkGivers with Base/MO compatibility, saved bills and existing DefName protections and native jobs tests; do not remove fallback benches by inference. Formal source: Docs/Design.md §1, §5, and Grains implementation roadmap.
 ### GRAINS-FLOUR-SCOPE-20261013 — Five grain flours
 
 **Owner:** Grains Food/cooking + Agriculture/XML. **Status:** IN PROGRESS — five-flour source chains implemented on feature branch; CI/runtime verification pending.
