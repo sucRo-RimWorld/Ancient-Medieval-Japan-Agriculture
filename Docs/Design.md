@@ -872,7 +872,7 @@ GrainsではVanillaの `Plant_Rice` を削除・複製せず、**V1では畑地�
 
 固定方針:
 - `AMJC_UplandRice` や水稲専用PlantDef、**別の可食米**ThingDefは作らない。稲束・籾の非可食中間物2件は共通加工経路として維持する。
-- **V1から** `Plant_Rice` の表示名を日本語「稲」・英語「rice plant」に統一する。説明には畑の陸稲と水田の水稲、同種ながら適応品種群が異なること、AMJでは1つの稲に抽象化することを記す。V1に水田作業は追加しない。採用済みの画像・栽培値・加工経路は変更しない。表示本文・出典の正本は [LocalizationHistoricalReview.md §7–8](LocalizationHistoricalReview.md)。
+- **V1から** `Plant_Rice` の表示名を日本語「稲」・英語「rice plant」に統一する。ゲーム内説明には畑の陸稲と水田の水稲、同種ながら適応品種群が異なること、AMJでは1つの稲に抽象化することを記す。**ゲーム内説明にV1などの版数、未実装の水田機能、別Modへの機能分担は記載しない。** V1の栽培条件は畑地基準のままで、水田機能はGrainsに追加しない。採用済みの画像・栽培値・加工経路は変更しない。表示本文・出典の正本は [LocalizationHistoricalReview.md §7–8](LocalizationHistoricalReview.md)。
 - Vanillaの `Hydroponic` sowTagを除き、`Ground` のみとする。実ゲームの播種可否は別途検証する。
 - `RawRice` は籾摺り**後**の共通米食材として再利用する。畑地・水田・うるち・もちの違いで最終食材を分けない。現行では収穫先とRecipe・E2Eのソースを二段階加工へ更新済み（実ゲームテストは未実行）。
 - CCTO導入時はCCTOが既に `Plant_Rice` へ設定する最低生育10℃・固定枯死-1℃を利用し、Grains側に重複したColdToleranceExtensionを追加しない。
