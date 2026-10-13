@@ -49,6 +49,24 @@ class ChainRegressionTests(unittest.TestCase):
 
     def test_flour_does_not_multiply_nutrition(self):
         self.mutate('BaseWithoutMO/Defs/Items_Flour.xml','ThingDef/statBases/Nutrition','0.1')
+    def test_barley_flour_rejects_wrong_input(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
+                    'RecipeDef[defName="AMJC_MillBarley"]/ingredients/li/filter/thingDefs/li',
+                    'AMJC_BarleyInHull')
+
+    def test_rice_flour_must_use_existing_vanilla_rice(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
+                    'RecipeDef[defName="AMJC_MillRice"]/ingredients/li/filter/thingDefs/li',
+                    'AMJC_RiceInHull')
+
+    def test_rice_flour_must_not_increase_output(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
+                    'RecipeDef[defName="AMJC_MillRice"]/products/AMJC_RiceFlour', '20')
+
+    def test_mo_barley_mill_must_use_mo_millstone(self):
+        self.mutate('Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_GrainsFlour.xml',
+                    'Operation[5]/value/recipeUsers/li', 'AMJC_ManualMillstone')
+
     def test_milling_does_not_create_straw(self):
         self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml','RecipeDef/products',new_element='<AMJC_Millet>1</AMJC_Millet>')
     def test_meal_must_replace_inherited_comp_list(self):
