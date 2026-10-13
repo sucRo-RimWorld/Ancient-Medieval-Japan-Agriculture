@@ -228,9 +228,9 @@ namespace AncientMedievalJapanCore.E2E
                 ThingDef mill = DefDatabase<ThingDef>.GetNamed(mo ? "DankPyon_Millstone" : "AMJC_ManualMillstone");
                 ctx.Assert(mill.researchPrerequisites == null || mill.researchPrerequisites.Count == 0,
                     "The standard Grains mill must be research-free.");
-                string[] grains = { "AMJC_Buckwheat", "AMJC_Millet", "AMJC_Wheat" };
-                string[] powders = { "AMJC_BuckwheatFlour", "AMJC_MilletFlour", mo ? "DankPyon_Flour" : "AMJC_WheatFlour" };
-                string[] recipes = { "AMJC_MillBuckwheat", "AMJC_MillMillet", mo ? "DankPyon_CraftFlour" : "AMJC_MillWheat" };
+                string[] grains = { "AMJC_Buckwheat", "AMJC_Millet", "AMJC_Wheat", "AMJC_Barley", "RawRice" };
+                string[] powders = { "AMJC_BuckwheatFlour", "AMJC_MilletFlour", mo ? "DankPyon_Flour" : "AMJC_WheatFlour", "AMJC_BarleyFlour", "AMJC_RiceFlour" };
+                string[] recipes = { "AMJC_MillBuckwheat", "AMJC_MillMillet", mo ? "DankPyon_CraftFlour" : "AMJC_MillWheat", "AMJC_MillBarley", "AMJC_MillRice" };
                 for (int index = 0; index < grains.Length; index++)
                 {
                     RecipeDef rec = DefDatabase<RecipeDef>.GetNamed(recipes[index]);
