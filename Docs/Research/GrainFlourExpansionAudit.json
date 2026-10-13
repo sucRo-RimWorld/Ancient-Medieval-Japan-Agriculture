@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "feature": "Complete Grains rice and barley flour resource and milling pathways",
+  "owner": "sucRo-RimWorld/Ancient-Medieval-Japan-Grains",
+  "scope": "Two approved flour production states, preserving Base and conditional MO provider ownership",
+  "status": "ready",
+  "search": {
+    "date": "2026-10-13",
+    "queries": [
+      "RimWorld rice flour mochi dumpling mod 1.6",
+      "RimWorld barley flour grain milling mods",
+      "Vanilla Cooking Expanded flour Medieval Overhaul compatibility",
+      "Grains and Brewing barley flour RimWorld"
+    ],
+    "ecosystems": [
+      "vanilla_mo",
+      "amj",
+      "ve",
+      "non_ve"
+    ],
+    "limitations": "Descriptions only for VE/non-VE candidates (no source XML); supplied MO 1.6 archive compared; no complete Vanilla runtime source available. No broad compatibility/release claims."
+  },
+  "candidates": [
+    {
+      "name": "Vanilla RimWorld plus current Grains",
+      "ecosystem": "vanilla_mo",
+      "version": "1.6",
+      "evidence": [
+        "review"
+      ],
+      "comparison": {
+        "function": "Vanilla provides RawRice/meal ingredients but no AMJ-specific two-flour output",
+        "historical_fit": "Existing Grains controls grain postharvest stages and separate flours",
+        "dependencies": "Only Vanilla",
+        "retention": "Preserve all Vanilla RawRice and meals",
+        "progression_balance": "No extra crops/steps; no nutritional flour multiplication",
+        "reuse": "Reuse RawRice and Grains milling tools",
+        "maintenance_license": "No upstream assets or code copied"
+      },
+      "outcome": "independent"
+    },
+    {
+      "name": "Medieval Overhaul",
+      "ecosystem": "vanilla_mo",
+      "version": "1.6 provider archive",
+      "evidence": [
+        "review"
+      ],
+      "comparison": {
+        "function": "Provides a generic wheat flour and millstone; not distinct AMJ rice/barley flour",
+        "historical_fit": "Keep distinct flour names with one combined rice-flour identity",
+        "dependencies": "MO optional only",
+        "retention": "Preserve MO millstone and wheat flour",
+        "progression_balance": "Existing Grains flour and production compatibility",
+        "reuse": "Reuse millstone conditional patch",
+        "maintenance_license": "No MO code or graphics copied"
+      },
+      "outcome": "optional_compatibility"
+    },
+    {
+      "name": "Grains existing flour system",
+      "ecosystem": "amj",
+      "version": "main 2026-10-13",
+      "evidence": [
+        "review"
+      ],
+      "comparison": {
+        "function": "Current three flour resources; two approved resources missing",
+        "historical_fit": "Five-flour AMJ primary agricultural food loop",
+        "dependencies": "No extra dependencies",
+        "retention": "Preserve approved three flour resources and cooking",
+        "progression_balance": "Existing 10:10, 300 work, 60-day nutrition-preserving production",
+        "reuse": "Shared file formats, recipes, existing art assets",
+        "maintenance_license": "Owned by Grains; no third-party assets copied"
+      },
+      "outcome": "independent"
+    },
+    {
+      "name": "Vanilla Cooking Expanded",
+      "ecosystem": "ve",
+      "version": "Workshop 1.6 listing",
+      "evidence": [
+        "review"
+      ],
+      "comparison": {
+        "function": "Generic flour, breads and expanded cooking",
+        "historical_fit": "General dishes, not AMJ five named grain-flour system",
+        "dependencies": "Requires VEF and large cooking suite",
+        "retention": "No reason to disable or replace VCE",
+        "progression_balance": "Broad culinary changes beyond narrow grains",
+        "reuse": "Conceptual only; avoid duplicate wheat flour when MO installed",
+        "maintenance_license": "XML source unavailable; external dependencies not justified"
+      },
+      "outcome": "prior_art_only"
+    },
+    {
+      "name": "Grains and Brewing",
+      "ecosystem": "non_ve",
+      "version": "Workshop 1.4+/1.5 listing",
+      "evidence": [
+        "review"
+      ],
+      "comparison": {
+        "function": "New cereal crops, brewing, pickles and VCE-linked milling",
+        "historical_fit": "Not a dedicated ancient/medieval Japan flour pathway",
+        "dependencies": "VEF and broader content; 1.6 status unverified",
+        "retention": "Maintaining all broader functionality is outside Grains scope",
+        "progression_balance": "Crop-altering behavior conflicts with AMJ crop balance ownership",
+        "reuse": "Flour production comparison only",
+        "maintenance_license": "Workshop CC BY-NC-SA; no assets or source reused"
+      },
+      "outcome": "prior_art_only"
+    },
+    {
+      "name": "AF Dumpling",
+      "ecosystem": "non_ve",
+      "version": "Workshop 1.6 listing",
+      "evidence": [
+        "review"
+      ],
+      "comparison": {
+        "function": "Filled dumpling production and specialized stoves",
+        "historical_fit": "Not equivalent to simple rice-flour dumplings",
+        "dependencies": "Separate raw dumpling/stoves",
+        "retention": "No need to remove content to coexist",
+        "progression_balance": "Adds cooking chain beyond minimum flour use",
+        "reuse": "Historical/ingredient comparison only",
+        "maintenance_license": "Source unavailable; no assets/code reused"
+      },
+      "outcome": "prior_art_only"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "review",
+      "path": "Docs/Research/GrainFlourExpansionAudit.md",
+      "sha256": "f731cfd034e51633f0e2eeb644cc4eb2a7ca5d50ca7b8b9be826f882c4cb4a87"
+    }
+  ],
+  "decision": {
+    "kind": "independent",
+    "rationale": "The existing explicitly approved AMJ five-flour grain processing loop lacks barley/rice outputs; retaining the native postharvest grain pathway and optional MO provider requires two small Grains-owned outputs without unrelated large external dependencies.",
+    "specification": "Docs/Design.md",
+    "independent_gap": "Separate named barley/rice flour items and 10:10 nutrition-preserving mill Bills on existing Grains/MO mills"
+  },
+  "unresolved": []
+}
