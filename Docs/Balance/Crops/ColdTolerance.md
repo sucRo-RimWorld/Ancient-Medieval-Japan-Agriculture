@@ -107,3 +107,10 @@ Grainsは最終的な気候マップの選定を所有しない。既存7穀の�
 ## 照明同期修正後のVanilla実機結果（2026-10-08）
 
 `automated-gates(8).log` は修正後のVanilla単独でC#ビルド、Pickle 6/6、実行時ERROR 0を確認した。以前のNREはこの実行では再発しない。Vanilla+CCTO / MO / MO+CCTOの同修正版は確認待ちであり、旧版の合格と混ぜて4構成完了にはしない。5/25℃・暦移動・実播種/成長の試験範囲と、自然気象/CCTO枯死が未検証という制約は維持する。証拠hashと同一ソースでのマトリクス確認手順は `Docs/GrainsProfileTesting.md` を正本とする。
+
+
+## 任意CCTOの検出名互換（2026-10-13）
+
+作者承認の限定修正として、Stage A 5作物と非MO小麦の `PatchOperationFindMod` は従来の英語名 `Crop Cold Tolerance Overhaul` と現行日本語併記名 `Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）` の両方を受け入れる。RimWorld 1.7のFindModは有効Modの表示名で判定するため、英語名だけでは現行CCTOに本資料の拡張値が付かない。数値・DefName・必須依存・稲への重複拡張は変更しない。
+
+実ゲーム1.7.4976のVanilla／Vanilla+CCTO／MO／MO+CCTO各6/6・ERROR0により、有効時の拡張と値、無効時の非付与を確認した。実際の閾値を跨ぐ枯死・自然気候は未検証。シナリオ前提と証拠は [GrainsProfileTesting](../../GrainsProfileTesting.md)、その既存Native17証拠JSONが正本。

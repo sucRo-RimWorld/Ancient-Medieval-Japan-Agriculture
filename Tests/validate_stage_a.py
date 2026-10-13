@@ -111,7 +111,7 @@ def assert_ccto_patch(def_name, death_temp):
         if op.attrib.get("Class") != "PatchOperationFindMod":
             continue
         mods = [li.text.strip() for li in op.findall("./mods/li") if li.text]
-        if mods != ["Crop Cold Tolerance Overhaul"]:
+        if mods != ["Crop Cold Tolerance Overhaul", "Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）"]:
             continue
         xpath_node = op.find("./match/xpath")
         if xpath_node is not None and xpath_node.text and def_name in xpath_node.text:
