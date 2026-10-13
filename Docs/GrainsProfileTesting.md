@@ -4,6 +4,23 @@
 
 The four-profile harness was established before changing production dependency metadata. The production `About.xml` now declares **no mandatory MO or other Mod**, while `loadAfter` retains an optional MO ordering hint. The MO conditional and BaseWithoutMO fallback paths remain exclusive. A successful metadata/static tooling test is not a real-game test or public-release clearance.
 
+## Author-deferred batch: loaded-game localization and rendering (2026-10-13)
+
+**Decision:** Do not perform one-off native/game-UI checks after each rice-text edit. Defer actual RimWorld launches and screenshot inspection until the next consolidated Grains native/visual regression session. This is scheduling scope only, **not** a waiver or a PASS. Static XML/document/locale parity tests may continue independently; none can substitute for loaded-game evidence. Do not start a new runtime host or retry incomplete game installation merely for this wording revision.
+
+In a single reviewed-source run, inspect these **four existing items** in both Japanese and English and verify the indicated specification:
+
+| Loaded item | Expected description and paragraph layout |
+|---|---|
+| `Plant_Rice` (稲 / rice plant) | **2 paragraphs**: Yayoi rice cultivation, upland versus paddy rice as one Plant, then AMJ's shared crop and current growing/processing behavior; no Edo/medical history here |
+| `AMJC_RiceSheaf` (稲束 / rice sheaf) | **2 paragraphs**: harvested unthreshed sheaf, then ancient/medieval taxes, estate rent and commodity-money role |
+| `AMJC_RiceInHull` (籾 / rice in hull) | **2 paragraphs**: grain in husk, then the distinction between hulling into brown rice and further polishing to white rice, including vitamin-B1 loss |
+| `RawRice` (米 / rice) | **4 paragraphs**: edible rice in a single Vanilla Def, Edo white-rice diet and beriberi, Takaki's Meiji Navy investigation, and Suzuki's oryzanin discovery |
+
+Batch checks: (1) resolve each item by its **actual loaded DefName**; confirm that English default description patches and Japanese DefInjected win without duplicate keys or missing/empty strings, including `RawRice` despite its reused Vanilla identity; (2) confirm literal XML `\n\n` becomes visible paragraph breaks, no raw backslash text, clipping, missing kanji or broken line layout in the Info tab at ordinary UI scale; (3) inspect the existing crop/item icons and normal-zoom states for missing texture/BadTex without altering approved artwork; (4) in each relevant native profile, collect game version, exact source state, provider manifest, named scenario results, complete Player.log and zero-ERROR evidence, reusing the standard Grains matrix rather than launching a separate ad-hoc game.
+
+**Scope and results:** Run with the next consolidated Grains 1.6/1.7-appropriate native matrix, not immediately in this wording workstream. A test on a prior commit or solely a successful GitHub Action does not verify these latest descriptions. Existing older native 1.6 PASS evidence and the documented 1.7 CCTO failures remain as recorded; they are not overwritten or silently reclassified. Actual JP/EN UI and rendering are **DEFERRED / NOT RUN** on this source; final publication eligibility remains OPEN.
+
 ## Loaded grain-icon check (2026-10-11)
 
 The existing real-provider primary-loop Pickle scenario checks the **nine current grain states**: hulled/edible millet, hulled/edible buckwheat, hulled/edible barley, edible wheat, rice in hull and Vanilla `RawRice`. For all four existing profiles (Vanilla, Vanilla+CCTO, MO, MO+CCTO), it resolves the loaded `ThingDef` graphic path/class, checks each `_a` PNG with Unity `ContentFinder<Texture2D>`, and resolves `Graphic_StackCount.SubGraphicForStackCount` materials for low, middle and high counts. It rejects missing/null/BadTex assets. This runs inside the existing Unity-main-thread `RuntimeThread.Run` entry point, retains six scenarios per profile, and does not pin production PNG bytes or require redundant `_b/_c` PNGs.
