@@ -110,6 +110,27 @@ class SevenGrainChainBalance(unittest.TestCase):
         self.assertEqual(float(wheat_flour["AMJC_WheatFlour"].findtext(
             "comps/li/daysToRotStart")), 60)
 
+    def test_new_barley_rice_flour_balance(self):
+        grains = defined("Defs/ThingDefs_Items/Items_StageA_Grains.xml", "ThingDef")
+        mills = defined("Defs/RecipeDefs/Recipes_GrainsMilling.xml", "RecipeDef")
+        flours = defined("Defs/ThingDefs_Items/Items_GrainsFlour.xml", "ThingDef")
+        for grain, powder, bill in (
+            ("AMJC_Barley", "AMJC_BarleyFlour", "AMJC_MillBarley"),
+            ("RawRice", "AMJC_RiceFlour", "AMJC_MillRice"),
+        ):
+            with self.subTest(grain=grain):
+                rec = require_recipe(mills, bill, grain, 10, powder, 10, 300)
+                self.assertEqual(rec.findtext("recipeUsers/li"), "AMJC_ManualMillstone")
+                self.assertEqual(flours[powder].findtext("ingestible/preferability"), "NeverForNutrition")
+                self.assertEqual(float(flours[powder].findtext("statBases/Nutrition")), 0.05)
+                self.assertEqual(float(flours[powder].findtext("comps/li/daysToRotStart")), 60)
+                if grain in grains:
+                    self.assertEqual(float(grains[grain].findtext("statBases/Nutrition")), 0.05)
+                else:
+                    self.assertEqual(grain, "RawRice", "RawRice must remain external Vanilla")
+        # This is a static XML test. Vanilla RawRice Nutrition is checked by
+        # loaded RimWorld rather than inferred from a nonexistent AMJ ThingDef.
+
     def test_flour_food_reward_and_short_shelf_life(self):
         meals = defined("Defs/RecipeDefs/Recipes_GrainsFood.xml", "RecipeDef")
         foods = defined("Defs/ThingDefs_Items/Items_GrainsFood.xml", "ThingDef")
