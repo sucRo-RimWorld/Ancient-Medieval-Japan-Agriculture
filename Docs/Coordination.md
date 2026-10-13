@@ -81,7 +81,7 @@ The author clarified that limiting Grains to wheat, buckwheat and mixed-millet f
 
 **2026-10-13 β thresh/hull stove fallback (author-confirmed):** On Vanilla **and MO**, all 18 Grains thresh/hull Recipes also accept `FueledStove` and `ElectricStove`, retaining both AMJ processing benches and MO-only thresh Straw. Source implementation uses five abstract processing parents (four shared and MO/Base wheat); quantities, work, milling recipes, foods and graphics are unchanged. Formal design: `Docs/Design.md` Base/MO boundary. Loaded stove Bill execution for four real-provider profiles remains OPEN.
 
-**2026-10-13 V1料理方針:** 作者はどの穀類も共通の飯・粥・粉食の3系統へ接続し、後の更新で必要な料理だけ分化させる方針を許容。現行XMLは5粉食ThingDef/1食・4食Recipeであり、V1共通出力は未実装。各穀類の差別化はまず既存の栽培・収穫・脱穀・保存・製粉で表現する。将来固有料理の史実/ゲーム役割/候補数値/移行リスクは `Docs/Research/GrainMealRoadmap.md` に記録。数値・固有料理の採否・古いセーブの処理は未承認。
+**2026-10-13 V1料理方針（追加確定）:** 全七穀は飯・粥・粉食の共通3系統へ接続。混合可能な穀粒・穀粉から作る共通料理は**分化後も存続する余剰在庫の消費先**とし、指定原料・配合の固有料理には共通料理より明確な実用性能上の優位を持たせる。自動鮮度選別は未搭載。穀物差はまず既存の栽培/加工/保存で表現。現行XMLの5粉食ThingDef/x1・x4 Recipeは未統合。混合Billの実機動作、バランス数値、旧セーブ移行、史実説明は未検証・未承認。設計正本は `Docs/Design.md §5.3`、研究/評価条件は `Docs/Research/GrainMealRoadmap.md`。
 
 **2026-10-13 V1 non-MO milling fallback implementation:** The five existing Base milling Recipes gained `FueledStove` and `ElectricStove` users; `AMJC_ManualMillstone`, input 10/output 10, work 300, nutrition and work-skill contracts remain. MO patch replaces the full users list and stays millstone-only. Static negative tests, loaded Def assertions and one native fueled-stove Bill were added without changing food Recipes or images. Real four-profile native-Bill and ERROR-0 revalidation remains OPEN. Canonical design: `Docs/Design.md §5.1–5.2`.
 
