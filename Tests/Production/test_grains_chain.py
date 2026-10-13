@@ -49,6 +49,32 @@ class ChainRegressionTests(unittest.TestCase):
 
     def test_flour_does_not_multiply_nutrition(self):
         self.mutate('BaseWithoutMO/Defs/Items_Flour.xml','ThingDef/statBases/Nutrition','0.1')
+    def test_milling_batch_count_cannot_shrink_while_ratio_stays_valid(self):
+        target = self.root/'Defs/RecipeDefs/Recipes_GrainsMilling.xml'
+        xml = ET.parse(target)
+        rec = xml.find('RecipeDef[defName="AMJC_MillBuckwheat"]')
+        rec.find('ingredients/li/count').text = '5'
+        rec.find('products/AMJC_BuckwheatFlour').text = '5'
+        xml.write(target)
+        with self.assertRaises(AssertionError): validate(self.root)
+
+    def test_milling_job_cost_cannot_change(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
+                    'RecipeDef[defName="AMJC_MillMillet"]/workAmount', '30')
+
+    def test_milling_bill_count_step_cannot_change(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
+                    'RecipeDef[defName="AMJC_MillBuckwheat"]/targetCountAdjustment', '1')
+
+    def test_milling_rejects_wrong_fixed_ingredient(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
+                    'RecipeDef[defName="AMJC_MillMillet"]/fixedIngredientFilter/thingDefs/li',
+                    'AMJC_Buckwheat')
+
+    def test_fallback_wheat_mill_remains_unmixed(self):
+        self.mutate('BaseWithoutMO/Defs/Recipes_Milling.xml',
+                    'RecipeDef/allowMixingIngredients', 'true')
+
     def test_milling_does_not_create_straw(self):
         self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml','RecipeDef/products',new_element='<AMJC_Millet>1</AMJC_Millet>')
     def test_meal_must_replace_inherited_comp_list(self):
