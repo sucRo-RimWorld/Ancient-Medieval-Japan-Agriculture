@@ -169,12 +169,48 @@ class MixedCookingRegression(unittest.TestCase):
         for profile in ('vanilla','vanilla-ccto','mo','mo-ccto'):
             feat = (ROOT/'Tests/E2E/Profiles'/('grains-'+profile+'.feature')).read_text(
                 encoding='utf-8')
-            self.assertEqual(feat.count('  Scenario:'), 7, profile)
-            self.assertEqual(feat.count('@quickstart:AmjStageAQuickstart'), 2)
+            self.assertEqual(feat.count('  Scenario:'), 10, profile)
+            self.assertEqual(feat.count('@quickstart:AmjStageAQuickstart'), 5)
             self.assertIn('Scenario: Grains '+profile+' common food single and mixed Bills complete', feat)
             self.assertIn('Then Grains common food single and mixed Bills complete through real jobs', feat)
         self.assertIn('$spec.Scenarios.Count', (ROOT/'Scripts/Run-17Tests.ps1').read_text(
             encoding='utf-8'))
+
+
+    def test_v1_native_gap_scenarios_are_wired(self):
+        # Source assertion only; native Build and complete Pickle logs are independent.
+        source = (ROOT/'Tests/E2E/GrainsSimulationSteps.cs').read_text(encoding='utf-8')
+        profiles = (ROOT/'Scripts/GrainsTestProfiles.ps1').read_text(encoding='utf-8')
+        cases = (
+            ('V1 alternate processing benches complete',
+             'Grains V1 alternate processing benches complete native Bills'),
+            ('cooking Bills reject wrong ingredients',
+             'Grains cooking Bills reject wrong ingredient families through native work givers'),
+            ('food ingestion applies correct thoughts',
+             'Grains common and specialty foods apply actual ingestion thoughts'))
+        for name, step in cases:
+            self.assertIn('Grains $Name '+name, profiles)
+            self.assertIn('[Then("'+step+'")]', source)
+            for profile in ('vanilla', 'vanilla-ccto', 'mo', 'mo-ccto'):
+                feature = (ROOT/'Tests/E2E/Profiles'/('grains-'+profile+'.feature')).read_text(encoding='utf-8')
+                self.assertIn('Scenario: Grains '+profile+' '+name, feature)
+                self.assertIn('Then '+step, feature)
+        for evidence in (
+            'scope.Bill("AMJC_ThreshMilletBulk", scope.Stove',
+            'scope.Bill("AMJC_HullMilletBulk", scope.Spot',
+            'scope.Bill("AMJC_ThreshMilletBulk", scope.Spot',
+            'scope.Bill("AMJC_HullMilletBulk", scope.Stove',
+            'scope.Bill("AMJC_MillBuckwheat", scope.Stove',
+            'stove.AllRecipes.Contains(', 'giver.JobOnThing(worker, Campfire, true)',
+            'offered == null || offered.bill != bill',
+            'JobMaker.MakeJob(JobDefOf.Ingest, item)', 'await Complete(job, () => item.Destroyed',
+            'worker.needs.mood.thoughts.memories.Memories.Count('):
+            self.assertIn(evidence, source)
+        thought = ET.parse(ROOT/'Defs/ThoughtDefs/Thoughts_GrainsFood.xml').getroot()
+        t = thought.find('ThoughtDef[defName="AMJC_AteFlourFood"]')
+        self.assertEqual(float(t.findtext('durationDays')), 0.5)
+        self.assertEqual(int(t.findtext('stackLimit')), 1)
+        self.assertEqual(float(t.findtext('stages/li/baseMoodEffect')), 2.0)
 
     def test_generic_ja_and_english_functional_text_present(self):
         recipes = ET.parse(ROOT/'Defs/RecipeDefs/Recipes_GrainsFood.xml').getroot()
