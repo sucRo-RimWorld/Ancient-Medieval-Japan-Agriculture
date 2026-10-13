@@ -435,3 +435,30 @@ Invoke `powershell -NoProfile -ExecutionPolicy Bypass -File Scripts/Run-17Tests.
 The new 1.7 entry identifies actual `Version.txt` / `RimWorld.exe`, selects installed 1.7 Pickle/Quickstarts providers from their `LoadFolders.xml`, stages only the established disposable profile Mods, and compiles the existing Quickstart/Pickle test sources using Roslyn and the game's root assemblies. Only the **staged test target**, never source `loadFolders.xml`, gains a `v1.7` node copied from the approved `v1.6` conditional routing; test-only About files gain 1.7. Normal player ModsConfig/Prefs and repository production files are hash-preserved. Every selected real-provider profile runs on its own hidden rendered 1.7 process with native PID-checked Player.log, no ERROR, and the existing strict six-scenario `Validate-GrainsPickleSummary.ps1` gate. The test path does not use fake MO/CCTO API fixtures or silently replace actual provider Defs.
 
 Four independent profiles (default): `vanilla`, `vanilla-ccto`, `mo`, `mo-ccto`; each must pass its six named assertions: real provider identity, primary grain loop, optional cold tolerance contract, wheat/flour/minimum meal, seven-grain environmental distinction, and native harvest/processing Bills. This is **24 profile-scenarios**, not 24 new checks. Test results stay under `TestResults/Grains17-*/` and are not Workshop content. CI validates only PowerShell parsing, native-log rejection, game version and provider selection; the real loaded-game 1.7 matrix is not yet executed by this GitHub-only change.
+
+## Independently inspected Windows 1.7 run — 2026-10-13
+
+Production base `d456ebb86ae580eb3fa74982a1a1fc5edc345c77` plus this test-only fixture/dispatcher/XML-reader correction was executed in four real-provider profiles on `1.7.4976 rev1043`. Newly merged flour/mixed-meal source is retained. [Exact named outcomes, source/provider DLL and complete PID-log hashes](Testing/Native17-20261013.json). Local matrix: `TestResults/Grains17-20261013-194427-800/matrix.json`.
+
+| Profile | Passed / total | Failed | Native ERROR entries | Gate |
+|---|---:|---:|---:|---|
+| Vanilla | 6/6 | 0 | 0 | PASS |
+| Vanilla+CCTO | 4/6 | 2 | 4 | FAIL |
+| MO | 6/6 | 0 | 0 | PASS |
+| MO+CCTO | 5/6 | 1 | 2 | FAIL |
+
+Six scenario premises per profile:
+1. `loads the requested real providers`: exact source and actual optional providers are active, never API fixture substitutes. PASS in all four.
+2. `primary grain loop resolves`: actual harvested products, processing recipes and optional MO straw/output routing match the owner chain. PASS in all four.
+3. `optional cold tolerance resolves`: each custom crop has exactly one CCTO extension with owner values when CCTO is active and none otherwise. FAIL in both CCTO profiles; PASS without CCTO.
+4. `wheat flour and minimum food resolve`: Base wheat/flour or native MO wheat/flour and the strict owner foods match; Base CCTO fallback wheat must carry its expected extension. FAIL only in Vanilla+CCTO.
+5. `seven grains retain environmental niches`: loaded temperature/fertility/environment contracts remain distinct. PASS in all four; not a proof of gameplay enjoyment or an exclusive winning niche for every grain.
+6. `real harvest and flour food Bills complete`: actual pawn harvest and thresh/hull/mill/cook Bills, including latest flour/mixed recipes, followed by controlled 25℃ rice sow, +quadrum/5℃ rice denial and barley sow/growth, and 25℃ rice recovery. PASS in all four. This does not independently run every V1 stove fallback/recipeUsers variant.
+
+The old seasonal fixture put rice and barley in one grow-zone and changed that whole zone to barley: native growers removed the earlier rice. Separate rice/barley zones now preserve the actual sow/growth assertions, with cleanup and crop/temperature diagnostics. Native 1.7 test compilation resolves the installed Pickle 1.6 dispatcher signature by reflection only under `AMJ_TEST_WAYLITH`; the 1.6 direct-call path and actual main-thread dispatch stay intact. XML reads honor declarations/BOM; synthetic provider metadata reads explicitly use UTF-8. No scenario/ERROR gate was relaxed.
+
+**Confirmed production blocker, not repaired in this test-only patch:** all five operations in `Patches/Compatibility/CCTO_StageA.xml` and one in `BaseWithoutMO/Patches/CCTO_Wheat.xml` match the English display name `Crop Cold Tolerance Overhaul`. The actual active provider is named `Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）` with the expected packageId. RimWorld 1.7's actual `PatchOperationFindMod.ApplyWorker` calls `ModLister.HasActiveModWithName`; these operations therefore do not attach the extensions. Native failures specifically report missing custom-crop and fallback-wheat extensions. A separate author-approved production change must accept the actual provider name while preserving old English-name compatibility and every crop value. Until then the full 24-scenario matrix is **FAILED (21/24)**; do not mark CCTO coexistence or release support PASS.
+
+Offline validation: native harness contracts passed in Windows PowerShell 5.1/PowerShell 7; source chain 44 tests and latest mixed-meal six tests passed (the hash-locked audit uses original Git bytes; Windows autocrlf must not reinterpret them); synthetic four-profile validation passed. Prior 1.6 compile proof is separate from a 1.6 game rerun. Production XML/Defs/art/public metadata and normal ModsConfig/Prefs remain unchanged.
+
+Still unverified: natural weather/climate, actual threshold-crossing CCTO frost death, actual old colony load/re-save, every stove/equipment setting variant, accepted visual/UI states, balance, downloaded Workshop payload and publication.

@@ -79,22 +79,6 @@ Use whichever label best fits the task:
 
 **Sources/gates:** `Docs/Design.md §5.3`, `Docs/Research/GrainMealRoadmap.md`, `Docs/Research/GrainsMixedMealsPriorArt-20261013.md` and adjacent decision JSON. Earlier research and four-serving batch details remain in `Docs/LocalizationHistoricalReview.md §12–13` and PR history (#64, #65, #70). Base and MO already allow thresh/hull at stoves; non-MO milling also has stove fallback, while MO milling stays with MO equipment. Runtime loaded Def, actual mixed Bill, harvested-source chain, rendering, save migration, and author historical wording acceptance are separate gates. No actual RimWorld runtime result established by static CI.
 
-### DES-IRONMAKING-001 — standalone ancient / medieval Ironmaking
-
-**Requested by:** author (2026-10-07 JST)  
-**Owner:** future Ironmaking design / compatibility  
-**Status:** IN PROGRESS — confirmed concept and detailed draft recorded; implementation/repository/runtime not started
-
-**Current durable source:** `sucRo-RimWorld/Ancient-Medieval-Japan-Project:Docs/Research/IronmakingDesign.md` (migrated under the pre-split staging rule; Project commit `f610761b8d9313f0114fdbdfb98898381946d54e`). Historical Grains design commits remain provenance only.
-
-Author-confirmed scope: independent ironmaking from early iron working through primitive furnaces and box-furnace development to medieval tatara; Edo/early-modern completion is excluded. Grains/MO/Environment/Waterworks must not become mandatory suite dependencies. Previous MO-required Iron Resources primary-smelting ownership and deferred Ironworking policy are superseded; global ore-distribution changes remain a future separately evaluated candidate.
-
-Detailed names, research costs, production quantities, Steel-as-Base-general-metal proxy, MO Coal reuse, extraction mechanism and equipment choices are **draft proposals**, not accepted balance/implementation. MO snapshot identifies charcoal-pile output as the same `DankPyon_Coal` used by mined coal, and IronIngot→Steel as an MO-owned chain. Historical sources distinguish medieval furnace development from later equipment and later “tamahagane” naming.
-
-**Verification completed:** eight relevant attached-MO XML assertions match; candidate yield/fuel calculations match the table; design-link and superseded-owner checks pass. No production Defs, About metadata, DLL or PNG was changed. Old tatara / new 1.6 patch / Rice civilization actual source files were not available; no third-party copying permission or full runtime support is inferred. DBHforMedieval DLL was not decompiled. No RimWorld runtime/build/compatibility/save PASS claimed.
-
-**Next smallest unit:** settle standalone sand-iron supply and usable general-metal endpoint, compare the initial furnace/Bill/fuel abstraction and review candidate balance. Then create/choose an owning Ironmaking repository, migrate this formal design and its handoff there, and implement/test only charcoal→small furnace→bloom→general metal before later furnaces. Keep research/balance proposals distinct from author-confirmed concept; no publishing/repository creation or background worker has been started.
-
 ### AMJ-011 — Barley post-harvest grain graphics
 
 **Owner:** Art/graphics. **Status:** IN PROGRESS — hulled barley accepted and integrated; edible barley remains OPEN (2026-10-10 JST). Immature/mature crop and sheaf art were integrated on PR #20; do not reopen those assets. The author accepted the hulled barley image. Preserve its exact 1429×1100 source at `Art/Sources/Things/Item/Resource/AMJC_Barley/BarleyInHull/BarleyInHull.png` (Git blob `2cb0f5eb972e3b0f574ae61c7b4150336c5adbff`) and three identical 256px textures at `Textures/Things/Item/Resource/AMJC_Barley/BarleyInHull/BarleyInHull_{a,b,c}.png` (Git blob `b047aaccdbbc3f31c3a0be3eb57f4077eb42c3d4`). `AMJC_BarleyInHull` now uses the dedicated texPath; its gameplay/recipe/nutrition values are unchanged. Dedicated edible barley artwork and real-game normal-zoom appearance checks are still pending. Crop/sheaf source provenance remains in `Docs/References/GrainsCropSourceManifest.json`.
@@ -265,30 +249,11 @@ Audit result: the current design still assigned water field, rice plant, paddy r
 
 **Grains runtime timeout preflight (2026-10-08):** Found Pickle global `-pickle-run-timeout=4` (240s) below the seven-crop/meal `@timeout:270` scenario budget. Parameterized the shared launcher global timeout with legacy default 4min; Grains alone now uses global 7min (420s) and outer 540s process watchdog. Static Windows tooling checks the four feature tags, global cap and process/matrix budgets. The private-desktop matrix still allows 40min, and per-job internal watchdog stays 240s. No game was launched; need real 4-profile Pickle, C# compile, runtime ERROR 0 before art.
 
-### GRAINS-DESIGN-CODE-CONSISTENCY-20261008 — ownership, MO milling and crop docs
-
-**Owner:** Grains source/documentation QA  
-**Status:** Grains static design/code reconciliation implemented; real-game gates remain open (2026-10-08 JST)
-
-Audited Grains Design, crop cold-tolerance source-of-truth, Scenarios extraction ledger, E2E contract and MO 1.6 upstream against Production XML. Reconciled old pre-upland Rice Cultivation ownership (including §8.1), obsolete six-crop/unfinished-flour wording, stale Scenarios compatibility paths, and mismatched MO grinding Hay claims. Grains' MO wheat conditional Patch removes upstream Hay from all three grinding recipes, so the loaded milling contract is flour-only, while the provider archive remains unchanged and legitimately contains Hay. New static/negative tests and loaded Pickle assertions guard that distinction. CCTO remains Vanilla rice death-temperature owner (-1°C), while Grains owns Plant_Rice's upland growth settings. No new gameplay Def, MO dependency removal or release claim. Pending: C# compile, all four real Pickle profiles, ERROR 0, season-dependent Sow, final art and old-save migration.
-
-
-**日本語説明文・翻訳の監査（2026-10-08）:** `Docs/LocalizationHistoricalReview.md` に、Grains現行Def・日本語DefInjected・作業Recipeの状態と、史実に基づく日本語候補を登録。史実の説明案はまだ作者承認前であり本番XML・英語への新規反映を保留する。Baseで藁を生成しない脱穀説明、Baseで研究不要の大麦、未実装の麦茶/味噌、非MOで成立する小麦製粉の説明だけを機能契約へ合わせて直した。名称/DefName/packageId/Recipe/バランスは変えない。次は作者の日本語レビュー後にDefInjected/英文を対応させ、四プロファイルでローカライズ結果を検証する。
-
-
-**Grains localization CI golden reconciliation (2026-10-08):** The first localization audit commit was blocked by the historical MO pre-split translation fixture: six shared threshing descriptions intentionally dropped untrue Base straw claims, while the immutable fixture retained old MO-mode straw wording. Fixed the validator to assert these six exact neutral strings and normalize only those in-memory for historical comparison; all other strings and legacy gameplay hashes retain strict verification. Added two negative tests; do not edit the historical fixture or make MO/base translation branches depend on each other. Follow-up CI must PASS before moving to new work.
-
 ### AMJGRAINS-LOC-APPROVAL-20261008 — accepted Japanese, paired English
 
 **Owner:** Grains descriptions/localization. **Status:** JP approved and paired EN strings committed to source; static parity regression added; runtime text load/ERROR-0 not executed.
 
 The author approved the existing 15 Japanese historical description/Recipe work-string candidates except two precise wording adjustments: use **AMJGrains** rather than Grains in player-facing prose, and replace the ambiguous wheat phrase `実は食材になるほか挽いて粉食に利用できる` with `小麦の穀粒は食事の材料に使え、石臼で挽けば小麦粉として粉食にも利用できる`. Apply the other approved Japanese text without extra historical claims. `Docs/LocalizationHistoricalReview.md` §2/§6 now records exact Japanese/English pairs. Source scopes: 5 shared grain-flour/food ThingDefs, 5 shared RecipeDefs, 4 non-MO wheat/millstone ThingDefs, one non-MO wheat milling Recipe. Japanese DefInjected describes all 15 and jobStrings for six Recipes; default English XML carries matching descriptions/jobStrings. Product labels, names/DefNames, gameplay XML, MO provider ownership and historical MO fixture unchanged. `Tests/test_grains_localization.py` checks exact docs–Japanese–English correspondence. Remaining: game-loaded language switching and four-provider Pickle/ERROR-0, extra plant prose review and images.
-
-### AMJGRAINS-SIX-CROP-APPROVAL-20261008 — approved and localized crop descriptions
-
-**Owner:** Grains localization/historical presentation. **Status:** Six Japanese crop texts approved; JP/EN production strings added with static parity checks. Runtime/UI verification pending.
-
-The author approved all six §7 historical crop explanations (Awa/Hie/Kibi/Soba/Barley/upland Vanilla `Plant_Rice`) without further wording changes on 2026-10-08. Replaced their five shared JP PlantDefInjected descriptions and the JP upland Rice description with exactly the approved text; translated the corresponding five shared English PlantDef descriptions and the `Patches/UplandRice.xml` English description. Canonical approved Japanese text is `Docs/LocalizationHistoricalReview.md §7`, aligned English in §8. Existing §2/§6 fifteen-approved food/milling/manual-wheat texts unchanged. Static `Tests/test_grains_localization.py` now enforces strict Japanese and English copy parity, named source XML and the conditional upland rice patch, while retaining historical/agronomic checks. `label`, DefName, packageId, gameplay, CCTO/MO integration and old fixtures preserved. Remaining: four real-game profiles, actual UI language switching, zero mod-owned runtime ERRORs, images and save migration.
 
 ### GRAINS-SEVEN-CROP-BALANCE-AUDIT-20261008
 
@@ -311,36 +276,6 @@ Implemented Vanilla `Plant_Rice → AMJC_RiceSheaf → AMJC_RiceInHull → RawRi
 
 **CI follow-up on automated-gates fixes (2026-10-08):** GitHub Actions run 37733027245 confirmed two failing negative tests were not guarded because the refreshed chain validator omitted the meal-comp and graphic assertions; restored those assertions and fixed the now-changed 2.5-day XPath in an existing negative test. Windows synthetic duplicate CCTO provider passed source resolution, but its manifest assertion hit PowerShell cast/member precedence (`[string]$cctoRecords[0].Root`); parenthesized the `Root` access before conversion. Confirmed by job logs before this targeted correction; the original loaded-game four-profile gate is still pending.
 
-### GRAINS-NATIVE-SEASONAL-SOW-20261008
-
-**Owner:** Grains native sow/temperature E2E. **Status:** Test code + deterministic static regression proposed/integrated; compiled and run against the installed game only on next author-side real-provider E2E. Existing 4×6/ERROR-0 evidence remains valid solely for earlier commit, not for the modified E2E. No production Def/Recipe/crop temperature change.
-
-Extends the last real production scenario without changing four profiles' six-scenario manifest: uses a real grow-zone and `WorkGiver_GrowerSow.JobOnCell` -> `JobDefOf.Sow` with a capable pawn; confirms real `Plant_Rice` sow at 25 C, +one-quadrum calendar movement with controlled 5 C blocks new rice sow and stops its long-tick growth, while barley can sow/grow at 5 C, and rice resumes growth on rewarming. SingleTick is advanced in short batches, with strict timeout and try/catch preserved; fixture date, biome temperature, plants, snow depth and zone are restored. Controlled `BiomeDef.constantOutdoorTemperature` is **not** natural climate simulation and does not prove actual frost death or extreme seasonal survival. See `Docs/GrainsProfileTesting.md` and `Docs/Balance/Crops/ColdTolerance.md`. Rerun the 4 real-provider profiles and ERROR 0 after compilation; do not claim this new coverage passed until logs prove it.
-
-### ADD-CHANGENOTE-20261008 — Workshop release metadata
-
-**Owner:** Ancient-Medieval-Japan-Grains release/packaging
-**Status:** SOURCE IMPLEMENTED — CI verification required; no Steam publication claimed
-
-Following Project `Docs/WorkshopChangenotes.md`, added `About/Manifest.xml`, `About/Changelog.txt`, and matching `About.xml` `modVersion=0.1.0-dev`. A deterministic validator now runs in the existing Workshop payload CI. `Tests/validate_workshop_payload.py` requires both files in the subscriber archive/stage in addition to its existing YADA rules. This adds **author-side** Add Changenote support only; package ID, gameplay implementation, current live-site content, and prior test/release status are unchanged. `0.1.0-dev` is the source metadata version, not a claim of a newly performed upload.
-
-### GRAINS-SKY-FIX-VANILLA-PASS-AND-SOURCE-IDENTITY-20261008
-
-**Owner:** Grains automated runtime testing. **Status:** post-fix Vanilla diagnosis DONE; other three corrected runtime profiles OPEN. Source-identity guard implemented; Windows CI validation DONE (see evidence below).
-
-Read the actual `automated-gates(8).log`: vanilla C# build succeeded, six named Pickle scenarios passed, isolated ERROR 0, player ModsConfig unchanged. Only nonfatal CS1684 warnings. Raw log SHA256 is `967ec9afcac0915103f3213d33ac1af91b53312fa884021dd85dbeb1886dad06`. No commit/source-state fingerprint appears in this console excerpt, so do not fabricate an exact source revision. Previous NRE did not recur in this run; this is not a four-profile or full release PASS.
-
-Added profile-independent production/harness SHA256 coverage and before/after source-drift checks to the normal runner, full byte attribution to source-state, source hash to console/matrix, and synthetic positive/negative Windows regressions. Canonical procedure/evidence is in `Docs/GrainsProfileTesting.md`; temperature evidence also in `Docs/Balance/Crops/ColdTolerance.md`. No C# steps, production XML, crop values, art or dependency metadata changed. Remaining immediate game action: all four profiles from unchanged corrected source, 6/6 each and ERROR 0. Natural climate/frost, actual old saves, final bilingual UI/art and release decisions remain separate. This environment has no installed RimWorld or Windows PowerShell; do not claim local game/Windows tests.
-
-
-**CI verified (2026-10-08 JST):** commit `a055c5b0e4f76ce7d69b57c89ed08850d2e52e30` passed [Stage A run 37761723079](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/actions/runs/37761723079), including Windows PowerShell 5.1 parsing and the expanded synthetic four-profile/source-drift tests, plus [Workshop payload run 37761722979](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/actions/runs/37761722979). Source-identity tooling validation is DONE. This is not an installed-game execution of the new runner; corrected real-provider matrix remains OPEN.
-
-### GRAINS-SEASONAL-NRE-DIAGNOSTICS-20261008
-
-Uploaded automated-gates(9).log reports source SHA256 fd08db39254d0272c369a781d03f43911b23f6829ec1eea3b6fe501ca20a7563. Vanilla passed 6/6 with ERROR 0; vanilla-ccto, mo and mo-ccto failed the seasonal warm-recovery setup with NullReferenceException. The excerpt does not provide individual pass counts for failed profiles or final matrix/source-drift completion. The earlier sky-update hypothesis has not resolved the failure and is not a proven cause.
-
-Diagnostic-only E2E change: report Exception.ToString() in the outer message so Pickle's message-only output includes the underlying stack, and label individual calendar/celestial/cache/temperature/growth operations. Explicitly check rice survival and sky-manager availability without skipping or relaxing any native sow/growth assertion. Production XML, crop values, recipes, textures and dependencies unchanged. Root cause and actual-game fix remain OPEN; next installed-game execution is a focused failed-profile diagnosis, not another speculative full matrix.
-
 ### ART-GRAINS-GENERATOR-20261009 — Grains-specific grain/crop image generation entry point
 
 **Requested by:** author (2026-10-09 JST)  
@@ -362,3 +297,8 @@ PR #20 (`cd52a3d9e15467d2f6ebc1bdaac63cda84f98cbd`) wired seven immature and sev
 
 **Next:** fresh-start screen/render inspection across actual Vanilla and MO providers, address only concrete sprite/UI failures; independently complete postharvest **millet in-hull and edible grain** (AMJ-019), barley/wheat item images and processing station art. No Steam release or real-game PASS claimed.
 
+### GRAINS-NATIVE17-20261013
+
+**Owner:** Grains runtime/CCTO compatibility. **State:** TEST FIX VERIFIED; PRODUCTION CCTO BLOCKER REQUIRES SCOPE DECISION. Latest base `d456ebb86ae580eb3fa74982a1a1fc5edc345c77` tested on 1.7.4976 rev1043: Vanilla 6/6 ERROR0, Vanilla+CCTO 4/6 ERROR4, MO 6/6 ERROR0, MO+CCTO 5/6 ERROR2; complete PID logs, no skipped/flaky scenarios. Actual harvest/processing/new meals and controlled seasonal recovery pass all four. Shared grow-zone replacement caused the old rice recovery failure; test zones now remain separate. Strict failed extension checks are retained.
+
+Production `CCTO_StageA.xml` (five operations) and Base `CCTO_Wheat.xml` (one) search an English display name; installed CCTO uses its bilingual title. Actual 1.7 FindMod checks active display names, so required extensions are missing. This task authorizes test-code fixes only: production XML not changed. Next decision: bounded name compatibility in those two XMLs, retaining old English title and all numeric values, then affected runtime reruns. Canonical evidence/premises: `Docs/GrainsProfileTesting.md`, `Docs/Testing/Native17-20261013.json`. Natural frost/climate, legacy saves, stove variants, appearance and release remain OPEN. This item supersedes earlier seasonal/NRE/source-identity runtime correction chains; historical evidence remains in the testing document/Git history.

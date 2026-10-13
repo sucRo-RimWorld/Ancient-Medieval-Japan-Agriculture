@@ -1,0 +1,300 @@
+{
+  "game_version": "1.7.4976 rev1043",
+  "production_base": "d456ebb86ae580eb3fa74982a1a1fc5edc345c77",
+  "tested_code_commit": "4b2e803667740f93456fd5daef850b872964288c",
+  "production_changed_from_base": false,
+  "test_source_sha256": {
+    "Scripts/AmjProfileXml.ps1": "9019c4c0c3b9fa5b809c425b95be4e8b3b56aa8a2a32e7b3d58d5cc25ecf96b0",
+    "Scripts/GrainsSourceState.ps1": "8c497ba6e751f1f61a74027818cd4b5a71ef76d1e4e2e2959e3bb67cc90ded48",
+    "Scripts/GrainsTestProfiles.ps1": "b981c36ebd0e63d349f2f0e338919c3d11221d9807cc931f1f5fc2e504ccdb1e",
+    "Scripts/IntegratedRuntimeDesktop/Run-AMJ-IsolatedDesktop.ps1": "a3734c00c5f1dd26eba7dba10c870539f0ac7717027cc6dde6ec45d89068a3ca",
+    "Scripts/Prepare-FixtureLoadFolders.ps1": "eab19bfec5f0ce1d2b8bd098b3b1bfdc2a9423ee13d9f529eca8cfd8066ffe6a",
+    "Scripts/Prepare-TestSaveData.ps1": "6dd6b0a863101c43030ffae9e6473c0bbd5d404c4eadf9f1b3b1dfd6dfe49a81",
+    "Scripts/Prepare-WorkshopContent.ps1": "1b5dbcc139c53300b3cc7ab6c8f7c8a8ad39c4ea91100a337e0d9bf105fef6c2",
+    "Scripts/RimWorldRuntime.ps1": "b8266365efcf05cde283632a429b9c7be8ac0804dc853b9b959c35508eb0ed4a",
+    "Scripts/Run-17Tests.ps1": "a4b8ef23ab22d6878bb531e180bce7f8c4c80e15faf4de4b24d6b0d29008fa77",
+    "Scripts/Run-GrainsProfiles.ps1": "3bd52a6d9937cc732e9e6d592f407bb26092a6da6da2594f613d742c8a74391a",
+    "Scripts/Run-RimWorldWithTimeout.ps1": "5f46e795e665dc3e536e03bd5ca4697e2c26271676135b4a66f91661a5433eab",
+    "Scripts/Stage-GrainsTestProfile.ps1": "26e53b79a7c2c8d5c03c48e863cae83f495e2aa73ad408aedf7581aaa44e1014",
+    "Scripts/Validate-GrainsPickleSummary.ps1": "b042c4ddc0dd9f8652c149e9c1d67eae98c7c84ada92195941e29c0399bb8d6a",
+    "Scripts/Validate-NewVillage.ps1": "8789a1d26f0c6e5059d75197f20ba6d79bcec630a5b927dfe6705c212b02245f",
+    "Scripts/Validate-PickleSummary.ps1": "e81b781f6c4d6ee8836c24ccccd78a1ad4dcd88a8c26857ec67168815351cd97",
+    "Scripts/Validate-RuntimeLog.ps1": "6f6774d8343ad069fc65faf7d97333856fccbc12f926c79f2b02da1d52a156f5",
+    "Scripts/Validate-StageA.ps1": "746687d12cfbff51af41da0e318d26a46caf2a8238c15ded4930153dd4e251ab",
+    "Scripts/Write-TestSourceState.ps1": "30747032d45c74a21243e0fe1d9e181abda53dc5caeae7a24c74449604e2f5ab",
+    "Tests/E2E/AmjStageAQuickstart.cs": "deb2c0b229c8870ab92c33b6c26aa2214c30377eea814624d894235c7d176c5e",
+    "Tests/E2E/CCTOFixture/ColdToleranceExtension.cs": "86e20faf3f5c4b2591c58b650446cf7bc9fbdd9192643e94f1cd3ab87f5c697a",
+    "Tests/E2E/GrainsProfileSteps.cs": "841abade3e3d63f1816b021bf073d78e7eed8a1fcec4603ab032abec65c150b8",
+    "Tests/E2E/GrainsSimulationSteps.cs": "fe2e32e80475be2cc857d5fbc11b5a8d786b1ab2b216d0e292c372a5ce714231",
+    "Tests/E2E/LegacyVillageSteps.cs": "fb2e4d5a09dcfa37b11444622cb88b936cc1ca726fddf1b7c48772f4b40b2e5e",
+    "Tests/E2E/Profiles/grains-mo-ccto.feature": "f2226608c1190c5f41906a8e17ae5127bd905cc936c52b451ef644fbbe0ac978",
+    "Tests/E2E/Profiles/grains-mo.feature": "b367abc4d0f18ee5e1864f2d47d9949f427e58102a540c1e9f7909778c08f9ca",
+    "Tests/E2E/Profiles/grains-vanilla-ccto.feature": "1fe66e88cee7c7e041fe2cb17b9ab53975622ef9f40c44208343ef359ac049cd",
+    "Tests/E2E/Profiles/grains-vanilla.feature": "c7642cb32ac3186a04de906adc99da1ed391eeb6aac6fd3837bef3cd8ee167df",
+    "Tests/E2E/StageASteps.cs": "9824ca9d7f78b715be092a957f71bd41ff31e29ae7fdd2c1479908cc8ef253bf",
+    "Tests/E2E/TestMod/Pickle/Features/stage-a.feature": "4ec811c119efe8c2055be828897e1d3369098ca5dfa9754e4c0b311141fe222d",
+    "Tests/Runtime/Test-RimWorld17Harness.ps1": "7be6643c7697958d0caa6515d675baa152079e13aa8712ebc4274a6f74ccc446",
+    "Tests/test_grains_profiles.ps1": "2d838d75b9a82af789ca50774c8616a29586f4dbfb757606fe3a0fd534a5a264"
+  },
+  "game_sha256": {
+    "Assembly-CSharp.dll": "a75352be43ff6fe20a45f014dd0969e90842ee6468c60655d02b9f5138eb69e7",
+    "UnityStubs.dll": "b0b997c300670d5a42ea70f468ff9fedaba03cbd65eabf5d522675b3f16cdb22",
+    "RimWorld.dll": "7183c5b884bf22dfe9efa10e596ffac862eeb3c71678b544c357ed69f50030a3",
+    "RimWorld.exe": "eb7db15592d9aaf9c952f1e82d96320c713b2952bed08acfb4e880149c78b46a"
+  },
+  "available_real_provider_dll_sha256": {
+    "steamapps/workshop/content/294100/2009463077/1.4/Assemblies/0Harmony.dll": "d04ec5b2590dd1bbb57f0f11dc417b1a5bebbb36b1f97006d35f2d87c3a2a69f",
+    "steamapps/workshop/content/294100/2009463077/1.5/Assemblies/0Harmony.dll": "e96fc01100b6bbdc094b900efe47850cf97aa9df7c6a78cbe723b1decf5a506a",
+    "steamapps/workshop/content/294100/2009463077/1.6/Assemblies/0Harmony.dll": "8ac54fdf0fab257148d68bc744d67609b74554ee72a4f3452e32030eaad009c6",
+    "steamapps/workshop/content/294100/2009463077/1.7/Assemblies/0Harmony.dll": "94dd929a06f720869f6a718a64bc6713a37dbe153c2f4c16c031b2587d7ee694",
+    "steamapps/workshop/content/294100/2023507013/1.0/Assemblies/0Harmony.dll": "e271d22a7c32bfca105d0e471c04eee14eec6142d37a30cd73cb7d32c7d1dd0f",
+    "steamapps/workshop/content/294100/3210544395/1.3/Assemblies/ProcessorFramework.dll": "c271052c8d61a1825aa4d88fa1e3a60c52f4e77fc42eff807164d22ade231621",
+    "steamapps/workshop/content/294100/3210544395/1.4/Assemblies/ProcessorFramework.dll": "18ac0eb4b65150f2d1803bfcfa3eb38c911439c4d7b1cb92e522be1e407d01a0",
+    "steamapps/workshop/content/294100/3210544395/1.5/Assemblies/ProcessorFramework.dll": "5458fe65bf0c78d54c7dba2ead3348a61a2624a586874fa64ed753278eb5accb",
+    "steamapps/workshop/content/294100/3210544395/1.6/Assemblies/0Harmony.dll": "df043f05c6e43602fa8e8f38f52a3a2cf962aab7a65a9d85573ea25f01a63e80",
+    "steamapps/workshop/content/294100/3210544395/1.6/Assemblies/ProcessorFramework.dll": "3e24319ecfca8f3e1c7c040df956cd61eb70b304476f0e4b74ce8b99e1ff1377",
+    "steamapps/workshop/content/294100/3219596926/1.4/Assemblies/MedievalOverhaul.dll": "254debaa238e56f617685397d25509cb05c4b438880147783efc5b5019dda719",
+    "steamapps/workshop/content/294100/3219596926/1.5/Assemblies/MedievalOverhaul.dll": "3c0d71c54c9599bbaf10e45446c2172709818e0646bd7b079b7c6033bf147513",
+    "steamapps/workshop/content/294100/3219596926/1.6/Assemblies/MedievalOverhaul.dll": "d92b9693f0cb4536504837fa0ce4df1ac8f1b57b547958c006f852c0287b85e1",
+    "steamapps/workshop/content/294100/3733484696/1.5/Assemblies/RimWorks.RimLogging.dll": "223284da0de164c7ec522ed10270c21f4c647ddfbf7fc2d00457a480b96c4b9c",
+    "steamapps/workshop/content/294100/3733484696/1.6/Assemblies/RimWorks.RimLogging.dll": "95a0b4d3a55187fa7d8cb7506ff2da0cc878b33d0ac235c3f39fcaf8eb0826cf",
+    "steamapps/workshop/content/294100/3733484696/1.7/Assemblies/RimWorks.RimLogging.dll": "176e837176ef206f766b6090346e6b8ff2031c7c3adaa2315108912dc39a382a",
+    "steamapps/workshop/content/294100/3791648678/1.5/Assemblies/RimWorks.Pickle.dll": "b3358fb0b67a681e8b72a598796c32464d56e35f498565c8de505c7fcb7a14e1",
+    "steamapps/workshop/content/294100/3791648678/1.6/Assemblies/RimWorks.Pickle.dll": "43d2d4aac76d444f8efa904d46649dce9ac8d387cd090541fd1466964a133eef",
+    "steamapps/workshop/content/294100/3793646067/1.5/Assemblies/Quickstarts.dll": "6225e36a30c38100ad0cf7340cd3e3901328c8217cbcd1d0a2004236129691fe",
+    "steamapps/workshop/content/294100/3793646067/1.6/Assemblies/Quickstarts.dll": "703caa0d2c279c486b688a8cbf7deaa67137239f612c7f0a9fff1a92037acaf5",
+    "steamapps/workshop/content/294100/3793646067/1.7/Assemblies/Quickstarts.dll": "eae575d43c525814a35a7557238bea5300457da4e602a399d46d0467581b6d64",
+    "steamapps/common/RimWorld/Mods/CropColdToleranceOverhaul/Assemblies/CropColdToleranceOverhaul.dll": "14ff28b0dcffade343a51b55df354b8e52d0bbd88c3edf6587a77a847002b77b"
+  },
+  "runs": [
+    {
+      "profile": "vanilla",
+      "local_report": "TestResults/Grains17-20261013-194427-800/vanilla/Reports",
+      "pid": 33984,
+      "log_complete": true,
+      "native_errors": 0,
+      "summary_sha256": "0892897c631e34ce96ad72e0e522478af16fb7545195168aacdb633221247fa4",
+      "log_sha256": "b80283c8f3a628ece6cd45b4a308fc1cdeab554cff8597a7cab92159ba26bed7",
+      "summary": {
+        "total": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "exitReason": "passed",
+        "scenarios": [
+          {
+            "name": "Grains vanilla loads the requested real providers",
+            "outcome": "Passed",
+            "durationMs": 739,
+            "attempts": 1
+          },
+          {
+            "name": "Grains vanilla primary grain loop resolves",
+            "outcome": "Passed",
+            "durationMs": 9,
+            "attempts": 1
+          },
+          {
+            "name": "Grains vanilla optional cold tolerance resolves",
+            "outcome": "Passed",
+            "durationMs": 12,
+            "attempts": 1
+          },
+          {
+            "name": "Grains vanilla wheat flour and minimum food resolve",
+            "outcome": "Passed",
+            "durationMs": 20,
+            "attempts": 1
+          },
+          {
+            "name": "Grains vanilla seven grains retain environmental niches",
+            "outcome": "Passed",
+            "durationMs": 15,
+            "attempts": 1
+          },
+          {
+            "name": "Grains vanilla real harvest and flour food Bills complete",
+            "outcome": "Passed",
+            "durationMs": 9019,
+            "attempts": 1
+          }
+        ]
+      }
+    },
+    {
+      "profile": "vanilla-ccto",
+      "local_report": "TestResults/Grains17-20261013-194427-800/vanilla-ccto/Reports",
+      "pid": 40016,
+      "log_complete": true,
+      "native_errors": 4,
+      "summary_sha256": "c1275f05323af7118e8509f4bfa4c7025a733fa6ff130ad6f7ba2ccedf713bd0",
+      "log_sha256": "e6fb62e5527c31184a39a11473d3cc9160fe4786a2b52bfe32809a4a1ff6e9db",
+      "summary": {
+        "total": 6,
+        "passed": 4,
+        "failed": 2,
+        "skipped": 0,
+        "flaky": 0,
+        "exitReason": "failed",
+        "scenarios": [
+          {
+            "name": "Grains vanilla-ccto loads the requested real providers",
+            "outcome": "Passed",
+            "durationMs": 759,
+            "attempts": 1
+          },
+          {
+            "name": "Grains vanilla-ccto primary grain loop resolves",
+            "outcome": "Passed",
+            "durationMs": 9,
+            "attempts": 1
+          },
+          {
+            "name": "Grains vanilla-ccto optional cold tolerance resolves",
+            "outcome": "Failed",
+            "durationMs": 4,
+            "attempts": 1,
+            "feature": "Grains real-provider migration smoke - vanilla-ccto",
+            "failureMessage": "AMJC_Plant_FoxtailMillet_Awa must load exactly one CCTO ColdToleranceExtension.",
+            "failingStep": "Then  Grains cold tolerance extensions are present"
+          },
+          {
+            "name": "Grains vanilla-ccto wheat flour and minimum food resolve",
+            "outcome": "Failed",
+            "durationMs": 5,
+            "attempts": 1,
+            "feature": "Grains real-provider migration smoke - vanilla-ccto",
+            "failureMessage": "Fallback CCTO extension must match the provider.",
+            "failingStep": "Then  the Grains wheat flour and minimum food chains resolve"
+          },
+          {
+            "name": "Grains vanilla-ccto seven grains retain environmental niches",
+            "outcome": "Passed",
+            "durationMs": 6,
+            "attempts": 1
+          },
+          {
+            "name": "Grains vanilla-ccto real harvest and flour food Bills complete",
+            "outcome": "Passed",
+            "durationMs": 9206,
+            "attempts": 1
+          }
+        ]
+      }
+    },
+    {
+      "profile": "mo",
+      "local_report": "TestResults/Grains17-20261013-194427-800/mo/Reports",
+      "pid": 30236,
+      "log_complete": true,
+      "native_errors": 0,
+      "summary_sha256": "6eac960bc31ccc54774307f3132fbe9659a07e9d08d33b0792caab7baab00992",
+      "log_sha256": "8976c81d00da71a89c265b19e725d64400c7b0c22356b4d01368b7bfa992e7e8",
+      "summary": {
+        "total": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "flaky": 0,
+        "exitReason": "passed",
+        "scenarios": [
+          {
+            "name": "Grains mo loads the requested real providers",
+            "outcome": "Passed",
+            "durationMs": 934,
+            "attempts": 1
+          },
+          {
+            "name": "Grains mo primary grain loop resolves",
+            "outcome": "Passed",
+            "durationMs": 18,
+            "attempts": 1
+          },
+          {
+            "name": "Grains mo optional cold tolerance resolves",
+            "outcome": "Passed",
+            "durationMs": 24,
+            "attempts": 1
+          },
+          {
+            "name": "Grains mo wheat flour and minimum food resolve",
+            "outcome": "Passed",
+            "durationMs": 20,
+            "attempts": 1
+          },
+          {
+            "name": "Grains mo seven grains retain environmental niches",
+            "outcome": "Passed",
+            "durationMs": 15,
+            "attempts": 1
+          },
+          {
+            "name": "Grains mo real harvest and flour food Bills complete",
+            "outcome": "Passed",
+            "durationMs": 9689,
+            "attempts": 1
+          }
+        ]
+      }
+    },
+    {
+      "profile": "mo-ccto",
+      "local_report": "TestResults/Grains17-20261013-194427-800/mo-ccto/Reports",
+      "pid": 27280,
+      "log_complete": true,
+      "native_errors": 2,
+      "summary_sha256": "ce7d0e9440f6707535c99c574decd664e40e73460220b6d0a169fafcefed4b3d",
+      "log_sha256": "8c007439bf16e0d22e5cfcb281d7180a876113d7c8672561e099ac6bc5832010",
+      "summary": {
+        "total": 6,
+        "passed": 5,
+        "failed": 1,
+        "skipped": 0,
+        "flaky": 0,
+        "exitReason": "failed",
+        "scenarios": [
+          {
+            "name": "Grains mo-ccto loads the requested real providers",
+            "outcome": "Passed",
+            "durationMs": 953,
+            "attempts": 1
+          },
+          {
+            "name": "Grains mo-ccto primary grain loop resolves",
+            "outcome": "Passed",
+            "durationMs": 16,
+            "attempts": 1
+          },
+          {
+            "name": "Grains mo-ccto optional cold tolerance resolves",
+            "outcome": "Failed",
+            "durationMs": 2,
+            "attempts": 1,
+            "feature": "Grains real-provider migration smoke - mo-ccto",
+            "failureMessage": "AMJC_Plant_FoxtailMillet_Awa must load exactly one CCTO ColdToleranceExtension.",
+            "failingStep": "Then  Grains cold tolerance extensions are present"
+          },
+          {
+            "name": "Grains mo-ccto wheat flour and minimum food resolve",
+            "outcome": "Passed",
+            "durationMs": 7,
+            "attempts": 1
+          },
+          {
+            "name": "Grains mo-ccto seven grains retain environmental niches",
+            "outcome": "Passed",
+            "durationMs": 15,
+            "attempts": 1
+          },
+          {
+            "name": "Grains mo-ccto real harvest and flour food Bills complete",
+            "outcome": "Passed",
+            "durationMs": 9383,
+            "attempts": 1
+          }
+        ]
+      }
+    }
+  ]
+}

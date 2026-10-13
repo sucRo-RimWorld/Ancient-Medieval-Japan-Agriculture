@@ -302,7 +302,7 @@ namespace AncientMedievalJapanCore.E2E
             // is changed. Natural climate/frost-death remains a separate gate.
             public async Task NativeSeasonalSowAndGrowth()
             {
-                Zone_Growing zone = null;
+                Zone_Growing zone = null, barleyZone = null;
                 Plant ricePlant = null, barleyPlant = null;
                 IntVec3 riceCell = IntVec3.Invalid, barleyCell = IntVec3.Invalid;
                 int savedTicks = -1;
@@ -342,8 +342,11 @@ namespace AncientMedievalJapanCore.E2E
                         zone = new Zone_Growing(map.zoneManager);
                         map.zoneManager.RegisterZone(zone);
                         zone.AddCell(riceCell);
-                        zone.AddCell(barleyCell);
+                        barleyZone = new Zone_Growing(map.zoneManager);
+                        map.zoneManager.RegisterZone(barleyZone);
+                        barleyZone.AddCell(barleyCell);
                         zone.SetPlantDefToGrow(DefDatabase<ThingDef>.GetNamed("Plant_Rice"));
+                        barleyZone.SetPlantDefToGrow(DefDatabase<ThingDef>.GetNamed("Plant_Rice"));
                         SetSeasonTemperature(25f, riceCell, barleyCell);
                         ThingDef rice = zone.GetPlantDefToGrow();
                         ctx.Require(PlantUtility.GrowthSeasonNow(riceCell, map, rice),
@@ -381,10 +384,18 @@ namespace AncientMedievalJapanCore.E2E
                         phase = "barley cold sow";
                         ctx.Require(!ricePlant.Destroyed && Math.Abs(ricePlant.Growth - riceBeforeCold) < 0.00001f,
                             "Real TickLong must not advance rice growth below 10 C.");
-                        zone.SetPlantDefToGrow(DefDatabase<ThingDef>.GetNamed("AMJC_Plant_Barley"));
-                        ThingDef barley = zone.GetPlantDefToGrow();
+                        // Keep the live rice cell assigned to rice. Changing a
+                        // shared zone to barley lets native growers clear the rice.
+                        barleyZone.SetPlantDefToGrow(DefDatabase<ThingDef>.GetNamed("AMJC_Plant_Barley"));
+                        ctx.Require(zone.GetPlantDefToGrow().defName == "Plant_Rice",
+                            "Rice recovery fixture must retain its original crop assignment.");
+                        ThingDef barley = barleyZone.GetPlantDefToGrow();
                         ctx.Require(PlantUtility.GrowthSeasonNow(barleyCell, map, barley),
-                            "Barley must be in a native growth season at 5 C.");
+                            "Barley must be in a native growth season at 5 C. "
+                            + "actualTemperature=" + barleyCell.GetTemperature(map)
+                            + ", minGrowthTemperature=" + barley.plant.minGrowthTemperature
+                            + ", maxGrowthTemperature=" + barley.plant.maxGrowthTemperature
+                            + ", zoneCrop=" + barleyZone.GetPlantDefToGrow().defName);
                         barleyJob = NativeSowOffer(barleyCell);
                         ctx.Require(barleyJob != null && barleyJob.def == JobDefOf.Sow &&
                             barleyJob.plantDefToSow == barley, "Barley needs a native sow job at 5 C.");
@@ -495,6 +506,7 @@ namespace AncientMedievalJapanCore.E2E
                         if (worker != null && worker.Spawned)
                             worker.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
                         if (zone != null) zone.Delete(false);
+                        if (barleyZone != null) barleyZone.Delete(false);
                         foreach (IntVec3 cell in new[] { riceCell, barleyCell })
                         {
                             if (!cell.IsValid) continue;
