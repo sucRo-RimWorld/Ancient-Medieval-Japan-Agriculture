@@ -145,9 +145,9 @@ namespace AncientMedievalJapanCore.E2E
                 await scope.Bill("AMJC_HullRiceBulk", scope.Processing, "AMJC_RiceInHull", 10);
                 await scope.Bill("AMJC_MillRice", scope.Mill, "RawRice", 10);
                 await scope.Bill("AMJC_CookRiceFlourDumplings", scope.Campfire, "AMJC_RiceFlour", 10);
-                // Keep the established six-scenario suite. This is an
-                // additional native sow + cold/warm grow integration assertion,
-                // not a seventh synthetic/static scenario.
+                // Seasonal checks remain inside the harvested-source scenario;
+                // the separate common-food native Bill scenario is now the seventh
+                // scenario for each provider profile.
                 await scope.NativeSeasonalSowAndGrowth();
             }
             catch (Exception error) { failure = ExceptionDispatchInfo.Capture(error); }
