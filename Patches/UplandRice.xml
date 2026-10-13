@@ -9,7 +9,7 @@
       </li>
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="Plant_Rice"]/description</xpath>
-        <value><description>Rice (ine). In Japan, paddy rice (suito) is cultivated in flooded fields, while upland rice (okabo, rikuto) is grown in dry fields. Both belong to the same rice species, but varieties adapted to different water conditions are generally used. Upland rice cultivation declined sharply after the mid-twentieth century.\n\nAMJGrains represents upland and paddy rice as a single rice crop, without separate plant types. It requires warm temperatures and sufficiently fertile soil. After harvest, threshing and hulling yield rice.</description></value>
+        <value><description>Rice (ine). Paddy-field rice cultivation spread across the Japanese archipelago during the Yayoi period, with regional differences. From ancient through medieval times, rice was used as food and, in some regions, paid as taxes or estate rents. Paddy rice (suito) is grown in flooded fields, while upland rice (okabo, rikuto) is grown in dry fields. Both belong to the same rice species, although varieties adapted to different water conditions are generally used. Upland rice cultivation declined sharply after the mid-twentieth century.\n\nAMJGrains represents upland and paddy rice as a single rice crop, without separate plant types. It requires warm temperatures and sufficiently fertile soil. After harvest, threshing and hulling yield rice.</description></value>
       </li>
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="Plant_Rice"]/plant/growDays</xpath>
