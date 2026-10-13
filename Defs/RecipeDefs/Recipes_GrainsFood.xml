@@ -360,4 +360,208 @@
       <AMJC_RiceFlourDumplings>4</AMJC_RiceFlourDumplings>
     </products>
   </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookMixedGrainMeal</defName>
+    <label>cook mixed grain meal</label>
+    <description>Cook 1 serving of mixed grain meal from 0.5 nutrition of available cereal grains.</description>
+    <jobString>Cooking mixed grain meal.</jobString>
+    <workAmount>240</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li><li>ElectricStove</li><li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs>
+          <li>AMJC_Millet</li>
+          <li>AMJC_Buckwheat</li>
+          <li>AMJC_Barley</li>
+          <li>AMJC_Wheat</li>
+          <li>RawRice</li>
+      </thingDefs></filter><count>0.5</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_Millet</li>
+        <li>AMJC_Buckwheat</li>
+        <li>AMJC_Barley</li>
+        <li>AMJC_Wheat</li>
+        <li>RawRice</li>
+      </thingDefs>
+      <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products><AMJC_MixedGrainMeal>1</AMJC_MixedGrainMeal></products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookMixedGrainMealBulk</defName>
+    <label>cook four servings of mixed grain meal</label>
+    <description>Cook 4 servings of mixed grain meal from 2 nutrition of available cereal grains.</description>
+    <jobString>Cooking mixed grain meal.</jobString>
+    <workAmount>960</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li><li>ElectricStove</li><li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs>
+          <li>AMJC_Millet</li>
+          <li>AMJC_Buckwheat</li>
+          <li>AMJC_Barley</li>
+          <li>AMJC_Wheat</li>
+          <li>RawRice</li>
+      </thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_Millet</li>
+        <li>AMJC_Buckwheat</li>
+        <li>AMJC_Barley</li>
+        <li>AMJC_Wheat</li>
+        <li>RawRice</li>
+      </thingDefs>
+      <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products><AMJC_MixedGrainMeal>4</AMJC_MixedGrainMeal></products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookMixedGrainPorridge</defName>
+    <label>cook mixed grain porridge</label>
+    <description>Cook 1 serving of mixed grain porridge from 0.5 nutrition of available cereal grains.</description>
+    <jobString>Cooking mixed grain porridge.</jobString>
+    <workAmount>200</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li><li>ElectricStove</li><li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs>
+          <li>AMJC_Millet</li>
+          <li>AMJC_Buckwheat</li>
+          <li>AMJC_Barley</li>
+          <li>AMJC_Wheat</li>
+          <li>RawRice</li>
+      </thingDefs></filter><count>0.5</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_Millet</li>
+        <li>AMJC_Buckwheat</li>
+        <li>AMJC_Barley</li>
+        <li>AMJC_Wheat</li>
+        <li>RawRice</li>
+      </thingDefs>
+      <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products><AMJC_MixedGrainPorridge>1</AMJC_MixedGrainPorridge></products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookMixedGrainPorridgeBulk</defName>
+    <label>cook four servings of mixed grain porridge</label>
+    <description>Cook 4 servings of mixed grain porridge from 2 nutrition of available cereal grains.</description>
+    <jobString>Cooking mixed grain porridge.</jobString>
+    <workAmount>800</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li><li>ElectricStove</li><li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs>
+          <li>AMJC_Millet</li>
+          <li>AMJC_Buckwheat</li>
+          <li>AMJC_Barley</li>
+          <li>AMJC_Wheat</li>
+          <li>RawRice</li>
+      </thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_Millet</li>
+        <li>AMJC_Buckwheat</li>
+        <li>AMJC_Barley</li>
+        <li>AMJC_Wheat</li>
+        <li>RawRice</li>
+      </thingDefs>
+      <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products><AMJC_MixedGrainPorridge>4</AMJC_MixedGrainPorridge></products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookMixedFlourFood</defName>
+    <label>cook mixed flour food</label>
+    <description>Cook 1 serving of mixed flour food from 0.5 nutrition of available cereal flours.</description>
+    <jobString>Cooking mixed flour food.</jobString>
+    <workAmount>300</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li><li>ElectricStove</li><li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs>
+          <li>AMJC_MilletFlour</li>
+          <li>AMJC_BuckwheatFlour</li>
+          <li>AMJC_BarleyFlour</li>
+          <li>AMJC_RiceFlour</li>
+          <li>AMJC_WheatFlour</li>
+      </thingDefs></filter><count>0.5</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_MilletFlour</li>
+        <li>AMJC_BuckwheatFlour</li>
+        <li>AMJC_BarleyFlour</li>
+        <li>AMJC_RiceFlour</li>
+        <li>AMJC_WheatFlour</li>
+      </thingDefs>
+      <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products><AMJC_MixedFlourFood>1</AMJC_MixedFlourFood></products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_CookMixedFlourFoodBulk</defName>
+    <label>cook four servings of mixed flour food</label>
+    <description>Cook 4 servings of mixed flour food from 2 nutrition of available cereal flours.</description>
+    <jobString>Cooking mixed flour food.</jobString>
+    <workAmount>1200</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <allowMixingIngredients>true</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers>
+      <li>Campfire</li><li>ElectricStove</li><li>FueledStove</li>
+    </recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs>
+          <li>AMJC_MilletFlour</li>
+          <li>AMJC_BuckwheatFlour</li>
+          <li>AMJC_BarleyFlour</li>
+          <li>AMJC_RiceFlour</li>
+          <li>AMJC_WheatFlour</li>
+      </thingDefs></filter><count>2</count></li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_MilletFlour</li>
+        <li>AMJC_BuckwheatFlour</li>
+        <li>AMJC_BarleyFlour</li>
+        <li>AMJC_RiceFlour</li>
+        <li>AMJC_WheatFlour</li>
+      </thingDefs>
+      <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products><AMJC_MixedFlourFood>4</AMJC_MixedFlourFood></products>
+  </RecipeDef>
 </Defs>
