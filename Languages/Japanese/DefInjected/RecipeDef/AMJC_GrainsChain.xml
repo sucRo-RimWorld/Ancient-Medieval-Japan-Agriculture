@@ -15,4 +15,10 @@
   <AMJC_CookSobagaki.jobString>そばがきを調理している。</AMJC_CookSobagaki.jobString>
   <AMJC_CookMilletDumplings.description>雑穀粉から雑穀団子を1個調理する。</AMJC_CookMilletDumplings.description>
   <AMJC_CookMilletDumplings.jobString>雑穀団子を調理している。</AMJC_CookMilletDumplings.jobString>
+  <AMJC_MillBarley.label>大麦を製粉する</AMJC_MillBarley.label>
+  <AMJC_MillRice.label>米を製粉する</AMJC_MillRice.label>
+  <AMJC_MillBarley.description>殻を取った大麦穀粒10個を挽いて、大麦粉10個にする。</AMJC_MillBarley.description>
+  <AMJC_MillRice.description>可食の米10個を挽いて、米粉10個にする。</AMJC_MillRice.description>
+  <AMJC_MillBarley.jobString>大麦を製粉している。</AMJC_MillBarley.jobString>
+  <AMJC_MillRice.jobString>米を製粉している。</AMJC_MillRice.jobString>
 </LanguageData>
