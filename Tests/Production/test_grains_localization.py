@@ -374,7 +374,7 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         self.assertIn('## 7. 既存六作物の承認済み歴史説明', review)
         self.assertIn('## 8. English descriptions translated', review)
         japanese_section = review.split('## 7.', 1)[1].split('## 8.', 1)[0]
-        english_section = review.split('## 8.', 1)[1]
+        english_section = review.split('## 8.', 1)[1].split('## 9.', 1)[0]
         self.assertIn('日本語説明を作者承認済み', japanese_section)
 
         def approved_table(section):
