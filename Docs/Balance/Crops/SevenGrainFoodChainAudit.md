@@ -48,6 +48,8 @@ Vanilla `RawRice` の栄養・腐敗期間はGrains所有のXMLで変更して�
 | 小麦／MOなし | 10→10 | 300 | 60日 | Grains `AMJC_MillWheat` |
 | ソバ／両構成 | 10→10 | 300 | 60日 | Grains `AMJC_MillBuckwheat` |
 | 雑穀／両構成 | 10→10 | 300 | 60日 | Grains `AMJC_MillMillet` |
+| 大麦／両構成 | 10→10 | 300 | 60日 | Grains `AMJC_MillBarley`、本番XML追加／実機未検証 |
+| 米（Vanilla RawRice）／両構成 | 10→10 | 300 | 60日 | Grains `AMJC_MillRice`、本番XML追加／RawRiceのゲームロード栄養未検証 |
 | 小麦／MOあり | 10→10 | **800** | **90日** | MO1.6 `DankPyon_CraftFlourBulk` 原本、Grains適用後Hay副産物なし |
 
 MOの石臼には単品製粉（小麦1→粉1、workAmount 100）と手挽き（1→1、workAmount 300）も存在する。上の比較では一括10個を使用し、同じ入出力数量で比較した。MO値は利用者提供 `3219596926.zip` の1.6 RecipeDefと小麦粉ThingDefから確認したものであり、将来MOが更新された場合は再監査する。
