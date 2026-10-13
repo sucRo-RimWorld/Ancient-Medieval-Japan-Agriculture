@@ -100,8 +100,9 @@ namespace AncientMedievalJapanCore.E2E
                 await scope.Bill("AMJC_HullBuckwheatBulk", scope.Processing, "AMJC_BuckwheatInHull", 10);
                 await scope.Bill("AMJC_ThreshWheatBulk", scope.Processing,
                     scope.MO ? "DankPyon_RawWheat" : "AMJC_RawWheat", 10);
-                await scope.Bill("AMJC_ThreshRiceBulk", scope.Processing, "AMJC_RiceSheaf", 10);
-                await scope.Bill("AMJC_HullRiceBulk", scope.Processing, "AMJC_RiceInHull", 10);
+                // Native DoBill at cooking stove, in both Vanilla and MO.
+                await scope.Bill("AMJC_ThreshRiceBulk", scope.Stove, "AMJC_RiceSheaf", 10);
+                await scope.Bill("AMJC_HullRiceBulk", scope.Stove, "AMJC_RiceInHull", 10);
                 foreach (string grain in new[] { "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley", "AMJC_Wheat", "RawRice" })
                     await scope.SimpleMeal(grain);
                 // Extra real harvests prevent consumption of prior simple-meal inputs.
@@ -148,7 +149,7 @@ namespace AncientMedievalJapanCore.E2E
             private Pawn worker;
             private IntVec3 center;
             public bool MO;
-            public Building_WorkTable Processing, Mill, Campfire;
+            public Building_WorkTable Processing, Mill, Campfire, Stove;
 
             public ProductionScope(PickleContext context)
             {
@@ -197,6 +198,10 @@ namespace AncientMedievalJapanCore.E2E
                     ctx.Require(worker.GetStatValue(StatDefOf.PlantHarvestYield) >= 1f, "Harvest failure must be excluded by worker skill.");
                     Processing = Bench("AMJC_GrainProcessingTable", center + new IntVec3(-3,0,0));
                     Mill = Bench(MO ? "DankPyon_Millstone" : "AMJC_ManualMillstone", center + new IntVec3(3,0,0));
+                    Stove = Bench("FueledStove", center + new IntVec3(4,0,-4));
+                    CompRefuelable stoveFuel = Stove.TryGetComp<CompRefuelable>();
+                    ctx.Require(stoveFuel != null, "FueledStove must have fuel.");
+                    stoveFuel.Refuel(stoveFuel.Props.fuelCapacity);
                     Campfire = Bench("Campfire", center + new IntVec3(0,0,-4));
                     CompRefuelable fuel = Campfire.TryGetComp<CompRefuelable>();
                     ctx.Require(fuel != null, "Campfire needs a fuel component.");

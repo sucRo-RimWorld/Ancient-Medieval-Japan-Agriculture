@@ -8,6 +8,8 @@
     <recipeUsers>
       <li>AMJC_GrainProcessingSpot</li>
       <li>AMJC_GrainProcessingTable</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
     </recipeUsers>
   </RecipeDef>
   <RecipeDef ParentName="AMJC_WheatProcessingBase">

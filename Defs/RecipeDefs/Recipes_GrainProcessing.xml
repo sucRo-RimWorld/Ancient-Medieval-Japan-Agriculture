@@ -9,6 +9,8 @@
     <recipeUsers>
       <li>AMJC_GrainProcessingSpot</li>
       <li>AMJC_GrainProcessingTable</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
     </recipeUsers>
   </RecipeDef>
 
@@ -141,6 +143,8 @@
     <recipeUsers>
       <li>AMJC_GrainProcessingSpot</li>
       <li>AMJC_GrainProcessingTable</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
     </recipeUsers>
   </RecipeDef>
 
@@ -237,6 +241,8 @@
     <recipeUsers>
       <li>AMJC_GrainProcessingSpot</li>
       <li>AMJC_GrainProcessingTable</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
     </recipeUsers>
   </RecipeDef>
 
@@ -329,7 +335,7 @@
     <workSkill>Crafting</workSkill>
     <workSkillLearnFactor>0.1</workSkillLearnFactor>
     <allowMixingIngredients>false</allowMixingIngredients>
-    <recipeUsers><li>AMJC_GrainProcessingSpot</li><li>AMJC_GrainProcessingTable</li></recipeUsers>
+    <recipeUsers><li>AMJC_GrainProcessingSpot</li><li>AMJC_GrainProcessingTable</li><li>FueledStove</li><li>ElectricStove</li></recipeUsers>
   </RecipeDef>
   <RecipeDef ParentName="AMJC_RiceProcessingBase">
     <defName>AMJC_ThreshRice</defName><label>thresh rice</label>

@@ -47,6 +47,23 @@ def validate(root=ROOT):
             assert work.tag == 'WorkGiverDef' and work.findtext('giverClass') == 'WorkGiver_DoBill'
             assert work.findtext('workType') == 'Crafting'
             assert [n.text for n in work.findall('fixedBillGiverDefs/li')] == ['AMJC_ManualMillstone']
+        # All single/bulk grain-processing Bills inherit this Base-and-MO stove fallback.
+        processing_users = ['AMJC_GrainProcessingSpot', 'AMJC_GrainProcessingTable',
+                            'FueledStove', 'ElectricStove']
+        for crop in ('Millet', 'Buckwheat', 'Barley', 'Rice', 'Wheat'):
+            parent = 'AMJC_' + crop + 'ProcessingBase'
+            matches = [n for n in doc.findall('RecipeDef')
+                       if n.get('Name') == parent and n.get('Abstract') == 'True']
+            assert len(matches) == 1, ('Processing parent missing', profile, parent)
+            assert [n.text for n in matches[0].findall('recipeUsers/li')] == processing_users, (
+                'Processing stove providers', profile, parent)
+            operations = ('Thresh',) if crop == 'Wheat' else ('Thresh', 'Hull')
+            for operation in operations:
+                for bulk in ('', 'Bulk'):
+                    name = 'AMJC_' + operation + crop + bulk
+                    rec = defs[name]
+                    assert rec.get('ParentName') == parent and rec.find('recipeUsers') is None, (
+                        'Processing recipe must inherit shared bench users', name)
         for name, count in [('AMJC_ThreshWheat',1), ('AMJC_ThreshWheatBulk',10)]:
             rec = defs[name]
             expected = 'DankPyon_RawWheat' if profile == 'mo' else 'AMJC_RawWheat'
