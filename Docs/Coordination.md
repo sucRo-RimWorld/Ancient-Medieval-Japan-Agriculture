@@ -60,6 +60,14 @@ Use whichever label best fits the task:
 
 ## Current coordination items
 
+### GRAINS-FLOUR-SCOPE-20261013 — Five grain flours
+
+**Owner:** Grains Food/cooking + Agriculture/XML. **Status:** OPEN — five-flour scope reconfirmed; two flour chains remain unimplemented.
+
+The author clarified that limiting Grains to wheat, buckwheat and mixed-millet flour is obsolete after the decision to own grain flour generally. The target five are mixed-millet, buckwheat, barley, wheat and rice flour. Barley/Rice production ThingDefs and milling Recipes are missing, while previously accepted `_a` images exist but are unreferenced. Keep `AMJC_Barley` and Vanilla `RawRice` as edible inputs, use existing Base/MO millstone ownership, conserve grain nutrition, avoid auto-registering grains into MO generic flour, and establish an actual food use without adding unnecessary cuisine. The existing three flour chains remain untouched. Current canonical target: `Docs/Design.md §2.8, §2.9, §4.2, §5.2–5.4, §12.1.4`.
+
+**Next:** complete VE and non-VE audit for the added flour chains and establish an approved practical consumption path, then add ThingDefs, recipe users, bilingual localization, static tests and four-provider loaded-game tests. This scope correction is documentation/coordination only; not a source-implemented or runtime-PASS claim.
+
 ### DES-IRONMAKING-001 — standalone ancient / medieval Ironmaking
 
 **Requested by:** author (2026-10-07 JST)  
@@ -133,7 +141,7 @@ Author-pushed 128px single `_a` grain icons are integrated for millet, buckwheat
 
 **2026-10-11 graphics runtime test preparation:** The existing real-provider primary-loop Pickle scenario now checks all nine grain icons on the Unity main thread, including loaded `RawRice` and low/middle/high `Graphic_StackCount` materials. This is a real loaded-game test added to the source, not a Python simulation; exact-head game build, four profiles, ERROR-zero and normal-zoom visuals remain unverified. The six-scenario count and existing runner are unchanged.
 
-**2026-10-11 flour texture wiring:** Five author-pushed `_a` flour images exist. AMJC_MilletFlour and AMJC_BuckwheatFlour now use their dedicated sprites in both profiles; Base AMJC_WheatFlour and MO-owned DankPyon_Flour use the dedicated wheat-flour sprite without creating a duplicate MO flour Def. BarleyFlour/RiceFlour artwork is retained as unreferenced until those resources/recipes are independently approved. No game balance, new flour items, or artwork bytes changed. Runtime visual/load verification and future quantity variants remain OPEN.
+**2026-10-11 flour texture wiring:** Five author-pushed `_a` flour images exist. AMJC_MilletFlour and AMJC_BuckwheatFlour now use their dedicated sprites in both profiles; Base AMJC_WheatFlour and MO-owned DankPyon_Flour use the dedicated wheat-flour sprite without creating a duplicate MO flour Def. BarleyFlour/RiceFlour artwork remains unreferenced because production ThingDefs/Recipes are missing. The author's 2026-10-13 correction confirms both are within Grains' five-flour target scope; image-only availability is not implementation. No game balance, new flour items, or artwork bytes changed. Runtime visual/load verification and future quantity variants remain OPEN.
 
 **Remaining work:**
 - Vanilla/MO normal-zoom review of the 14 crop stages, five sheaves and grain icons; no current loaded-game graphics PASS is claimed.
