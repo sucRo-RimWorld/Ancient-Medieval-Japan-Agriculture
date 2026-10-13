@@ -9,6 +9,8 @@ SHARED_NAMES = {
     'AMJC_BuckwheatFlour','AMJC_MilletFlour','AMJC_Houtou','AMJC_Sobagaki',
     'AMJC_MilletDumplings','AMJC_AteFlourFood','AMJC_MillBuckwheat','AMJC_MillMillet',
     'AMJC_CookHoutou','AMJC_CookSobagaki','AMJC_CookMilletDumplings','AMJC_DoGrainProcessing',
+    'AMJC_BarleyFlour','AMJC_RiceFlour','AMJC_BarleyFlourGruel','AMJC_RiceFlourDumplings',
+    'AMJC_MillBarley','AMJC_MillRice','AMJC_CookBarleyFlourGruel','AMJC_CookRiceFlourDumplings',
 }
 FALLBACK_NAMES = {'AMJC_Plant_Wheat','AMJC_RawWheat','AMJC_WheatFlour','AMJC_ManualMillstone','AMJC_MillWheat','AMJC_DoGrainsMilling'}
 
@@ -51,7 +53,9 @@ def validate(root=ROOT):
             assert int(rec.findtext('products/AMJC_Wheat')) == count
             assert [n.tag for n in rec.findall('products/*')] == (['AMJC_Wheat','DankPyon_Straw'] if profile == 'mo' else ['AMJC_Wheat'])
         chains = [('AMJC_MillBuckwheat','AMJC_Buckwheat','AMJC_BuckwheatFlour'),
-                  ('AMJC_MillMillet','AMJC_Millet','AMJC_MilletFlour')]
+                  ('AMJC_MillMillet','AMJC_Millet','AMJC_MilletFlour'),
+                  ('AMJC_MillBarley','AMJC_Barley','AMJC_BarleyFlour'),
+                  ('AMJC_MillRice','RawRice','AMJC_RiceFlour')]
         if profile == 'vanilla':chains += [('AMJC_MillWheat','AMJC_Wheat','AMJC_WheatFlour')]
         for recipe, grain, flour in chains:
             rec = defs[recipe]
@@ -69,7 +73,9 @@ def validate(root=ROOT):
             assert rec.findtext('allowMixingIngredients') == 'false', ('Milling mixed inputs', recipe)
             assert rec.findtext('fixedIngredientFilter/thingDefs/li') == grain, ('Fixed milling ingredient', recipe)
             assert rec.findtext('fixedIngredientFilter/specialFiltersToDisallow/li') == 'AllowRotten', ('Rotten grain filter', recipe)
-            assert amount * float(defs[grain].findtext('statBases/Nutrition')) == output * float(defs[flour].findtext('statBases/Nutrition'))
+            grain_nutrition = 0.05 if grain == 'RawRice' else float(defs[grain].findtext('statBases/Nutrition'))
+            # RawRice belongs to Vanilla: loaded-game assertions check its actual stat.
+            assert amount * grain_nutrition == output * float(defs[flour].findtext('statBases/Nutrition'))
             assert rec.findtext('recipeUsers/li') == ('DankPyon_Millstone' if profile == 'mo' else 'AMJC_ManualMillstone')
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
             assert float(defs[flour].findtext('comps/li/daysToRotStart')) == 60
@@ -77,6 +83,8 @@ def validate(root=ROOT):
         flour_graphics = {
             'AMJC_BuckwheatFlour': 'Things/Item/Resource/AMJC_Buckwheat/BuckwheatFlour',
             'AMJC_MilletFlour': 'Things/Item/Resource/AMJC_Millet/MilletFlour',
+            'AMJC_BarleyFlour': 'Things/Item/Resource/AMJC_Barley/BarleyFlour',
+            'AMJC_RiceFlour': 'Things/Item/Resource/AMJC_Rice/RiceFlour',
         }
         if profile == 'vanilla':
             flour_graphics['AMJC_WheatFlour'] = 'Things/Item/Resource/AMJC_Wheat/WheatFlour'
@@ -92,9 +100,12 @@ def validate(root=ROOT):
             'Houtou': 'Things/Item/Resource/AMJC_Millet/Millet',
             'Sobagaki': 'Things/Item/Resource/AMJC_Buckwheat/Buckwheat',
             'MilletDumplings': 'Things/Item/Resource/AMJC_Millet/Millet',
+            'BarleyFlourGruel': 'Things/Item/Resource/AMJC_Barley/Barley',
+            'RiceFlourDumplings': 'Things/Item/Resource/AMJC_Rice/Rice',
         }
         for suffix, flour in [('Houtou','DankPyon_Flour' if profile == 'mo' else 'AMJC_WheatFlour'),
-                              ('Sobagaki','AMJC_BuckwheatFlour'),('MilletDumplings','AMJC_MilletFlour')]:
+                              ('Sobagaki','AMJC_BuckwheatFlour'),('MilletDumplings','AMJC_MilletFlour'),
+                              ('BarleyFlourGruel','AMJC_BarleyFlour'),('RiceFlourDumplings','AMJC_RiceFlour')]:
             rec = defs['AMJC_Cook'+suffix];food=defs['AMJC_'+suffix]
             assert rec.findtext('ingredientValueGetterClass') == 'IngredientValueGetter_Nutrition'
             assert rec.findtext('ingredients/li/filter/thingDefs/li') == flour
