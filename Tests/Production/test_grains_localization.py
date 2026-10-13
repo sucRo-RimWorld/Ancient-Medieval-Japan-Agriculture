@@ -226,7 +226,7 @@ class JapaneseLocalizationAudit(unittest.TestCase):
             (relative[2], '<jobString>Hulling rice in bulk.</jobString>',
              '<jobString>Milling rice in bulk.</jobString>'),
             (relative[0], '籾10個をまとめて籾摺りし', '籾100個をまとめて籾摺りし'),
-            (relative[5], 'commodity money', 'altered money'),
+            (relative[5], 'Edo sickness', 'altered sickness'),
         ):
             with self.subTest(file=target), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
