@@ -308,6 +308,10 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         self.assertIn('Edo', english['Plant_Rice'])
         self.assertIn('commodity money', english['Plant_Rice'])
         self.assertIn('postwar economic growth', english['Plant_Rice'])
+        for term in ('江戸患い', '脚気', '高木兼寛', '龍驤', '筑波', '疫学', '1910年', '鈴木梅太郎', 'オリザニン', 'ビタミンB1'):
+            self.assertIn(term, japanese['Plant_Rice'], 'Missing historical rice context: ' + term)
+        for term in ('beriberi', 'Edo sickness', 'Kanehiro Takaki', 'Tsukuba', 'Ryūjō', 'epidemiology', '1910', 'Umetaro Suzuki', 'oryzanin', 'vitamin B1'):
+            self.assertIn(term, english['Plant_Rice'], 'Missing English rice context: ' + term)
         for forbidden in ('V1', '未実装', '別Mod'):
             self.assertNotIn(forbidden, japanese['Plant_Rice'],
                              'Release stage / ownership must not appear in player prose')
