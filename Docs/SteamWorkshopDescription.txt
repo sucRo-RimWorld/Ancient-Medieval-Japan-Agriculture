@@ -12,6 +12,16 @@
 
 This is a focused agriculture module, not an all-in-one AMJ Core. Rice paddies, fermentation and the broader Japanese settlement systems belong to other independent AMJ projects.
 
+[h2]V1 food options and balance[/h2]
+Values per serving. Spoilage times are at room temperature.
+[list]
+[*][b]Mixed grain meal[/b] — Any of 5 edible grain types (mixing allowed) | Cooking work 240 | 3 days | No mood bonus
+[*][b]Mixed grain porridge[/b] — Any of 5 edible grain types (mixing allowed) | Cooking work 200 | 1.5 days | No mood bonus
+[*][b]Mixed flour food[/b] — Any of 5 cereal flours (mixing allowed) | Cooking work 300 | 2 days | No mood bonus
+[*][b]5 ingredient-specific flour dishes[/b] — Only each recipe's designated flour | Cooking work 300 | 2.5 days | Mood +2 after eating
+[/list]
+Mixed dishes remain available for using leftover grains and flours. All have four-serving cooking options, with ingredients and work multiplied by four.
+
 [h2]Requirements and compatibility[/h2]
 [b]RimWorld 1.6[/b]. [b]No additional Mod is required.[/b] Medieval Overhaul (MO) is optional: with MO, Grains reuses its wheat, flour, millstone and straw integration; without MO, Grains provides its own wheat and milling path. Grains' own crop and processing rules take priority in both configurations. [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul (CCTO)[/url] is also optional for crop-specific cold behavior.
 
@@ -35,6 +45,16 @@ Documentation: [url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Gra
 [/list]
 
 AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う独立した構成要素です。水田稲作・発酵・集落生活のほかの仕組みは別のAMJ Modで扱います。
+
+[h2]V1料理の性能比較[/h2]
+数値は1食あたり。保存期間は常温で腐敗するまでの目安。
+[list]
+[*][b]混合穀物飯[/b] — 可食穀粒5系統（混合可）｜調理Work 240｜3日｜心情補正なし
+[*][b]混合穀物粥[/b] — 可食穀粒5系統（混合可）｜調理Work 200｜1.5日｜心情補正なし
+[*][b]混合粉食[/b] — 穀粉5系統（混合可）｜調理Work 300｜2日｜心情補正なし
+[*][b]材料指定の粉食5品[/b] — 各料理に対応する穀粉のみ｜調理Work 300｜2.5日｜食後の心情+2
+[/list]
+混合料理は余った穀類を使う手段として残す。いずれも4食まとめ調理に対応し、必要材料と調理Workは4倍。
 
 [h2]必須Mod・互換性[/h2]
 [b]RimWorld 1.6対応。追加の必須Modはありません。[/b] Medieval Overhaul（MO）は任意です。MO併用時はMOの小麦・小麦粉・石臼・藁を連携利用し、MOなしではGrains側の小麦・製粉を利用します。いずれもGrains所有の作物・加工設定を優先します。[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul（CCTO）[/url]も任意です。
