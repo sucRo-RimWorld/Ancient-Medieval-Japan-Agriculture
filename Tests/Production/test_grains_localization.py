@@ -7,12 +7,10 @@ ROOT = Path(__file__).resolve().parents[2]
 SHARED_THINGS = {
     'AMJC_BuckwheatFlour', 'AMJC_MilletFlour', 'AMJC_Houtou',
     'AMJC_Sobagaki', 'AMJC_MilletDumplings',
-    'AMJC_BarleyFlour', 'AMJC_RiceFlour', 'AMJC_BarleyFlourGruel', 'AMJC_RiceFlourDumplings',
 }
 SHARED_RECIPES = {
     'AMJC_MillBuckwheat', 'AMJC_MillMillet', 'AMJC_CookHoutou',
     'AMJC_CookSobagaki', 'AMJC_CookMilletDumplings',
-    'AMJC_MillBarley', 'AMJC_MillRice', 'AMJC_CookBarleyFlourGruel', 'AMJC_CookRiceFlourDumplings',
 }
 BASE_THINGS = {
     'AMJC_Plant_Wheat', 'AMJC_RawWheat',
