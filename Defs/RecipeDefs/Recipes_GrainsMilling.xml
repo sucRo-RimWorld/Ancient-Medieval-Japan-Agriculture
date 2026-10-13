@@ -70,4 +70,74 @@
       <AMJC_MilletFlour>10</AMJC_MilletFlour>
     </products>
   </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_MillBarley</defName>
+    <label>mill barley</label>
+    <description>Grind 10 edible barley grains into 10 units of barley flour.</description>
+    <jobString>Milling barley.</jobString>
+    <workAmount>300</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <targetCountAdjustment>10</targetCountAdjustment>
+    <recipeUsers>
+      <li>AMJC_ManualMillstone</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>AMJC_Barley</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>AMJC_Barley</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products>
+      <AMJC_BarleyFlour>10</AMJC_BarleyFlour>
+    </products>
+  </RecipeDef>
+  <RecipeDef>
+    <defName>AMJC_MillRice</defName>
+    <label>mill rice</label>
+    <description>Grind 10 units of Vanilla edible rice into 10 units of rice flour.</description>
+    <jobString>Milling rice.</jobString>
+    <workAmount>300</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <workSkill>Crafting</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <targetCountAdjustment>10</targetCountAdjustment>
+    <recipeUsers>
+      <li>AMJC_ManualMillstone</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>RawRice</li>
+          </thingDefs>
+        </filter>
+        <count>10</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>RawRice</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <products>
+      <AMJC_RiceFlour>10</AMJC_RiceFlour>
+    </products>
+  </RecipeDef>
 </Defs>
