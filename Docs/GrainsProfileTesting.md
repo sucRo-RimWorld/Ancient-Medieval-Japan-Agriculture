@@ -258,7 +258,7 @@ Grains owns Vanilla `Plant_Rice` as **upland rice (陸稲)** through the committ
 
 The real-provider suite retains **six named scenarios per profile**, but its C# Pickle source and static analysis now cover **seven crops**. No four-profile game execution has occurred. These tests must pass at runtime before standalone release:
 
-- the loaded `Plant_Rice` is the Grains upland-rice definition/patch in both Vanilla and MO profiles;
+- the loaded `Plant_Rice` is the single Grains rice Plant in both Vanilla and MO profiles, with the V1 field-growing settings; the Japanese label is `稲` and the English label is `rice plant` (verify both UI languages separately, not merely the underlying static strings);
 - upland rice is sowable on normal ground with the implemented `Ground`-only sow tag and without `Hydroponic`;
 - a native harvest produces `AMJC_RiceSheaf`; real threshing/hulling Bills yield Vanilla `RawRice`, which remains accepted by ordinary meals;
 - CCTO profiles retain CCTO's existing `Plant_Rice` minimum-growth / cold-death behavior without a duplicate Grains cold-tolerance extension;

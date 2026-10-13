@@ -69,8 +69,12 @@ def validate():
     assert 'RawRice' in xml and 'AMJC_UplandRice' not in xml
     assert '/Defs/ThingDef[defName="Plant_Rice"]/plant/harvestedThingDef' in replaced
     jp = ET.parse(ROOT / 'Languages/Japanese/DefInjected/ThingDef/AMJC_UplandRice.xml').getroot()
-    assert jp.findtext('Plant_Rice.label') == '陸稲'
+    assert jp.findtext('Plant_Rice.label') == '稲'
     assert jp.findtext('Plant_Rice.description')
+    assert '水稲' in jp.findtext('Plant_Rice.description')
+    assert '陸稲' in jp.findtext('Plant_Rice.description')
+    assert '<label>rice plant</label>' in xml
+    assert 'same rice species' in xml
     ccto = (ROOT / 'Patches/Compatibility/CCTO_StageA.xml').read_text(encoding='utf-8')
     assert 'Plant_Rice' not in ccto, 'Do not add duplicate CCTO rice extension'
     fixture = json.loads((ROOT / 'Tests/Fixtures/Grains_Environment.json').read_text())
