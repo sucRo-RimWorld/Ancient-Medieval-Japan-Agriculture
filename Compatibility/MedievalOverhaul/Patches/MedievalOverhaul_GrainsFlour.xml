@@ -56,4 +56,20 @@
       <li>DankPyon_Flour</li>
     </value>
   </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFood"]/ingredients/li/filter/thingDefs/li[5]</xpath>
+    <value><li>DankPyon_Flour</li></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFood"]/fixedIngredientFilter/thingDefs/li[5]</xpath>
+    <value><li>DankPyon_Flour</li></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFoodBulk"]/ingredients/li/filter/thingDefs/li[5]</xpath>
+    <value><li>DankPyon_Flour</li></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFoodBulk"]/fixedIngredientFilter/thingDefs/li[5]</xpath>
+    <value><li>DankPyon_Flour</li></value>
+  </Operation>
 </Patch>

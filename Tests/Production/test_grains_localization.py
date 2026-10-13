@@ -131,8 +131,12 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         japanese = labels('Languages/Japanese/DefInjected/RecipeDef/AMJC_GrainsChain.xml')
         source = ET.parse(ROOT/'Defs/RecipeDefs/Recipes_GrainsFood.xml').getroot()
         foods = ('Houtou','Sobagaki','MilletDumplings','BarleyFlourGruel','RiceFlourDumplings')
-        self.assertEqual(len([n for n in source.findall('RecipeDef')
-                              if (n.findtext('defName') or '').endswith('Bulk')]), 5)
+        # Protect exactly the five author-reviewed special-food batches.
+        # The three separately guarded generic fallback batches must not
+        # cause historical-copy acceptance to expand implicitly.
+        specialized = {'AMJC_Cook' + suffix + 'Bulk' for suffix in foods}
+        self.assertEqual({n.findtext('defName') for n in source.findall('RecipeDef')
+                          if n.findtext('defName') in specialized}, specialized)
         for suffix in foods:
             name = 'AMJC_Cook'+suffix+'Bulk'
             rec = source.find('RecipeDef[defName="' + name + '"]')

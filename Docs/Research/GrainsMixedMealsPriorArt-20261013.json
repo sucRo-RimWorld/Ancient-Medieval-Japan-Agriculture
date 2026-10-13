@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "feature": "Permanent mixed-cereal cooking and distinct stronger grain-specific meals",
+  "owner": "sucRo-RimWorld/Ancient-Medieval-Japan-Grains",
+  "scope": "V1 grain, porridge, flour recipe family; Base/MO and optional CCTO",
+  "status": "ready",
+  "search": {
+    "date": "2026-10-13",
+    "queries": [
+      "RimWorld Vanilla Cooking Expanded 1.6 mixed soups",
+      "RimWorld Bulk Cooking Recipes non VE XML",
+      "RimWorld Medieval Overhaul flour grain",
+      "AMJ Grains mixed flour recipes"
+    ],
+    "ecosystems": [
+      "vanilla_mo",
+      "amj",
+      "ve",
+      "non_ve"
+    ],
+    "limitations": "Bounded to inspected original recipe sources and earlier audited MO 1.6 provider; not an exhaustive Workshop review or 1.7 source/runtime verification."
+  },
+  "evidence": [
+    {
+      "id": "audited",
+      "path": "Docs/Research/GrainsMixedMealsPriorArt-20261013.md",
+      "sha256": "14a852ee050e43689e7bfe5f966cdb47b9ce57995f881a09e9cdf8f1d2e4c608"
+    }
+  ],
+  "candidates": [
+    {
+      "name": "Vanilla CookMealSimple and Medieval Overhaul 1.6 milling",
+      "ecosystem": "vanilla_mo",
+      "version": "Vanilla 1.6; audited MO 1.6",
+      "evidence": [
+        "audited"
+      ],
+      "comparison": {
+        "function": "Generic simple meal and MO flour production, not 3 specific generic Grains outputs.",
+        "historical_fit": "Native food base but not grain-method-specific.",
+        "dependencies": "No required dependency; MO optional.",
+        "retention": "Keep Vanilla meal recipes intact.",
+        "progression_balance": "Do not mutate universal simple meal.",
+        "reuse": "Use nutrition getter and conditional MO powder provider.",
+        "maintenance_license": "No upstream code copied."
+      },
+      "outcome": "prior_art_only"
+    },
+    {
+      "name": "AMJ Grains five strict flour meals",
+      "ecosystem": "amj",
+      "version": "main, 2026-10-13",
+      "evidence": [
+        "audited"
+      ],
+      "comparison": {
+        "function": "Five single-flour recipes, no shared mixed-food Bill.",
+        "historical_fit": "Existing historical cuisine names kept intact.",
+        "dependencies": "Owner source; no dependency changes.",
+        "retention": "Preserve ThingDef/Recipe names and save items.",
+        "progression_balance": "Existing +2 mood distinguishes specials.",
+        "reuse": "Reuse meal graphics and basic stat patterns.",
+        "maintenance_license": "Owner-managed code and fixture tests."
+      },
+      "outcome": "prior_art_only"
+    },
+    {
+      "name": "Vanilla Cooking Expanded soup and gourmet",
+      "ecosystem": "ve",
+      "version": "1.6 source at 2026-10-13",
+      "evidence": [
+        "audited"
+      ],
+      "comparison": {
+        "function": "Nutrient-based mixed input with generic FoodRaw and soup research.",
+        "historical_fit": "Broader Vanilla cooking pack, not targeted grain method categories.",
+        "dependencies": "Adds large VCE package and further cooking components.",
+        "retention": "Unrelated VE dishes far exceed 3 fallback foods.",
+        "progression_balance": "Research and mixed-food counts differ.",
+        "reuse": "Mixing recipe semantics useful as prior art.",
+        "maintenance_license": "No code reuse; upstream package maintenance independent."
+      },
+      "outcome": "prior_art_only"
+    },
+    {
+      "name": "Bulk Cooking Recipes by gitChaoslord",
+      "ecosystem": "non_ve",
+      "version": "archived source 2023, queried 2026-10-13",
+      "evidence": [
+        "audited"
+      ],
+      "comparison": {
+        "function": "Mixed raw food x5/x10 to Vanilla MealSimple.",
+        "historical_fit": "No historic Japanese grain/flour treatment.",
+        "dependencies": "Not a needed provider, 1.6 unverified.",
+        "retention": "General batch overrides not desired.",
+        "progression_balance": "Work and batch counts conflict with Grains.",
+        "reuse": "Plain nutrient mixing illustrates reusable engine behavior.",
+        "maintenance_license": "Archived 2023; no direct copy and maintenance uncertain."
+      },
+      "outcome": "prior_art_only"
+    }
+  ],
+  "decision": {
+    "kind": "independent",
+    "rationale": "No inspected alternative offers narrow permanent mixed-grain, grain porridge and mixed-grain-flour RecipeDefs across AMJ five cereal types, with conditional MO standard flour and save-stable superior special foods; narrow owned recipes avoid broad dependencies/global patches.",
+    "specification": "Docs/Research/GrainMealRoadmap.md",
+    "independent_gap": "Three distinct mixed cereal output dishes and strictly separate raw/flour inputs, preserving five specific food DefNames and Base/MO provider contracts."
+  },
+  "unresolved": []
+}

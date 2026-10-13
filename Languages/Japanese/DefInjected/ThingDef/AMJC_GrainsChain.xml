@@ -18,4 +18,10 @@
   <AMJC_RiceFlour.description>米粉（こめこ）。米を挽いた粉。AMJGrainsではうるち米粉ともち米粉を一つにまとめ、米粉団子の材料にする。</AMJC_RiceFlour.description>
   <AMJC_BarleyFlourGruel.description>麦粉粥（むぎこがゆ）。大麦粉を湯で煮てつくる簡単な粉食。</AMJC_BarleyFlourGruel.description>
   <AMJC_RiceFlourDumplings.description>米粉団子（こめこだんご）。米粉を水で練り、加熱した団子。うるち米粉ともち米粉はゲーム内で共通の材料として扱う。</AMJC_RiceFlourDumplings.description>
+  <AMJC_MixedGrainMeal.label>混合穀物飯</AMJC_MixedGrainMeal.label>
+  <AMJC_MixedGrainMeal.description>可食穀粒を組み合わせて調理する共通料理。複数の材料を混ぜて作れる。</AMJC_MixedGrainMeal.description>
+  <AMJC_MixedGrainPorridge.label>混合穀物粥</AMJC_MixedGrainPorridge.label>
+  <AMJC_MixedGrainPorridge.description>可食穀粒を組み合わせて調理する共通料理。複数の材料を混ぜて作れる。</AMJC_MixedGrainPorridge.description>
+  <AMJC_MixedFlourFood.label>混合粉食</AMJC_MixedFlourFood.label>
+  <AMJC_MixedFlourFood.description>穀粉を組み合わせて調理する共通料理。複数の材料を混ぜて作れる。</AMJC_MixedFlourFood.description>
 </LanguageData>
