@@ -175,6 +175,22 @@ def validate():
                 normalized.find(element).text = historical
             # Normalize only the three superseded MO settings on a deepcopy
             # for the immutable historical fixture, never in production XML.
+            # Beta thresh/hull stove fallback changes only the abstract AMJ
+            # processing bench list. Compare that approved delta separately,
+            # then normalize just the two added stoves for the immutable
+            # historical pre-split MO snapshot. Do not rewrite the fixture.
+            if name in {
+                "AMJC_MilletProcessingBase", "AMJC_BuckwheatProcessingBase",
+                "AMJC_BarleyProcessingBase", "AMJC_WheatProcessingBase",
+            }:
+                users = normalized.find("recipeUsers")
+                assert users is not None, "Historical AMJ processing parent has no recipeUsers: " + name
+                assert [li.text for li in users.findall("li")] == [
+                    "AMJC_GrainProcessingSpot", "AMJC_GrainProcessingTable",
+                    "FueledStove", "ElectricStove",
+                ], "Beta processing stove allowlist differs: " + name
+                for li in list(users)[2:]:
+                    users.remove(li)
             if name == "AMJC_Plant_Barley":
                 sow = ET.SubElement(normalized.find("plant"), "sowResearchPrerequisites")
                 ET.SubElement(sow, "li").text = "DankPyon_BasicAgriculture"
