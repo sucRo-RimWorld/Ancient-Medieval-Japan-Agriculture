@@ -74,7 +74,9 @@ namespace AncientMedievalJapanCore.E2E
                 // All inputs below are outputs of the preceding real jobs.
                 await scope.Bill("AMJC_ThreshMilletBulk", scope.Processing, "AMJC_RawMillet", 10);
                 await scope.Bill("AMJC_HullMilletBulk", scope.Processing, "AMJC_MilletInHull", 10);
-                await scope.Bill("AMJC_MillMillet", scope.Mill, "AMJC_Millet", 10);
+                // Native Cooking WorkGiver must complete this milling Bill at a
+                // Vanilla stove only in Base. MO retains its own millstone.
+                await scope.Bill("AMJC_MillMillet", scope.MO ? scope.Mill : scope.Stove, "AMJC_Millet", 10);
                 await scope.Bill("AMJC_CookMilletDumplings", scope.Campfire, "AMJC_MilletFlour", 10);
                 await scope.Bill("AMJC_ThreshBuckwheatBulk", scope.Processing, "AMJC_RawBuckwheat", 10);
                 await scope.Bill("AMJC_HullBuckwheatBulk", scope.Processing, "AMJC_BuckwheatInHull", 10);

@@ -12,6 +12,8 @@
     <targetCountAdjustment>10</targetCountAdjustment>
     <recipeUsers>
       <li>AMJC_ManualMillstone</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
     </recipeUsers>
     <ingredients>
       <li>
@@ -47,6 +49,8 @@
     <targetCountAdjustment>10</targetCountAdjustment>
     <recipeUsers>
       <li>AMJC_ManualMillstone</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
     </recipeUsers>
     <ingredients>
       <li>
@@ -82,6 +86,8 @@
     <targetCountAdjustment>10</targetCountAdjustment>
     <recipeUsers>
       <li>AMJC_ManualMillstone</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
     </recipeUsers>
     <ingredients>
       <li>
@@ -117,6 +123,8 @@
     <targetCountAdjustment>10</targetCountAdjustment>
     <recipeUsers>
       <li>AMJC_ManualMillstone</li>
+      <li>FueledStove</li>
+      <li>ElectricStove</li>
     </recipeUsers>
     <ingredients>
       <li>

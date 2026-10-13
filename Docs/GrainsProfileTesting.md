@@ -198,6 +198,14 @@ Rice bulk threshing and rice bulk hulling are also executed as real Bills on a
 fueled Vanilla stove in Base and MO; other processing Bills still use the AMJ
 processing table. All 18 single/bulk grain-processing recipe users are checked
 in loaded Defs for both stoves and both AMJ processing stations.
+For V1 non-MO milling, the same test fixture also runs the AMJC_MillMillet
+Bill at the FueledStove through the loaded Cooking WorkGiver; the other four
+AMJC milling Recipes retain the existing AMJ manual millstone route. Loaded
+Def assertions require exactly three bench users (AMJ stone, FueledStove and
+ElectricStove) for all five Base milling Recipes, while all four AMJ MO
+milling Recipes remain MO-millstone-only. MO wheat uses its upstream native
+flour Recipe. Real installed-game and ERROR-0 verification of the new stove
+milling job remains pending.
 Harvest and milling/cooking must add no Straw/Hay; MO threshing's declared Straw
 is allowed. The test checks available table recipes and rejects jobs that end
 without their outputs. It does not call product-generation helpers itself.

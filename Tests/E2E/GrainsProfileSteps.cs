@@ -252,6 +252,18 @@ namespace AncientMedievalJapanCore.E2E
                     ThingDef powder = DefDatabase<ThingDef>.GetNamed(powders[index]);
                     ctx.Assert(rec.ingredients.Any(i => i.filter.Allows(grain)) && rec.recipeUsers.Contains(mill),
                         "Grain must connect to the standard mill: " + grains[index]);
+                    // The V1 stove fallback applies to all AMJ non-MO milling Recipes only.
+                    // MO's native wheat recipe is kept unchanged and is checked separately above.
+                    if (rec.defName.StartsWith("AMJC_Mill"))
+                    {
+                        ThingDef fueled = DefDatabase<ThingDef>.GetNamed("FueledStove");
+                        ThingDef electric = DefDatabase<ThingDef>.GetNamed("ElectricStove");
+                        ctx.Assert(mo
+                            ? rec.recipeUsers.Count == 1 && rec.recipeUsers[0] == mill
+                            : rec.recipeUsers.Count == 3 && rec.recipeUsers.Contains(fueled)
+                                && rec.recipeUsers.Contains(electric),
+                            "V1 beta: only Base must offer milling at both Vanilla stoves: " + recipes[index]);
+                    }
                     ctx.Assert(rec.products.Count == 1 && rec.products[0].thingDef == powder,
                         "Milling must yield only the designated powder: " + recipes[index]);
                     ctx.Assert(Math.Abs(rec.ingredients[0].GetBaseCount() * grain.GetStatValueAbstract(StatDefOf.Nutrition)
