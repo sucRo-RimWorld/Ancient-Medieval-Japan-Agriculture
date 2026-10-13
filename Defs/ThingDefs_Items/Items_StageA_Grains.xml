@@ -282,7 +282,7 @@
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_RiceSheaf</defName>
     <label>rice sheaf</label>
-    <description>Harvested rice stalks and ears tied into sheaves. Threshing and hulling are needed before this rice can be eaten.</description>
+    <description>Harvested rice stalks and ears tied into sheaves. Threshing and hulling are needed before this rice can be eaten.\n\nIn ancient and medieval Japan, rice was not only food: it was paid as taxes and estate rent. In the late Heian period it also served alongside silk and cloth as a form of commodity money.</description>
     <graphicData><texPath>Things/Item/Resource/AMJC_Rice/RiceSheaf</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
     <statBases><MarketValue>1.1</MarketValue></statBases>
     <ingestible><foodType>Seed</foodType><preferability>NeverForNutrition</preferability></ingestible>
@@ -292,7 +292,7 @@
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_RiceInHull</defName>
     <label>rice in hull</label>
-    <description>Rice grains after threshing, still enclosed in their husks. Remove the husks to obtain edible Vanilla rice.</description>
+    <description>Rice grains after threshing, still enclosed in their husks. Remove the husks to obtain edible rice.\n\nHulling yields brown rice with its bran and germ intact; further polishing yields white rice. Polishing removes much of the vitamin B1 in the bran and germ.</description>
     <graphicData><texPath>Things/Item/Resource/AMJC_Rice/RiceInHull</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
     <statBases><MarketValue>1.1</MarketValue></statBases>
     <ingestible><foodType>Seed</foodType><preferability>NeverForNutrition</preferability></ingestible>

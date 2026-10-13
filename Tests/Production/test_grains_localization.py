@@ -33,7 +33,7 @@ def all_localizations(*bases):
     return found
 
 
-RICE_ITEMS = {'AMJC_RiceSheaf', 'AMJC_RiceInHull'}
+RICE_ITEMS = {'AMJC_RiceSheaf', 'AMJC_RiceInHull', 'RawRice'}
 RICE_RECIPES = {'AMJC_ThreshRice', 'AMJC_ThreshRiceBulk',
                 'AMJC_HullRice', 'AMJC_HullRiceBulk'}
 
@@ -50,7 +50,7 @@ def validate_rice_localizations(root):
     chapter = source.split('## 10. 陸稲の新加工語彙', 1)[1]
     entries, jobs = {}, {}
     for line in chapter.splitlines():
-        matched = re.fullmatch(r'- `(AMJC_[A-Za-z]+)`：(.+?)。(.+?)English: \*\*([^*]+)\*\* — (.+)', line)
+        matched = re.fullmatch(r'- `(AMJC_[A-Za-z]+|RawRice)`：(.+?)。(.+?)English: \*\*([^*]+)\*\* — (.+)', line)
         if matched:
             name, jp_label, jp_desc, en_label, en_desc = matched.groups()
             assert name not in entries, 'Duplicate approved rice description: ' + name
@@ -68,6 +68,25 @@ def validate_rice_localizations(root):
     jp_items = ET.parse(root / 'Languages/Japanese/DefInjected/ThingDef/AMJC_RiceProcessing.xml').getroot()
     jp_recipes = ET.parse(root / 'Languages/Japanese/DefInjected/RecipeDef/AMJC_RiceProcessing.xml').getroot()
     for name, (ja_label, ja_desc, en_label, en_desc) in entries.items():
+        if name == 'RawRice':
+            assert ja_label == '米' and en_label == 'rice'
+            assert jp_items.findtext('RawRice.description') == ja_desc
+            assert jp_items.find('RawRice.label') is None
+            assert not any(x.findtext('defName') == 'RawRice' for x in thing_source)
+            patch = ET.parse(root / 'Patches/RawRiceDescription.xml').getroot()
+            patch_ops = patch.findall('.//li')
+            assert len(patch_ops) == 1, 'Only a description patch for Vanilla RawRice'
+            operation = patch_ops[0]
+            assert operation.get('Class') == 'PatchOperationReplace'
+            assert operation.findtext('xpath') == '/Defs/ThingDef[defName="RawRice"]/description'
+            assert operation.findtext('value/description') == en_desc
+            assert ja_desc.startswith('米（こめ）。')
+            for term in ('江戸患い', '高木兼寛', '疫学', '1910年', '鈴木梅太郎', 'オリザニン'):
+                assert term in ja_desc
+            for term in ('Edo sickness', 'Kanehiro Takaki', 'epidemiological', '1910', 'Umetaro Suzuki', 'oryzanin'):
+                assert term in en_desc
+            assert ja_desc.count(r'\n\n') == en_desc.count(r'\n\n') == 3
+            continue
         source_group = thing_source if name in RICE_ITEMS else recipe_source
         jp_group = jp_items if name in RICE_ITEMS else jp_recipes
         nodes = [node for node in source_group if node.findtext('defName') == name]
@@ -77,6 +96,14 @@ def validate_rice_localizations(root):
         assert node.findtext('description') == en_desc, 'English rice description drift: ' + name
         assert jp_group.findtext(name + '.label') == ja_label, 'Japanese rice label drift: ' + name
         assert jp_group.findtext(name + '.description') == ja_desc, 'Japanese rice description drift: ' + name
+        if name in ('AMJC_RiceSheaf', 'AMJC_RiceInHull'):
+            assert ja_desc.count(r'\n\n') == en_desc.count(r'\n\n') == 1
+            assert len(ja_desc) < 280, 'Avoid unreadably long rice-stage text'
+            if name == 'AMJC_RiceSheaf':
+                assert '年貢' in ja_desc and 'commodity money' in en_desc
+            else:
+                assert all(term in ja_desc for term in ('玄米', '白米', 'ビタミンB1'))
+                assert 'brown rice' in en_desc and 'white rice' in en_desc
         if name in RICE_RECIPES:
             assert node.findtext('jobString') == jobs[name][1], 'English rice jobString drift: ' + name
             assert jp_group.findtext(name + '.jobString') == jobs[name][0], 'Japanese rice jobString drift: ' + name
@@ -191,6 +218,7 @@ class JapaneseLocalizationAudit(unittest.TestCase):
             'Defs/RecipeDefs/Recipes_GrainProcessing.xml',
             'Languages/Japanese/DefInjected/ThingDef/AMJC_RiceProcessing.xml',
             'Languages/Japanese/DefInjected/RecipeDef/AMJC_RiceProcessing.xml',
+            'Patches/RawRiceDescription.xml',
         )
         for target, old, new in (
             (relative[1], '<label>rice sheaf</label>', '<label>unreviewed sheaf</label>'),
@@ -198,6 +226,7 @@ class JapaneseLocalizationAudit(unittest.TestCase):
             (relative[2], '<jobString>Hulling rice in bulk.</jobString>',
              '<jobString>Milling rice in bulk.</jobString>'),
             (relative[0], '籾10個をまとめて籾摺りし', '籾100個をまとめて籾摺りし'),
+            (relative[5], 'Edo sickness', 'altered sickness'),
         ):
             with self.subTest(file=target), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
@@ -292,26 +321,16 @@ class JapaneseLocalizationAudit(unittest.TestCase):
                        if node.findtext('xpath') == rice_label_target]
         self.assertEqual(rice_labels, ['rice plant'])
         self.assertEqual(localizations['Plant_Rice.label'], '稲')
-        self.assertIn('水稲', japanese['Plant_Rice'])
-        self.assertIn('陸稲', japanese['Plant_Rice'])
-        self.assertIn('同じイネ', japanese['Plant_Rice'])
-        self.assertIn('弥生時代', japanese['Plant_Rice'])
-        self.assertIn('古代から中世', japanese['Plant_Rice'])
-        self.assertIn('年貢', japanese['Plant_Rice'])
-        self.assertIn('same rice species', english['Plant_Rice'])
-        self.assertIn('Yayoi period', english['Plant_Rice'])
-        self.assertIn('ancient through medieval', english['Plant_Rice'])
-        self.assertIn('estate rent', english['Plant_Rice'])
-        self.assertIn('貨幣の役割', japanese['Plant_Rice'])
-        self.assertIn('白米', japanese['Plant_Rice'])
-        self.assertIn('戦後の経済成長', japanese['Plant_Rice'])
-        self.assertIn('Edo', english['Plant_Rice'])
-        self.assertIn('commodity money', english['Plant_Rice'])
-        self.assertIn('postwar economic growth', english['Plant_Rice'])
-        for term in ('江戸患い', '脚気', '高木兼寛', '龍驤', '筑波', '疫学', '1910年', '鈴木梅太郎', 'オリザニン', 'ビタミンB1'):
-            self.assertIn(term, japanese['Plant_Rice'], 'Missing historical rice context: ' + term)
-        for term in ('beriberi', 'Edo sickness', 'Kanehiro Takaki', 'Tsukuba', 'Ryūjō', 'epidemiology', '1910', 'Umetaro Suzuki', 'oryzanin', 'vitamin B1'):
-            self.assertIn(term, english['Plant_Rice'], 'Missing English rice context: ' + term)
+        # Cultivation is the only history owned by the living plant's description.
+        for term in ('水稲', '陸稲', '同じイネ', '弥生時代', 'AMJGrains'):
+            self.assertIn(term, japanese['Plant_Rice'])
+        for term in ('same rice species', 'Yayoi period', 'AMJGrains'):
+            self.assertIn(term, english['Plant_Rice'])
+        for term in ('江戸患い', 'オリザニン', '高木兼寛', '年貢', 'ビタミンB1'):
+            self.assertNotIn(term, japanese['Plant_Rice'])
+        for item in (japanese['Plant_Rice'], english['Plant_Rice']):
+            self.assertEqual(item.count(r'\n\n'), 1)
+        self.assertLess(max(map(len, japanese['Plant_Rice'].split(r'\n\n'))), 220)
         for forbidden in ('V1', '未実装', '別Mod'):
             self.assertNotIn(forbidden, japanese['Plant_Rice'],
                              'Release stage / ownership must not appear in player prose')
