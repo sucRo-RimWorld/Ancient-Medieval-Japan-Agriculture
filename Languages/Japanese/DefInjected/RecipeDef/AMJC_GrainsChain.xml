@@ -27,4 +27,19 @@
   <AMJC_MillRice.jobString>米を製粉している。</AMJC_MillRice.jobString>
   <AMJC_CookBarleyFlourGruel.jobString>麦粉粥を調理している。</AMJC_CookBarleyFlourGruel.jobString>
   <AMJC_CookRiceFlourDumplings.jobString>米粉団子を調理している。</AMJC_CookRiceFlourDumplings.jobString>
+  <AMJC_CookHoutouBulk.label>餺飥を4食まとめて作る</AMJC_CookHoutouBulk.label>
+  <AMJC_CookHoutouBulk.description>小麦粉の栄養2.0相当から餺飥を4食調理する。</AMJC_CookHoutouBulk.description>
+  <AMJC_CookHoutouBulk.jobString>餺飥を4食分調理している。</AMJC_CookHoutouBulk.jobString>
+  <AMJC_CookSobagakiBulk.label>そばがきを4食まとめて作る</AMJC_CookSobagakiBulk.label>
+  <AMJC_CookSobagakiBulk.description>蕎麦粉の栄養2.0相当からそばがきを4食調理する。</AMJC_CookSobagakiBulk.description>
+  <AMJC_CookSobagakiBulk.jobString>そばがきを4食分調理している。</AMJC_CookSobagakiBulk.jobString>
+  <AMJC_CookMilletDumplingsBulk.label>雑穀団子を4食まとめて作る</AMJC_CookMilletDumplingsBulk.label>
+  <AMJC_CookMilletDumplingsBulk.description>雑穀粉の栄養2.0相当から雑穀団子を4食調理する。</AMJC_CookMilletDumplingsBulk.description>
+  <AMJC_CookMilletDumplingsBulk.jobString>雑穀団子を4食分調理している。</AMJC_CookMilletDumplingsBulk.jobString>
+  <AMJC_CookBarleyFlourGruelBulk.label>麦粉粥を4食まとめて作る</AMJC_CookBarleyFlourGruelBulk.label>
+  <AMJC_CookBarleyFlourGruelBulk.description>大麦粉の栄養2.0相当から麦粉粥を4食調理する。</AMJC_CookBarleyFlourGruelBulk.description>
+  <AMJC_CookBarleyFlourGruelBulk.jobString>麦粉粥を4食分調理している。</AMJC_CookBarleyFlourGruelBulk.jobString>
+  <AMJC_CookRiceFlourDumplingsBulk.label>米粉団子を4食まとめて作る</AMJC_CookRiceFlourDumplingsBulk.label>
+  <AMJC_CookRiceFlourDumplingsBulk.description>米粉の栄養2.0相当から米粉団子を4食調理する。</AMJC_CookRiceFlourDumplingsBulk.description>
+  <AMJC_CookRiceFlourDumplingsBulk.jobString>米粉団子を4食分調理している。</AMJC_CookRiceFlourDumplingsBulk.jobString>
 </LanguageData>
