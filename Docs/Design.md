@@ -796,7 +796,7 @@ Grainsの存在意義は「日本の穀物Defを増やすこと」ではなく�
 | 大麦 | 日常主食＋将来の加工用途 | 寒冷寄り。粒食可能。後に麦味噌・麦茶へ拡張 |
 | 小麦 | 製粉・粉食向け | 粒食より加工価値を重視 |
 | 蕎麦 | 短期・痩せ地向け | 成長が速く肥沃度依存が小さい。霜には弱め |
-| 陸稲（Vanilla `Plant_Rice`） | 水田を使わない米作 | VanillaのRiceを別作物として増やさず陸稲へ再定義する。最終的な成長・収量役割は既存6作物との七穀回帰で確定する |
+| 稲（Vanilla `Plant_Rice`、V1は畑地栽培） | 水田を使わない米作 | VanillaのRiceを別作物として増やさず同一Plantを畑作基準に調整する。最終的な成長・収量役割は既存6作物との七穀回帰で確定する |
 
 ### 4.2 作物の差別化軸
 
@@ -872,7 +872,7 @@ GrainsではVanillaの `Plant_Rice` を削除・複製せず、**V1では畑地�
 
 固定方針:
 - `AMJC_UplandRice` や水稲専用PlantDef、**別の可食米**ThingDefは作らない。稲束・籾の非可食中間物2件は共通加工経路として維持する。
-- 現行 `Plant_Rice` の表示名・説明・画像・栽培値はV1の畑地栽培として維持する。将来、共通稲Plantにふさわしい名称・説明の見直しが必要だが、承認済み史実文言はこの設計判断だけでは書き換えない。
+- **V1から** `Plant_Rice` の表示名を日本語「稲」・英語「rice plant」に統一する。説明には畑の陸稲と水田の水稲、同種ながら適応品種群が異なること、AMJでは1つの稲に抽象化することを記す。V1に水田作業は追加しない。採用済みの画像・栽培値・加工経路は変更しない。表示本文・出典の正本は [LocalizationHistoricalReview.md §7–8](LocalizationHistoricalReview.md)。
 - Vanillaの `Hydroponic` sowTagを除き、`Ground` のみとする。実ゲームの播種可否は別途検証する。
 - `RawRice` は籾摺り**後**の共通米食材として再利用する。畑地・水田・うるち・もちの違いで最終食材を分けない。現行では収穫先とRecipe・E2Eのソースを二段階加工へ更新済み（実ゲームテストは未実行）。
 - CCTO導入時はCCTOが既に `Plant_Rice` へ設定する最低生育10℃・固定枯死-1℃を利用し、Grains側に重複したColdToleranceExtensionを追加しない。
@@ -1067,7 +1067,7 @@ Grains Baseの主要ループはMO ResearchDefを必要としない。MO併用�
 
 Grainsは**共通の稲Plantと穀物の収穫後加工・製粉**を所有し、将来のRice Cultivationは**水田・水管理・同一Plantの水田栽培への拡張**を所有する。Rice Cultivationの詳細設計は専用所有先ができるまではProject側を正本とし、本書ではGrainsとの接続境界だけを固定する。
 
-- GrainsはVanilla `Plant_Rice` を陸稲として再定義し、稲束→籾→Vanilla `RawRice` の収穫後加工を共通所有する（収穫先とRecipeは本番XMLへ実装済み、実ゲーム未検証）。
+- GrainsはVanilla `Plant_Rice` をV1の畑地栽培に合わせて調整し、表示名を「稲」とする。稲束→籾→Vanilla `RawRice` の収穫後加工を共通所有する（収穫先とRecipeは本番XMLへ実装済み、実ゲーム未検証）。
 - 水田Terrain、水深・給排水、苗代・田植え、同一 `Plant_Rice` への水田生育・収量補正等の水田固有ロジックはGrainsに入れない。
 - Rice Cultivation + Grainsでは、畑・水田とも同一 `Plant_Rice` からGrainsの稲束・籾の共通加工経路へ接続し、脱穀・籾摺りを迂回しない。水稲専用Plant、米・米粉・精米設備・製粉RecipeをRice Cultivation側で重複定義しない。
 - GrainsはRice Cultivationを必須依存にしない。Rice Cultivation単独時の簡易収穫経路と、稲架掛け・藁・保存差等の水稲固有設計はRice Cultivation側で決める。
