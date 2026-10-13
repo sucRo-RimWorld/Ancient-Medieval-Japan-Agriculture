@@ -23,7 +23,20 @@ SHARED_NAMES = {
 FALLBACK_NAMES = {'AMJC_Plant_Wheat','AMJC_RawWheat','AMJC_WheatFlour','AMJC_ManualMillstone','AMJC_MillWheat','AMJC_DoGrainsMilling'}
 
 
+def validate_ccto_detection(root=ROOT):
+    accepted = {'Crop Cold Tolerance Overhaul',
+                'Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）'}
+    for path, count in (('Patches/Compatibility/CCTO_StageA.xml', 5),
+                        ('BaseWithoutMO/Patches/CCTO_Wheat.xml', 1)):
+        operations = ET.parse(root/path).findall('Operation[@Class="PatchOperationFindMod"]')
+        assert len(operations) == count, ('CCTO detection operation count', path)
+        for operation in operations:
+            names = [node.text for node in operation.findall('mods/li')]
+            assert len(names) == 2 and set(names) == accepted, ('CCTO provider title compatibility', path)
+
+
 def validate(root=ROOT):
+    validate_ccto_detection(root)
     for profile in ('vanilla','mo'):
         doc = profile_xml(profile, root)
         defs = {n.findtext('defName'): n for n in doc if n.findtext('defName')}

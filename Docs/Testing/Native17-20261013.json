@@ -296,5 +296,236 @@
         ]
       }
     }
-  ]
+  ],
+  "approved_ccto_name_correction": {
+    "production_base": "2f5b8132eb1a32bc3cfa01625f895dc045f70fc8",
+    "authorized_scope": "Two production XML files; six FindMod title selectors accept legacy English and current bilingual names; all numeric values and other XML nodes unchanged.",
+    "production_xml_sha256": {
+      "Patches/Compatibility/CCTO_StageA.xml": "5db469627c4757849635c23ba7a7a1198897f4f339941615059466a2958ddc7b",
+      "BaseWithoutMO/Patches/CCTO_Wheat.xml": "1aa56a064dbdfd337c9b324dc55190df1e9e12399f7bd1b4d8eab0a8aeb67753"
+    },
+    "source_hash_before_offline_git_byte_restoration": "04beeb26f5fc3c56997f1e99bcf11c6f62617979cc89f47cb690d42117c6dde6",
+    "runs": [
+      {
+        "profile": "vanilla",
+        "local_report": "TestResults/Grains17-20261013-201330-725/vanilla/Reports",
+        "pid": 31696,
+        "log_complete": true,
+        "native_errors": 0,
+        "summary_sha256": "1465bf2f1bc715b2a9df22c604baf8bf3d38f69f0b3ed6df7f21a19960a338e6",
+        "log_sha256": "0f3a50727555ab365a951217467a4316d69f61f75047722bf44dff41c296dca4",
+        "summary": {
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "flaky": 0,
+          "exitReason": "passed",
+          "scenarios": [
+            {
+              "name": "Grains vanilla loads the requested real providers",
+              "outcome": "Passed",
+              "durationMs": 765,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla primary grain loop resolves",
+              "outcome": "Passed",
+              "durationMs": 10,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla optional cold tolerance resolves",
+              "outcome": "Passed",
+              "durationMs": 11,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla wheat flour and minimum food resolve",
+              "outcome": "Passed",
+              "durationMs": 20,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla seven grains retain environmental niches",
+              "outcome": "Passed",
+              "durationMs": 15,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla real harvest and flour food Bills complete",
+              "outcome": "Passed",
+              "durationMs": 9674,
+              "attempts": 1
+            }
+          ]
+        }
+      },
+      {
+        "profile": "vanilla-ccto",
+        "local_report": "TestResults/Grains17-20261013-201330-725/vanilla-ccto/Reports",
+        "pid": 30532,
+        "log_complete": true,
+        "native_errors": 0,
+        "summary_sha256": "7cc021b1db8a4d0fe5eefde2f527219f2323d846a2389cf9ae7127068433cc54",
+        "log_sha256": "cd47d40daabb27afafd54cc354185d17ae1cf13aa12cc79705e16dc8d91abac3",
+        "summary": {
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "flaky": 0,
+          "exitReason": "passed",
+          "scenarios": [
+            {
+              "name": "Grains vanilla-ccto loads the requested real providers",
+              "outcome": "Passed",
+              "durationMs": 731,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla-ccto primary grain loop resolves",
+              "outcome": "Passed",
+              "durationMs": 9,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla-ccto optional cold tolerance resolves",
+              "outcome": "Passed",
+              "durationMs": 12,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla-ccto wheat flour and minimum food resolve",
+              "outcome": "Passed",
+              "durationMs": 20,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla-ccto seven grains retain environmental niches",
+              "outcome": "Passed",
+              "durationMs": 15,
+              "attempts": 1
+            },
+            {
+              "name": "Grains vanilla-ccto real harvest and flour food Bills complete",
+              "outcome": "Passed",
+              "durationMs": 9048,
+              "attempts": 1
+            }
+          ]
+        }
+      },
+      {
+        "profile": "mo",
+        "local_report": "TestResults/Grains17-20261013-201330-725/mo/Reports",
+        "pid": 2740,
+        "log_complete": true,
+        "native_errors": 0,
+        "summary_sha256": "58e18c0fe8f80038e2b41d1ee43eada582937620f046bbe1a5f54ec4db616c71",
+        "log_sha256": "dfca6891cb3ae21cd829d1e76d930672c7581d12c64c65f33e763425b182b79d",
+        "summary": {
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "flaky": 0,
+          "exitReason": "passed",
+          "scenarios": [
+            {
+              "name": "Grains mo loads the requested real providers",
+              "outcome": "Passed",
+              "durationMs": 954,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo primary grain loop resolves",
+              "outcome": "Passed",
+              "durationMs": 16,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo optional cold tolerance resolves",
+              "outcome": "Passed",
+              "durationMs": 24,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo wheat flour and minimum food resolve",
+              "outcome": "Passed",
+              "durationMs": 20,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo seven grains retain environmental niches",
+              "outcome": "Passed",
+              "durationMs": 15,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo real harvest and flour food Bills complete",
+              "outcome": "Passed",
+              "durationMs": 10361,
+              "attempts": 1
+            }
+          ]
+        }
+      },
+      {
+        "profile": "mo-ccto",
+        "local_report": "TestResults/Grains17-20261013-201330-725/mo-ccto/Reports",
+        "pid": 39924,
+        "log_complete": true,
+        "native_errors": 0,
+        "summary_sha256": "2060cbcf5ff65263abc48820a97df2f9fbd60768c5698028cc489abed1701d93",
+        "log_sha256": "3d7bfeb9c9b5eccb1c04802696d42df05d5966487eec9d0c24fe3a8c3daf1410",
+        "summary": {
+          "total": 6,
+          "passed": 6,
+          "failed": 0,
+          "skipped": 0,
+          "flaky": 0,
+          "exitReason": "passed",
+          "scenarios": [
+            {
+              "name": "Grains mo-ccto loads the requested real providers",
+              "outcome": "Passed",
+              "durationMs": 970,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo-ccto primary grain loop resolves",
+              "outcome": "Passed",
+              "durationMs": 19,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo-ccto optional cold tolerance resolves",
+              "outcome": "Passed",
+              "durationMs": 9,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo-ccto wheat flour and minimum food resolve",
+              "outcome": "Passed",
+              "durationMs": 20,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo-ccto seven grains retain environmental niches",
+              "outcome": "Passed",
+              "durationMs": 15,
+              "attempts": 1
+            },
+            {
+              "name": "Grains mo-ccto real harvest and flour food Bills complete",
+              "outcome": "Passed",
+              "durationMs": 9449,
+              "attempts": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

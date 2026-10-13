@@ -8,13 +8,13 @@ import xml.etree.ElementTree as ET
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from amj_profile_xml import ROOT
-from validate_grains_chain import validate, validate_mo_source
+from validate_grains_chain import validate, validate_mo_source, validate_ccto_detection
 
 class ChainRegressionTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        for folder in ('Defs','BaseWithoutMO','Compatibility','LegacyStartingScenarios','Textures'):
+        for folder in ('Defs','Patches','BaseWithoutMO','Compatibility','LegacyStartingScenarios','Textures'):
             shutil.copytree(ROOT/folder,self.root/folder)
         shutil.copyfile(ROOT/'loadFolders.xml',self.root/'loadFolders.xml')
 
@@ -26,6 +26,24 @@ class ChainRegressionTests(unittest.TestCase):
         with self.assertRaises(AssertionError):validate(self.root)
 
     def test_current_chain(self):validate(self.root)
+
+    def test_both_ccto_provider_titles_are_retained(self):
+        validate_ccto_detection(self.root)
+        for path in ('Patches/Compatibility/CCTO_StageA.xml',
+                     'BaseWithoutMO/Patches/CCTO_Wheat.xml'):
+            file = self.root/path
+            original = file.read_bytes()
+            for index in range(len(ET.parse(file).findall('Operation'))):
+                for title in ('Crop Cold Tolerance Overhaul',
+                              'Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）'):
+                    with self.subTest(path=path, operation=index, title=title):
+                        xml = ET.fromstring(original)
+                        mods = xml.findall('Operation')[index].find('mods')
+                        mods.remove(next(node for node in mods if node.text == title))
+                        ET.ElementTree(xml).write(file, encoding='utf-8')
+                        with self.assertRaisesRegex(AssertionError, 'CCTO provider title compatibility'):
+                            validate_ccto_detection(self.root)
+                        file.write_bytes(original)
     def test_flour_uses_dedicated_art(self):
         self.mutate('Defs/ThingDefs_Items/Items_GrainsFlour.xml',
                     'ThingDef[defName="AMJC_BuckwheatFlour"]/graphicData/texPath',

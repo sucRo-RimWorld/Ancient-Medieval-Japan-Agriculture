@@ -2,7 +2,7 @@
 <Patch>
 
   <Operation Class="PatchOperationFindMod">
-    <mods><li>Crop Cold Tolerance Overhaul</li></mods>
+    <mods><li>Crop Cold Tolerance Overhaul</li><li>Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）</li></mods>
     <match Class="PatchOperationAddModExtension">
       <xpath>/Defs/ThingDef[defName="AMJC_Plant_FoxtailMillet_Awa"]</xpath>
       <value>
@@ -14,7 +14,7 @@
   </Operation>
 
   <Operation Class="PatchOperationFindMod">
-    <mods><li>Crop Cold Tolerance Overhaul</li></mods>
+    <mods><li>Crop Cold Tolerance Overhaul</li><li>Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）</li></mods>
     <match Class="PatchOperationAddModExtension">
       <xpath>/Defs/ThingDef[defName="AMJC_Plant_BarnyardMillet_Hie"]</xpath>
       <value>
@@ -26,7 +26,7 @@
   </Operation>
 
   <Operation Class="PatchOperationFindMod">
-    <mods><li>Crop Cold Tolerance Overhaul</li></mods>
+    <mods><li>Crop Cold Tolerance Overhaul</li><li>Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）</li></mods>
     <match Class="PatchOperationAddModExtension">
       <xpath>/Defs/ThingDef[defName="AMJC_Plant_ProsoMillet_Kibi"]</xpath>
       <value>
@@ -39,7 +39,7 @@
 
 
   <Operation Class="PatchOperationFindMod">
-    <mods><li>Crop Cold Tolerance Overhaul</li></mods>
+    <mods><li>Crop Cold Tolerance Overhaul</li><li>Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）</li></mods>
     <match Class="PatchOperationAddModExtension">
       <xpath>/Defs/ThingDef[defName="AMJC_Plant_Buckwheat_Soba"]</xpath>
       <value>
@@ -52,7 +52,7 @@
 
 
   <Operation Class="PatchOperationFindMod">
-    <mods><li>Crop Cold Tolerance Overhaul</li></mods>
+    <mods><li>Crop Cold Tolerance Overhaul</li><li>Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）</li></mods>
     <match Class="PatchOperationAddModExtension">
       <xpath>/Defs/ThingDef[defName="AMJC_Plant_Barley"]</xpath>
       <value>

@@ -2,7 +2,7 @@
 <Patch>
   <Operation Class="PatchOperationFindMod">
     <mods>
-      <li>Crop Cold Tolerance Overhaul</li>
+      <li>Crop Cold Tolerance Overhaul</li><li>Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）</li>
     </mods>
     <match Class="PatchOperationAddModExtension">
       <xpath>/Defs/ThingDef[defName="AMJC_Plant_Wheat"]</xpath>
