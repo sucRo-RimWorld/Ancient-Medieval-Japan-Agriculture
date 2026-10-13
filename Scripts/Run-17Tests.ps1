@@ -1,4 +1,4 @@
-# RimWorld 1.7 unstable: run the existing six-scenario REAL-provider Grains matrix.
+# RimWorld 1.7 unstable: run the seven-scenario REAL-provider Grains matrix.
 # 1.6 entry points and production source/art/metadata remain untouched.
 [CmdletBinding()]
 param(
@@ -139,4 +139,4 @@ finally {
     }
 }
 if (@($matrix | Where-Object { $_.ExitCode -ne 0 }).Count) { throw "One or more Grains 1.7 profiles failed: $result" }
-Write-Output "[OK] Grains 1.7 profiles: $($profiles -join ', ') 6/6 each, native ERROR 0. Evidence: $result"
+Write-Output "[OK] Grains 1.7 profiles: $($profiles -join ', ') $($spec.Scenarios.Count)/$($spec.Scenarios.Count) each, native ERROR 0. Evidence: $result"
