@@ -87,4 +87,62 @@
       </li>
     </comps>
   </ThingDef>
+  <ThingDef ParentName="MealFineBase">
+    <defName>AMJC_BarleyFlourGruel</defName>
+    <label>barley-flour gruel</label>
+    <description>A simple gruel made by cooking barley flour with hot water. This is not the roasted-grain preparation used for hattaiko.</description>
+    <!-- Existing grain sprite used as a temporary meal graphic; no new PNG assets. -->
+    <graphicData>
+      <texPath>Things/Item/Resource/AMJC_Barley/Barley</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <statBases>
+      <Nutrition>0.9</Nutrition>
+      <MarketValue>12</MarketValue>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+      <tasteThought>AMJC_AteFlourFood</tasteThought>
+    </ingestible>
+    <comps Inherit="False">
+      <!-- Keep the Vanilla cooked meal family components; do not append a
+           second rottable comp inherited through MealFineBase. -->
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Ingredients" />
+      <li Class="CompProperties_FoodPoisonable" />
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>2.5</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
+  <ThingDef ParentName="MealFineBase">
+    <defName>AMJC_RiceFlourDumplings</defName>
+    <label>rice-flour dumplings</label>
+    <description>Small dumplings cooked from rice flour mixed with water. AMJGrains represents ordinary and glutinous rice flour with the same ingredient.</description>
+    <!-- Existing grain sprite used as a temporary meal graphic; no new PNG assets. -->
+    <graphicData>
+      <texPath>Things/Item/Resource/AMJC_Rice/Rice</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <statBases>
+      <Nutrition>0.9</Nutrition>
+      <MarketValue>12</MarketValue>
+    </statBases>
+    <ingestible>
+      <preferability>MealSimple</preferability>
+      <tasteThought>AMJC_AteFlourFood</tasteThought>
+    </ingestible>
+    <comps Inherit="False">
+      <!-- Keep the Vanilla cooked meal family components; do not append a
+           second rottable comp inherited through MealFineBase. -->
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Ingredients" />
+      <li Class="CompProperties_FoodPoisonable" />
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>2.5</daysToRotStart>
+        <rotDestroys>true</rotDestroys>
+      </li>
+    </comps>
+  </ThingDef>
 </Defs>
