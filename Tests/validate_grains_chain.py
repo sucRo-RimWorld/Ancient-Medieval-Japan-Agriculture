@@ -13,6 +13,12 @@ SHARED_NAMES = {
     'AMJC_MillBarley','AMJC_MillRice','AMJC_CookBarleyFlourGruel','AMJC_CookRiceFlourDumplings',
     'AMJC_CookHoutouBulk','AMJC_CookSobagakiBulk','AMJC_CookMilletDumplingsBulk',
     'AMJC_CookBarleyFlourGruelBulk','AMJC_CookRiceFlourDumplingsBulk',
+    # V1 permanent shared cooking variants; tracked separately from the
+    # immutable historical pre-split MO fixture and individually regression-tested.
+    'AMJC_MixedGrainMeal','AMJC_MixedGrainPorridge','AMJC_MixedFlourFood',
+    'AMJC_CookMixedGrainMeal','AMJC_CookMixedGrainMealBulk',
+    'AMJC_CookMixedGrainPorridge','AMJC_CookMixedGrainPorridgeBulk',
+    'AMJC_CookMixedFlourFood','AMJC_CookMixedFlourFoodBulk',
 }
 FALLBACK_NAMES = {'AMJC_Plant_Wheat','AMJC_RawWheat','AMJC_WheatFlour','AMJC_ManualMillstone','AMJC_MillWheat','AMJC_DoGrainsMilling'}
 
