@@ -432,7 +432,7 @@ def product_count(node, name):
     assert p is not None and p.text is not None, f"missing product {name}"
     return int(p.text)
 
-expected_users = sorted(["AMJC_GrainProcessingSpot", "AMJC_GrainProcessingTable"])
+expected_users = sorted(["AMJC_GrainProcessingSpot", "AMJC_GrainProcessingTable", "FueledStove", "ElectricStove"])
 
 cases = {
     "AMJC_ThreshMillet": (15, "AMJC_RawMillet", 1, {"AMJC_MilletInHull": 1, "DankPyon_Straw": 1}),

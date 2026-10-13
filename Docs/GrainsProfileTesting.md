@@ -183,7 +183,7 @@ cells, counting ties as wins. It does not advance a growing plant through a seas
 The sixth grain-only scenario requests `AmjStageAQuickstart`, independently of New Village.
 `GrainsSimulationSteps.cs` creates mature plants for all six grains (an extra Soba
 plant supplies its x10 processing chain), one capable Plants/Crafting/Cooking-20
-worker, processing table, profile-owned mill and a fuelled Campfire. Existing
+worker, processing table, fueled Vanilla stove, profile-owned mill and a fuelled Campfire. Existing
 Quickstart pawns are temporarily despawned; only this disposable map is prepared.
 The test never creates harvested ingredients or recipe products. Native designated
 harvest jobs create the sheaves. Eleven native `DoBill` jobs then thresh/hull,
@@ -194,6 +194,10 @@ Bills come from the loaded recipes, ingredient selection comes from loaded
 `WorkGiver_DoBill` workers, and ingredients/products are counted across map stacks
 and the test worker's carried stack. Each Bill must finish one iteration, consume
 the expected ten ingredient units and produce exactly its declared output counts.
+Rice bulk threshing and rice bulk hulling are also executed as real Bills on a
+fueled Vanilla stove in Base and MO; other processing Bills still use the AMJ
+processing table. All 18 single/bulk grain-processing recipe users are checked
+in loaded Defs for both stoves and both AMJ processing stations.
 Harvest and milling/cooking must add no Straw/Hay; MO threshing's declared Straw
 is allowed. The test checks available table recipes and rejects jobs that end
 without their outputs. It does not call product-generation helpers itself.

@@ -95,6 +95,18 @@ class ChainRegressionTests(unittest.TestCase):
         self.mutate('BaseWithoutMO/Defs/Recipes_Milling.xml',
                     'RecipeDef/allowMixingIngredients', 'true')
 
+    def test_beta_processing_stoves_are_kept_in_shared_recipes(self):
+        self.mutate('Defs/RecipeDefs/Recipes_GrainProcessing.xml',
+                    'RecipeDef[@Name="AMJC_RiceProcessingBase"]/recipeUsers/li[3]', 'Campfire')
+
+    def test_beta_processing_stoves_are_kept_for_base_wheat(self):
+        self.mutate('BaseWithoutMO/Defs/Recipes_Wheat.xml',
+                    'RecipeDef[@Name="AMJC_WheatProcessingBase"]/recipeUsers/li[4]', 'Campfire')
+
+    def test_beta_processing_stoves_are_kept_for_mo_wheat(self):
+        self.mutate('Compatibility/MedievalOverhaul/Defs/Recipes_MOWheat.xml',
+                    'RecipeDef[@Name="AMJC_WheatProcessingBase"]/recipeUsers/li[4]', 'Campfire')
+
     def test_milling_does_not_create_straw(self):
         self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml','RecipeDef/products',new_element='<AMJC_Millet>1</AMJC_Millet>')
     def test_meal_must_replace_inherited_comp_list(self):

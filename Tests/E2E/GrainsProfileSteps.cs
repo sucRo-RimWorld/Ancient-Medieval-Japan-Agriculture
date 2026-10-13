@@ -63,6 +63,20 @@ namespace AncientMedievalJapanCore.E2E
                     "AMJG processing table must remain research-free in Base and MO profiles.");
                 ctx.Assert(table.costList.Count == 1 && table.costList[0].thingDef.defName == "Steel" && table.costList[0].count == 30,
                     "AMJG processing table must use 30 Steel in Base and MO profiles.");
+                // Threshing/hulling beta stove fallback applies with or without MO.
+                ThingDef processingFuelStove = DefDatabase<ThingDef>.GetNamed("FueledStove");
+                ThingDef processingElectricStove = DefDatabase<ThingDef>.GetNamed("ElectricStove");
+                ThingDef processingSpot = DefDatabase<ThingDef>.GetNamed("AMJC_GrainProcessingSpot");
+                foreach (RecipeDef processing in DefDatabase<RecipeDef>.AllDefsListForReading.Where(
+                    r => r.defName.StartsWith("AMJC_Thresh") || r.defName.StartsWith("AMJC_Hull")))
+                {
+                    ctx.Assert(processing.recipeUsers != null && processing.recipeUsers.Count == 4
+                        && processing.recipeUsers.Contains(processingSpot) && processing.recipeUsers.Contains(table)
+                        && processing.recipeUsers.Contains(processingFuelStove)
+                        && processing.recipeUsers.Contains(processingElectricStove),
+                        "All 18 grain processing Bills require two AMJ benches and two Vanilla stoves: "
+                            + processing.defName);
+                }
                 if (!Active("dankpyon.medieval.overhaul"))
                 {
                     foreach (RecipeDef recipe in DefDatabase<RecipeDef>.AllDefsListForReading.Where(r => r.defName.StartsWith("AMJC_Thresh")))
