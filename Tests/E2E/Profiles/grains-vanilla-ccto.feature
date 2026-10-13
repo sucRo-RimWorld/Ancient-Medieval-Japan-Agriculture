@@ -22,3 +22,15 @@ Feature: Grains real-provider migration smoke - vanilla-ccto
   @quickstart:AmjStageAQuickstart @timeout:270
   Scenario: Grains vanilla-ccto common food single and mixed Bills complete
     Then Grains common food single and mixed Bills complete through real jobs
+
+  @quickstart:AmjStageAQuickstart @timeout:270
+  Scenario: Grains vanilla-ccto V1 alternate processing benches complete
+    Then Grains V1 alternate processing benches complete native Bills
+
+  @quickstart:AmjStageAQuickstart @timeout:270
+  Scenario: Grains vanilla-ccto cooking Bills reject wrong ingredients
+    Then Grains cooking Bills reject wrong ingredient families through native work givers
+
+  @quickstart:AmjStageAQuickstart @timeout:270
+  Scenario: Grains vanilla-ccto food ingestion applies correct thoughts
+    Then Grains common and specialty foods apply actual ingestion thoughts

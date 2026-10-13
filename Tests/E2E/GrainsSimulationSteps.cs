@@ -88,6 +88,89 @@ namespace AncientMedievalJapanCore.E2E
             if (failure != null) failure.Throw();
         }
 
+
+        [Then("Grains V1 alternate processing benches complete native Bills")]
+        public async Task AlternateProcessingJobs(PickleContext ctx)
+        {
+            ProductionScope scope = null; ExceptionDispatchInfo failure = null;
+            try
+            {
+                await RuntimeThread.Run(delegate
+                {
+                    scope = new ProductionScope(ctx);
+                    scope.AssertElectricRecipes();
+                    scope.StageIngredient("AMJC_RawMillet", 20);
+                });
+                await scope.Bill("AMJC_ThreshMilletBulk", scope.Stove, "AMJC_RawMillet", 10);
+                await scope.Bill("AMJC_HullMilletBulk", scope.Spot, "AMJC_MilletInHull", 10);
+                await scope.Bill("AMJC_ThreshMilletBulk", scope.Spot, "AMJC_RawMillet", 10);
+                await scope.Bill("AMJC_HullMilletBulk", scope.Stove, "AMJC_MilletInHull", 10);
+                if (!scope.MO)
+                {
+                    await RuntimeThread.Run(delegate { scope.StageIngredient("AMJC_Buckwheat", 10); });
+                    await scope.Bill("AMJC_MillBuckwheat", scope.Stove, "AMJC_Buckwheat", 10);
+                }
+            }
+            catch (Exception error) { failure = ExceptionDispatchInfo.Capture(error); }
+            try { if (scope != null) await RuntimeThread.Run(scope.Dispose); }
+            catch (Exception error)
+            {
+                if (failure != null) throw new AggregateException(failure.SourceException, error);
+                throw;
+            }
+            if (failure != null) failure.Throw();
+        }
+
+        [Then("Grains cooking Bills reject wrong ingredient families through native work givers")]
+        public async Task RejectedFoodIngredients(PickleContext ctx)
+        {
+            ProductionScope scope = null; ExceptionDispatchInfo failure = null;
+            try
+            {
+                await RuntimeThread.Run(delegate
+                {
+                    scope = new ProductionScope(ctx);
+                    foreach (string family in new[] { "MixedGrainMeal", "MixedGrainPorridge" })
+                        scope.RejectFoodInput("AMJC_Cook" + family, "AMJC_MilletFlour");
+                    scope.RejectFoodInput("AMJC_CookMixedFlourFood", "AMJC_Millet");
+                    foreach (string food in new[] { "Houtou", "Sobagaki", "BarleyFlourGruel", "RiceFlourDumplings" })
+                        scope.RejectFoodInput("AMJC_Cook" + food, "AMJC_MilletFlour");
+                    scope.RejectFoodInput("AMJC_CookMilletDumplings", "AMJC_BuckwheatFlour");
+                });
+            }
+            catch (Exception error) { failure = ExceptionDispatchInfo.Capture(error); }
+            try { if (scope != null) await RuntimeThread.Run(scope.Dispose); }
+            catch (Exception error)
+            {
+                if (failure != null) throw new AggregateException(failure.SourceException, error);
+                throw;
+            }
+            if (failure != null) failure.Throw();
+        }
+
+        [Then("Grains common and specialty foods apply actual ingestion thoughts")]
+        public async Task FoodIngestionThoughts(PickleContext ctx)
+        {
+            ProductionScope scope = null; ExceptionDispatchInfo failure = null;
+            try
+            {
+                await RuntimeThread.Run(delegate { scope = new ProductionScope(ctx); });
+                await scope.IngestFood("AMJC_MixedGrainMeal", false);
+                await scope.IngestFood("AMJC_MixedGrainPorridge", false);
+                await scope.IngestFood("AMJC_MixedFlourFood", false);
+                await scope.IngestFood("AMJC_Houtou", true);
+                await scope.IngestFood("AMJC_Sobagaki", true);
+            }
+            catch (Exception error) { failure = ExceptionDispatchInfo.Capture(error); }
+            try { if (scope != null) await RuntimeThread.Run(scope.Dispose); }
+            catch (Exception error)
+            {
+                if (failure != null) throw new AggregateException(failure.SourceException, error);
+                throw;
+            }
+            if (failure != null) failure.Throw();
+        }
+
         [Then("Grains harvest and flour food Bills complete through real jobs")]
         public async Task ProductionJobs(PickleContext ctx)
         {
@@ -178,7 +261,7 @@ namespace AncientMedievalJapanCore.E2E
             private Pawn worker;
             private IntVec3 center;
             public bool MO;
-            public Building_WorkTable Processing, Mill, Campfire, Stove;
+            public Building_WorkTable Processing, Spot, Mill, Campfire, Stove;
 
             public ProductionScope(PickleContext context)
             {
@@ -226,6 +309,7 @@ namespace AncientMedievalJapanCore.E2E
                         worker.skills.GetSkill(skill).Level = 20;
                     ctx.Require(worker.GetStatValue(StatDefOf.PlantHarvestYield) >= 1f, "Harvest failure must be excluded by worker skill.");
                     Processing = Bench("AMJC_GrainProcessingTable", center + new IntVec3(-3,0,0));
+                    Spot = Bench("AMJC_GrainProcessingSpot", center + new IntVec3(-4,0,-4));
                     Mill = Bench(MO ? "DankPyon_Millstone" : "AMJC_ManualMillstone", center + new IntVec3(3,0,0));
                     Stove = Bench("FueledStove", center + new IntVec3(4,0,-4));
                     CompRefuelable stoveFuel = Stove.TryGetComp<CompRefuelable>();
@@ -631,6 +715,102 @@ namespace AncientMedievalJapanCore.E2E
                 });
                 if (name == "AMJC_Plant_Buckwheat_Soba" && !extra)
                     await Harvest(name, true);
+            }
+
+
+            // Staged inputs only. ProductionJobs separately proves real harvest.
+            public void StageIngredient(string name, int quantity)
+            {
+                ctx.Require(quantity > 0 && Count(name) == 0, "Bad test stack: " + name);
+                Thing input = ThingMaker.MakeThing(DefDatabase<ThingDef>.GetNamed(name));
+                input.stackCount = quantity;
+                created.Add(input);
+                GenSpawn.Spawn(input, center + new IntVec3(-1, 0, -2), map);
+            }
+
+            public void AssertElectricRecipes()
+            {
+                ThingDef stove = DefDatabase<ThingDef>.GetNamed("ElectricStove");
+                foreach (string name in new[] { "AMJC_ThreshMilletBulk", "AMJC_HullMilletBulk" })
+                    ctx.Assert(stove.AllRecipes.Contains(DefDatabase<RecipeDef>.GetNamed(name)),
+                        "ElectricStove missing " + name);
+                if (!MO)
+                    ctx.Assert(stove.AllRecipes.Contains(DefDatabase<RecipeDef>.GetNamed("AMJC_MillBuckwheat")),
+                        "Base ElectricStove missing V1 milling.");
+            }
+
+            public void RejectFoodInput(string recipeName, string wrongName)
+            {
+                RecipeDef recipe = DefDatabase<RecipeDef>.GetNamed(recipeName);
+                ThingDef wrong = DefDatabase<ThingDef>.GetNamed(wrongName);
+                ctx.Require(Campfire.def.AllRecipes.Contains(recipe), recipeName + " not offered.");
+                ctx.Require(!recipe.fixedIngredientFilter.Allows(wrong)
+                    && recipe.ingredients.All(i => !i.filter.Allows(wrong)),
+                    recipeName + " unexpectedly permits " + wrongName);
+                Thing input = ThingMaker.MakeThing(wrong);
+                input.stackCount = 40;
+                created.Add(input);
+                GenSpawn.Spawn(input, center + new IntVec3(0, 0, -2), map);
+                Bill_Production bill = (Bill_Production)recipe.MakeNewBill();
+                bill.repeatMode = BillRepeatModeDefOf.RepeatCount;
+                bill.repeatCount = 1;
+                bill.ingredientSearchRadius = 10f;
+                bill.ingredientFilter.SetDisallowAll();
+                bill.ingredientFilter.SetAllow(wrong, true);
+                Campfire.BillStack.AddBill(bill);
+                try
+                {
+                    foreach (WorkGiverDef def in DefDatabase<WorkGiverDef>.AllDefsListForReading)
+                    {
+                        if (def.giverClass == null || !typeof(WorkGiver_DoBill).IsAssignableFrom(def.giverClass)) continue;
+                        WorkGiver_DoBill giver = def.Worker as WorkGiver_DoBill;
+                        if (giver == null || !giver.ThingIsUsableBillGiver(Campfire)) continue;
+                        Job offered = giver.JobOnThing(worker, Campfire, true);
+                        ctx.Assert(offered == null || offered.bill != bill,
+                            recipeName + " wrongly offered a job for " + wrongName);
+                    }
+                }
+                finally
+                {
+                    Campfire.BillStack.Delete(bill);
+                    input.Destroy(DestroyMode.Vanish);
+                }
+            }
+
+            // Actual Ingest JobDriver only: never insert test memories directly.
+            public async Task IngestFood(string name, bool specialty)
+            {
+                Job job = null; Thing item = null; ThoughtDef thought = null; int before = 0;
+                await RuntimeThread.Run(delegate
+                {
+                    thought = DefDatabase<ThoughtDef>.GetNamed("AMJC_AteFlourFood");
+                    ctx.Require(thought.stages.Count == 1
+                        && Math.Abs(thought.stages[0].baseMoodEffect - 2f) < 0.001f
+                        && Math.Abs(thought.durationDays - 0.5f) < 0.001f
+                        && thought.stackLimit == 1, "Flour thought must be +2, half-day, nonstacking.");
+                    ThingDef def = DefDatabase<ThingDef>.GetNamed(name);
+                    ctx.Require(def.ingestible != null && worker.needs.mood != null,
+                        "Food/pawn must support ingestion/mood.");
+                    ctx.Require(specialty ? def.ingestible.tasteThought == thought
+                        : def.ingestible.tasteThought == null, name + " tasteThought differs.");
+                    before = worker.needs.mood.thoughts.memories.Memories.Count(m => m.def == thought);
+                    item = ThingMaker.MakeThing(def);
+                    item.stackCount = 1;
+                    created.Add(item);
+                    GenSpawn.Spawn(item, center + new IntVec3(0, 0, -2), map);
+                    worker.needs.food.CurLevelPercentage = 0.1f;
+                    job = JobMaker.MakeJob(JobDefOf.Ingest, item);
+                    job.count = 1;
+                    job.playerForced = true;
+                    worker.jobs.StartJob(job, JobCondition.InterruptForced);
+                    ctx.Require(worker.CurJob == job, "Ingest job did not start for " + name);
+                });
+                await Complete(job, () => item.Destroyed, "Ingest/" + name);
+                await RuntimeThread.Run(delegate
+                {
+                    int after = worker.needs.mood.thoughts.memories.Memories.Count(m => m.def == thought);
+                    ctx.Assert(after == (specialty ? 1 : before), name + " incorrect memory count: " + after);
+                });
             }
 
             public async Task Bill(string recipeName, Building_WorkTable bench, string ingredient, int consumed)

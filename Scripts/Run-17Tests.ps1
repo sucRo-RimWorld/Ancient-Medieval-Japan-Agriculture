@@ -1,4 +1,4 @@
-# RimWorld 1.7 unstable: run the seven-scenario REAL-provider Grains matrix.
+# RimWorld 1.7 unstable: run the ten-scenario REAL-provider Grains matrix.
 # 1.6 entry points and production source/art/metadata remain untouched.
 [CmdletBinding()]
 param(

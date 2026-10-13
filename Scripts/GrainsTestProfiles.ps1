@@ -21,7 +21,10 @@ function Get-GrainsTestProfile([string]$Name) {
             "Grains $Name wheat flour and minimum food resolve",
             "Grains $Name seven grains retain environmental niches",
             "Grains $Name real harvest and flour food Bills complete",
-            "Grains $Name common food single and mixed Bills complete"
+            "Grains $Name common food single and mixed Bills complete",
+            "Grains $Name V1 alternate processing benches complete",
+            "Grains $Name cooking Bills reject wrong ingredients",
+            "Grains $Name food ingestion applies correct thoughts"
         )
     }
 }

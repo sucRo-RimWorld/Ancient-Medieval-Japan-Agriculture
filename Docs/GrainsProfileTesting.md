@@ -46,7 +46,7 @@ Batch checks: (1) resolve each item by its **actual loaded DefName**; confirm th
 
 ## V1 test-inventory reconciliation (2026-10-13)
 
-The seven current real-provider scenarios are: provider load/isolation; primary harvest/processing/food Def contracts and nine grain graphics; conditional CCTO; wheat/flour/food Def contracts; seven-crop environmental niches; actual harvested-source production Bills, seasonal growth and five Vanilla simple-meal inputs; and actual single/two-ingredient common-food Bills (3 families × 1/4 servings × 1/2 input kinds = 12 native cases). Four configurations are mandatory: Vanilla, Vanilla+CCTO, MO, MO+CCTO. **28/28 is the current required count, not a recorded current-main runtime PASS.**
+The ten current real-provider scenarios are: provider load/isolation; primary harvest/processing/food Def contracts and nine grain graphics; conditional CCTO; wheat/flour/food Def contracts; seven-crop environmental niches; actual harvested-source production Bills, seasonal growth and five Vanilla simple-meal inputs; actual single/two-ingredient common-food Bills (3 families × 1/4 servings × 1/2 input kinds = 12 native cases); alternate bench native jobs; wrong-ingredient native rejection; and pawn ingestion thoughts. Four configurations are mandatory: Vanilla, Vanilla+CCTO, MO, MO+CCTO. **40/40 is the current required count, not a recorded current-main runtime PASS.**
 
 Review of coverage and scope:
 
@@ -64,9 +64,11 @@ Review of coverage and scope:
 
 Do not count duplicated source-XML assertions as independent gameplay evidence. Preserve the legacy eight-case fixture only as a narrow compatibility contract, not as another required seven-scenario native profile. Keep current-source build, full native logs, distribution and author visual judgment as separate results.
 
+**Additional source-only cases:** The 8th performs four native fueled-stove/processing-spot thresh/hull jobs per profile and one extra Base-only stove mill Bill; it checks ElectricStove loaded recipe exposure but not powered electric jobs. The 9th rejects wrong-only ingredients for 3 common and 5 specialty food Bills via native WorkGiver. The 10th uses real pawn Ingest jobs for 3 common meals and 2 specialty flour foods and verifies a single +2/half-day nonstacking memory. Inputs and ready-made meals in these tests are test-only staged items, not harvested evidence. Exact-head C# compilation, 40/40 native jobs, and zero-ERROR reports are still NOT RUN.
+
 ## Loaded grain-icon check (2026-10-11)
 
-The existing real-provider primary-loop Pickle scenario checks the **nine current grain states**: hulled/edible millet, hulled/edible buckwheat, hulled/edible barley, edible wheat, rice in hull and Vanilla `RawRice`. For all four existing profiles (Vanilla, Vanilla+CCTO, MO, MO+CCTO), it resolves the loaded `ThingDef` graphic path/class, checks each `_a` PNG with Unity `ContentFinder<Texture2D>`, and resolves `Graphic_StackCount.SubGraphicForStackCount` materials for low, middle and high counts. It rejects missing/null/BadTex assets. This runs inside the existing Unity-main-thread `RuntimeThread.Run` entry point, retains the primary-loop check within the current seven-scenario suite, and does not pin production PNG bytes or require redundant `_b/_c` PNGs.
+The existing real-provider primary-loop Pickle scenario checks the **nine current grain states**: hulled/edible millet, hulled/edible buckwheat, hulled/edible barley, edible wheat, rice in hull and Vanilla `RawRice`. For all four existing profiles (Vanilla, Vanilla+CCTO, MO, MO+CCTO), it resolves the loaded `ThingDef` graphic path/class, checks each `_a` PNG with Unity `ContentFinder<Texture2D>`, and resolves `Graphic_StackCount.SubGraphicForStackCount` materials for low, middle and high counts. It rejects missing/null/BadTex assets. This runs inside the existing Unity-main-thread `RuntimeThread.Run` entry point, retains the primary-loop check within the current ten-scenario suite, and does not pin production PNG bytes or require redundant `_b/_c` PNGs.
 
 A successful C# compile and installed-game four-profile Pickle run with complete ERROR-zero logs are required to call this a runtime PASS. The check confirms loaded texture/material selection, **not** visual quality or framing at normal zoom. The author has temporarily deferred high-resolution source archival; no source-master or normal-zoom acceptance is implied.
 
@@ -136,8 +138,8 @@ setup diagnostics and report paths. The report includes:
 - source HEAD, existing source fingerprints, and SHA-256 hashes of the staged
   runtime target, compiled test assemblies/features and non-Vanilla providers.
 
-The current profile suite requires exactly seven grain-only named scenarios, 7/7 passes and
-zero skips (28/28 across four profiles). Historical 6/6 and 24/24 results apply only to their recorded revisions. Assertions check actual provider presence, fixture/production-Core
+The current profile suite requires exactly ten grain-only named scenarios, 10/10 passes and
+zero skips (40/40 across four profiles). Historical 6/6 and 24/24 results apply only to their recorded revisions. Assertions check actual provider presence, fixture/production-Core
 absence, resolved primary crop/recipe/simple-meal contracts, loaded wheat/flour/milling/food contracts, and presence/absence of AMJ cold-tolerance extensions. Runtime log checking
 fails on **any ERROR**, including provider errors. Both summary and log gates
 run after a launched game even if the process or scenarios already failed.
@@ -191,7 +193,7 @@ to an independent starting-scenario mod. That mod must work with Vanilla alone;
 Grains and MO integrations are optional and owned by the scenario mod. Neither
 mod makes the other a hard dependency. The owner is Ancient-Medieval-Japan-Scenarios / sucro.ancientmedievaljapan.scenarios. Production legacy copies are guarded; actual save-migration verification remains pending.
 
-Current Grains real-provider suites have seven grain-only scenarios, including the separate native common-food single/mixed Bill test. Their dedicated Scenario-presence requirement and two village checks are removed. Canonical start checks/Quickstart live in Scenarios (four profiles, three scenarios each); Grains retains LegacyVillageSteps and AmjLegacyVillageQuickstart in the old eight-case fixture for its compatibility copy. Preserve all 38 historical contracts, including legacy start contracts, rather than dropping the golden snapshot.
+Current Grains real-provider suites have ten grain-only scenarios, adding native alternate benches, wrong-source food Bills and ingestion Thoughts to the previous seven. Their dedicated Scenario-presence requirement and two village checks are removed. Canonical start checks/Quickstart live in Scenarios (four profiles, three scenarios each); Grains retains LegacyVillageSteps and AmjLegacyVillageQuickstart in the old eight-case fixture for its compatibility copy. Preserve all 38 historical contracts, including legacy start contracts, rather than dropping the golden snapshot.
 
 The scenario owner must test Vanilla alone, Grains, MO and Grains+MO starts, plus
 old Core New Village saves and exactly one provider of every migrated Def when
