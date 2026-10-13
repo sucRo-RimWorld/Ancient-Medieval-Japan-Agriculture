@@ -9,7 +9,7 @@
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_RawMillet</defName>
     <label>millet sheaf</label>
-    <description>Harvested millet stalks and seed heads bundled together before threshing and hulling. They keep well in storage but are not yet suitable for eating.</description>
+    <description>Harvested stalks and seed heads of awa, hie and kibi, tied into sheaves. AMJGrains combines all three harvests into a single millet sheaf item. Threshing and hulling are required to make them edible.</description>
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Millet/MilletSheaf</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -35,7 +35,7 @@
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_MilletInHull</defName>
     <label>millet in hull</label>
-    <description>Millet grain after threshing but before the hulls have been removed. The hull protects the grain during storage, but it is not yet suitable for eating.</description>
+    <description>Millet kernels separated from the sheaves by threshing, still enclosed in their hulls. The hulls protect them during long storage, but they cannot be eaten until hulled. AMJGrains then treats awa, hie and kibi as a shared edible millet.</description>
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Millet/MilletInHull</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -61,7 +61,7 @@
   <ThingDef ParentName="PlantFoodRawBase">
     <defName>AMJC_Millet</defName>
     <label>millet</label>
-    <description>Edible millet grain with its hull removed. A basic staple that can be eaten as grain or used as an ingredient in ordinary meals.</description>
+    <description>Edible grains of awa, hie and kibi with the hulls removed. These millets have long supplemented rice in Japan and have served as everyday staples in some regions. In AMJGrains they can be cooked as grain or milled into millet flour.</description>
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Millet/Millet</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -92,7 +92,7 @@
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_RawBuckwheat</defName>
     <label>buckwheat sheaf</label>
-    <description>Harvested buckwheat stems and seed clusters before threshing. It stores well but is not yet suitable for eating.</description>
+    <description>Harvested buckwheat stems and seed clusters before threshing. The sheaves are not edible; threshing produces buckwheat still in its hulls. Hulling and milling are later steps.</description>
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Buckwheat/BuckwheatSheaf</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -118,7 +118,7 @@
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_BuckwheatInHull</defName>
     <label>buckwheat in hull</label>
-    <description>Threshed buckwheat grain with its hull still attached. The hull protects it in storage, but it is not yet suitable for eating.</description>
+    <description>Buckwheat grains separated from the sheaves by threshing, still covered by their dark hulls. Hulling makes the kernels available for cooking; grinding them further produces buckwheat flour.</description>
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Buckwheat/BuckwheatInHull</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -144,7 +144,7 @@
   <ThingDef ParentName="PlantFoodRawBase">
     <defName>AMJC_Buckwheat</defName>
     <label>buckwheat</label>
-    <description>Edible buckwheat grain with its hull removed. It is a short-lived staple grain suited to direct cooking; flour is introduced only when a concrete flour-based use is implemented.</description>
+    <description>Edible buckwheat kernels with the hulls removed. Before buckwheat noodles became widespread, buckwheat was also cooked as whole grains, including porridge. In AMJGrains it is used in grain meals and porridge, or ground into flour for sobagaki. Its shelf life is shorter than that of millet.</description>
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Buckwheat/Buckwheat</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -174,7 +174,7 @@
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_RawBarley</defName>
     <label>barley sheaf</label>
-    <description>Harvested barley stalks and heads before threshing. It stores well but is not yet suitable for eating.</description>
+    <description>Harvested barley stalks and heads tied into sheaves. The harvest is not edible until it is threshed and hulled, but it can be stored for a long time in this state.</description>
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Barley/BarleySheaf</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -200,7 +200,7 @@
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_BarleyInHull</defName>
     <label>barley in hull</label>
-    <description>Threshed barley grain with its hull still attached. The hull protects it during storage, but it is not yet suitable for eating.</description>
+    <description>Barley grains separated from stalks and heads by threshing but still covered by their hulls. They store well while hulled, but their hulls must be removed before they can be eaten.</description>
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Barley/BarleyInHull</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
@@ -226,7 +226,7 @@
   <ThingDef ParentName="PlantFoodRawBase">
     <defName>AMJC_Barley</defName>
     <label>barley</label>
-    <description>Edible barley grain with its hull removed. A durable staple grain that can be cooked directly and can support additional barley-based processing in later content.</description>
+    <description>Edible barley kernels with the hulls removed. Barley has long been cooked with rice or other grains in Japanese meals and porridge. In AMJGrains it can be cooked as grain or milled into barley flour for gruel.</description>
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Barley/Barley</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>

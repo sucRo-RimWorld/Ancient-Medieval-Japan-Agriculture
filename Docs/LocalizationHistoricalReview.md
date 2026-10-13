@@ -16,10 +16,12 @@
 | 粉 `AMJC_BuckwheatFlour` / `AMJC_MilletFlour` | ThingDef本体description空、和訳labelのみ | 承認済み、日本語・英語へ反映 |
 | 料理 `AMJC_Houtou` / `AMJC_Sobagaki` / `AMJC_MilletDumplings` | ThingDef本体description空、和訳labelのみ | 承認済み、日本語・英語へ反映 |
 | 共有の製粉・料理Recipe5件 | description空、和訳labelのみ、英語jobStringが残る | 説明文と作業表示の承認済み、日本語・英語へ反映 |
-| 非MOの小麦・小麦束・小麦粉・手動石臼（4 ThingDefs）、小麦製粉Recipe | description空、和訳labelのみ | 承認済み、日本語・英語へ反映 |
+| 非MOの小麦・小麦束・小麦粉・石臼（4 ThingDefs）、小麦製粉Recipe | description空、和訳labelのみ | 承認済み、日本語・英語へ反映 |
 | MOの既存小麦粉・石臼 | 外部MO所有Defを条件付きで再利用 | グラフィック・歴史説明の本格的日本化はMO Japanizationの所有。Grainsは自Modの互換説明のみ |
 
 ## 2. 承認済み日本語説明文（本番XMLに反映）
+
+**2026-10-13後続改稿:** 作者指示により小麦束の説明冒頭から読み仮名を削除し、石臼のUI名を「石臼」に統一。石臼の説明は本番の5穀粉すべてを対象とする。§6の英語も対応して更新し、数値・DefNameは維持する。
 
 ### 粉・料理
 
@@ -38,9 +40,9 @@
 | DefName | 採用済み日本語description |
 |---|---|
 | `AMJC_Plant_Wheat` | **小麦（こむぎ）。** 日本へは弥生期に伝わり、奈良時代にも栽培が確認される穀物。小麦の穀粒は食事の材料に使え、石臼で挽けば小麦粉として粉食にも利用できる。AMJGrainsでは刈り取った小麦束を脱穀して使う。 |
-| `AMJC_RawWheat` | **小麦束（こむぎたば）。** 穂と茎を付けたまま収穫した小麦。未脱穀のままでは食べられず、脱穀によって小麦穀粒になる。 |
+| `AMJC_RawWheat` | 穂と茎を付けたまま収穫した小麦。未脱穀のままでは食べられず、脱穀によって小麦穀粒になる。 |
 | `AMJC_WheatFlour` | **小麦粉（こむぎこ）。** 小麦穀粒を石臼で挽いた粉。AMJGrainsでは餺飥を作るために使う。 |
-| `AMJC_ManualMillstone` | **石臼（いしうす）。** 手で穀粒を挽いて粉にする石製の道具。AMJGrainsでは小麦・蕎麦・雑穀の製粉に使用する。 |
+| `AMJC_ManualMillstone` | **石臼（いしうす）。** 穀粒を挽いて粉にする石製の道具。AMJGrainsでは小麦・蕎麦・雑穀・大麦・米の五種類の穀粉を製粉できる。 |
 
 ### 加工・粉食Recipe（入出力を現行XMLと一致させる案）
 
@@ -99,9 +101,9 @@ The following descriptions and jobStrings are the approved Japanese-first implem
 | `AMJC_Sobagaki` | Sobagaki (蕎麦掻き). A flour-based dish made by stirring buckwheat flour into hot water instead of shaping it into noodles. Before soba noodles became widespread, buckwheat was also eaten as cooked grains or kneaded flour. | — |
 | `AMJC_MilletDumplings` | Millet dumplings (雑穀団子). A single game dish representing dumpling-like foods made by mixing flour from awa, hie, or kibi with water and cooking it. It does not recreate the sweet confections of the early modern period or later. | — |
 | `AMJC_Plant_Wheat` | Wheat (komugi). A cereal introduced to Japan in the Yayoi period and known to have been cultivated during the Nara period. Wheat grains can be used in meals or ground into flour for flour-based dishes. In AMJGrains, harvested wheat sheaves must be threshed before use. | — |
-| `AMJC_RawWheat` | Wheat sheaf (komugitaba). Harvested wheat with the heads and stalks still attached. It cannot be eaten before threshing, which produces edible wheat grains. | — |
+| `AMJC_RawWheat` | Harvested wheat with the heads and stalks still attached. It cannot be eaten before threshing, which produces edible wheat grains. | — |
 | `AMJC_WheatFlour` | Wheat flour (komugiko). Flour ground from wheat grains using a stone mill. In AMJGrains, it is used to prepare hakutaku. | — |
-| `AMJC_ManualMillstone` | Stone mill (ishi-usu). A stone tool for grinding grains into flour by hand. In AMJGrains, it is used to mill wheat, buckwheat, and millet. | — |
+| `AMJC_ManualMillstone` | Stone mill (ishi-usu). A stone tool for grinding grain into flour. In AMJGrains it mills five types of grain: wheat, buckwheat, millet, barley and rice. | — |
 | `AMJC_MillWheat` | Grind 10 threshed wheat grains into 10 units of wheat flour. | Milling wheat. |
 | `AMJC_MillBuckwheat` | Grind 10 dehulled buckwheat grains into 10 units of buckwheat flour. | Milling buckwheat. |
 | `AMJC_MillMillet` | Grind 10 units of edible millet into 10 units of millet flour. | Milling millet. |
@@ -269,3 +271,30 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 - 光永俊郎（2018）「オオムギについて XI―歴史・文化・科学・利用」（https://doi.org/10.34457/ffij.223.1_61）は日本史における大麦粥食に言及するが、細挽き**大麦粉粥**の中世固有名を実証しない。はくばく「知られざる大麦の歴史」（https://www.hakubaku.co.jp/omugi-lab/hyakka/oomugi-history/）は挽き割り大麦粥と『和名類聚抄』の乾燥・焙煎・製粉を区別する。日本粉体工業技術協会「はったい粉」（https://appie.or.jp/column/%E3%81%AF%E3%81%A3%E3%81%9F%E3%81%84%E7%B2%89/）も炒った大麦を粉にする製法を記す。通常製粉→湯で煮る本Modの麦粉粥は、焙煎前提のはったい・麦こがしと同一ではない。
 
 **日英・実装整合:** 日本語 DefInjected は大麦粉→湯で煮る、米粉→水で練り加熱するという内容で、英語ThingDefの説明と一致する。米粉はうるち／もちを一つのゲーム食材にする抽象化に留まり、独立米粉品種・特殊水設備・砂糖・串・史料未裏付けの固有料理名を新設しない。ThingDef・RecipeDef・栽培・栄養・工数・画像は変更しない。実機の日本語/英語表示、加工Bill、画像検証と非公開プレイ・公開判断は従来の別ゲートのまま。
+
+## 16. 作者指示による穀粒状態・共通料理・石臼の説明整理（2026-10-13）
+
+**決定内容:** V1本番Defから抽出した日本語・英語の12組を下表で固定する。新規の加工工程、史実固有名、収量、Recipe/DefName変更は行わない。長文の稲・籾・米および承認済み餺飥・そばがき・雑穀団子等の本文はそのまま残す。
+
+**修正範囲:** 穀束・殻付き・食用の9状態は段階間の役割を明確化し、特に可食雑穀・ソバ・大麦に、既に作物・料理側で承認された日本の食利用と現行製粉・調理用途を配分する。共通3料理には材料混合が**任意**であること、飯と粥の作業・保存差、共通粉食の位置付けを明示する。材料の古い処理名称が別の加工技術を意味しないようにする。
+
+| DefName | 日本語description（本番） | English description (production) |
+|---|---|---|
+| `AMJC_RawMillet` | 粟・稗・黍の茎と穂を刈り取り、束ねたもの。AMJGrainsでは三種の収穫物を一つの雑穀束にまとめる。脱穀と殻取りを経て食べられる穀粒になる。 | Harvested stalks and seed heads of awa, hie and kibi, tied into sheaves. AMJGrains combines all three harvests into a single millet sheaf item. Threshing and hulling are required to make them edible. |
+| `AMJC_MilletInHull` | 雑穀束を脱穀して得られる、殻を残した穀粒。殻に守られて長く保存できるが、そのままでは食べられない。殻を取り除くと、粟・稗・黍を共通に扱う食用の雑穀になる。 | Millet kernels separated from the sheaves by threshing, still enclosed in their hulls. The hulls protect them during long storage, but they cannot be eaten until hulled. AMJGrains then treats awa, hie and kibi as a shared edible millet. |
+| `AMJC_Millet` | 粟・稗・黍の殻を取り除いた食用穀粒。これらの雑穀は古くから米を補う食料となり、地域によっては日常の主食だった。AMJGrainsでは飯や粥に使うほか、雑穀粉に製粉できる。 | Edible grains of awa, hie and kibi with the hulls removed. These millets have long supplemented rice in Japan and have served as everyday staples in some regions. In AMJGrains they can be cooked as grain or milled into millet flour. |
+| `AMJC_RawBuckwheat` | 茎と実を付けたまま収穫したソバ束。未脱穀なので食べられず、脱穀で殻付きソバを得る。殻取りと製粉はその後の工程になる。 | Harvested buckwheat stems and seed clusters before threshing. The sheaves are not edible; threshing produces buckwheat still in its hulls. Hulling and milling are later steps. |
+| `AMJC_BuckwheatInHull` | ソバ束を脱穀して得た、黒い殻が残るソバの実。殻を取ることで粒のまま調理できるソバ穀粒になり、さらに挽けば蕎麦粉になる。 | Buckwheat grains separated from the sheaves by threshing, still covered by their dark hulls. Hulling makes the kernels available for cooking; grinding them further produces buckwheat flour. |
+| `AMJC_Buckwheat` | 殻を取って食べられる状態にしたソバの実。蕎麦切りが広く普及する以前にも、ソバは粒を炊いて粥にするなどして食べられた。AMJGrainsでは飯・粥の材料になるほか、蕎麦粉に挽いてそばがきに利用できる。雑穀より保存期間は短い。 | Edible buckwheat kernels with the hulls removed. Before buckwheat noodles became widespread, buckwheat was also cooked as whole grains, including porridge. In AMJGrains it is used in grain meals and porridge, or ground into flour for sobagaki. Its shelf life is shorter than that of millet. |
+| `AMJC_RawBarley` | 茎と穂を付けたまま刈り取った大麦束。脱穀と殻取りを行うまでは食べられないが、収穫直後の状態で長く保存できる。 | Harvested barley stalks and heads tied into sheaves. The harvest is not edible until it is threshed and hulled, but it can be stored for a long time in this state. |
+| `AMJC_BarleyInHull` | 大麦束を脱穀し、穂や茎から分離した殻付きの大麦。殻を残した状態では保存しやすいが、食べるには殻を取り除く必要がある。 | Barley grains separated from stalks and heads by threshing but still covered by their hulls. They store well while hulled, but their hulls must be removed before they can be eaten. |
+| `AMJC_Barley` | 殻を取り除いた食用大麦の穀粒。大麦は古くから米や雑穀と混ぜた飯や粥にも利用された。AMJGrainsでは粒のまま調理するほか、大麦粉に挽いて麦粉粥にも使える。 | Edible barley kernels with the hulls removed. Barley has long been cooked with rice or other grains in Japanese meals and porridge. In AMJGrains it can be cooked as grain or milled into barley flour for gruel. |
+| `AMJC_MixedGrainMeal` | 米・麦・雑穀などの可食穀粒を炊いた飯。一種類だけでも、複数を混ぜても作れる。米以外の穀物も主食に取り入れてきた食生活を表現し、粥より日持ちする一方、調理にはやや手間がかかる。 | A cooked grain meal made from edible rice, barley, millet and other kernels. It accepts one grain or a mixture, reflecting the use of grains alongside rice in Japanese staple foods. It keeps longer than grain porridge but takes somewhat more work to cook. |
+| `AMJC_MixedGrainPorridge` | 米・麦・雑穀などの可食穀粒を水分多めに煮た粥。一種類だけでも、複数を混ぜても作れる。混合穀物飯より少ない作業量で調理できるが、常温では傷みやすい。 | Porridge made by simmering edible rice, barley, millet or other kernels with extra water. It accepts one grain or a mixture. Cooking requires less work than mixed grain meal, but the porridge spoils sooner at room temperature. |
+| `AMJC_MixedFlourFood` | 雑穀粉・蕎麦粉・大麦粉・小麦粉・米粉などを使う簡素な粉食。一種類の粉でも複数の粉を混ぜても作れる。麺に限らない穀粉食を表現し、材料を指定した粉食より常温での保存期間は短い。 | A simple cooked flour dish made from millet, buckwheat, barley, wheat or rice flour. One flour or several may be used together. It represents flour-based foods other than noodles and keeps for less time at room temperature than ingredient-specific flour dishes. |
+
+**加工設備／小麦束（Baseのみ）:** `AMJC_ManualMillstone` はセーブとRecipe参照を守るため内部DefNameを変更しない。プレイヤー表示は日本語 `石臼` ／英語 `stone mill`。現行の大麦・米を含むAMJ全5穀粉を記述し、MO構成ではMO自身の石臼 `DankPyon_Millstone` に切り替わる。小麦束 `AMJC_RawWheat` は「小麦束（こむぎたば）。」という説明先頭の重複表現だけを日英から除き、表示ラベル「小麦束」を維持する。§2/§6の正本と本番XMLを対応更新済み。
+
+**根拠の境界:** 雑穀が日本の主食を補ってきたことは§7のアワ・ヒエ・キビの承認済み説明と文化庁「にし阿波地域の雑穀食」（https://www.bunka.go.jp/seisaku/bunkazai/joseishien/syokubunka_story/93727709.html）に基づくが、特定地域の近代まで続いた慣習を中世全国の標準食と断定しない。蕎麦の粒食・粥食・そばがきと後の蕎麦切りの区別は農林水産省「特集2 新そば」（https://www.maff.go.jp/j/pr/aff/1811/characterinformation.html）。大麦が米・雑穀との混食や粥に利用されたことは農林水産省中国四国農政局「大麦について」（https://www.maff.go.jp/chushi/seisan/mugi/attach/pdf/project-41.pdf）。ゲームの腐敗期間・調理Workは `Docs/Balance/Crops/SevenGrainFoodChainAudit.md §3` の実装値であり歴史時代の実際の保存日数を断定しない。
+
+**静的確認対象:** 12組の日英本文がThingDefと完全一致、異種穀粒・異種穀粉を混ぜられるが単一原料も可、飯はWork240/腐敗3日、粥はWork200/腐敗1.5日、共通粉食はWork300/腐敗2日、既存指定粉食5品は不変、石臼は日本語/英語名とBaseの5製粉Recipeに対応、MOがいる場合はBase石臼を重複しない。ロード済みUI・実調理Bill・グラフィックは後日の一括実機確認に残す。

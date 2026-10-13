@@ -81,7 +81,7 @@ HISTORICAL_MO_PLANT_DESCRIPTIONS = {
 def approved_plant_descriptions(root):
     text = (root / "Docs/LocalizationHistoricalReview.md").read_text(encoding="utf-8")
     assert "## 8. English descriptions translated" in text, "Missing approved English crop section"
-    chapter = text.split("## 8.", 1)[1]
+    chapter = text.split("## 8.", 1)[1].split("## 9.", 1)[0]
     entries = {}
     for row in chapter.splitlines():
         if not row.startswith("| `"):
@@ -94,6 +94,43 @@ def approved_plant_descriptions(root):
         "Approved English crop list changed"
     )
     return entries
+
+
+
+# The nine previously hashed shared item descriptions were updated by the
+# author's V1 localization request. Preserve immutable MO history by checking
+# each CURRENT copy against the bilingual canonical table in §16, then reverting
+# ONLY the description on the deepcopy used for the old 38-contract comparison.
+HISTORICAL_MO_STAGE_DESCRIPTIONS = {
+    "AMJC_RawMillet": "Harvested millet stalks and seed heads bundled together before threshing and hulling. They keep well in storage but are not yet suitable for eating.",
+    "AMJC_MilletInHull": "Millet grain after threshing but before the hulls have been removed. The hull protects the grain during storage, but it is not yet suitable for eating.",
+    "AMJC_Millet": "Edible millet grain with its hull removed. A basic staple that can be eaten as grain or used as an ingredient in ordinary meals.",
+    "AMJC_RawBuckwheat": "Harvested buckwheat stems and seed clusters before threshing. It stores well but is not yet suitable for eating.",
+    "AMJC_BuckwheatInHull": "Threshed buckwheat grain with its hull still attached. The hull protects it in storage, but it is not yet suitable for eating.",
+    "AMJC_Buckwheat": "Edible buckwheat grain with its hull removed. It is a short-lived staple grain suited to direct cooking; flour is introduced only when a concrete flour-based use is implemented.",
+    "AMJC_RawBarley": "Harvested barley stalks and heads before threshing. It stores well but is not yet suitable for eating.",
+    "AMJC_BarleyInHull": "Threshed barley grain with its hull still attached. The hull protects it during storage, but it is not yet suitable for eating.",
+    "AMJC_Barley": "Edible barley grain with its hull removed. A durable staple grain that can be cooked directly and can support additional barley-based processing in later content."
+}
+
+
+def reviewed_stage_descriptions(root):
+    review = (root / "Docs/LocalizationHistoricalReview.md").read_text(encoding="utf-8")
+    assert "## 16. 作者指示による穀粒状態" in review
+    rows = {}
+    for row in review.split("## 16.", 1)[1].splitlines():
+        if not row.startswith("| `AMJC_"):
+            continue
+        cells = [v.strip() for v in row.split("|")]
+        assert len(cells) == 5, row
+        name = cells[1].strip("`")
+        assert name not in rows, "Duplicate review Def: " + name
+        rows[name] = cells[3]
+    expected = set(HISTORICAL_MO_STAGE_DESCRIPTIONS) | {
+        "AMJC_MixedGrainMeal", "AMJC_MixedGrainPorridge", "AMJC_MixedFlourFood"
+    }
+    assert set(rows) == expected, "Reviewed bilingual Def inventory changed"
+    return {name: rows[name] for name in HISTORICAL_MO_STAGE_DESCRIPTIONS}
 
 
 def validate():
@@ -166,6 +203,7 @@ def validate():
         translations[key] = golden["recipeTranslations"][key]
     assert translations == golden["recipeTranslations"], "MO recipe translations changed during split"
     crop_descriptions = approved_plant_descriptions(ROOT)
+    stage_descriptions = reviewed_stage_descriptions(ROOT)
     actual = {}
     for node in mo:
         name = node.findtext("defName") or node.get("Name")
@@ -200,6 +238,11 @@ def validate():
                 ET.SubElement(cost, "DankPyon_IronIngot").text = "30"
                 research = ET.SubElement(normalized, "researchPrerequisites")
                 ET.SubElement(research, "li").text = "DankPyon_BasicAgriculture"
+            if name in HISTORICAL_MO_STAGE_DESCRIPTIONS:
+                assert normalized.findtext("description") == stage_descriptions[name], (
+                    "Reviewed stage description drift: " + name
+                )
+                normalized.find("description").text = HISTORICAL_MO_STAGE_DESCRIPTIONS[name]
             if name in HISTORICAL_MO_PLANT_DESCRIPTIONS:
                 assert normalized.findtext("description") == crop_descriptions[name], (
                     "Approved English crop description changed: " + name

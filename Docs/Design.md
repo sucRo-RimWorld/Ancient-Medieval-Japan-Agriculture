@@ -401,7 +401,7 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 | 小麦粉 | Grains所有のフォールバック小麦粉 | DankPyon_Flour を唯一の標準小麦粉として利用し、AMJ小麦粉を二重表示しない | **Base概念はGrains、MO時の実Def供給元はMO** |
 | 蕎麦粉 / 雑穀粉 / 大麦粉 / 米粉 | Grains所有（大麦粉・米粉もソース実装済み、実機未検証） | Grains所有の専用粉とし、MO generic flourへ自動統合しない | **Grains** |
 | 製粉Recipe | 5種の穀粉を対象とし、Grainsが各Base Recipeをソース実装。製粉では総栄養を保存 | 小麦はMO既存製粉経路へ接続。他4種はGrains RecipeをMO石臼へ追加（新規の大麦・米経路は実機未検証） | **工程仕様はGrains** |
-| 石臼 / 最低限の製粉設備 | Grains単体で使えるAMJ所有の手動石臼を持つ。最低限経路はMO研究なしで成立 | MOの DankPyon_Millstone を標準設備として再利用し、AMJ石臼は重複表示しない | **BaseはGrains、MO時の実Def供給元はMO** |
+| 石臼 / 最低限の製粉設備 | Grains単体で使えるAMJ所有の石臼を持つ（表示名：石臼 / stone mill。内部DefName `AMJC_ManualMillstone` は互換維持）。最低限経路はMO研究なしで成立 | MOの DankPyon_Millstone を標準設備として再利用し、AMJ石臼は重複表示しない | **BaseはGrains、MO時の実Def供給元はMO** |
 | DankPyon_Cereal | 存在しない前提。Base主要ループに使わない | MO既存製粉/醸造へ参加させる対象だけ登録。未脱穀束・ソバ・雑穀を一律登録しない | **MO互換専用** |
 | Straw | **AMJ Straw ThingDefを作らない。** Base脱穀では茎葉残渣を非アイテム化 | 脱穀時だけ DankPyon_Straw を副産物として追加。収穫時Hay・製粉時Hay/Strawは出さない | **MO時のみMO所有資産を利用** |
 | 作物・加工研究 | Grains所有の大麦・一次加工台は初期利用可能。手動製粉をMO研究で止めない | MO併用時もGrains所有の大麦・一次加工台にMO研究条件を追加しない。MO所有小麦Plant側の研究条件は維持 | **Grains所有Defの解禁はGrains優先** |
@@ -963,7 +963,7 @@ Grainsが対象とする穀粉は**雑穀粉・蕎麦粉・大麦粉・小麦粉
 - **現行V1製粉の固定数値・検証:** 各Recipeは入力10→粉10、workAmount 300、作業Skill Crafting、研究不要、栄養保存、副産物なし。実ゲームでは非MOで燃料式調理台から製粉Billを発行してWorkGiver_DoBill経由で完了させ、MOでは石臼以外の製粉設備を追加しない。四構成の実機検証が完了するまでは実動作確認済みと記載しない。
 - **簡易穀物加工場所 / AMJC_GrainProcessingSpot:** 初期から使える低速の脱穀・殻取り設備。
 - **穀物加工台 / AMJC_GrainProcessingTable:** 同じ脱穀・殻取りRecipeを高速に処理する上位設備。BaseではMO研究・MO素材を要求しない。
-- **Grains手動石臼:** Baseで小麦・ソバ・雑穀を製粉し、大麦・米の製粉にも共用するAMJ所有設備。最低限の製粉経路はMO研究なしで成立させる。step 3初期実装は `AMJC_ManualMillstone`、BlocksGranite 30 + WoodLog 20、WorkToBuild 500。設備・製粉Recipeに研究前提は置かないが、石材の入手はVanillaの採掘・加工・交易等に依存し、全マップで初日建設できることは保証しない。
+- **Grains石臼:** Baseで小麦・ソバ・雑穀・大麦・米の五種類を製粉するAMJ所有設備。最低限の製粉経路はMO研究なしで成立させる。step 3初期実装は `AMJC_ManualMillstone`、BlocksGranite 30 + WoodLog 20、WorkToBuild 500。設備・製粉Recipeに研究前提は置かないが、石材の入手はVanillaの採掘・加工・交易等に依存し、全マップで初日建設できることは保証しない。
 - MO併用時は DankPyon_Millstone を標準石臼として使い、Grains手動石臼は重複表示しない。
 - MOのCraftingSpot手挽き等を残す場合も、未脱穀穀束から直接粉へ飛ばないようGrains工程順を維持する。
 - x10等のBulk Recipeは単品処理より作業量を減らし、大量処理時のBill/Job負荷を抑える。

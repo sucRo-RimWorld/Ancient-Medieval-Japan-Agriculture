@@ -2,8 +2,8 @@
 <Defs>
   <ThingDef ParentName="BenchBase">
     <defName>AMJC_ManualMillstone</defName>
-    <label>manual millstone</label>
-    <description>Stone mill (ishi-usu). A stone tool for grinding grains into flour by hand. In AMJGrains, it is used to mill wheat, buckwheat, and millet.</description>
+    <label>stone mill</label>
+    <description>Stone mill (ishi-usu). A stone tool for grinding grain into flour. In AMJGrains it mills five types of grain: wheat, buckwheat, millet, barley and rice.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/TableStonecutter</texPath>

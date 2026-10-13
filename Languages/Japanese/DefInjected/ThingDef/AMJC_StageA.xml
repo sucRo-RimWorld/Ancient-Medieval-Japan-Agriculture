@@ -15,39 +15,39 @@
   <AMJC_Plant_Buckwheat_Soba.description>蕎麦（そば）。古代には凶作に備える作物として栽培を勧められ、山間部や痩せた土地でも育てられてきた。AMJGrainsでは短期栽培に向くが霜には弱く、収穫後に脱穀・殻取りを行う。古い蕎麦の食べ方と、江戸期に広まる麺状の蕎麦切りは区別する。</AMJC_Plant_Buckwheat_Soba.description>
 
   <AMJC_RawBuckwheat.label>ソバ束</AMJC_RawBuckwheat.label>
-  <AMJC_RawBuckwheat.description>茎と実が付いたまま刈り取った未脱穀のソバ束。保存性は高いが、このままでは食べられない。</AMJC_RawBuckwheat.description>
+  <AMJC_RawBuckwheat.description>茎と実を付けたまま収穫したソバ束。未脱穀なので食べられず、脱穀で殻付きソバを得る。殻取りと製粉はその後の工程になる。</AMJC_RawBuckwheat.description>
 
   <AMJC_BuckwheatInHull.label>殻付きソバ</AMJC_BuckwheatInHull.label>
-  <AMJC_BuckwheatInHull.description>脱穀後も殻が残っているソバ。保存性は高いが、このままでは食べられない。</AMJC_BuckwheatInHull.description>
+  <AMJC_BuckwheatInHull.description>ソバ束を脱穀して得た、黒い殻が残るソバの実。殻を取ることで粒のまま調理できるソバ穀粒になり、さらに挽けば蕎麦粉になる。</AMJC_BuckwheatInHull.description>
 
   <AMJC_Buckwheat.label>ソバ穀粒</AMJC_Buckwheat.label>
-  <AMJC_Buckwheat.description>殻を取り除いて食べられる状態にしたソバの穀粒。保存期間は雑穀より短い。</AMJC_Buckwheat.description>
+  <AMJC_Buckwheat.description>殻を取って食べられる状態にしたソバの実。蕎麦切りが広く普及する以前にも、ソバは粒を炊いて粥にするなどして食べられた。AMJGrainsでは飯・粥の材料になるほか、蕎麦粉に挽いてそばがきに利用できる。雑穀より保存期間は短い。</AMJC_Buckwheat.description>
 
 
   <AMJC_Plant_Barley.label>大麦</AMJC_Plant_Barley.label>
   <AMJC_Plant_Barley.description>大麦（おおむぎ）。弥生時代に日本へ伝わり、奈良時代にも栽培が確認される麦類。米とともに食生活を支えてきた。AMJGrainsでは冷涼な気温での栽培に向き、雑穀より生育期間は長いが収量が多い。収穫後は脱穀と殻取りを行う。</AMJC_Plant_Barley.description>
 
   <AMJC_RawBarley.label>大麦束</AMJC_RawBarley.label>
-  <AMJC_RawBarley.description>茎と穂が付いたまま刈り取った未脱穀の大麦束。保存性は高いが、このままでは食べられない。</AMJC_RawBarley.description>
+  <AMJC_RawBarley.description>茎と穂を付けたまま刈り取った大麦束。脱穀と殻取りを行うまでは食べられないが、収穫直後の状態で長く保存できる。</AMJC_RawBarley.description>
 
   <AMJC_BarleyInHull.label>殻付き大麦</AMJC_BarleyInHull.label>
-  <AMJC_BarleyInHull.description>脱穀後も殻が残っている大麦。殻に守られて保存性は高いが、このままでは食べられない。</AMJC_BarleyInHull.description>
+  <AMJC_BarleyInHull.description>大麦束を脱穀し、穂や茎から分離した殻付きの大麦。殻を残した状態では保存しやすいが、食べるには殻を取り除く必要がある。</AMJC_BarleyInHull.description>
 
   <AMJC_Barley.label>大麦穀粒</AMJC_Barley.label>
-  <AMJC_Barley.description>殻を取り除いて食べられる状態にした大麦の穀粒。日常の主食や一般的な食事の材料として利用できる。</AMJC_Barley.description>
+  <AMJC_Barley.description>殻を取り除いた食用大麦の穀粒。大麦は古くから米や雑穀と混ぜた飯や粥にも利用された。AMJGrainsでは粒のまま調理するほか、大麦粉に挽いて麦粉粥にも使える。</AMJC_Barley.description>
 
 
   <AMJC_Wheat.label>小麦穀粒</AMJC_Wheat.label>
   <AMJC_Wheat.description>小麦束を脱穀して茎や藁から分けた、食用の小麦穀粒。粒のまま食事に使えるほか、製粉の材料になる。</AMJC_Wheat.description>
 
   <AMJC_RawMillet.label>雑穀束</AMJC_RawMillet.label>
-  <AMJC_RawMillet.description>茎と穂が付いたまま刈り取った未脱穀の雑穀束。保存性は高いが、このままでは食べられない。脱穀と殻取りを経て食用の雑穀になる。</AMJC_RawMillet.description>
+  <AMJC_RawMillet.description>粟・稗・黍の茎と穂を刈り取り、束ねたもの。AMJGrainsでは三種の収穫物を一つの雑穀束にまとめる。脱穀と殻取りを経て食べられる穀粒になる。</AMJC_RawMillet.description>
 
   <AMJC_MilletInHull.label>殻付き雑穀</AMJC_MilletInHull.label>
-  <AMJC_MilletInHull.description>脱穀を終えたものの、まだ殻が残っている雑穀。殻に守られて保存性は高いが、このままでは食べられない。</AMJC_MilletInHull.description>
+  <AMJC_MilletInHull.description>雑穀束を脱穀して得られる、殻を残した穀粒。殻に守られて長く保存できるが、そのままでは食べられない。殻を取り除くと、粟・稗・黍を共通に扱う食用の雑穀になる。</AMJC_MilletInHull.description>
 
   <AMJC_Millet.label>雑穀</AMJC_Millet.label>
-  <AMJC_Millet.description>殻を取り除いて食べられる状態にした雑穀。日常の主食や一般的な食事の材料として利用できる。</AMJC_Millet.description>
+  <AMJC_Millet.description>粟・稗・黍の殻を取り除いた食用穀粒。これらの雑穀は古くから米を補う食料となり、地域によっては日常の主食だった。AMJGrainsでは飯や粥に使うほか、雑穀粉に製粉できる。</AMJC_Millet.description>
 
   <AMJC_GrainProcessingSpot.label>簡易穀物加工場所</AMJC_GrainProcessingSpot.label>
   <AMJC_GrainProcessingSpot.description>手作業で穀物の脱穀や殻取りを行う簡易的な作業場所。ほとんど設備を必要としないが、本格的な穀物加工台より作業速度が遅い。</AMJC_GrainProcessingSpot.description>

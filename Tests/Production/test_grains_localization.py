@@ -250,6 +250,114 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         self.assertEqual(japanese.findtext('AMJC_AteFlourFood.stages.0.description'),
                          '挽いた穀物から作った料理を食べた。')
 
+    def test_stage_and_shared_meal_copy_matches_author_review(self):
+        """Exact bilingual source paragraphs; checks definitions, not loaded game UI."""
+        source = (ROOT/'Docs/LocalizationHistoricalReview.md').read_text(
+            encoding='utf-8')
+        self.assertIn('## 16. 作者指示による穀粒状態', source)
+        rows = {}
+        for line in source.split('## 16.', 1)[1].splitlines():
+            if not line.startswith('| `AMJC_'):
+                continue
+            cells = [x.strip() for x in line.split('|')]
+            self.assertEqual(len(cells), 5, line)
+            name = cells[1].strip('`')
+            self.assertNotIn(name, rows)
+            rows[name] = (cells[2], cells[3])
+        grain_names = {
+            'AMJC_RawMillet', 'AMJC_MilletInHull', 'AMJC_Millet',
+            'AMJC_RawBuckwheat', 'AMJC_BuckwheatInHull', 'AMJC_Buckwheat',
+            'AMJC_RawBarley', 'AMJC_BarleyInHull', 'AMJC_Barley',
+        }
+        meal_names = {
+            'AMJC_MixedGrainMeal', 'AMJC_MixedGrainPorridge',
+            'AMJC_MixedFlourFood',
+        }
+        self.assertEqual(set(rows), grain_names | meal_names)
+        ja_grains = labels('Languages/Japanese/DefInjected/ThingDef/AMJC_StageA.xml')
+        ja_foods = labels('Languages/Japanese/DefInjected/ThingDef/AMJC_GrainsChain.xml')
+        en_grains = labels('Defs/ThingDefs_Items/Items_StageA_Grains.xml')
+        en_foods = labels('Defs/ThingDefs_Items/Items_GrainsFood.xml')
+        for name, (japanese, english) in rows.items():
+            with self.subTest(name=name):
+                jp = ja_grains if name in grain_names else ja_foods
+                en = en_grains if name in grain_names else en_foods
+                self.assertEqual(jp.findtext(name + '.description'), japanese)
+                item = en.find('ThingDef[defName="' + name + '"]')
+                self.assertIsNotNone(item)
+                self.assertEqual(item.findtext('description'), english)
+                self.assertTrue(japanese.endswith('。'))
+                self.assertTrue(english.endswith('.'))
+
+        self.assertNotEqual(
+            rows['AMJC_MixedGrainMeal'], rows['AMJC_MixedGrainPorridge'])
+        self.assertIn('粥より日持ちする', rows['AMJC_MixedGrainMeal'][0])
+        self.assertIn('常温では傷みやすい', rows['AMJC_MixedGrainPorridge'][0])
+        for name in meal_names:
+            self.assertIn('一種類', rows[name][0])
+            self.assertIn('one', rows[name][1].lower())
+
+        # Production behavior assumed by descriptions: common grain meal
+        # 240 work / 3 days; porridge 200 / 1.5; flour 300 / 2.
+        recipes = labels('Defs/RecipeDefs/Recipes_GrainsFood.xml')
+        metrics = (
+            ('MixedGrainMeal', 240, 3.0),
+            ('MixedGrainPorridge', 200, 1.5),
+            ('MixedFlourFood', 300, 2.0),
+        )
+        for suffix, work, rot in metrics:
+            food = en_foods.find('ThingDef[defName="AMJC_' + suffix + '"]')
+            recipe = recipes.find('RecipeDef[defName="AMJC_Cook' + suffix + '"]')
+            bulk = recipes.find('RecipeDef[defName="AMJC_Cook' + suffix + 'Bulk"]')
+            self.assertIsNotNone(recipe)
+            self.assertIsNotNone(bulk)
+            self.assertEqual(float(recipe.findtext('workAmount')), work)
+            self.assertEqual(float(bulk.findtext('workAmount')), work * 4)
+            self.assertEqual(food.findtext(
+                "comps/li[@Class='CompProperties_Rottable']/daysToRotStart"),
+                str(rot).rstrip('0').rstrip('.'))
+            self.assertEqual(recipe.findtext('allowMixingIngredients'), 'true')
+
+    def test_stone_mill_display_name_and_five_flour_paths(self):
+        """UI label changes; preserve savegame DefName and Base/MO split."""
+        lang = labels('BaseWithoutMO/Languages/Japanese/DefInjected/ThingDef/AMJC_WheatFallback.xml')
+        wheat = labels('BaseWithoutMO/Defs/Items_Wheat.xml')
+        stone = labels('BaseWithoutMO/Defs/Buildings_Millstone.xml')
+        text_ja = lang.findtext('AMJC_RawWheat.description')
+        text_en = wheat.findtext('ThingDef[defName="AMJC_RawWheat"]/description')
+        self.assertEqual(lang.findtext('AMJC_RawWheat.label'), '小麦束')
+        self.assertTrue(text_ja.startswith('穂と茎を付けたまま'))
+        self.assertTrue(text_en.startswith('Harvested wheat'))
+        self.assertNotIn('こむぎたば', text_ja)
+        self.assertNotIn('komugitaba', text_en)
+        self.assertEqual(lang.findtext('AMJC_ManualMillstone.label'), '石臼')
+        self.assertEqual(stone.findtext(
+            'ThingDef[defName="AMJC_ManualMillstone"]/label'), 'stone mill')
+        description = lang.findtext('AMJC_ManualMillstone.description')
+        for grain in ('小麦', '蕎麦', '雑穀', '大麦', '米'):
+            self.assertIn(grain, description)
+        for value in ('wheat', 'buckwheat', 'millet', 'barley', 'rice'):
+            self.assertIn(value, stone.findtext(
+                'ThingDef[defName="AMJC_ManualMillstone"]/description'))
+
+        all_mills = [
+            labels('BaseWithoutMO/Defs/Recipes_Milling.xml'),
+            labels('Defs/RecipeDefs/Recipes_GrainsMilling.xml'),
+        ]
+        expected = {
+            'AMJC_MillWheat', 'AMJC_MillBuckwheat', 'AMJC_MillMillet',
+            'AMJC_MillBarley', 'AMJC_MillRice',
+        }
+        mills = [recipe for source in all_mills for recipe in source
+                 if recipe.findtext('defName') in expected]
+        self.assertEqual({r.findtext('defName') for r in mills}, expected)
+        for recipe in mills:
+            self.assertIn('AMJC_ManualMillstone',
+                          [li.text for li in recipe.findall('recipeUsers/li')])
+            self.assertEqual(float(recipe.findtext('workAmount')), 300)
+        mo = labels('Compatibility/MedievalOverhaul/Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml')
+        self.assertIsNone(mo.find('AMJC_ManualMillstone.label'))
+
     def test_shared_thing_explanations_do_not_claim_unimplemented_features(self):
         things = labels('Languages/Japanese/DefInjected/ThingDef/AMJC_StageA.xml')
         barley = things.findtext('AMJC_Plant_Barley.description')
@@ -266,7 +374,7 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         self.assertIn('## 7. 既存六作物の承認済み歴史説明', review)
         self.assertIn('## 8. English descriptions translated', review)
         japanese_section = review.split('## 7.', 1)[1].split('## 8.', 1)[0]
-        english_section = review.split('## 8.', 1)[1]
+        english_section = review.split('## 8.', 1)[1].split('## 9.', 1)[0]
         self.assertIn('日本語説明を作者承認済み', japanese_section)
 
         def approved_table(section):
