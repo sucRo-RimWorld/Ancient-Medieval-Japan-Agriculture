@@ -245,8 +245,19 @@ class ChainRegressionTests(unittest.TestCase):
                     'AMJC_RiceFlour')
 
     def test_mo_bulk_houtou_uses_mo_flour(self):
-        self.mutate('Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_GrainsFlour.xml',
-                    'Operation[last()]/value/li', 'AMJC_WheatFlour')
+        # Match the authored MO patch target by XPath value, never by its
+        # physical Operation position: new independent AMJ recipes may append
+        # unrelated patches without changing Houtou's ingredient contract.
+        path = self.root/'Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_GrainsFlour.xml'
+        doc = ET.parse(path)
+        target = '/Defs/RecipeDef[defName="AMJC_CookHoutouBulk"]/ingredients/li/filter/thingDefs/li'
+        matches = [operation for operation in doc.getroot().findall('Operation')
+                   if operation.findtext('xpath') == target]
+        self.assertEqual(len(matches), 1)
+        matches[0].find('value/li').text = 'AMJC_WheatFlour'
+        doc.write(path)
+        with self.assertRaises(AssertionError):
+            validate(self.root)
 
     def test_bulk_recipes_remain_research_free(self):
         self.mutate('Defs/RecipeDefs/Recipes_GrainsFood.xml',
