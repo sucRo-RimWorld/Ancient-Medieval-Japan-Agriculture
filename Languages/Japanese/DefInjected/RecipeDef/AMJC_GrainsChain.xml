@@ -25,7 +25,7 @@
   <AMJC_CookRiceFlourDumplings.description>米粉から米粉団子を1個調理する。</AMJC_CookRiceFlourDumplings.description>
   <AMJC_MillBarley.jobString>大麦を製粉している。</AMJC_MillBarley.jobString>
   <AMJC_MillRice.jobString>米を製粉している。</AMJC_MillRice.jobString>
-  <AMJC_CookBarleyFlourGruel.jobString>麦粉粥を調理している。</AMJC_CookBarleyFlourGruel.jobString>
+  <AMJC_CookBarleyFlourGruel.jobString>麦粉粥を煮ている。</AMJC_CookBarleyFlourGruel.jobString>
   <AMJC_CookRiceFlourDumplings.jobString>米粉団子を調理している。</AMJC_CookRiceFlourDumplings.jobString>
   <AMJC_CookHoutouBulk.label>餺飥を4食まとめて作る</AMJC_CookHoutouBulk.label>
   <AMJC_CookHoutouBulk.description>小麦粉の栄養2.0相当から餺飥を4食調理する。</AMJC_CookHoutouBulk.description>
@@ -42,22 +42,22 @@
   <AMJC_CookRiceFlourDumplingsBulk.label>米粉団子を4食まとめて作る</AMJC_CookRiceFlourDumplingsBulk.label>
   <AMJC_CookRiceFlourDumplingsBulk.description>米粉の栄養2.0相当から米粉団子を4食調理する。</AMJC_CookRiceFlourDumplingsBulk.description>
   <AMJC_CookRiceFlourDumplingsBulk.jobString>米粉団子を4食分調理している。</AMJC_CookRiceFlourDumplingsBulk.jobString>
-  <AMJC_CookMixedGrainMeal.label>混合穀物飯を1食作る</AMJC_CookMixedGrainMeal.label>
-  <AMJC_CookMixedGrainMeal.description>複数種類の可食穀粒を混ぜて混合穀物飯を1食調理できる。</AMJC_CookMixedGrainMeal.description>
-  <AMJC_CookMixedGrainMeal.jobString>混合穀物飯を調理している。</AMJC_CookMixedGrainMeal.jobString>
-  <AMJC_CookMixedGrainMealBulk.label>混合穀物飯を4食まとめて作る</AMJC_CookMixedGrainMealBulk.label>
-  <AMJC_CookMixedGrainMealBulk.description>複数種類の可食穀粒を混ぜて混合穀物飯を4食調理できる。</AMJC_CookMixedGrainMealBulk.description>
-  <AMJC_CookMixedGrainMealBulk.jobString>混合穀物飯を調理している。</AMJC_CookMixedGrainMealBulk.jobString>
-  <AMJC_CookMixedGrainPorridge.label>混合穀物粥を1食作る</AMJC_CookMixedGrainPorridge.label>
-  <AMJC_CookMixedGrainPorridge.description>複数種類の可食穀粒を混ぜて混合穀物粥を1食調理できる。</AMJC_CookMixedGrainPorridge.description>
-  <AMJC_CookMixedGrainPorridge.jobString>混合穀物粥を調理している。</AMJC_CookMixedGrainPorridge.jobString>
-  <AMJC_CookMixedGrainPorridgeBulk.label>混合穀物粥を4食まとめて作る</AMJC_CookMixedGrainPorridgeBulk.label>
-  <AMJC_CookMixedGrainPorridgeBulk.description>複数種類の可食穀粒を混ぜて混合穀物粥を4食調理できる。</AMJC_CookMixedGrainPorridgeBulk.description>
-  <AMJC_CookMixedGrainPorridgeBulk.jobString>混合穀物粥を調理している。</AMJC_CookMixedGrainPorridgeBulk.jobString>
-  <AMJC_CookMixedFlourFood.label>混合粉食を1食作る</AMJC_CookMixedFlourFood.label>
-  <AMJC_CookMixedFlourFood.description>複数種類の穀粉を混ぜて混合粉食を1食調理できる。</AMJC_CookMixedFlourFood.description>
-  <AMJC_CookMixedFlourFood.jobString>混合粉食を調理している。</AMJC_CookMixedFlourFood.jobString>
-  <AMJC_CookMixedFlourFoodBulk.label>混合粉食を4食まとめて作る</AMJC_CookMixedFlourFoodBulk.label>
-  <AMJC_CookMixedFlourFoodBulk.description>複数種類の穀粉を混ぜて混合粉食を4食調理できる。</AMJC_CookMixedFlourFoodBulk.description>
-  <AMJC_CookMixedFlourFoodBulk.jobString>混合粉食を調理している。</AMJC_CookMixedFlourFoodBulk.jobString>
+  <AMJC_CookMixedGrainMeal.label>飯を1食作る</AMJC_CookMixedGrainMeal.label>
+  <AMJC_CookMixedGrainMeal.description>可食穀粒を使い、1種類でも複数種類でも飯を1食炊ける。</AMJC_CookMixedGrainMeal.description>
+  <AMJC_CookMixedGrainMeal.jobString>飯を炊いている。</AMJC_CookMixedGrainMeal.jobString>
+  <AMJC_CookMixedGrainMealBulk.label>飯を4食まとめて作る</AMJC_CookMixedGrainMealBulk.label>
+  <AMJC_CookMixedGrainMealBulk.description>可食穀粒を使い、1種類でも複数種類でも飯を4食炊ける。</AMJC_CookMixedGrainMealBulk.description>
+  <AMJC_CookMixedGrainMealBulk.jobString>飯を炊いている。</AMJC_CookMixedGrainMealBulk.jobString>
+  <AMJC_CookMixedGrainPorridge.label>粥を1食作る</AMJC_CookMixedGrainPorridge.label>
+  <AMJC_CookMixedGrainPorridge.description>可食穀粒を使い、1種類でも複数種類でも粥を1食煮られる。</AMJC_CookMixedGrainPorridge.description>
+  <AMJC_CookMixedGrainPorridge.jobString>粥を煮ている。</AMJC_CookMixedGrainPorridge.jobString>
+  <AMJC_CookMixedGrainPorridgeBulk.label>粥を4食まとめて作る</AMJC_CookMixedGrainPorridgeBulk.label>
+  <AMJC_CookMixedGrainPorridgeBulk.description>可食穀粒を使い、1種類でも複数種類でも粥を4食煮られる。</AMJC_CookMixedGrainPorridgeBulk.description>
+  <AMJC_CookMixedGrainPorridgeBulk.jobString>粥を煮ている。</AMJC_CookMixedGrainPorridgeBulk.jobString>
+  <AMJC_CookMixedFlourFood.label>粉食を1食作る</AMJC_CookMixedFlourFood.label>
+  <AMJC_CookMixedFlourFood.description>穀粉を使い、1種類でも複数種類でも粉食を1食作れる。</AMJC_CookMixedFlourFood.description>
+  <AMJC_CookMixedFlourFood.jobString>粉食を調理している。</AMJC_CookMixedFlourFood.jobString>
+  <AMJC_CookMixedFlourFoodBulk.label>粉食を4食まとめて作る</AMJC_CookMixedFlourFoodBulk.label>
+  <AMJC_CookMixedFlourFoodBulk.description>穀粉を使い、1種類でも複数種類でも粉食を4食作れる。</AMJC_CookMixedFlourFoodBulk.description>
+  <AMJC_CookMixedFlourFoodBulk.jobString>粉食を調理している。</AMJC_CookMixedFlourFoodBulk.jobString>
 </LanguageData>
