@@ -21,28 +21,4 @@ namespace AncientMedievalJapanCore.E2E
             get { return "AMJ-Stage-A-E2E"; }
         }
     }
-
-    // Select the retained legacy Scenario; do not replace its pawn/items/research parts.
-    public sealed class AmjLegacyVillageQuickstart : AbstractQuickstart
-    {
-        public override TaggedString description
-        {
-            get { return "Starts the production AMJC New Village scenario for Pickle verification."; }
-        }
-
-        public override ScenarioDef scenario
-        {
-            get { return DefDatabase<ScenarioDef>.GetNamed("AMJC_NewVillage"); }
-        }
-
-        public override int mapSize
-        {
-            get { return 75; }
-        }
-
-        public override string seed
-        {
-            get { return "AMJ-New-Village-E2E"; }
-        }
-    }
 }
