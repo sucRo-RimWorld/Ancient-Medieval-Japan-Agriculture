@@ -60,7 +60,9 @@ def validate(root=ROOT):
         assert len(flour_set) == 5
         for suffix, (raw, work, spoil, tex) in MENU.items():
             item = defs['AMJC_'+suffix]
-            assert item.tag == 'ThingDef' and item.get('ParentName') == 'MealFineBase'
+            # The Vanilla FineMeal parent inherits AteFineMeal (+5), even if XML
+            # omits tasteThought. CookedIngredientless has no tasteThought.
+            assert item.tag == 'ThingDef' and item.get('ParentName') == 'MealCookedIngredientless'
             assert float(item.findtext('statBases/Nutrition')) == 0.9
             assert item.findtext('ingestible/preferability') == 'MealSimple'
             assert item.find('ingestible/tasteThought') is None, suffix
@@ -105,6 +107,23 @@ def validate(root=ROOT):
 class MixedCookingRegression(unittest.TestCase):
     def test_actual_base_and_mo_xml_contracts(self):
         self.assertTrue(validate())
+
+    def test_common_meals_cannot_inherit_vanilla_fine_meal_thought(self):
+        root = ET.parse(ROOT/'Defs/ThingDefs_Items/Items_GrainsFood.xml').getroot()
+        for suffix in MENU:
+            item = deepcopy(root.find('ThingDef[defName="AMJC_'+suffix+'"]'))
+            self.assertEqual(item.get('ParentName'), 'MealCookedIngredientless')
+            self.assertIsNone(item.find('ingestible/tasteThought'))
+            # The inherited FineMeal tasteThought was observed in actual
+            # Linux 1.6 Pickle, despite no explicit child XML element.
+            item.set('ParentName', 'MealFineBase')
+            with self.assertRaises(AssertionError):
+                assert item.get('ParentName') == 'MealCookedIngredientless'
+        for suffix in SPECIFIC:
+            food = root.find('ThingDef[defName="AMJC_'+suffix+'"]')
+            self.assertEqual(food.get('ParentName'), 'MealFineBase')
+            self.assertEqual(food.findtext('ingestible/tasteThought'),
+                             'AMJC_AteFlourFood')
 
     def test_mixing_disabled_must_be_rejected(self):
         node = deepcopy(ET.parse(ROOT/'Defs/RecipeDefs/Recipes_GrainsFood.xml')
