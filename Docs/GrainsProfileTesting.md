@@ -544,3 +544,34 @@ This establishes fresh-profile 1.7 runtime of the corrected optional compatibili
 Grains **does not** own Vanilla potato/corn/strawberry/cotton/hops/smokeleaf or MO lentil/onion/garlic/flax/sugarcane/carrot/tomato `growDays` patches. They moved to independent optional **AMJ Crop Growth Balance**. Do **not** assert their replacement values in the Grains-only four-profile acceptance tests. Native Grains acceptance retains its own seven grains, Vanilla `Plant_Rice=5`, and optional MO wheat `growDays=12` with the existing processing and CCTO constraints.
 
 For combined-play compatibility, include separate profiles with Crop Growth Balance installed and require Grains seven-grain unchanged values, no duplicated crop growth overrides, correct MO conditional availability, and native ERROR0. Crop Growth Balance's own 6+7 loaded-Def assertions, field work, season-yield economic comparison and 1.6/1.7 verification belong to its own `Docs/Design.md` and tests rather than this Grains release gate. Previous post-PR#99 native validation was not performed; no game PASS is inherited by moving the patch.
+
+
+## Linux 1.6 MO audio-isolated functional test (2026-10-14)
+
+This is separate from the strict release/runtime gate for the **unmodified**
+Medieval Overhaul and SYR audio files. Project [native run #38566373498](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/38566373498)
+ran source-pinned Grains `9f8bc72eb16faacfd1219f18e91b489294af224c`
+with the actual staged VEF/SYR/MO providers inside a disposable game
+copy. Only two verified problematic third-party sound MP3s were
+transcoded inside that game copy to 44.1-kHz stereo PCM WAV; no owner
+production XML, original third-party source or strict ERROR threshold
+was changed. Unity **ERROR 0, FMOD 0**; Pickle `mo` **9/10 FAIL**,
+natural game exit code 1. Exactly one of the ten required scenarios,
+`Grains mo common food single and mixed Bills complete`, failed in
+the native test fixture with `Harvest failure must be excluded by worker
+skill.`; all nine other scenarios passed, including real harvest, flour,
+processing, recipe rejection and ingestion checks. `mo-ccto` was not
+executed in this same run after the failure.
+
+Owner test-only [PR #103](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/pull/103),
+main `6a3c55d58754e9127f7b92bba116fd384dadf314`,
+now sets a candidate's Plants/Crafting/Cooking skills to 20 and verifies
+**actual** `PlantHarvestYield >= 1.0` before selecting it, rather than
+assuming all random pawns at level 20 meet the original requirement.
+The strict post-spawn >=1.0 assertion, all original scenario names and
+production data remain unchanged. Stage A/Workshop CI passed.
+Project source repin [PR #225](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/pull/225)
+targets this exact owner source; a real rerun is required before the
+failure can be considered resolved. Converted-media test success cannot
+satisfy the original-media ERROR0 release gate or prove audible sound.
+
