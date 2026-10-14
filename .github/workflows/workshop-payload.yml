@@ -1,4 +1,4 @@
-name: Workshop payload filtering
+name: Workshop subscriber candidate preflight (Actions, no YADA)
 on:
   push:
     branches: [main]
@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Verify Add Changenote version and changelog
+      - name: Verify source release metadata/version compatibility
         run: python Tests/Release/validate_add_changenote.py
-      - name: Validate YADA filter and subscriber payload contract
-        run: python Tests/Release/validate_workshop_payload.py
+      - name: Stage exact runtime/legal candidate from explicit Actions allowlist
+        run: python Tests/Release/stage_actions_candidate.py --output TestResults/WorkshopCandidate
+      - name: Explicitly reject Steam publication in push/PR preflight
+        run: test -f TestResults/WorkshopCandidate/About/About.xml && test -f TestResults/WorkshopCandidate/LICENSE
