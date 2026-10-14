@@ -20,7 +20,7 @@ Checked 2026-10-14, RimWorld 1.6 and provided MO 1.6 source. Search topics: `Rim
 | Provider | PlantDef | Old | New | Agronomic/gameplay rationale |
 |---|---|---:|---:|---|
 | Vanilla | Plant_Potato | 5.8 | 6 | fairly early edible tuber |
-| Vanilla | Plant_Corn | 11.3 | 10 | long, high-yield warm-season grain relative to millet |
+| Vanilla | Plant_Corn | 11.3 | 13 | fertile long-season grain; avoid easier harvest outperforming processed millet |
 | Vanilla | Plant_Strawberry | 4.6 | 6 | moderate production interval; not instant early staple |
 | Vanilla | Plant_Cotton | 8 | 10 | long-season fiber crop |
 | Vanilla | Plant_Hops | 5 | 7 | not an exceptionally fast agricultural output |
