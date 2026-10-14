@@ -62,11 +62,6 @@ $trackedFiles = @(
     "Defs\ThoughtDefs\Thoughts_GrainsFood.xml",
     "Compatibility\MedievalOverhaul\Patches\MedievalOverhaul_GrainsFlour.xml",
     "Compatibility\MedievalOverhaul\Patches\MedievalOverhaul_GrainsMillstone.xml",
-    "Tests\E2E\LegacyVillageSteps.cs",
-    "LegacyStartingScenarios\Defs\Scenarios\Scenarios_NewVillage.xml",
-    "LegacyStartingScenarios\Defs\PawnKindDefs\PawnKinds_Villager.xml",
-    "LegacyStartingScenarios\Defs\FactionDefs\Factions_PlayerVillage.xml",
-    "LegacyStartingScenarios\Compatibility\MedievalOverhaul\Patches\StartingScenarios.xml",
     "Defs\ThingDefs_Buildings\Buildings_GrainProcessing.xml",
     "Scripts\Prepare-FixtureLoadFolders.ps1"
 )
