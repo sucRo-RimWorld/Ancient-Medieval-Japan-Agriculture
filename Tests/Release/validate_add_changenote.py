@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Validate Add Changenote metadata and subscriber-filter preservation."""
+"""Validate Workshop release metadata for explicit GitHub Actions staging."""
 from pathlib import Path
 import re
 import sys
 import xml.etree.ElementTree as ET
+from stage_actions_candidate import permitted
 
 ROOT = Path(__file__).resolve().parents[2]
 VERSION = re.compile(r"^\d+(?:\.\d+){1,3}(?:-[A-Za-z0-9][A-Za-z0-9.-]*)?$")
@@ -28,10 +29,9 @@ def main():
     filtered = [(i, found) for i, found, _ in headings if i > matches[0][0]]
     end = filtered[0][0] if filtered else len(text.splitlines())
     assert end > matches[0][0], "Empty changenote block"
-    rules = {line.strip().lower().rstrip("/") for line in (ROOT / ".rimignore").read_text(encoding="utf-8-sig").splitlines()
-             if line.strip() and not line.lstrip().startswith("#")}
-    assert not rules.intersection({"about", "manifest.xml", "changelog.txt", "*.xml", "*.txt"}), "Add Changenote metadata excluded by .rimignore"
-    print("PASS: Add Changenote version, changelog and YADA metadata inclusion:", version)
+    for required in ("About/About.xml", "About/Manifest.xml", "About/Changelog.txt"):
+        assert permitted(required), "Release metadata missing from explicit Actions allowlist: " + required
+    print("PASS: metadata/version parity and Actions allowlist preservation:", version)
 
 if __name__ == "__main__":
     try:
