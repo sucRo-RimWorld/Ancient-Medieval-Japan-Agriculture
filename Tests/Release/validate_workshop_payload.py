@@ -42,6 +42,8 @@ def subscriber_file(path):
     if path == "loadFolders.xml":
         return True
     parts = p.parts
+    if parts[:1] == ("LegacyStartingScenarios",):
+        return False  # Historical unpublished scenario provider is never a Grains payload.
     if parts[:2] == ("Compatibility", "MedievalOverhaul"):
         parts = parts[2:]
     elif parts[:1] == ("BaseWithoutMO",):
@@ -78,6 +80,8 @@ def self_test():
     kept, leaks, lost = audit(unwanted + runtime, rules)
     assert kept == sorted(runtime) and not leaks and not lost
     assert audit(["NewDeveloperFolder/data.json"], rules)[1]
+    assert audit(["LegacyStartingScenarios/Defs/Scenarios/Scenarios_NewVillage.xml"], rules)[1]
+    assert audit(["LegacyStartingScenarios/Languages/Japanese/Keyed/AMJC_Scenarios.xml"], rules)[1]
     assert audit(["Defs/Plants.xml"], rules + ["*.xml"])[2]
     assert ignored("art/Sources/X.png", rules)
     try:
