@@ -27,7 +27,7 @@ $required = @(
     "Loaded AMJ grain processing buildings and recipes match the design values",
     "Stage A crops preserve distinct gameplay roles",
     "Stage A grain quantities are conserved through processing",
-    "Edible AMJ grains are accepted by the vanilla simple meal ingredient filter",
+    "Edible AMJ grains are accepted by the vanilla simple meal ingredient filter"
 )
 
 if ([int]$summary.total -ne 6) {
