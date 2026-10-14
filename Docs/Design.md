@@ -751,31 +751,13 @@ AMJC固有作物の耐寒値と保存候補範囲の正本は [AMJC作物の耐�
 | 大麦 | 10 | 22 | 0.5 | 0.6 | 0～35℃ | 5～22℃ | -8℃ | 2 | 初期（MO併用時も同じ） |
 | 小麦（MO） | 12 | 28 | 0.7 | 0.9 | 最低0℃。高温側はMO/RimWorld基準を維持 | MO/RimWorld基準 | -6℃ | 0（MO 1.6で明示なし） | MO `DankPyon_BasicAgriculture` |
 
-### 4.2.1a Vanilla/MO既存栽培作物の成長期間互換（2026-10-14、Grains導入時）
+### 4.2.1a Vanilla/MO既存作物との生育期間整合（2026-10-14 分離決定）
 
-Grainsの独自七穀だけを現実の成熟期間に基づく相対的な生育日数へ変えても、Vanilla/MOの短期栽培作物がそのままなら植え分けは成立しない。**Grains有効時は既存Vanilla/MO作物も同じ農学上の早晩差とゲーム内短縮の基準で評価する**。現実の暦日を`growDays`へ直接換算しない。Grainsの七穀（ソバ4、キビ・稲5、アワ・ヒエ6、大麦10、小麦12）は既存の承認済み値を維持する。
+**作者決定：Vanilla・MO既存の野菜・豆・繊維・非AMJ作物の一律な生育日数調整はGrainsの責務外。** 独立した任意Mod **AMJ Crop Growth Balance（中世日本 - 作物生育期間調整）** に移管する。Grainsの単体導入では当該既存作物の `growDays` を変更しない。Grainsは既存七穀の相対的な早晩・収量・加工・栽培条件と、`Plant_Rice`（5日）およびMO小麦（12日）のGrains側統合だけを所有する。
 
-**栽培作物の補正値の正本（growDays、変更前→変更後）：**
+共通方針は、現実の成熟期間の早晩差をRimWorldの日照・気温・肥沃度に合わせて圧縮すること。ただし現実の暦日を`growDays`へ直換算しない。分離先の初期値はVanilla 6種・MO 7種で、Grains主食七穀の固定値は変更しない。Crop Growth BalanceはGrainsの**任意の推奨併用**にとどめ、Grainsを使わない単独運用も可能。CCTOの成長温度・枯死閾値は独立した責務のまま維持する。
 
-| Provider | PlantDef | 現行原本 | Grains導入後 |
-|---|---|---:|---:|
-| Vanilla | `Plant_Potato` | 5.8 | **6** |
-| Vanilla | `Plant_Corn` | 11.3 | **13** |
-| Vanilla | `Plant_Strawberry` | 4.6 | **6** |
-| Vanilla | `Plant_Cotton` | 8 | **10** |
-| Vanilla | `Plant_Hops` | 5 | **7** |
-| Vanilla | `Plant_Smokeleaf` | 7.5 | **9** |
-| MO | `DankPyon_Plant_Onions` | 4 | **8** |
-| MO | `DankPyon_Plant_Lentils` | 3 | **8** |
-| MO | `DankPyon_Plant_Garlic` | 4 | **10** |
-| MO | `DankPyon_Plant_Flax` | 7 | **9** |
-| MO | `DankPyon_Plant_Sugarcane` | 5.8 | **12** |
-| MO | `DankPyon_Plant_Carrots` | 3.25 | **6** |
-| MO | `DankPyon_Plant_Tomatoes` | 4.25 | **7** |
-
-`Plant_Rice`（5）とMO小麦（12）は既存のGrains仕様を優先し、重複パッチしない。元から相対期間が妥当なVanillaの牧草・薬草・サイコイド等、MOのキャベツ8・カボチャ8等は不必要に変更しない。果樹は種まきから一度の畑作収穫までとは異なる多年生のため、MOハーブ・キノコ・架空作物とともに別枠で評価する。
-
-今回の変更対象は既存PlantDefの`growDays`のみ。`harvestYield`、肥沃度、成長可能温度、耐寒枯死、播種タグ、研究・加工工程、レシピ、食事、DefName、画像を変更しない。MOのPatchは`loadFolders.xml`でMO有効時だけ読み込ませる。CCTOのVanilla/MO低温データは上書きしない。旧セーブ中の植物の成長割合は強制変更せず、ロード後の成長速度に新値が適用される想定とし実機検証する。作物数値は**初期候補**であり、土地・気温・生育日数・栽培労働・収穫物栄養と加工工数を含めた四構成プレイで定量評価する。事前の原本照合と先行Mod監査は [CropGrowthNormalization-20261014.md](Research/CropGrowthNormalization-20261014.md)、静的テストは`Tests/Production/test_crop_growth_normalization.py`。このXMLと静的テストだけでは実機PASSとはしない。
+旧Grainsで2026-10-14に実装した広域作物補正（PR #99）は本分離で除去。作物補正値および検証は独立Mod所有の`Docs/Design.md`、`Tests/test_crop_growth.py`、専用XMLを正本とする。専用GitHubリポジトリが未作成の間、移管済みソースZIPは一時納品物として保持し、GitHub未反映を公開・配布済みと称しない。旧値・先行Mod調査の経緯はPR #99のGit履歴を参照する。
 
 アワ・ヒエ・キビについて、プレイヤーが「どの土地・気温・残り生育期間ならどれを植えるか」を判断できるよう、肥沃度・温度のゲーム内式を含む比較資料を [`Docs/Balance/Crops/Millet_Cultivation_Balance.md`](Balance/Crops/Millet_Cultivation_Balance.md) に置く。そこに掲載する数値・グラフは**現実の農業値ではなく、史実・農学的特徴を参考にAMJへ落とし込んだゲーム内バランス値**である。
 
