@@ -53,10 +53,16 @@ try {
     $duplicateCcto = Join-Path $workshop '3812412548/About'
     New-Item -ItemType Directory -Force -Path $duplicateCcto | Out-Null
     Copy-Item -LiteralPath (Join-Path $mods 'sucro.cropcoldtoleranceoverhaul/About/About.xml') -Destination (Join-Path $duplicateCcto 'About.xml')
+    # Re-stage over a disposable old test install; the old village must not survive.
+    $staleScenario = Join-Path $mods 'AncientMedievalJapanCore.E2ETarget/LegacyStartingScenarios/Defs/Scenarios'
+    New-Item -ItemType Directory -Force -Path $staleScenario | Out-Null
+    '<Defs><ScenarioDef><defName>AMJC_NewVillage</defName></ScenarioDef></Defs>' |
+        Set-Content -LiteralPath (Join-Path $staleScenario 'Scenarios_NewVillage.xml')
     foreach ($profile in @('vanilla','vanilla-ccto','mo','mo-ccto')) {
         $spec = Get-GrainsTestProfile $profile
         & (Join-Path $repo 'Scripts/Stage-GrainsTestProfile.ps1') -RepositoryRoot $repo -ModsRoot $mods -Profile $profile
         $target = Join-Path $mods 'AncientMedievalJapanCore.E2ETarget'
+        Assert (-not (Test-Path -LiteralPath (Join-Path $target 'LegacyStartingScenarios'))) 'Stale New Village survived profile restaging.'
         Assert (-not (Test-Path (Join-Path $target 'Patches/E2E_Graphics.xml'))) 'Graphics substitutions leaked into real profile.'
         foreach ($folder in @('Defs','Patches','Textures','Languages','Compatibility','BaseWithoutMO')) {
             foreach ($file in Get-ChildItem -LiteralPath (Join-Path $repo $folder) -File -Recurse) {
