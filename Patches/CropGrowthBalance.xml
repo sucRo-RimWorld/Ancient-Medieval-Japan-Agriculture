@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Grains owns only the relative growth-time balance; keep every other provider field unchanged. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="Plant_Potato"]/plant/growDays</xpath>
+    <value><growDays>6</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="Plant_Corn"]/plant/growDays</xpath>
+    <value><growDays>13</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="Plant_Strawberry"]/plant/growDays</xpath>
+    <value><growDays>6</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="Plant_Cotton"]/plant/growDays</xpath>
+    <value><growDays>10</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="Plant_Hops"]/plant/growDays</xpath>
+    <value><growDays>7</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="Plant_Smokeleaf"]/plant/growDays</xpath>
+    <value><growDays>9</growDays></value>
+  </Operation>
+</Patch>
