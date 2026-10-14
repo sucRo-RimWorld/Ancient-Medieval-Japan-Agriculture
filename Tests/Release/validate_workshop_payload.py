@@ -74,7 +74,7 @@ def self_test():
                "BaseWithoutMO/Languages/Japanese/DefInjected/ThingDef/Wheat.xml",
                "Compatibility/MedievalOverhaul/Defs/Recipes.xml",
                "Compatibility/MedievalOverhaul/Patches/MO.xml",
-               "Compatibility/MedievalOverhaul/Languages/Japanese/DefInjected/ThingDef/MO.xml",
+               "Compatibility/MedievalOverhaul/Languages/Japanese/DefInjected/ThingDef/MO.xml"]
     kept, leaks, lost = audit(unwanted + runtime, rules)
     assert kept == sorted(runtime) and not leaks and not lost
     assert audit(["NewDeveloperFolder/data.json"], rules)[1]
