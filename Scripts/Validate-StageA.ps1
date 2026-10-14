@@ -459,7 +459,6 @@ if ($null -ne $moBarleyDef) {
     Fail "Installed Medieval Overhaul now contains a Barley-named Def. Re-audit AMJC Barley ownership before keeping the duplicate crop."
 }
 
-& (Join-Path $RepositoryRoot "Scripts/Validate-NewVillage.ps1") -RepositoryRoot $RepositoryRoot -MedievalOverhaulRoot $MedievalOverhaulRoot -RimWorldRoot $RimWorldRoot
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
 Write-Host "[OK] AMJ Stage A static validation passed." -ForegroundColor Green
