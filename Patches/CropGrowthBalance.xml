@@ -7,7 +7,7 @@
   </Operation>
   <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[defName="Plant_Corn"]/plant/growDays</xpath>
-    <value><growDays>10</growDays></value>
+    <value><growDays>13</growDays></value>
   </Operation>
   <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[defName="Plant_Strawberry"]/plant/growDays</xpath>
