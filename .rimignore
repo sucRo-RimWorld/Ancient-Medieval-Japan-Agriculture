@@ -1,6 +1,7 @@
-# AMJ Workshop distribution exclusions (YADA basename rules, inherited recursively).
-# Keep only runtime assets, Mod metadata, and required license/attribution notices.
-# Shared policy: Core Docs/WorkshopPackaging.md
+# LEGACY YADA exclusion list preserved for historical validator regression only.
+# From 2026-10-15 onward, NO upload uses YADA or derives an Actions payload
+# from these exclusions. The Actions stage uses an independent allowlist.
+# Shared policy: Project Docs/WorkshopPackaging.md
 
 # Version control, editor and publisher metadata
 .git
