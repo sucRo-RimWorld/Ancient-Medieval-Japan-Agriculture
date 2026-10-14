@@ -760,7 +760,7 @@ Grainsの独自七穀だけを現実の成熟期間に基づく相対的な生�
 | Provider | PlantDef | 現行原本 | Grains導入後 |
 |---|---|---:|---:|
 | Vanilla | `Plant_Potato` | 5.8 | **6** |
-| Vanilla | `Plant_Corn` | 11.3 | **10** |
+| Vanilla | `Plant_Corn` | 11.3 | **13** |
 | Vanilla | `Plant_Strawberry` | 4.6 | **6** |
 | Vanilla | `Plant_Cotton` | 8 | **10** |
 | Vanilla | `Plant_Hops` | 5 | **7** |
