@@ -14,7 +14,7 @@
 | Straw・研究・材料 | BaseのMO参照を除去、MO互換のみで再接続 | 新規開始での実際の継承値 |
 | 画像 | 下表のMO提供4パスを共有Defから無条件参照 | Grains所有画像への置換と全表示状態の検証 |
 | About（2026-10-10） | **MO必須依存なし**。MOとCCTOの`loadAfter`は任意の順序ヒントとして維持 | 新規開始の実機・配布・完成画像を検証 |
-| シナリオ | Scenariosへ物理分離済み。Grains旧コピーはScenarios不在時のみ | Scenariosが所有する新規開始の実機検証 |
+| シナリオ | Scenariosが完全所有。Grains旧コピーなし | Scenariosが所有する新規開始の実機検証 |
 
 ## 監査時点のMO画像の残存依存
 
@@ -35,7 +35,7 @@ Base小麦と粉類が以前参照していた既存作物・雑穀画像、お�
 
 ## 検証の読み方と次の単位
 
-`Tests/validate_grains_base.py` はBase XMLの識別子・クラス参照、条件付き互換、旧38契約を検証する。出力を「MO identifier/class references 0」へ限定し、画像と実ゲームは対象外と明記した。`test_grains_chain.py`、`test_grains_environment.py`、`test_scenario_extraction.py` は工程・環境・分離の静的回帰検証である。
+`Tests/validate_grains_base.py` はBase XMLの識別子・クラス参照、条件付き互換、旧38契約を検証する。出力を「MO identifier/class references 0」へ限定し、画像と実ゲームは対象外と明記した。`test_grains_chain.py`、`test_grains_environment.py`、シナリオの新規開始テストは Scenarios 側の責務であり、Grains は開始Defの非所有を静的回帰で検証する。
 
 本監査で選定した単位は上記3Defの画像依存解消（下記の仮参照分離を実装済み）。専用画像制作・レビュー後、4構成（Vanilla / MO / CCTO / MO+CCTO）をGrainsの6穀物ケースでコンパイル・実行し、描画・Bill実行・ERRORを確認する。旧セーブ移行・MO取り外しは導入実績がないため不要。Scenariosの新規開始実機テストはScenarios所有とする。
 
