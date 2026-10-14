@@ -85,7 +85,7 @@ Review of coverage and scope:
 | Save migration | No deployed Grains saves | **Out of scope**; do not restore obsolete Core/provider-removal migration or scenario ownership gates |
 | Equipment specialization, water paddies, future recipes | Post-V1 development owned elsewhere | **Out of V1 scope**; do not require purpose-built bench artwork, paddy simulation or future meal recipes for these functional tests |
 
-Do not count duplicated source-XML assertions as independent gameplay evidence. Preserve the legacy eight-case fixture only as a narrow compatibility contract, not as another required ten-scenario native profile. Keep current-source build, full native logs, distribution and author visual judgment as separate results.
+Do not count duplicated source-XML assertions as independent gameplay evidence. The old eight-case fixture was reduced to six grain cases; it is not another required ten-scenario native profile. Keep current-source build, full native logs, distribution and author visual judgment as separate results.
 
 **Additional source-only cases:** The 8th performs four native fueled-stove/processing-spot thresh/hull jobs per profile and one extra Base-only stove mill Bill; it checks ElectricStove loaded recipe exposure but not powered electric jobs. The 9th rejects wrong-only ingredients for 3 common and 5 specialty food Bills via native WorkGiver. The 10th uses real pawn Ingest jobs for 3 common meals and 2 specialty flour foods and verifies a single +2/half-day nonstacking memory. Inputs and ready-made meals in these tests are test-only staged items, not harvested evidence. Exact-head C# compilation, 40/40 native jobs, and zero-ERROR reports are still NOT RUN.
 
@@ -209,20 +209,11 @@ patches. They do not simulate external MO wheat patches, XML inheritance, loaded
 Def references, localization resolution or texture loading. Existing wheat-patch
 checks remain separate; actual game tests are required for those boundaries.
 
-## Approved Scenario ownership boundary (2026-10-07)
+## Scenarios ownership boundary (2026-10-14)
 
-New Village, its starting player Faction/PawnKind, research and supplies will move
-to an independent starting-scenario mod. That mod must work with Vanilla alone;
-Grains and MO integrations are optional and owned by the scenario mod. Neither
-mod makes the other a hard dependency. The owner is Ancient-Medieval-Japan-Scenarios / sucro.ancientmedievaljapan.scenarios. Production legacy copies are guarded; actual save-migration verification remains pending.
+Scenarios is the sole owner of `New Village`, its player Faction/PawnKind, starting equipment/research, language files and MO/Grains start compatibility. **Grains does not ship or load the former legacy scenario even when Scenarios is absent.** There are no deployed legacy saves to migrate. Formal Grains owner boundary: `Docs/ScenarioExtraction.md`.
 
-Current Grains real-provider suites have ten grain-only scenarios, adding native alternate benches, wrong-source food Bills and ingestion Thoughts to the previous seven. Their dedicated Scenario-presence requirement and two village checks are removed. Canonical start checks/Quickstart live in Scenarios (four profiles, three scenarios each); Grains retains LegacyVillageSteps and AmjLegacyVillageQuickstart in the old eight-case fixture for its compatibility copy. Preserve all 38 historical contracts, including legacy start contracts, rather than dropping the golden snapshot.
-
-The scenario owner must test Vanilla alone, Grains, MO and Grains+MO starts, plus
-old Core New Village saves and exactly one provider of every migrated Def when
-old/new packages coexist. Grains standalone must pass without the scenario mod.
-Apply the existing non-interactive rendering and runtime ERROR gates. None of
-these extraction/migration tests is claimed as already passing.
+The current real-provider Grains matrix consists of **ten grain-only Pickle scenarios per Vanilla/CCTO/MO/MO+CCTO profile**, not village-start tests. The former separate eight-case fixture is reduced to its six grain Stage A cases; village assertions, legacy Scenario quickstart and dedicated scenario fixture are removed. Starting-scenario runtime tests remain Scenarios-owned. Before declaring native success require the actual source revision, all cases, isolated logs and ERROR-0 evidence. A static CI pass is not runtime evidence.
 
 ## Step 3 chain validation and outstanding release gates
 
@@ -319,23 +310,11 @@ still uncompiled/unrun here. The step source preserves asynchronous cleanup whil
 remaining compatible with the repository's Framework C# 5 compiler syntax.
 
 
-## Starting-scenario extraction and legacy compatibility
+## Complete scenario extraction
 
-`Docs/ScenarioExtraction.md` is the owning extraction/migration procedure.
-`python Tests/test_scenario_extraction.py` builds two disposable test packages
-and checks six XML ownership configurations plus guard/order/duplicate regressions.
-It preserves all current explicit contracts whenever Grains is present; standalone
-Scenario supplies use draft RawRice 300 instead of unavailable AMJC grain refs.
-Production scenario Defs/localization and MO starting differences now reside in conditional LegacyStartingScenarios; the then-six-case grain-only real-profile suites omitted canonical village checks; the legacy fixture remains eight. The generator
-requires fresh output and distinct `.extractiontest` IDs, records source/payload
-hashes and does not install, publish or rewrite saves. An unchanged current Core
-cannot coexist with a new provider; the regression explicitly rejects that mix.
+The former `LegacyStartingScenarios/` provider, its two loader conditions and extraction-prototype scripts/tests were removed from Grains (2026-10-14). Grains now has zero start-def providers; Scenarios is optional and supplies its own content. Static Base/MO checks assert that no `AMJC_NewVillage`, `AMJC_PlayerVillage` or `AMJC_Villager` Def is owned by Grains, and the subscriber filter does not allow legacy content.
 
-Physical XML relocation is implemented. CI also checks the actual separate Scenarios repository at reviewed commit cbd5e313f9cb0871f7227e447d3faa7497fd962e through Tests/validate_scenario_pair.py (six configurations). This proves explicit XML contracts, not game loader behavior or successful old-save migration. Canonical NewVillage steps/Quickstart/start features are now Scenarios-owned; generic Stage A/environment/Bill tests remain in Grains. Exact suite names/counts/source attribution are updated together. Both real
-four-profile suites and save-migration runs must retain rendering/private desktop
-and ERROR gates before reporting a release-ready separation.
-
-Scenarios build, provider-alias staging, four-profile runner, private-desktop entry point and actual-start assertions are source/tooling only: see the owner Docs/RuntimeTesting.md. They have not compiled or run here; old-save migration automation remains next.
+Keep the existing grain-only profile, Bill and CCTO tests. Scenarios owns testing of a new village start across its four independent profiles. No save migration testing is needed for unpublished Grains/Core starts.
 
 ## Upland rice scope extension (2026-10-08 audit)
 
