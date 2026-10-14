@@ -145,7 +145,7 @@
       </li>
     </comps>
   </ThingDef>
-  <ThingDef ParentName="MealFineBase">
+  <ThingDef ParentName="MealCookedIngredientless">
     <defName>AMJC_MixedGrainMeal</defName>
     <label>cooked grains</label>
     <description>A cooked grain meal made from edible rice, barley, millet and other kernels. It accepts one grain or a mixture, reflecting the use of grains alongside rice in Japanese staple foods. It keeps longer than porridge but takes somewhat more work to cook.</description>
@@ -166,7 +166,7 @@
       </li>
     </comps>
   </ThingDef>
-  <ThingDef ParentName="MealFineBase">
+  <ThingDef ParentName="MealCookedIngredientless">
     <defName>AMJC_MixedGrainPorridge</defName>
     <label>porridge</label>
     <description>Porridge made by simmering edible rice, barley, millet or other kernels with extra water. It accepts one grain or a mixture. Cooking requires less work than cooked grains, but the porridge spoils sooner at room temperature.</description>
@@ -187,7 +187,7 @@
       </li>
     </comps>
   </ThingDef>
-  <ThingDef ParentName="MealFineBase">
+  <ThingDef ParentName="MealCookedIngredientless">
     <defName>AMJC_MixedFlourFood</defName>
     <label>flour dish</label>
     <description>A simple cooked flour dish made from millet, buckwheat, barley, wheat or rice flour. One flour or several may be used together. It represents flour-based foods other than noodles and spoils a little sooner at room temperature than hakutaku or sobagaki.</description>
