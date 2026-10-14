@@ -58,7 +58,7 @@ try {
         & (Join-Path $repo 'Scripts/Stage-GrainsTestProfile.ps1') -RepositoryRoot $repo -ModsRoot $mods -Profile $profile
         $target = Join-Path $mods 'AncientMedievalJapanCore.E2ETarget'
         Assert (-not (Test-Path (Join-Path $target 'Patches/E2E_Graphics.xml'))) 'Graphics substitutions leaked into real profile.'
-        foreach ($folder in @('Defs','Patches','Textures','Languages','Compatibility','BaseWithoutMO','LegacyStartingScenarios')) {
+        foreach ($folder in @('Defs','Patches','Textures','Languages','Compatibility','BaseWithoutMO')) {
             foreach ($file in Get-ChildItem -LiteralPath (Join-Path $repo $folder) -File -Recurse) {
                 $relative = $file.FullName.Substring($repo.Length + 1)
                 Assert ((Get-FileHash -LiteralPath $file.FullName).Hash -eq (Get-FileHash -LiteralPath (Join-Path $target $relative)).Hash) "Runtime bytes changed: $relative"
@@ -131,10 +131,7 @@ try {
     [xml]$fixtureLoader = Get-Content -LiteralPath (Join-Path $target 'loadFolders.xml') -Raw
     Assert ($fixtureLoader.loadFolders.'v1.6'.li[1].IfModActive -eq 'sucro.ancientmedievaljapan.core.mofixture') 'Legacy fixture condition was not isolated.'
     Assert ($fixtureLoader.loadFolders.'v1.6'.li[2].IfModNotActive -eq 'sucro.ancientmedievaljapan.core.mofixture') 'Legacy fixture failed to exclude fallback content.'
-    Assert ($fixtureLoader.loadFolders.'v1.6'.li[4].IfModActive -eq 'sucro.ancientmedievaljapan.core.mofixture') 'Legacy scenario MO patch condition was not isolated.'
-    foreach ($index in @(3,4)) {
-        Assert ($fixtureLoader.loadFolders.'v1.6'.li[$index].IfModNotActive -eq 'sucro.ancientmedievaljapan.scenarios') 'Independent scenario exclusion guard was lost.'
-    }
+    Assert ($fixtureLoader.loadFolders.'v1.6'.li.Count -eq 3) 'Grains fixture unexpectedly loads a scenario.'
     [xml]$productionLoader = Get-Content -LiteralPath (Join-Path $repo 'loadFolders.xml') -Raw
     Assert ($productionLoader.loadFolders.'v1.6'.li[1].IfModActive -eq 'DankPyon.Medieval.Overhaul') 'Fixture condition leaked into production.'
     [xml]$productionAbout = Get-Content -LiteralPath (Join-Path $repo 'About/About.xml') -Raw -Encoding UTF8
@@ -152,9 +149,7 @@ try {
         Assert ($null -eq $table.SelectSingleNode('researchPrerequisites')) 'AMJG processing table must stay research-free.'
         $barley = $projection.SelectSingleNode("/Defs/ThingDef[defName='AMJC_Plant_Barley']")
         Assert ($null -ne $barley -and $null -eq $barley.SelectSingleNode('plant/sowResearchPrerequisites')) 'AMJG barley must stay research-free.'
-        $research = $projection.SelectNodes("/Defs/ScenarioDef[defName='AMJC_NewVillage']/scenario/parts/li[@Class='ScenPart_StartingResearch']")
-        $expected = if ($xmlProfile -eq 'mo') { 3 } else { 0 }
-        Assert ($research.Count -eq $expected) 'Projected scenario research differs.'
+        Assert ($projection.SelectNodes('/Defs/ScenarioDef | /Defs/FactionDef[defName="AMJC_PlayerVillage"] | /Defs/PawnKindDef[defName="AMJC_Villager"]').Count -eq 0) 'Grains unexpectedly provides starting-scenario Defs.'
     }
     Assert ((Get-FileHash -LiteralPath (Join-Path $repo 'About/About.xml')).Hash -eq $originalAbout) 'Production metadata changed.'
     Assert ((Get-FileHash -LiteralPath (Join-Path $sourceConfig 'ModsConfig.xml')).Hash -eq $sourceHash) 'Player config changed.'
@@ -196,7 +191,7 @@ try {
     $snapshot = Join-Path $temp 'source-snapshot'
     New-Item -ItemType Directory -Force -Path $snapshot | Out-Null
     foreach ($folder in @('About','Defs','Patches','BaseWithoutMO','Compatibility',
-        'LegacyStartingScenarios','Languages','Textures','Scripts')) {
+        'Languages','Textures','Scripts')) {
         Copy-Item -LiteralPath (Join-Path $repo $folder) -Destination $snapshot -Recurse
     }
     New-Item -ItemType Directory -Force -Path (Join-Path $snapshot 'Tests') | Out-Null

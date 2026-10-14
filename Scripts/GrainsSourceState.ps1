@@ -4,7 +4,7 @@ function Get-GrainsSourceState([string]$RepositoryRoot) {
     $root = (Resolve-Path -LiteralPath $RepositoryRoot).Path
     $paths = New-Object 'System.Collections.Generic.List[string]'
     foreach ($folder in @('About','Defs','Patches','BaseWithoutMO','Compatibility',
-        'LegacyStartingScenarios','Languages','Textures','Tests/E2E','Scripts')) {
+        'Languages','Textures','Tests/E2E','Scripts')) {
         $directory = Join-Path $root $folder
         if (-not (Test-Path -LiteralPath $directory -PathType Container)) {
             throw "Required source-state directory was not found: $directory"

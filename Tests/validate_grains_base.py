@@ -135,7 +135,7 @@ def reviewed_stage_descriptions(root):
 
 def validate():
     # MO identifiers/classes must be absent from Base Defs and localization.
-    for folder in ("Defs", "Languages", "BaseWithoutMO", "LegacyStartingScenarios/Defs", "LegacyStartingScenarios/Languages"):
+    for folder in ("Defs", "Languages", "BaseWithoutMO"):
         for path in sorted((ROOT / folder).rglob("*.xml")):
             document = ET.parse(path).getroot()
             for node in document.iter():
@@ -255,8 +255,13 @@ def validate():
                   "RecipeDef:AMJC_RiceProcessingBase",
                   "RecipeDef:AMJC_ThreshRice", "RecipeDef:AMJC_ThreshRiceBulk",
                   "RecipeDef:AMJC_HullRice", "RecipeDef:AMJC_HullRiceBulk"}
-    assert set(actual) == set(golden["sha256"]) | {n.tag+":"+n.findtext("defName") for n in mo if n.findtext("defName") in SHARED_NAMES} | rice_names, "Unknown MO AMJC contract"
-    assert {k: actual[k] for k in golden["sha256"]} == golden["sha256"], "MO-loaded explicit AMJC contracts differ from the pre-split snapshot"
+    # Preserve the immutable historical fixture; scenario contracts belong to Scenarios.
+    scenario_keys = {"FactionDef:AMJC_PlayerVillage", "PawnKindDef:AMJC_Villager", "ScenarioDef:AMJC_NewVillage"}
+    grains_golden = {k: v for k, v in golden["sha256"].items() if k not in scenario_keys}
+    assert set(actual) == set(grains_golden) | {n.tag+":"+n.findtext("defName") for n in mo if n.findtext("defName") in SHARED_NAMES} | rice_names, "Unknown MO AMJC contract"
+    assert {k: actual[k] for k in grains_golden} == grains_golden, "MO-loaded explicit AMJC grain contracts differ from the pre-split snapshot"
+    for doc in (base, mo):
+        assert not any(node.findtext("defName") in {"AMJC_NewVillage", "AMJC_PlayerVillage", "AMJC_Villager"} for node in doc), "Grains must not provide Scenarios-owned Defs"
     def get(name):
         matches = [node for node in base if node.findtext("defName") == name]
         assert len(matches) == 1, name
@@ -282,7 +287,6 @@ def validate():
     table = get("AMJC_GrainProcessingTable")
     assert table.findtext("costList/Steel") == "30" and table.find("researchPrerequisites") is None
     assert [n.text for n in get("AMJC_GrainProcessingSpot").findall("stuffCategories/li")] == ["Woody"]
-    assert [n.text for n in get("AMJC_Villager").findall("apparelTags/li")] == ["Neolithic"]
     for node in base.findall("RecipeDef"):
         assert node.find("products/DankPyon_Straw") is None
         if (node.findtext("defName") or "").startswith("AMJC_Thresh"):

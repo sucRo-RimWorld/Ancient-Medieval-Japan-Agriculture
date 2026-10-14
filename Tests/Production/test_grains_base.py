@@ -18,7 +18,7 @@ class BaseBoundaryTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        for name in ('Defs', 'Languages', 'Patches', 'Compatibility', 'BaseWithoutMO', 'LegacyStartingScenarios', 'Tests/Fixtures', 'Textures'):
+        for name in ('Defs', 'Languages', 'Patches', 'Compatibility', 'BaseWithoutMO', 'Tests/Fixtures', 'Textures'):
             shutil.copytree(ROOT / name, self.root / name)
         shutil.copyfile(ROOT / 'loadFolders.xml', self.root / 'loadFolders.xml')
         (self.root / 'Docs').mkdir(exist_ok=True)

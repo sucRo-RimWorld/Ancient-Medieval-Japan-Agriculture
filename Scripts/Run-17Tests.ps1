@@ -82,7 +82,7 @@ try {
         # The copied test-only About identity remains constant across profiles.
         Invoke-RimWorldTestCompile $game.Root (Join-Path $test 'Assemblies/AncientMedievalJapanCore.E2E.dll') `
             @((Join-Path $repo 'Tests/E2E/AmjStageAQuickstart.cs')) @($quick)
-        $stepSources = @('StageASteps.cs','GrainsProfileSteps.cs','GrainsSimulationSteps.cs','LegacyVillageSteps.cs') |
+        $stepSources = @('StageASteps.cs','GrainsProfileSteps.cs','GrainsSimulationSteps.cs') |
             ForEach-Object { Join-Path $repo ('Tests/E2E/' + $_) }
         Invoke-RimWorldTestCompile $game.Root (Join-Path $test 'Pickle/Assemblies/AncientMedievalJapanCore.E2E.Steps.dll') `
             $stepSources @($pickle)

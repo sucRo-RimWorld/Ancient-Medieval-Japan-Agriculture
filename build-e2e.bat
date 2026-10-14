@@ -116,7 +116,6 @@ if exist "%ROOT%Textures" (
 )
 
 xcopy "%ROOT%BaseWithoutMO" "%TARGET_MOD_DIR%\BaseWithoutMO" /E /I /Y >nul
-xcopy "%ROOT%LegacyStartingScenarios" "%TARGET_MOD_DIR%\LegacyStartingScenarios" /E /I /Y >nul
 if errorlevel 1 exit /b 1
 xcopy "%ROOT%Compatibility" "%TARGET_MOD_DIR%\Compatibility" /E /I /Y >nul
 if errorlevel 1 exit /b 1
@@ -188,8 +187,7 @@ if exist "%UNITY_CORE%" (
         /reference:"%NETSTANDARD%" ^
         /reference:"%PICKLE_DLL%" ^
         "%ROOT%Tests\E2E\StageASteps.cs" ^
-        %PROFILE_STEPS% ^
-        "%ROOT%Tests\E2E\LegacyVillageSteps.cs"
+        %PROFILE_STEPS%
 ) else (
     "%CSC%" /nologo /target:library /optimize+ /out:"%STEPS_OUTPUT%" ^
         /reference:"%ASSEMBLY_CSHARP%" ^
@@ -197,8 +195,7 @@ if exist "%UNITY_CORE%" (
         /reference:"%NETSTANDARD%" ^
         /reference:"%PICKLE_DLL%" ^
         "%ROOT%Tests\E2E\StageASteps.cs" ^
-        %PROFILE_STEPS% ^
-        "%ROOT%Tests\E2E\LegacyVillageSteps.cs"
+        %PROFILE_STEPS%
 )
 if errorlevel 1 exit /b 1
 

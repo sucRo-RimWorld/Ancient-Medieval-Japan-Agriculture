@@ -406,7 +406,7 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 | Straw | **AMJ Straw ThingDefを作らない。** Base脱穀では茎葉残渣を非アイテム化 | 脱穀時だけ DankPyon_Straw を副産物として追加。収穫時Hay・製粉時Hay/Strawは出さない | **MO時のみMO所有資産を利用** |
 | 作物・加工研究 | Grains所有の大麦・一次加工台は初期利用可能。手動製粉をMO研究で止めない | MO併用時もGrains所有の大麦・一次加工台にMO研究条件を追加しない。MO所有小麦Plant側の研究条件は維持 | **Grains所有Defの解禁はGrains優先** |
 | 建築材料 | Vanilla / Grains所有のStuff・Thingだけで建設可能 | Grains加工台はMO併用でもSteel 30を維持。MO原木カテゴリ等は互換として追加可能だがGrains側の確定コストを置換しない | **Grains設備の確定コストはGrains優先** |
-| New Village Scenario | **独立Scenarios Modが所有**。Grainsの旧版互換コピーはScenarios不在時だけ読み込む | ScenariosがGrains/MO導入時の物資・研究差分を任意互換として所有 | **Grainsの最終責務から除外。物理分離済み、実ゲーム・旧セーブ移行は未検証** |
+| New Village Scenario | **独立Scenarios Modだけが所有**。Grainsの旧定義・互換コピーは廃止 | ScenariosがGrains/MO導入時の物資・研究差分を任意互換として所有 | **Grainsから完全除去**。Scenariosの実ゲーム開始は別途検証 |
 | CCTO | なくてもGrains作物は成立 | CCTO存在時だけ既存互換Patch | **任意互換** |
 | 共通の稲 / `RawRice` | Vanilla `Plant_Rice` / `RawRice` を再利用し、V1では畑地向けに調整 | 共通Plantを保持し、将来の水田環境で生育・収量を補正 | **Grains**。陸稲・水稲・うるち・もち米の別Plant/食材/米粉ThingDefは増やさない |
 | 水田・水管理 | 所有しない | 所有しない | **Rice Cultivation**。同じ `Plant_Rice` の水田対応を所有し、Waterworksは任意の供給基盤 |
@@ -552,21 +552,15 @@ Grainsの責務は、**乾田穀物および畑地・水田に共通する稲Pla
 
 旧Stage B（豆類）・C（繊維）・D（根菜）はGrainsロードマップから外す。内容自体を永久不採用としたわけではなく、主要ゲームループと自然な所有先が確定した時点で別機能として再評価する。
 
-#### 開始シナリオの独立Mod化（2026-10-07 作者確定）
+#### 開始シナリオの独立Mod化（2026-10-14 完全分離）
 
-「新しい村」のScenario、開始用プレイヤーFaction/PawnKind、初期研究・物資は、**開始シナリオ専用の独立Mod**が所有する。Grainsは穀物・一次加工・製粉・最低限粉食を所有し、村の開始条件を含めない。NPC派閥を追加するAMJ Factionsとも別責務とする。正式名称は **Ancient & Medieval Japan - Scenarios**（略称AMJ - Scenarios）、packageIdは `sucro.ancientmedievaljapan.scenarios`。作者指定により専用リポジトリ [`Ancient-Medieval-Japan-Scenarios`](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Scenarios) で所有する。Coreリポジトリは作者により `Ancient-Medieval-Japan-Grains` へ改名された。リポジトリ改名だけでは本番ModのpackageId・DefName・About依存を変更しない。 移行対象台帳・二つの試作パッケージの生成規則・旧セーブ検証計画は [`Docs/ScenarioExtraction.md`](ScenarioExtraction.md) を正本とする。
+新規開始シナリオ「新しい村」、開始用プレイヤー派閥・PawnKind・開始物資・研究・翻訳と MO / Grains の開始用互換は [AMJ Scenarios](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Scenarios) が単独所有する。Grains は農業・穀物加工・料理に限定し、シナリオを読み込む条件付き旧互換コピーを持たない。
 
-- 開始シナリオModはVanilla単独で成立させる。Grains・MOを必須依存にしない。
-- Grains導入時だけ雑穀等の開始物資と加工経路への接続を適用し、MO導入時だけMO研究・素材・携行食等の差分を適用する。両方導入した構成も開始シナリオMod側の任意互換で扱う。
-- Grains側から開始シナリオModへの必須依存も設けない。穀物を使うために専用開始を選ぶ必要はない。
-- 今回は所有方針の確定であり、物理移行は未実施。step 2のScenario/Base/MO差分とテストは移行中の契約として現パッケージに残す。Vanillaだけの新Mod開始物資の具体値は移行設計で決め、現在のAMJC物資を無条件で持ち込まない。
-
-**物理移行の前提・完了条件**
-1. `AMJC_NewVillage`、`AMJC_PlayerVillage`、`AMJC_Villager` と関連翻訳・開始ダイアログ・互換Patch・Quickstart/テストの移転対象を監査する。既存DefNameを維持し、旧パッケージとの同時導入でも各Defの供給者を1つにする。
-2. 旧Coreで開始した既存セーブの読込、Grains単独、新シナリオMod単独、両方導入を検証する。旧Coreを外す／新Modを加える場合の移行手順と、互換保持Defが必要かを実装・実機検証で決める。安全な削除・差替えを未検証のまま保証しない。
-3. 新規開始の恒久テストは開始シナリオModへ移す。Vanilla単独、Grains併用、MO併用、Grains+MO併用を検証し、既存セーブ回帰とruntime ERROR gateを適用する。Grainsの恒久テストから専用Scenarioの存在要求を外すのは物理移行と同時とする。
-4. 現行38件のMO契約snapshotは削除して回避せず、移転したScenario/Faction/PawnKindの契約を移転先で継承し、穀物側の契約と分けて維持する。
-5. 所有先・依存・セーブ互換の実装に合わせて双方のAbout/README/Workshop/2gameとテスト手順を同期する。現時点の公開説明を分離済みへ書き換えない。
+- Grains 単独では `AMJC_NewVillage`、`AMJC_PlayerVillage`、`AMJC_Villager` を提供しない。
+- Scenarios は Vanilla 単独の開始を提供し、Grains と MO は任意互換である。Grains は Scenarios を必須としない。
+- 開発段階で公開・旧セーブ運用がないため、Grains に旧 Core 開始を再提供する旧セーブ移行仕様は採用しない。
+- 旧38件の MO 参照契約は履歴fixtureのまま保存し、Grains 実装の静的比較から移転済み3Defだけを除外する。新規開始の正本・恒久テスト・日英ローカライズは Scenarios 所有。
+- 分離後の回帰契約は [Docs/ScenarioExtraction.md](ScenarioExtraction.md) を参照。Grains での既存の加工・栽培・調理テストは維持する。
 
 #### 詳細設計前の先行Mod監査
 
@@ -671,87 +665,9 @@ Core自身は鉄鉱床・砂鉄等の**供給量や生成分布を変更しな�
 ### Repair & Reuse / 修理・再利用Mod（仮）
 
 Grainsは修理・再利用を所有しない。独自実装の要否とR⁴ / Simple Mending比較はProjectの [RepairReuseCandidate.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/RepairReuseCandidate.md) を正本とする。
-### Core標準Scenario
+### 開始シナリオ（Scenarios Mod所有）
 
-> **Grains移行注記:** 作者承認により最終所有先は開始シナリオ専用の独立Modとする（上の独立Mod化節）。物理移行までは現パッケージに暫定保持。step 2でBaseと条件付きMO差分を実装した。以下のAlpha表はMO併用時の既存互換契約、Base物資表はMOなし構成の契約とする。Scenario/Faction/PawnKindの既存DefNameを維持する。ScenarioはGrainsの主要機能ではない。
-
-現行公開CoreのScenarioは **「新しい村」 / New Village**（`AMJC_NewVillage`）とする。様々な事情で元の共同体を離れた一般の人々が、新しい土地で小さな村を興す。武将・大名・特権階級の開始にはしない。
-
-#### Alpha開始条件（2026-10-04）
-
-| 項目 | 初期条件 | 意図 |
-|---|---|---|
-| 人数 | 候補8人から5人を選ぶ | 畑作・調理・建築を分担できる小共同体 |
-| 到着 | Standing（徒歩で到着した状態） | 通常の地上開始 |
-| プレイヤー派閥 | `AMJC_PlayerVillage`、Medieval | 中世研究を進められる村の技術水準 |
-| 基本PawnKind | `AMJC_Villager`、Human | 一般住民。技能・情熱・特性・年齢は固定しない |
-| 背景 | Vanilla/MOのTribalフィルタ | AMJ Backgroundsなしで生成できる暫定基盤 |
-| 衣服 | Neolithic / MOのDankPyon_Peasantタグ、Cloth素材 | 一般住民向けの通常生成。戦闘装備一式を与えない |
-| 技術由来Hediff | 自動付与確率0 | SFインプラントの自動付与を避ける |
-| 初期研究 | `DankPyon_Lumber`、`DankPyon_RusticFurniture`、`DankPyon_BasicCooking`の3件 | 基本木工・素朴な家具・初期料理を生活の土台とする |
-| 研究タグ / Techprintタグ | 空 | MO中世開始・部族開始タグ経由で研究を追加しない |
-| キャラバン採集係数 | 1.0 | 部族開始の採集倍率を追加しない |
-| 家畜・ペット | なし | 初期の飼育負担を増やさない |
-
-開始人数と「生活に必要な技術だけ」の方針は作者選択。研究3件と物資の具体値はAlpha実装の初期バランスとして下記に定め、開始の遊び心地を見て調整する。
-
-石切り・蝋燭・鞣し・ペミカン・植林・農業・醸造・鍛造等は初期完了にしない。既存派閥の `startingResearchTags` を引き継ぐ代わりに、Scenarioの `ScenPart_StartingResearch` で3件だけ指定する。基本農業未研究でもアワ・ヒエ・キビ・ソバを栽培し、木10で簡易穀物加工場を建てて脱穀・脱殻できる。大麦・小麦・本格加工台は `DankPyon_BasicAgriculture` 研究後に進む。
-
-#### 初期物資
-
-| DefName | 数量 | 用途 |
-|---|---:|---|
-| `DankPyon_MealRations` | 60 | 採集・狩猟・調理へ移るまでの携行食 |
-| `AMJC_Millet` | 200 | すぐ調理できる雑穀 |
-| `AMJC_RawMillet` | 100 | 簡易加工場で初期の脱穀・脱殻を体験する雑穀束 |
-| `MedicineHerbal` | 20 | 当面の治療 |
-| `WoodLog` | 200 | 加工済み木材。簡易加工場・住居等の立ち上げ |
-| `DankPyon_RawWood` | 200 | 燃料・木材加工に使う原木 |
-| `DankPyon_IronIngot` | 30 | 小量の金属備蓄。鍛造設備・武装を完成済みにしない |
-| `Cloth` | 80 | 少量の布備蓄 |
-| `Silver` | 150 | 小規模な交易の余地 |
-| `Bow_Short` | 2 | 採集以外の食料調達・自衛 |
-| `MeleeWeapon_Knife`（鉄インゴット製） | 2 | 簡単な近接武器 |
-| `MeleeWeapon_Club`（WoodLog製） | 1 | 簡単な近接武器 |
-
-#### Base開始条件・物資（2026-10-07）
-
-Baseは初期研究0件、衣服タグNeolithicのみとする。人数・到着・派閥・背景・空研究タグ等は上表と共通。大麦と加工台は研究不要で、Steel 30を使う。step 3で小麦のBase栽培・製粉を追加した（実機未検証）。MO併用時は旧3研究、Peasantタグ、上の12物資と鉄製ナイフを条件付き差分で復元する。
-
-| DefName | 数量 | 用途 |
-|---|---:|---|
-| `Pemmican` | 1080 | Vanilla携行食で初期栄養54を確保 |
-| `AMJC_Millet` | 200 | 即時調理用雑穀 |
-| `AMJC_RawMillet` | 100 | 初期一次加工用 |
-| `MedicineHerbal` | 20 | 治療 |
-| `WoodLog` | 400 | 木材と原木の備蓄400を単一Vanilla素材へ置換 |
-| `Steel` | 30 | Vanilla金属備蓄 |
-| `Cloth` | 80 | 布備蓄 |
-| `Silver` | 150 | 交易 |
-| `Bow_Short` | 2 | 食料調達・自衛 |
-| `MeleeWeapon_Knife`（Steel製） | 2 | 近接武器 |
-| `MeleeWeapon_Club`（WoodLog製） | 1 | 近接武器 |
-
-Pemmicanは初期携行食のゲーム上の代理であり、日本中世の同名食を主張しない。MO食糧60×Nutrition 0.9 = 54に、Vanilla Pemmican 1080×0.05 = 54を合わせる。耐久・嗜好・市場価値まで等価とはしない。ペミカン研究は与えず、ロード後の栄養値はruntime assertionで検証する。実機の開始体験・食糧日数は未検証とする。
-
-物資は全て開始地点へ `ScenPart_StartingThing_Defined` で与え、追加の全域散布や隠れた初期物資は設けない。建築済み設備・コンポーネント・石材・追加鎧は与えない。持ち込んだ食料だけで初回収穫や冬越しが保証される量にはせず、早期の採集・狩猟・作付けを必要とする。寒冷地・冬開始など、どの環境でも成立することは保証しない。
-
-#### 責務と互換
-
-- 最終所有者は開始シナリオ専用の独立Mod。現CoreによるScenario・開始用プレイヤーFaction/PawnKindの供給は移行までの暫定措置。NPC派閥群を追加するAMJ Factionsとは別責務。
-- Vanilla/MOの既存Scenario・Faction・研究タグ・PawnKindは書き換えない。AMJCのScenario以外の開始条件を変更しない。
-- AMJ Backgroundsなしで動作する。導入時のAMJ背景優先生成は将来の互換作業で扱い、Alphaでは実装済みとしない。
-- 日本風の衣装・固有背景・種族選択を強制しない。標準PawnKindは人間であり、HAR種族別開始の対応はこのScenarioの完了条件に含めない。
-- Scenarioの初期条件は新規開始に適用する。既存セーブの人数・物資・研究は変更しない。
-- このScenarioで作成したセーブはAMJC独自Faction/PawnKindを参照するため、Core削除の安全性は保証しない。
-
-#### 自動テスト
-
-静的検証は人数・到着方法・初期研究（Base 0件 / MO 3件）・研究タグの空集合・物資/素材・日本語表示と設計の一致を確認する。ローカル検証では実際のRimWorld 1.6/MO 1.6の参照Def・ScenarioBase・PlayerFactionBase・BasePlayerPawnKindも確認する。
-
-Pickleには読み込み後のScenario/Faction/PawnKind検証と、実Scenarioを選択する `AmjNewVillageQuickstart` による開始検証を追加する。後者は5人の生成・開始派閥・プロファイル別初期研究のみの完了・開始物資数量/素材・未研究で利用できる簡易加工経路を確認する。物資の定義数量は厳密一致、生成済みマップでは別途生成される品を許容して必要量以上の存在を確認する。移行中の旧fixture suiteは8件、実providerの4プロファイルは各5件であり、隔離ログERRORゲートを使用する。物理分離時には開始検証を開始シナリオModへ移し、Grains単独にScenarioを要求しない。MOは既存方針どおり軽量XML fixtureで参照を供給するため、これをMO全体の統合テスト成功とは扱わない。実ゲーム開始テストの成功が確認されるまでAMJ-015はIN PROGRESSを維持する。
-
-調査基盤は添付MO 1.6の `Defs/Scenarios`、`Defs/FactionDefs/Factions_Player.xml`、`Defs/PawnKindDefs_Humanlikes/PawnKinds_Player.xml` とRimWorld Dataの1.6形式（OdysseyのsurfaceLayerを含む）である。Quickstarts/Pickleの接続仕様は各開発元のソースで確認する。手動確認は日本語UIと開始の遊び心地に限定する。
+`AMJC_NewVillage`（新しい村）と `AMJC_PlayerVillage` / `AMJC_Villager` は Grains から除去済み。開始人数・派閥・初期物資・研究・開始イベント・翻訳の正式な設計と実装は独立 [AMJ Scenarios](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Scenarios) の正本を参照する。Grains 自体の栽培・製粉・食事に特定の開始シナリオは不要。
 
 ### 最初の公開Alphaテーマ
 
@@ -1293,7 +1209,7 @@ Grainsの主要実装は、次の順で管理する。
 
 | Stage | 主題 | 主な内容 | 現在の状態 |
 |---|---|---|---|
-| **Stage A / 現行実装** | 乾田穀物 | アワ・ヒエ・キビ・ソバ・大麦・MO小麦統合、脱穀・殻取り、穀物加工設備、New Village | MO必須版として実装済み |
+| **Stage A / 現行実装** | 乾田穀物 | アワ・ヒエ・キビ・ソバ・大麦・MO小麦統合、脱穀・殻取り、穀物加工設備 | MO必須版として実装済み |
 | **Grains分離移行** | Vanilla自己完結 | 非MO小麦、小麦粉・蕎麦粉・雑穀粉、手動石臼、最低限粉食、BaseからMO参照除去、MO条件付き互換 | **step 3 小麦・製粉・最低限粉食XML実装・実機未検証** |
 | **陸稲統合** | Vanilla Riceの中世日本化 | `Plant_Rice` を陸稲として再定義、稲束→籾→`RawRice` 必須加工、Hydroponic除去、七穀バランス・CCTO回帰 | **Production XML・静的七穀分析・Pickleの加工経路ソースを追加。実ゲーム・画像・セーブ回帰は未完** |
 | **回帰固定** | 環境別穀物選択 | Base/MO/CCTO各プロファイルで単一穀物がほぼ全条件の最適解にならないことを自動確認 | 分離移行と同時に追加 |
@@ -1542,23 +1458,11 @@ CraftingのWorkGiver_DoBillから固定対象へ通常作業を割り当てる�
 MO石臼は既存MO WorkGiverを利用し、重複作業Defを追加しない。既存38契約は変更しない。
 
 
-### 開始シナリオの分離と条件付き互換領域（2026-10-07）
+### 開始シナリオの完全分離（2026-10-14）
 
-`Scripts/prepare_scenario_extraction.py` と機械可読台帳から、本番を変更せずに
-移行対応Grains／独立シナリオのテスト用パッケージを生成できる。
-新シナリオが有効なときはGrainsの旧3Def・翻訳・MO開始差分をロードせず、
-同名・同型のDefを新Mod側が一意に提供する。無効時はGrainsの互換用領域が提供する。
-MO差分の後にGrains物資差分を適用し、Grains併用時の全明示契約は現行値と順序を維持する。
+旧 `LegacyStartingScenarios/` とそれを起動する条件付きロード領域、旧 New Village の専用 E2E / fixture を Grains から撤去。Grains の `loadFolders.xml` は基本・MO・非MO領域のみをロードする。Grains は開始シナリオ/開始用派閥/開始用 PawnKind を供給しない。新規開始の4構成テストは Scenarios 所有であり、Grains 側の独立した穀物テストは従来どおり実施する。
 
-Vanilla/MO単独時の穀物代替は試案RawRice 300。正式名・packageId・専用リポジトリは確定済み。
-Grains本番の3Def・5翻訳・MO開始差分は `LegacyStartingScenarios` へ移動し、
-新Modが無効なときだけ提供する。穀物側のMO操作・既存38契約を維持する。
-実行時テストソース・専用Quickstart・4構成ランナーはScenarios所有へ移管した。
-Grainsの通常6件から専用Scenario要件を外し、旧fixtureの8件にはLegacy開始回帰を残す。
-正式な単独バランス採用・C#コンパイル／ゲーム実行・セーブ移行の実測は未完了。改修前Coreのまま新Modと併用すると重複するため、
-移行対応版への更新を先に行う。静的な一意性・契約一致は旧セーブ読込／安全な削除の実測を代替しない。
-詳細と未完ゲートは `Docs/ScenarioExtraction.md`。
-
+旧 Core / Grains の未公開セーブ互換や仮シナリオ抽出パッケージは不要。履歴は Git に残し、現在の正本は [Docs/ScenarioExtraction.md](ScenarioExtraction.md) と Scenarios リポジトリ。
 
 ### 日本語説明文・翻訳監査（2026-10-08）
 

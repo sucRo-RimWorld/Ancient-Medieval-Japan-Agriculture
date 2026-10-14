@@ -37,7 +37,7 @@ These values are implemented in the current Defs. Four-profile loaded-game valid
 
 The `loadAfter` entry for MO is an **optional ordering hint, not a hard dependency**. MO-specific definitions and patches load only when MO is active through `loadFolders.xml`; `BaseWithoutMO` supplies the fallback path otherwise. CCTO adds explicit cold-death support when installed.
 
-New Village is now owned by the separate AMJ Scenarios Mod. Grains keeps a conditional legacy compatibility copy only when Scenarios is absent.
+New Village and its starting definitions are provided exclusively by the separate AMJ Scenarios Mod. Grains does not include a scenario or legacy scenario compatibility copy.
 
 ## Development status
 

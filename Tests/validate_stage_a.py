@@ -506,9 +506,6 @@ fixture_names = {n.findtext("defName") for n in fixture}
 for needed in ("DankPyon_RawWood", "DankPyon_IronIngot", "DankPyon_Straw", "DankPyon_BasicAgriculture"):
     assert needed in fixture_names
 
-from validate_new_village import validate as validate_new_village
-validate_new_village()
-validate_new_village(profile="vanilla")
 from validate_grains_base import validate as validate_grains_base
 validate_grains_base()
 
