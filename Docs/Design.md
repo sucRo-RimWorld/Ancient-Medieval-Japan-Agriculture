@@ -757,6 +757,8 @@ AMJC固有作物の耐寒値と保存候補範囲の正本は [AMJC作物の耐�
 
 両Modは技術的には独立して単独導入可能。ただし**目的はGrainsの数値基準との整合性**であり、現実の暦日への厳密な換算、全作物の収量・栄養・労働効率の均等化は採用しない。Grains自体の作物値は今回の方針転換で変更しない。元の広域パッチは旧Grains PR #99から所有分離PR #101で削除済み。Crop Growth Balanceの正式仕様・実装正本はそのリポジトリの `Docs/Design.md` とXML。
 
+**GitHub Actions配布方針（2026-10-15）：** GrainsとCrop Growth Balanceを含む今後のAMJ各ModのWorkshopアップロードでは**YADAを使わずGitHub Actionsに統一**する。実際の配布物をGitHub Actionsで許可リストにより構築し、その成果物とSHAを検証した上で、明示的な手動公開操作による保護されたSteamCMD／Steamworks経路から送信する。既存のGrains `.rimignore` は歴史的なYADAフィルタの静的検査資料であり、**Actions配布物の抽出に用いない**。同一Modの著者アカウント、Workshop ID、公開状態、バージョンおよびタグは独立の確認対象。Grains用の実Steamアップロードworkflow／対象アイテムの確定は未完了。push/PRで勝手にアップロードしない。
+
 **公開時期の条件（作者確定）：Crop Growth Balanceを単独先行公開せず、Grainsの初回一般公開と同時に公開する。** CGBのための別個の長期実プレイは求めず、Grainsの実プレイでGrains作物を優先して確認する。CGBの作物Def反映・代表播種/成長/収穫・Grains共存は既存のLinux 1.6 Pickle実機検証済み。MO原本由来FMOD音声ERROR各2件が残るため、ゲーム全体の厳格ERROR0を4/4 PASSと表示しない。CGBの収穫量・栄養・全季節・Pawn作業時間の追加精密監査は同時公開の条件ではない。**Grains本体の加工・料理・画像・セーブ等の独自公開条件は維持**し、それらの未完了をCGBの作物検証へ転嫁しない。Workshop/2gameでの公開実行は両リポジトリが準備できた段階で別途実施する。
 
 アワ・ヒエ・キビについて、プレイヤーが「どの土地・気温・残り生育期間ならどれを植えるか」を判断できるよう、肥沃度・温度のゲーム内式を含む比較資料を [`Docs/Balance/Crops/Millet_Cultivation_Balance.md`](Balance/Crops/Millet_Cultivation_Balance.md) に置く。そこに掲載する数値・グラフは**現実の農業値ではなく、史実・農学的特徴を参考にAMJへ落とし込んだゲーム内バランス値**である。
