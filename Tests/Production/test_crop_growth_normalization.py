@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 VANILLA = {
-    "Plant_Potato": (5.8, 6), "Plant_Corn": (11.3, 10),
+    "Plant_Potato": (5.8, 6), "Plant_Corn": (11.3, 13),
     "Plant_Strawberry": (4.6, 6), "Plant_Cotton": (8, 10),
     "Plant_Hops": (5, 7), "Plant_Smokeleaf": (7.5, 9)
 }
