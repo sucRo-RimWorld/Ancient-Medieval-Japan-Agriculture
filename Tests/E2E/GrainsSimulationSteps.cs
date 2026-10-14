@@ -298,7 +298,14 @@ namespace AncientMedievalJapanCore.E2E
                         if (!candidate.Downed && candidate.skills != null && !candidate.WorkTypeIsDisabled(WorkTypeDefOf.Growing)
                             && !candidate.WorkTypeIsDisabled(WorkTypeDefOf.Crafting)
                             && !candidate.WorkTypeIsDisabled(DefDatabase<WorkTypeDef>.GetNamed("Cooking")))
-                        { worker = candidate; break; }
+                        {
+                            foreach (SkillDef skill in new[] { SkillDefOf.Plants, SkillDefOf.Crafting, SkillDefOf.Cooking })
+                                candidate.skills.GetSkill(skill).Level = 20;
+                            // A generated pawn may have a harvest-yield modifier even at skill 20.
+                            // Preserve the >= 1.0 invariant by rejecting that candidate here.
+                            if (candidate.GetStatValue(StatDefOf.PlantHarvestYield) >= 1f)
+                            { worker = candidate; break; }
+                        }
                         candidate.Destroy(DestroyMode.Vanish);
                     }
                     ctx.Require(worker != null, "Cannot create a capable production worker.");
