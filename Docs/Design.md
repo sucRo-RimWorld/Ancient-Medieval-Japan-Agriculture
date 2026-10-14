@@ -751,13 +751,13 @@ AMJC固有作物の耐寒値と保存候補範囲の正本は [AMJC作物の耐�
 | 大麦 | 10 | 22 | 0.5 | 0.6 | 0～35℃ | 5～22℃ | -8℃ | 2 | 初期（MO併用時も同じ） |
 | 小麦（MO） | 12 | 28 | 0.7 | 0.9 | 最低0℃。高温側はMO/RimWorld基準を維持 | MO/RimWorld基準 | -6℃ | 0（MO 1.6で明示なし） | MO `DankPyon_BasicAgriculture` |
 
-### 4.2.1a Vanilla/MO既存作物との生育期間整合（2026-10-14 分離決定）
+### 4.2.1a Vanilla/MO既存作物との生育期間整合（2026-10-15 公開連携確定）
 
-**作者決定：Vanilla・MO既存の野菜・豆・繊維・非AMJ作物の一律な生育日数調整はGrainsの責務外。** 独立した任意Mod **AMJ Crop Growth Balance（中世日本 - 作物生育期間調整）** に移管する。Grainsの単体導入では当該既存作物の `growDays` を変更しない。Grainsは既存七穀の相対的な早晩・収量・加工・栽培条件と、`Plant_Rice`（5日）およびMO小麦（12日）のGrains側統合だけを所有する。
+**作者決定：Grainsの生育日数のバランスを基準に、バニラ・MOの既存作物の相対的な生育期間を揃えるための任意姉妹Modが [AMJ Crop Growth Balance](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Crop-Growth-Balance) である。** CCTOの耐寒性・枯死温度調整とは別目的。Grains側は七穀（アワ6・ヒエ6・キビ5・ソバ4・大麦10・小麦12・稲5）と加工・収穫量・栽培条件、Vanilla `Plant_Rice` とMO小麦の統合だけを所有する。Crop Growth Balance側がバニラ6作物とMO導入時の7作物の `growDays` だけを変更し、Grainsの作物をパッチしない。
 
-共通方針は、現実の成熟期間の早晩差をRimWorldの日照・気温・肥沃度に合わせて圧縮すること。ただし現実の暦日を`growDays`へ直換算しない。分離先の初期値はVanilla 6種・MO 7種で、Grains主食七穀の固定値は変更しない。Crop Growth BalanceはGrainsの**任意の推奨併用**にとどめ、Grainsを使わない単独運用も可能。CCTOの成長温度・枯死閾値は独立した責務のまま維持する。
+両Modは技術的には独立して単独導入可能。ただし**目的はGrainsの数値基準との整合性**であり、現実の暦日への厳密な換算、全作物の収量・栄養・労働効率の均等化は採用しない。Grains自体の作物値は今回の方針転換で変更しない。元の広域パッチは旧Grains PR #99から所有分離PR #101で削除済み。Crop Growth Balanceの正式仕様・実装正本はそのリポジトリの `Docs/Design.md` とXML。
 
-旧Grainsで2026-10-14に実装した広域作物補正（PR #99）は本分離で除去。作物補正値および検証は独立Mod所有の`Docs/Design.md`、`Tests/test_crop_growth.py`、専用XMLを正本とする。専用GitHubリポジトリが未作成の間、移管済みソースZIPは一時納品物として保持し、GitHub未反映を公開・配布済みと称しない。旧値・先行Mod調査の経緯はPR #99のGit履歴を参照する。
+**公開時期の条件（作者確定）：Crop Growth Balanceを単独先行公開せず、Grainsの初回一般公開と同時に公開する。** CGBのための別個の長期実プレイは求めず、Grainsの実プレイでGrains作物を優先して確認する。CGBの作物Def反映・代表播種/成長/収穫・Grains共存は既存のLinux 1.6 Pickle実機検証済み。MO原本由来FMOD音声ERROR各2件が残るため、ゲーム全体の厳格ERROR0を4/4 PASSと表示しない。CGBの収穫量・栄養・全季節・Pawn作業時間の追加精密監査は同時公開の条件ではない。**Grains本体の加工・料理・画像・セーブ等の独自公開条件は維持**し、それらの未完了をCGBの作物検証へ転嫁しない。Workshop/2gameでの公開実行は両リポジトリが準備できた段階で別途実施する。
 
 アワ・ヒエ・キビについて、プレイヤーが「どの土地・気温・残り生育期間ならどれを植えるか」を判断できるよう、肥沃度・温度のゲーム内式を含む比較資料を [`Docs/Balance/Crops/Millet_Cultivation_Balance.md`](Balance/Crops/Millet_Cultivation_Balance.md) に置く。そこに掲載する数値・グラフは**現実の農業値ではなく、史実・農学的特徴を参考にAMJへ落とし込んだゲーム内バランス値**である。
 
