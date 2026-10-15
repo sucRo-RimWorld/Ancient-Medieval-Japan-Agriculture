@@ -480,7 +480,8 @@ namespace AncientMedievalJapanCore.E2E
                 }
             }
             b.AppendLine("text_generator_font_count=" + found);
-            b.AppendLine("probe_status=" + (found == 3 ? "COLLECTED" : "WRONG_FONT_COUNT"));
+            bool testFontInjected = Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT") == "Noto Sans JP";
+            b.AppendLine("probe_status=" + (found == (testFontInjected ? 4 : 3) ? "COLLECTED" : "WRONG_FONT_COUNT"));
             return b.ToString();
         }
 
