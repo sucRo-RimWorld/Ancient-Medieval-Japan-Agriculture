@@ -95,8 +95,8 @@ namespace AncientMedievalJapanCore.E2E
                     {
                         ctx.Assert(thresh.WorkerCounter.GetType().FullName == "AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain",
                             "MO thresh must use the primary-grain counter: " + thresh.defName);
-                        ctx.Assert(thresh.WorkerCounter.CanCountProducts(new Bill_Production(thresh)),
-                            "MO thresh must allow TargetCount: " + thresh.defName);
+                        // The actual bench-bound Bill verifies CanCountProducts in
+                        // AlternateProcessingJobs; an unattached Bill has no Map.
                     }
                 }
                 ThingDef rice = DefDatabase<ThingDef>.GetNamed("Plant_Rice");
