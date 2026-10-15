@@ -158,6 +158,32 @@ namespace AncientMedievalJapanCore.E2E
             Type fontType = LoadedType("UnityEngine.Font");
             if (fontType == null)
                 throw new InvalidOperationException("No loaded Unity.Font API");
+            var originals = typeof(Verse.Text).GetField("fonts",
+                BindingFlags.Static | BindingFlags.Public |
+                BindingFlags.NonPublic)?.GetValue(null) as Array;
+            var originalStyles = typeof(Verse.Text).GetField("fontStyles",
+                BindingFlags.Static | BindingFlags.Public |
+                BindingFlags.NonPublic)?.GetValue(null) as Array;
+            var originalMetrics = new StringBuilder();
+            int[] originalSizes = new int[3];
+            for (int index = 0; index < 3; index++)
+            {
+                object old = originals == null ? null : originals.GetValue(index);
+                object style = originalStyles == null ? null : originalStyles.GetValue(index);
+                var oldSizeProperty = fontType.GetProperty("fontSize");
+                int oldSize = old == null || oldSizeProperty == null ? -1 :
+                    Convert.ToInt32(oldSizeProperty.GetValue(old, null));
+                int styleSize = style == null ? -1 :
+                    Convert.ToInt32(style.GetType().GetProperty("fontSize")
+                        .GetValue(style, null));
+                if (!directFile && (oldSize < 8 || oldSize > 32 || styleSize != 0))
+                    throw new InvalidOperationException("Original font size/layout contract changed");
+                originalSizes[index] = oldSize;
+                var oldFont = old as UnityEngine.Object;
+                originalMetrics.AppendLine("original_font_index=" + index +
+                    " name=" + (oldFont == null ? "UNAVAILABLE" : oldFont.name) +
+                    " font_size=" + oldSize + " style_size=" + styleSize);
+            }
             object obj;
             if (directFile)
             {
@@ -187,35 +213,13 @@ namespace AncientMedievalJapanCore.E2E
                     new[] { typeof(string), typeof(int) });
                 if (creator == null)
                     throw new InvalidOperationException("Unity Font OS family creator unavailable");
-                obj = creator.Invoke(null, new object[] { requested, 20 });
+                obj = creator.Invoke(null, new object[] { requested, originalSizes[1] });
             }
             UnityEngine.Object newFont = obj as UnityEngine.Object;
             if (newFont == null)
                 throw new InvalidOperationException("Unity did not create test font object");
             newFont.name = directFile ? "AMJ_Test_NotoPath" : "AMJ_Test_NotoSansJP";
 
-            var originals = typeof(Verse.Text).GetField("fonts",
-                BindingFlags.Static | BindingFlags.Public |
-                BindingFlags.NonPublic)?.GetValue(null) as Array;
-            var originalStyles = typeof(Verse.Text).GetField("fontStyles",
-                BindingFlags.Static | BindingFlags.Public |
-                BindingFlags.NonPublic)?.GetValue(null) as Array;
-            var originalMetrics = new StringBuilder();
-            for (int index = 0; index < 3; index++)
-            {
-                object old = originals == null ? null : originals.GetValue(index);
-                object style = originalStyles == null ? null : originalStyles.GetValue(index);
-                var oldSizeProperty = fontType.GetProperty("fontSize");
-                int oldSize = old == null || oldSizeProperty == null ? -1 :
-                    Convert.ToInt32(oldSizeProperty.GetValue(old, null));
-                int styleSize = style == null ? -1 :
-                    Convert.ToInt32(style.GetType().GetProperty("fontSize")
-                        .GetValue(style, null));
-                var oldFont = old as UnityEngine.Object;
-                originalMetrics.AppendLine("original_font_index=" + index +
-                    " name=" + (oldFont == null ? "UNAVAILABLE" : oldFont.name) +
-                    " font_size=" + oldSize + " style_size=" + styleSize);
-            }
             var fields = typeof(Verse.Text).GetFields(
                 BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             int assigned = 0;
