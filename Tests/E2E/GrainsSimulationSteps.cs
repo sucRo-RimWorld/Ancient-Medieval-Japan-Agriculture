@@ -879,7 +879,7 @@ namespace AncientMedievalJapanCore.E2E
                         IntVec3 storageCell = center + new IntVec3(6, 0, 6);
                         ctx.Require(!storageCell.GetThingList(map).Any(t => t is Building || t is Pawn),
                             "TargetCount fixture storage cell is obstructed.");
-                        Zone_Stockpile stockpile = new Zone_Stockpile(map.zoneManager);
+                        Zone_Stockpile stockpile = new Zone_Stockpile(StorageSettingsPreset.DefaultStockpile, map.zoneManager);
                         map.zoneManager.RegisterZone(stockpile);
                         try
                         {
