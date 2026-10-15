@@ -489,6 +489,8 @@ namespace AncientMedievalJapanCore.E2E
                 if (unity == null || (unity.name != "Arial_small" &&
                     unity.name != "Arial_medium" && unity.name != "Calibri_tiny" &&
                     unity.name != "AMJ_Test_NotoSansJP" &&
+                    unity.name != "AMJ_Test_NotoSansJP_tiny" &&
+                    unity.name != "AMJ_Test_NotoSansJP_medium" &&
                     unity.name != "AMJ_Test_NotoPath"))
                     continue;
                 ++found;
@@ -571,7 +573,7 @@ namespace AncientMedievalJapanCore.E2E
             b.AppendLine("text_generator_font_count=" + found);
             string requestedFont = Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT");
             bool testFontInjected = requestedFont == "Noto Sans JP" || requestedFont == "Noto Sans JP Path";
-            b.AppendLine("probe_status=" + (found == (testFontInjected ? 4 : 3) ? "COLLECTED" : "WRONG_FONT_COUNT"));
+            b.AppendLine("probe_status=" + (found == (testFontInjected ? (requestedFont == "Noto Sans JP" ? 6 : 4) : 3) ? "COLLECTED" : "WRONG_FONT_COUNT"));
             return b.ToString();
         }
 
