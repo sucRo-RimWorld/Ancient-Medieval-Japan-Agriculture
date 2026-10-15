@@ -93,6 +93,53 @@ The Project private isolated native game must preserve this nonempty text report
 
 **Interpretation:** Grains' Japanese data is loaded by the original native tests, but its text and base RimWorld Kana/Han remain **visually FAIL** on the isolated Linux 1.6/Xvfb host; these tests do not certify readable Japanese or the author's Windows UI. No production Grains changes, licensed game asset edits, user saves, persistent fonts or Steam state changes. Neither XDG nor legacy HOME placement, `fontNames`, Unity Font-object replacement or glyph-request metadata is a proven fix. Future native glyph/font discovery belongs to Project test-host routing via `Docs/GoldenPaths/PersistentHostIntegrations.md` and `main:Docs/Coordination.md`; use read-only engine/native-resolver evidence rather than repeating the same external-font trials. Retain actual screenshot pixels as the acceptance criterion.
 
+### Unity actual font-file paths and direct-font-by-path A/B (2026-10-15)
+
+**Grains owner diagnostic only; Japanese visual remains FAIL.**
+Read-only font-path collector added in source
+`e76fbc8a2c5496a96e92c8eebe984298769023e9`
+and executed in the original isolated Project
+[Actions #38738213368](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/38738213368),
+real Linux RimWorld 1.6.4871. Its first native attempt crashed with
+Mono GC SIGSEGV, exit139 and no Pickle summary; the *one* identical native
+retry completed all four original EN/JA × Vanilla/CCTO owner loaded-UI
+scenarios **4/4 Pickle PASS, Unity ERROR0, natural exit0**, 16 InfoCard
+PNGs, and four complete font inventories. Actual Unity installed-font
+API enumerated **16 fonts (DejaVu and Ubuntu only)** and 30 paths all
+under `/usr`, omitting the previously verified private Noto JP OTF even
+though Japanese disposable HOME's fontconfig selected that exact file.
+Runtime `/proc/self/maps` query returned no matching font-related mapped
+library, which is not evidence that Unity contains no linked or transient
+glyph renderer. All 16 screen captures were byte-identical with previous
+family-name Noto experiment; no visible Kana/Han.
+
+A distinct test-only file-path constructor from source
+`d5d243661473205c6a53a450d037d4f8fdaf756f` was then executed
+[Project #38739733584](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/38739733584).
+In Japanese only, the same exact official hash-verified 4,533,028-byte
+OTF from the disposable HOME was provided as the **full file path** to
+`UnityEngine.Font(string)`, not to
+`Font.CreateDynamicFontFromOSFont(familyName)`. The created test object
+`AMJ_Test_NotoPath` was assigned to 15 live `Verse.Text` font/style
+slots, with explicit test-only provenance. **All four** original owner
+loaded UI scenarios were again **Pickle PASS, Unity ERROR0, exit0**;
+all 16 screenshots were saved. But the actual TestGenerator
+`UIVertex` result for **both Latin A and Japanese 稲/あ/中** in the new
+object was **0×0 quad size with all UV coordinates zero**. All 8 Japanese
+screenshots changed from the earlier Noto family-name trial by losing
+even remaining text; all 8 English controls stayed byte-identical.
+Thus the constructor's successful return, assigned styles and loaded
+translations do **not** certify rendered glyphs. The path-based mode
+is **rejected**, and Project runner restores its prior isolated
+diagnostic default; test-only code remains dormant. No game, source
+graphics, translation XML, user fonts/saves or Steam publication
+changes, no Windows-client inference. The next genuine diagnosis
+must isolate how the original Unity legacy IMGUI font backend supplies
+CJK outlines rather than retrying HOME paths, `fontNames`, family-name
+or file-path constructors. Full host evidence and coordination:
+Project `Docs/GoldenPaths/PersistentHostIntegrations.md`,
+`main:Docs/Coordination.md`.
+
 ## Next consolidated native food-Bill matrix: missing execution coverage (2026-10-13)
 
 **2026-10-13 implementation update — SOURCE ONLY:** `Tests/E2E/GrainsSimulationSteps.cs` now includes an independent `CommonFoodJobs` / `CommonFoodBill` scenario in every real-provider profile. It stages exactly the declared 0.5/2.0 Nutrition in **one input Def** or **two different permitted input Defs** and has the *actual* `WorkGiver_DoBill` produce 1/4 food servings. For each of 飯、粥、粉食, both batch sizes and both input modes run once: **12 native Bill cases per profile**. The fixture uses `ThingMaker` to create **test-only input stacks** rather than harvesting them; the separate unchanged harvest/processing E2E scenario supplies end-to-end crop evidence. Product and per-ingredient counts must match, and setup/teardown must restore its isolated map. At the time of this seven-case expansion, the four profile lists expected **7 scenarios per profile (28/28 across four profiles)** rather than the preceding historical six; the current ten-case V1 suite is specified in the reconciliation below. The 1.7 runner prints the dynamic configured scenario count. `Tests/Production/test_grains_mixed_meals.py` guards scenario wiring in CI; it **does not compile C# or prove native gameplay**. A new exact-head 1.6/1.7 runtime, ERROR 0, job timing and UI remain OPEN. The prior 24/24 real 1.7 evidence is historical, not a current 40/40 result.
