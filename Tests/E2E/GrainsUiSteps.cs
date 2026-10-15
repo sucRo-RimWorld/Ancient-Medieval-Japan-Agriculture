@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Reflection;
+using System.Text;
 using RimWorks.Pickle;
 using RimWorld;
 using Verse;
@@ -93,6 +95,150 @@ namespace AncientMedievalJapanCore.E2E
             }
         }
 
+
+        // Diagnostic evidence from the actual Unity UI process, not from the host's
+        // fontconfig inventory. This runs only in the disposable test target.
+        private static Type LoadedType(string fullname)
+        {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                Type type = assembly.GetType(fullname, false);
+                if (type != null)
+                    return type;
+            }
+            return null;
+        }
+
+        private static string DescribeFont(object font, Type fontType)
+        {
+            if (font == null || fontType == null)
+                return "<null>";
+            var b = new StringBuilder();
+            var unityObject = font as UnityEngine.Object;
+            b.Append(unityObject == null ? fontType.FullName : unityObject.name);
+            try
+            {
+                var names = fontType.GetProperty("fontNames");
+                var values = names == null ? null : names.GetValue(font, null) as string[];
+                if (values != null)
+                    b.Append(" families=").Append(string.Join(",", values));
+            }
+            catch (Exception ex) { b.Append(" families_error=").Append(ex.GetType().Name); }
+
+            MethodInfo hasCharacter = fontType.GetMethod("HasCharacter", new[] { typeof(char) });
+            if (hasCharacter == null)
+                return b.Append(" HasCharacter=unavailable").ToString();
+            foreach (char c in new[] { 'A', '稲', '籾', '米', '飯', 'あ', '漢', '中', '国' })
+            {
+                try
+                {
+                    b.Append(" U+").Append(((int)c).ToString("X4")).Append('=')
+                     .Append(hasCharacter.Invoke(font, new object[] { c }));
+                }
+                catch (Exception ex)
+                {
+                    b.Append(" U+").Append(((int)c).ToString("X4")).Append("_error=")
+                     .Append(ex.GetType().Name);
+                }
+            }
+            return b.ToString();
+        }
+
+        private static string CaptureRuntimeFontEvidence()
+        {
+            var b = new StringBuilder();
+            b.AppendLine("probe=real-rimworld-native-Unity-font-after-InfoCard-render");
+            b.AppendLine("language=" + Prefs.LangFolderName);
+            Type fontType = LoadedType("UnityEngine.Font");
+            b.AppendLine("unity_font_type=" + (fontType == null ? "UNAVAILABLE" : fontType.AssemblyQualifiedName));
+            if (fontType != null)
+            {
+                try
+                {
+                    var method = typeof(Resources).GetMethod("FindObjectsOfTypeAll",
+                        new[] { typeof(Type) });
+                    var fonts = method == null ? null :
+                        method.Invoke(null, new object[] { fontType }) as Array;
+                    b.AppendLine("loaded_unity_font_count=" +
+                        (fonts == null ? "UNAVAILABLE" : fonts.Length.ToString()));
+                    if (fonts != null)
+                    {
+                        int count = 0;
+                        foreach (object font in fonts)
+                        {
+                            if (count++ >= 96) { b.AppendLine("fonts_truncated=96"); break; }
+                            b.AppendLine("loaded_font=" + DescribeFont(font, fontType));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    b.AppendLine("font_inventory_error=" + ex.ToString());
+                }
+            }
+
+            // The actual info window uses Verse.Text / Unity IMGUI, not fontconfig
+            // directly. Identify the selected skin and style fonts separately from
+            // the (possibly unused) loaded Unity.Font inventory above.
+            try
+            {
+                Type gui = LoadedType("UnityEngine.GUI");
+                var skinProperty = gui == null ? null : gui.GetProperty("skin",
+                    BindingFlags.Public | BindingFlags.Static);
+                object skin = skinProperty == null ? null : skinProperty.GetValue(null, null);
+                b.AppendLine("unity_gui_skin=" + (skin == null ? "UNAVAILABLE" : skin.ToString()));
+                if (skin != null)
+                {
+                    foreach (string styleName in new[] { "label", "box", "button" })
+                    {
+                        var prop = skin.GetType().GetProperty(styleName);
+                        object style = prop == null ? null : prop.GetValue(skin, null);
+                        object font = style == null ? null :
+                            style.GetType().GetProperty("font")?.GetValue(style, null);
+                        b.AppendLine("unity_gui_" + styleName + "_font=" +
+                            DescribeFont(font, fontType));
+                    }
+                    object defaultFont = skin.GetType().GetProperty("font")?.GetValue(skin, null);
+                    b.AppendLine("unity_gui_skin_font=" + DescribeFont(defaultFont, fontType));
+                }
+            }
+            catch (Exception ex) { b.AppendLine("gui_style_error=" + ex.ToString()); }
+
+            foreach (var member in typeof(Verse.Text).GetFields(
+                BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                if (member.Name.IndexOf("font", StringComparison.OrdinalIgnoreCase) < 0 &&
+                    member.Name.IndexOf("style", StringComparison.OrdinalIgnoreCase) < 0)
+                    continue;
+                try
+                {
+                    object value = member.GetValue(null);
+                    b.AppendLine("verse_text_field=" + member.Name + " type=" +
+                        member.FieldType.FullName + " value=" +
+                        (value == null ? "<null>" : value.ToString()));
+                    var array = value as Array;
+                    if (array != null)
+                    {
+                        int index = 0;
+                        foreach (object style in array)
+                        {
+                            if (index >= 20) break;
+                            object font = style == null ? null :
+                                style.GetType().GetProperty("font")?.GetValue(style, null);
+                            b.AppendLine("verse_text_style_" + (index++) + "_font=" +
+                                DescribeFont(font, fontType));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    b.AppendLine("verse_text_field_error=" + member.Name + ":" +
+                        ex.GetType().Name);
+                }
+            }
+            return b.ToString();
+        }
+
         [Then("Grains loaded bilingual Info strings and production graphics resolve")]
         public async Task Verify(PickleContext ctx)
         {
@@ -152,6 +298,22 @@ namespace AncientMedievalJapanCore.E2E
                     Find.WindowStack.Add(card);
                 });
                 await Task.Delay(350);
+                if (index == 0)
+                {
+                    string fontsPath = Environment.GetEnvironmentVariable(
+                        "RIMWORLD_GRAINS_UI_FONT_REPORT");
+                    if (!string.IsNullOrEmpty(fontsPath))
+                    {
+                        await RuntimeThread.Run(delegate
+                        {
+                            File.WriteAllText(fontsPath,
+                                CaptureRuntimeFontEvidence(), Encoding.UTF8);
+                        });
+                        ctx.Assert(File.Exists(fontsPath) &&
+                            new FileInfo(fontsPath).Length > 256,
+                            "Native Unity font inventory missing or empty.");
+                    }
+                }
                 await RuntimeThread.Run(delegate
                 {
                     // Unity puts ScreenCapture in an optional managed module;
