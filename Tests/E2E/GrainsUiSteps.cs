@@ -403,7 +403,8 @@ namespace AncientMedievalJapanCore.E2E
             {
                 var unity = font as UnityEngine.Object;
                 if (unity == null || (unity.name != "Arial_small" &&
-                    unity.name != "Arial_medium" && unity.name != "Calibri_tiny"))
+                    unity.name != "Arial_medium" && unity.name != "Calibri_tiny" &&
+                    unity.name != "AMJ_Test_NotoSansJP"))
                     continue;
                 ++found;
                 b.AppendLine("font=" + unity.name);
@@ -479,6 +480,8 @@ namespace AncientMedievalJapanCore.E2E
                     }
                 }
             }
+            b.AppendLine("new_font_object_in_probe=" +
+                (Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT") == "Noto Sans JP"));
             b.AppendLine("text_generator_font_count=" + found);
             bool testFontInjected = Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT") == "Noto Sans JP";
             b.AppendLine("probe_status=" + (found == (testFontInjected ? 4 : 3) ? "COLLECTED" : "WRONG_FONT_COUNT"));
