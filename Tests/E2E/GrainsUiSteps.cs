@@ -188,6 +188,122 @@ namespace AncientMedievalJapanCore.E2E
             return changed;
         }
 
+
+        // Nonshipping diagnostic only: discover whether the real Unity legacy
+        // font atlas can materialize an individual Japanese glyph. Do not infer
+        // glyph availability from dynamic Font.HasCharacter(), which can always
+        // report true even when the atlas lacks the character.
+        private static string CaptureGlyphAtlasEvidence()
+        {
+            var evidence = new StringBuilder();
+            evidence.AppendLine("probe=real-rimworld-legacy-unity-glyph-atlas-v1");
+            evidence.AppendLine("language=" + Prefs.LangFolderName);
+            Type fontType = LoadedType("UnityEngine.Font");
+            Type infoType = LoadedType("UnityEngine.CharacterInfo");
+            Type styleType = LoadedType("UnityEngine.FontStyle");
+            if (fontType == null || infoType == null || styleType == null)
+                throw new InvalidOperationException("Unity legacy font atlas API types unavailable");
+            object normal = Enum.Parse(styleType, "Normal");
+            Type[] charArgs = { typeof(char), infoType.MakeByRefType(),
+                                typeof(int), styleType };
+            var getInfo = fontType.GetMethod("GetCharacterInfo", charArgs);
+            var request = fontType.GetMethod("RequestCharactersInTexture",
+                new[] { typeof(string), typeof(int), styleType });
+            if (getInfo == null || request == null)
+                throw new InvalidOperationException("Unity glyph atlas API signatures unavailable");
+
+            var fontList = (typeof(Resources).GetMethod("FindObjectsOfTypeAll",
+                new[] { typeof(Type) })).Invoke(null, new object[] { fontType }) as Array;
+            if (fontList == null)
+                throw new InvalidOperationException("Unity loaded font inventory unavailable");
+            int probed = 0;
+            foreach (object value in fontList)
+            {
+                UnityEngine.Object unityFont = value as UnityEngine.Object;
+                if (unityFont == null || (unityFont.name != "Calibri_tiny" &&
+                    unityFont.name != "Arial_small" && unityFont.name != "Arial_medium"))
+                    continue;
+                ++probed;
+                evidence.AppendLine("font_begin=" + unityFont.name);
+                var dyn = fontType.GetProperty("dynamic");
+                evidence.AppendLine("dynamic=" +
+                    (dyn == null ? "UNAVAILABLE" : dyn.GetValue(value, null).ToString()));
+                var names = fontType.GetProperty("fontNames");
+                var families = names == null ? null :
+                    names.GetValue(value, null) as string[];
+                evidence.AppendLine("families=" +
+                    (families == null ? "UNAVAILABLE" : string.Join(",", families)));
+                try
+                {
+                    var material = fontType.GetProperty("material")?.GetValue(value, null)
+                        as Material;
+                    var atlas = material == null ? null : material.mainTexture;
+                    evidence.AppendLine("atlas=" + (atlas == null ? "<null>" :
+                        atlas.width + "x" + atlas.height + " type=" +
+                        atlas.GetType().Name));
+                    evidence.AppendLine("shader=" + (material == null ||
+                        material.shader == null ? "<null>" : material.shader.name));
+                }
+                catch (Exception ex)
+                {
+                    evidence.AppendLine("atlas_metadata_error=" + ex.GetType().Name +
+                        ":" + ex.Message);
+                }
+
+                foreach (int size in new[] { 16, 22 })
+                {
+                    foreach (string phase in new[] { "before", "after" })
+                    {
+                        if (phase == "after")
+                        {
+                            // A/B within a disposable runtime only; records if the
+                            // glyph atlas was actually populated after a request.
+                            try
+                            {
+                                request.Invoke(value, new object[] { "A稲あ中", size, normal });
+                                evidence.AppendLine("request=ok font=" + unityFont.name +
+                                    " size=" + size);
+                            }
+                            catch (Exception ex)
+                            {
+                                evidence.AppendLine("request=error font=" + unityFont.name +
+                                    " size=" + size + " type=" + ex.GetType().Name +
+                                    " details=" + ex.Message);
+                            }
+                        }
+                        foreach (char c in new[] { 'A', '稲', 'あ', '中' })
+                        {
+                            try
+                            {
+                                var args = new object[] { c,
+                                    Activator.CreateInstance(infoType), size, normal };
+                                bool available = (bool)getInfo.Invoke(value, args);
+                                var adv = infoType.GetField("advance");
+                                string metric = available && adv != null ?
+                                    Convert.ToString(adv.GetValue(args[1])) : "NA";
+                                evidence.AppendLine("glyph=" + unityFont.name +
+                                    " size=" + size + " phase=" + phase +
+                                    " U+" + ((int)c).ToString("X4") +
+                                    " available=" + available + " advance=" + metric);
+                            }
+                            catch (Exception ex)
+                            {
+                                evidence.AppendLine("glyph_error=" + unityFont.name +
+                                    " U+" + ((int)c).ToString("X4") + " size=" +
+                                    size + " phase=" + phase + " type=" +
+                                    ex.GetType().Name + " details=" + ex.Message);
+                            }
+                        }
+                    }
+                }
+                evidence.AppendLine("font_end=" + unityFont.name);
+            }
+            evidence.AppendLine("glyph_atlas_probe_count=" + probed);
+            if (probed != 3)
+                throw new InvalidOperationException("Expected three active legacy fonts, got " + probed);
+            return evidence.ToString();
+        }
+
         private static string CaptureRuntimeFontEvidence()
         {
             var b = new StringBuilder();
@@ -357,6 +473,19 @@ namespace AncientMedievalJapanCore.E2E
                         // Let the original IMGUI InfoCard render additional frames
                         // before taking screenshots; no owner/game font is persisted.
                         await Task.Delay(500);
+                    }
+                    string glyphsPath = Environment.GetEnvironmentVariable(
+                        "RIMWORLD_GRAINS_UI_GLYPH_REPORT");
+                    if (!string.IsNullOrEmpty(glyphsPath))
+                    {
+                        await RuntimeThread.Run(delegate
+                        {
+                            File.WriteAllText(glyphsPath,
+                                CaptureGlyphAtlasEvidence(), Encoding.UTF8);
+                        });
+                        ctx.Assert(File.Exists(glyphsPath) &&
+                            new FileInfo(glyphsPath).Length > 500,
+                            "Native Unity glyph atlas report missing or empty.");
                     }
                     string fontsPath = Environment.GetEnvironmentVariable(
                         "RIMWORLD_GRAINS_UI_FONT_REPORT");
