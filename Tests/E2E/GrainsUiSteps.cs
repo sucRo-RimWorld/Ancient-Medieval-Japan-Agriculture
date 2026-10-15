@@ -769,6 +769,89 @@ namespace AncientMedievalJapanCore.E2E
             return b.ToString();
         }
 
+        private static string InspectTmpLookupTables()
+        {
+            var result = new StringBuilder();
+            result.AppendLine("tmp_tables_probe=v1");
+            Type type = LoadedType("TMPro.TMP_FontAsset");
+            if (type == null) return result.AppendLine("tmp_tables_status=UNAVAILABLE").ToString();
+            var flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+            var load = typeof(Resources).GetMethod("Load",
+                new[] { typeof(string), typeof(Type) });
+            int found = 0;
+            foreach (string name in new[] {
+                "fonts & materials/liberationsans sdf",
+                "fonts & materials/liberationsans sdf misc non-english" })
+            {
+                object asset = load.Invoke(null, new object[] { name, type });
+                if (asset == null) continue;
+                found++;
+                result.AppendLine("tmp_table_name=" + name);
+                foreach (string fieldName in new[] {
+                    "m_CharacterTable", "m_GlyphTable",
+                    "m_CharacterLookupDictionary", "m_FallbackFontAssetTable" })
+                {
+                    var field = type.GetField(fieldName, flags);
+                    object val = field == null ? null : field.GetValue(asset);
+                    var collection = val as System.Collections.ICollection;
+                    result.AppendLine("tmp_" + fieldName + "=" +
+                        (collection == null ? "UNAVAILABLE" : collection.Count.ToString()));
+                }
+                var rawCharsField = type.GetField("m_CharacterTable", flags);
+                var rawChars = rawCharsField == null ? null :
+                    rawCharsField.GetValue(asset) as System.Collections.IList;
+                foreach (int code in new[] { 65, 0x7A32, 0x3042, 0x4E2D, 0x7C7E })
+                {
+                    bool present = false;
+                    if (rawChars != null)
+                        foreach (object entry in rawChars.Cast<object>().Take(8192))
+                        {
+                            if (entry == null) continue;
+                            var unicode = entry.GetType().GetProperty("unicode");
+                            if (unicode != null && Convert.ToInt32(
+                                unicode.GetValue(entry, null)) == code)
+                            { present = true; break; }
+                        }
+                    result.AppendLine("tmp_raw_U+" + code.ToString("X4") + "=" +
+                        (rawChars == null ? "UNKNOWN" : present ? "PRESENT" : "ABSENT"));
+                }
+                var p = type.GetProperty("characterLookupTable", flags);
+                var lookup = p == null ? null : p.GetValue(asset, null)
+                    as System.Collections.IDictionary;
+                result.AppendLine("tmp_lookup_initialized_count=" +
+                    (lookup == null ? "UNAVAILABLE" : lookup.Count.ToString()));
+                foreach (int code in new[] { 65, 0x7A32, 0x3042, 0x4E2D, 0x7C7E })
+                    result.AppendLine("tmp_lookup_U+" + code.ToString("X4") + "=" +
+                        (lookup != null && lookup.Contains((uint)code)));
+            }
+            int slotCount = 0;
+            int legacyFontCount = 0;
+            int tmpCount = 0;
+            foreach (string fieldName in new[] { "fonts", "fontStyles",
+                "textFieldStyles", "textAreaStyles", "textAreaReadOnlyStyles" })
+            {
+                var field = typeof(Verse.Text).GetField(fieldName,
+                    BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                var slots = field == null ? null : field.GetValue(null) as Array;
+                if (slots == null) continue;
+                foreach (object entry in slots)
+                {
+                    object font = fieldName == "fonts" ? entry :
+                        entry?.GetType().GetProperty("font")?.GetValue(entry, null);
+                    slotCount++;
+                    if (font is Font) legacyFontCount++;
+                    if (font != null && type.IsInstanceOfType(font)) tmpCount++;
+                }
+            }
+            result.AppendLine("verse_font_slot_count=" + slotCount);
+            result.AppendLine("verse_unity_font_count=" + legacyFontCount);
+            result.AppendLine("verse_tmp_font_count=" + tmpCount);
+            result.AppendLine("tmp_tables_found=" + found);
+            result.AppendLine("tmp_tables_status=" +
+                (found == 2 && slotCount == 15 ? "COLLECTED" : "INCOMPLETE"));
+            return result.ToString();
+        }
+
         private static string CaptureRuntimeFontEvidence()
         {
             var b = new StringBuilder();
@@ -865,6 +948,7 @@ namespace AncientMedievalJapanCore.E2E
             }
             b.Append(CaptureFontResolverEvidence(fontType));
             b.Append(CaptureInternalTmpCoverage());
+            b.Append(InspectTmpLookupTables());
             return b.ToString();
         }
 
