@@ -158,6 +158,32 @@ namespace AncientMedievalJapanCore.E2E
             Type fontType = LoadedType("UnityEngine.Font");
             if (fontType == null)
                 throw new InvalidOperationException("No loaded Unity.Font API");
+            var originals = typeof(Verse.Text).GetField("fonts",
+                BindingFlags.Static | BindingFlags.Public |
+                BindingFlags.NonPublic)?.GetValue(null) as Array;
+            var originalStyles = typeof(Verse.Text).GetField("fontStyles",
+                BindingFlags.Static | BindingFlags.Public |
+                BindingFlags.NonPublic)?.GetValue(null) as Array;
+            var originalMetrics = new StringBuilder();
+            int[] originalSizes = new int[3];
+            for (int index = 0; index < 3; index++)
+            {
+                object old = originals == null ? null : originals.GetValue(index);
+                object style = originalStyles == null ? null : originalStyles.GetValue(index);
+                var oldSizeProperty = fontType.GetProperty("fontSize");
+                int oldSize = old == null || oldSizeProperty == null ? -1 :
+                    Convert.ToInt32(oldSizeProperty.GetValue(old, null));
+                int styleSize = style == null ? -1 :
+                    Convert.ToInt32(style.GetType().GetProperty("fontSize")
+                        .GetValue(style, null));
+                if (!directFile && (oldSize < 8 || oldSize > 32 || styleSize != 0))
+                    throw new InvalidOperationException("Original font size/layout contract changed");
+                originalSizes[index] = oldSize;
+                var oldFont = old as UnityEngine.Object;
+                originalMetrics.AppendLine("original_font_index=" + index +
+                    " name=" + (oldFont == null ? "UNAVAILABLE" : oldFont.name) +
+                    " font_size=" + oldSize + " style_size=" + styleSize);
+            }
             object obj;
             if (directFile)
             {
@@ -187,35 +213,34 @@ namespace AncientMedievalJapanCore.E2E
                     new[] { typeof(string), typeof(int) });
                 if (creator == null)
                     throw new InvalidOperationException("Unity Font OS family creator unavailable");
-                obj = creator.Invoke(null, new object[] { requested, 20 });
+                obj = creator.Invoke(null, new object[] { requested, originalSizes[1] });
             }
             UnityEngine.Object newFont = obj as UnityEngine.Object;
             if (newFont == null)
                 throw new InvalidOperationException("Unity did not create test font object");
             newFont.name = directFile ? "AMJ_Test_NotoPath" : "AMJ_Test_NotoSansJP";
 
-            var originals = typeof(Verse.Text).GetField("fonts",
-                BindingFlags.Static | BindingFlags.Public |
-                BindingFlags.NonPublic)?.GetValue(null) as Array;
-            var originalStyles = typeof(Verse.Text).GetField("fontStyles",
-                BindingFlags.Static | BindingFlags.Public |
-                BindingFlags.NonPublic)?.GetValue(null) as Array;
-            var originalMetrics = new StringBuilder();
-            for (int index = 0; index < 3; index++)
+            // Preserve the original Verse GameFont sizing. The former test
+            // assigned a single 20px face to all three sizes, causing Japanese
+            // InfoCard section titles and separator lines to overlap.
+            object[] replacementFonts = new object[3] { obj, obj, obj };
+            if (!directFile)
             {
-                object old = originals == null ? null : originals.GetValue(index);
-                object style = originalStyles == null ? null : originalStyles.GetValue(index);
-                var oldSizeProperty = fontType.GetProperty("fontSize");
-                int oldSize = old == null || oldSizeProperty == null ? -1 :
-                    Convert.ToInt32(oldSizeProperty.GetValue(old, null));
-                int styleSize = style == null ? -1 :
-                    Convert.ToInt32(style.GetType().GetProperty("fontSize")
-                        .GetValue(style, null));
-                var oldFont = old as UnityEngine.Object;
-                originalMetrics.AppendLine("original_font_index=" + index +
-                    " name=" + (oldFont == null ? "UNAVAILABLE" : oldFont.name) +
-                    " font_size=" + oldSize + " style_size=" + styleSize);
+                var creator = fontType.GetMethod("CreateDynamicFontFromOSFont",
+                    new[] { typeof(string), typeof(int) });
+                for (int i = 0; i < replacementFonts.Length; i++)
+                {
+                    if (i == 1) continue; // original Arial_small, 14 px
+                    object alternative = creator.Invoke(null,
+                        new object[] { requested, originalSizes[i] });
+                    var unity = alternative as UnityEngine.Object;
+                    if (unity == null)
+                        throw new InvalidOperationException("Unable to instantiate sized Noto face");
+                    unity.name = "AMJ_Test_NotoSansJP_" + (i == 0 ? "tiny" : "medium");
+                    replacementFonts[i] = alternative;
+                }
             }
+
             var fields = typeof(Verse.Text).GetFields(
                 BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             int assigned = 0;
@@ -225,6 +250,13 @@ namespace AncientMedievalJapanCore.E2E
             report.AppendLine("font_object_source=" +
                 (directFile ? "direct-verified-otf-path" : "os-family"));
             report.AppendLine("font_object_actual=" + newFont.name);
+            for (int i = 0; i < 3; i++)
+            {
+                var selected = replacementFonts[i] as UnityEngine.Object;
+                report.AppendLine("selected_verse_index=" + i +
+                    " point_size=" + originalSizes[i] +
+                    " font=" + (selected == null ? "UNAVAILABLE" : selected.name));
+            }
             report.AppendLine("font_object_fontNames=" +
                 string.Join(",", fontType.GetProperty("fontNames").GetValue(obj, null) as string[]
                           ?? new string[0]));
@@ -242,7 +274,7 @@ namespace AncientMedievalJapanCore.E2E
                 {
                     if (field.Name == "fonts")
                     {
-                        value.SetValue(obj, i);
+                        value.SetValue(replacementFonts[i], i);
                     }
                     else
                     {
@@ -250,8 +282,8 @@ namespace AncientMedievalJapanCore.E2E
                         var property = style.GetType().GetProperty("font");
                         if (property == null || !property.CanWrite)
                             throw new InvalidOperationException("Verse GUIStyle font not writable");
-                        property.SetValue(style, obj, null);
-                        if (!System.Object.ReferenceEquals(property.GetValue(style, null), obj))
+                        property.SetValue(style, replacementFonts[i], null);
+                        if (!System.Object.ReferenceEquals(property.GetValue(style, null), replacementFonts[i]))
                             throw new InvalidOperationException("Verse font assignment was ignored");
                     }
                     ++assigned;
@@ -457,6 +489,8 @@ namespace AncientMedievalJapanCore.E2E
                 if (unity == null || (unity.name != "Arial_small" &&
                     unity.name != "Arial_medium" && unity.name != "Calibri_tiny" &&
                     unity.name != "AMJ_Test_NotoSansJP" &&
+                    unity.name != "AMJ_Test_NotoSansJP_tiny" &&
+                    unity.name != "AMJ_Test_NotoSansJP_medium" &&
                     unity.name != "AMJ_Test_NotoPath"))
                     continue;
                 ++found;
@@ -539,7 +573,7 @@ namespace AncientMedievalJapanCore.E2E
             b.AppendLine("text_generator_font_count=" + found);
             string requestedFont = Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT");
             bool testFontInjected = requestedFont == "Noto Sans JP" || requestedFont == "Noto Sans JP Path";
-            b.AppendLine("probe_status=" + (found == (testFontInjected ? 4 : 3) ? "COLLECTED" : "WRONG_FONT_COUNT"));
+            b.AppendLine("probe_status=" + (found == (testFontInjected ? (requestedFont == "Noto Sans JP" ? 6 : 4) : 3) ? "COLLECTED" : "WRONG_FONT_COUNT"));
             return b.ToString();
         }
 
