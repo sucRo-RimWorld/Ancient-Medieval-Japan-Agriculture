@@ -488,6 +488,97 @@ namespace AncientMedievalJapanCore.E2E
             return b.ToString();
         }
 
+        // Read-only runtime comparison of Unity's own OS-font resolver with
+        // the game's embedded legacy and TMP resource paths. Does not change
+        // any font, UIStyle, game asset, or production language string.
+        private static string CaptureFontResolverEvidence(Type fontType)
+        {
+            var b = new StringBuilder();
+            b.AppendLine("resolver_probe=unity-font-resource-v1");
+            try
+            {
+                MethodInfo enumerate = fontType == null ? null :
+                    fontType.GetMethod("GetOSInstalledFontNames",
+                        BindingFlags.Static | BindingFlags.Public, null,
+                        Type.EmptyTypes, null);
+                if (enumerate == null)
+                {
+                    b.AppendLine("unity_os_font_enumeration=API_UNAVAILABLE");
+                }
+                else
+                {
+                    string[] names = enumerate.Invoke(null, new object[0]) as string[];
+                    b.AppendLine("unity_os_font_enumeration=" +
+                        (names == null ? "NULL" : "COLLECTED"));
+                    if (names != null)
+                    {
+                        b.AppendLine("unity_os_font_count=" + names.Length);
+                        var matches = names.Where(name =>
+                            !string.IsNullOrEmpty(name) &&
+                            (name.IndexOf("Noto", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                             name.IndexOf("Japanese", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                             name.IndexOf("CJK", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                             name.IndexOf("Arial", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                             name.IndexOf("Calibri", StringComparison.OrdinalIgnoreCase) >= 0))
+                            .Take(40).ToArray();
+                        b.AppendLine("unity_os_font_matches=" + string.Join("|", matches));
+                        b.AppendLine("unity_os_font_noto_jp=" + names.Any(name =>
+                            !string.IsNullOrEmpty(name) &&
+                            name.IndexOf("Noto Sans JP",
+                                StringComparison.OrdinalIgnoreCase) >= 0));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                b.AppendLine("unity_os_font_error=" + ex.GetType().FullName +
+                    ":" + ex.Message);
+            }
+
+            Type tmpType = LoadedType("TMPro.TMP_FontAsset");
+            Type textAssetType = LoadedType("UnityEngine.TextAsset");
+            b.AppendLine("tmp_font_asset_type=" +
+                (tmpType == null ? "UNAVAILABLE" : tmpType.FullName));
+            MethodInfo load = typeof(Resources).GetMethod("Load",
+                new[] { typeof(string), typeof(Type) });
+            b.AppendLine("unity_resources_load_api=" +
+                (load == null ? "UNAVAILABLE" : "PRESENT"));
+            if (load == null)
+                return b.ToString();
+            var resources = new[] {
+                new { Id = "arial_small", Path = "fonts/arial_small", Type = fontType },
+                new { Id = "arial_medium", Path = "fonts/arial_medium", Type = fontType },
+                new { Id = "calibri_tiny", Path = "fonts/calibri_tiny", Type = fontType },
+                new { Id = "liberation_sdf", Path = "fonts & materials/liberationsans sdf", Type = tmpType },
+                new { Id = "nonenglish_bytes", Path = "fonts & materials/misc non-english characters", Type = textAssetType },
+                new { Id = "nonenglish_sdf", Path = "fonts & materials/liberationsans sdf misc non-english", Type = tmpType }
+            };
+            foreach (var resource in resources)
+            {
+                if (resource.Type == null)
+                {
+                    b.AppendLine("resource_" + resource.Id + "=TYPE_UNAVAILABLE");
+                    continue;
+                }
+                try
+                {
+                    object asset = load.Invoke(null,
+                        new object[] { resource.Path, resource.Type });
+                    UnityEngine.Object unity = asset as UnityEngine.Object;
+                    b.AppendLine("resource_" + resource.Id + "=" +
+                        (unity == null ? "NOT_LOADED" :
+                         "FOUND type=" + unity.GetType().FullName +
+                         " name=" + unity.name));
+                }
+                catch (Exception ex)
+                {
+                    b.AppendLine("resource_" + resource.Id + "=ERROR " +
+                        ex.GetType().Name + ":" + ex.Message);
+                }
+            }
+            return b.ToString();
+        }
+
         private static string CaptureRuntimeFontEvidence()
         {
             var b = new StringBuilder();
@@ -582,6 +673,7 @@ namespace AncientMedievalJapanCore.E2E
                         ex.GetType().Name);
                 }
             }
+            b.Append(CaptureFontResolverEvidence(fontType));
             return b.ToString();
         }
 
