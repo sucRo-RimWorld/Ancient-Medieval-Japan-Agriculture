@@ -380,6 +380,28 @@ namespace AncientMedievalJapanCore.E2E
                             (vertexCount ?? "UNAVAILABLE") + " char_count=" +
                             (characterCount ?? "UNAVAILABLE") + " verts_count=" +
                             (actualCount ?? "UNAVAILABLE"));
+                        // Capture the first glyph quad's actual coordinates, UVs
+                        // and color alpha, not just its vertex count. This can
+                        // discriminate degenerate/missing atlas geometry from
+                        // nonzero triangles without exporting any texture data.
+                        if (sample.Length == 1 && list is System.Collections.IEnumerable)
+                        {
+                            int vertexIndex = 0;
+                            foreach (object vertex in (System.Collections.IEnumerable)list)
+                            {
+                                if (vertexIndex >= 4) break;
+                                var vertexType = vertex.GetType();
+                                Func<string, string> attr = name =>
+                                {
+                                    var member = vertexType.GetField(name);
+                                    object val = member == null ? null : member.GetValue(vertex);
+                                    return val == null ? "UNAVAILABLE" : val.ToString();
+                                };
+                                b.AppendLine("quad=" + unity.name + " sample=" + sampleId +
+                                    " v=" + (vertexIndex++) + " position=" + attr("position") +
+                                    " uv0=" + attr("uv0") + " color=" + attr("color"));
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
