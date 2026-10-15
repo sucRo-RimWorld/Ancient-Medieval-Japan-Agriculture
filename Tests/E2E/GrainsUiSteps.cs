@@ -152,7 +152,18 @@ namespace AncientMedievalJapanCore.E2E
                     Find.WindowStack.Add(card);
                 });
                 await Task.Delay(350);
-                await RuntimeThread.Run(delegate { ScreenCapture.CaptureScreenshot(filename); });
+                await RuntimeThread.Run(delegate
+                {
+                    // Unity puts ScreenCapture in an optional managed module;
+                    // resolve it from the installed game's actual assemblies.
+                    var screenType = Type.GetType(
+                        "UnityEngine.ScreenCapture, UnityEngine.ScreenCaptureModule", true);
+                    var capture = screenType.GetMethod(
+                        "CaptureScreenshot", new[] { typeof(string) });
+                    ctx.Require(capture != null,
+                        "Native Unity screenshot API is unavailable.");
+                    capture.Invoke(null, new object[] { filename });
+                });
                 await Task.Delay(1200);
                 await RuntimeThread.Run(delegate { card.Close(false); });
                 ctx.Assert(File.Exists(filename) && new FileInfo(filename).Length > 1024,
