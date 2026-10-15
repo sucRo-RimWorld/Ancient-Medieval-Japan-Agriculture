@@ -513,6 +513,11 @@ namespace AncientMedievalJapanCore.E2E
                     if (names != null)
                     {
                         b.AppendLine("unity_os_font_count=" + names.Length);
+                        b.AppendLine("unity_os_font_names=" + string.Join("|",
+                            names.Take(32).Select(name =>
+                                (name ?? "<null>").Replace("|", "_")
+                                    .Replace("\\r", " ").Replace("\\n", " "))
+                                .ToArray()));
                         var matches = names.Where(name =>
                             !string.IsNullOrEmpty(name) &&
                             (name.IndexOf("Noto", StringComparison.OrdinalIgnoreCase) >= 0 ||
@@ -533,6 +538,83 @@ namespace AncientMedievalJapanCore.E2E
             {
                 b.AppendLine("unity_os_font_error=" + ex.GetType().FullName +
                     ":" + ex.Message);
+            }
+
+            // Collect Unity's own OS font paths, not host fc-match guesses.
+            // Only names and bounded file basenames are archived: the actual
+            // licensed font data and private host absolute paths are never copied.
+            try
+            {
+                MethodInfo getPaths = fontType == null ? null :
+                    fontType.GetMethod("GetPathsToOSFonts",
+                        BindingFlags.Static | BindingFlags.Public, null,
+                        Type.EmptyTypes, null);
+                if (getPaths == null)
+                {
+                    b.AppendLine("unity_os_font_paths_status=API_UNAVAILABLE");
+                }
+                else
+                {
+                    string[] paths = getPaths.Invoke(null, new object[0]) as string[];
+                    b.AppendLine("unity_os_font_paths_status=" +
+                        (paths == null ? "NULL" : "COLLECTED"));
+                    if (paths != null)
+                    {
+                        b.AppendLine("unity_os_font_path_count=" + paths.Length);
+                        string home = Environment.GetEnvironmentVariable("HOME") ?? "";
+                        foreach (string path in paths.Where(p => !string.IsNullOrEmpty(p)).Take(64))
+                        {
+                            string value = path.Replace('\\', '/');
+                            string scope = home.Length > 0 &&
+                                value.StartsWith(home.Replace('\\', '/') + "/",
+                                    StringComparison.Ordinal) ? "disposable-home" :
+                                value.StartsWith("/usr/", StringComparison.Ordinal) ? "usr" :
+                                value.StartsWith("/srv/", StringComparison.Ordinal) ? "srv" :
+                                "other";
+                            b.AppendLine("unity_os_font_path=" + scope + "|" +
+                                Path.GetFileName(value).Replace("|", "_"));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                b.AppendLine("unity_os_font_paths_error=" +
+                    ex.GetType().Name + ":" + ex.Message);
+            }
+
+            // Runtime mappings are in this *same RimWorld process*, after the
+            // InfoCard has rendered. /proc/self/maps is read-only; report only
+            // native font-related module basenames, never private paths.
+            try
+            {
+                if (!File.Exists("/proc/self/maps"))
+                {
+                    b.AppendLine("native_font_maps_status=UNAVAILABLE");
+                }
+                else
+                {
+                    string[] native = File.ReadLines("/proc/self/maps")
+                        .Select(line => line.Substring(line.LastIndexOf(' ') + 1))
+                        .Where(name => {
+                            string low = name.ToLowerInvariant();
+                            return low.Contains("freetype") ||
+                                   low.Contains("fontconfig") ||
+                                   low.Contains("harfbuzz") ||
+                                   low.Contains("pango") ||
+                                   low.EndsWith(".ttf") || low.EndsWith(".otf");
+                        })
+                        .Select(name => Path.GetFileName(name))
+                        .Distinct().Take(32).ToArray();
+                    b.AppendLine("native_font_maps_status=COLLECTED");
+                    b.AppendLine("native_font_maps_count=" + native.Length);
+                    b.AppendLine("native_font_mapped_names=" + string.Join("|", native));
+                }
+            }
+            catch (Exception ex)
+            {
+                b.AppendLine("native_font_maps_error=" +
+                    ex.GetType().Name + ":" + ex.Message);
             }
 
             Type tmpType = LoadedType("TMPro.TMP_FontAsset");
