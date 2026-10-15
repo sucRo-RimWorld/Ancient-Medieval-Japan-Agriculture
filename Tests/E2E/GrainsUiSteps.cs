@@ -797,11 +797,32 @@ namespace AncientMedievalJapanCore.E2E
                     result.AppendLine("tmp_" + fieldName + "=" +
                         (collection == null ? "UNAVAILABLE" : collection.Count.ToString()));
                 }
+                var rawCharsField = type.GetField("m_CharacterTable", flags);
+                var rawChars = rawCharsField == null ? null :
+                    rawCharsField.GetValue(asset) as System.Collections.IList;
+                foreach (int code in new[] { 65, 0x7A32, 0x3042, 0x4E2D, 0x7C7E })
+                {
+                    bool present = false;
+                    if (rawChars != null)
+                        foreach (object entry in rawChars.Cast<object>().Take(8192))
+                        {
+                            if (entry == null) continue;
+                            var unicode = entry.GetType().GetProperty("unicode");
+                            if (unicode != null && Convert.ToInt32(
+                                unicode.GetValue(entry, null)) == code)
+                            { present = true; break; }
+                        }
+                    result.AppendLine("tmp_raw_U+" + code.ToString("X4") + "=" +
+                        (rawChars == null ? "UNKNOWN" : present ? "PRESENT" : "ABSENT"));
+                }
                 var p = type.GetProperty("characterLookupTable", flags);
                 var lookup = p == null ? null : p.GetValue(asset, null)
                     as System.Collections.IDictionary;
                 result.AppendLine("tmp_lookup_initialized_count=" +
                     (lookup == null ? "UNAVAILABLE" : lookup.Count.ToString()));
+                foreach (int code in new[] { 65, 0x7A32, 0x3042, 0x4E2D, 0x7C7E })
+                    result.AppendLine("tmp_lookup_U+" + code.ToString("X4") + "=" +
+                        (lookup != null && lookup.Contains((uint)code)));
             }
             result.AppendLine("tmp_tables_found=" + found);
             result.AppendLine("tmp_tables_status=" + (found == 2 ? "COLLECTED" : "INCOMPLETE"));
