@@ -145,6 +145,73 @@ namespace AncientMedievalJapanCore.E2E
         }
 
 
+
+        // Distinct from fontNames reassignment: create a new temporary Unity
+        // Font object from the native installed Japanese face, then attach the
+        // object to the real Verse GUIStyles and fonts[] in this process only.
+        private static string ApplyExplicitTestFontToGuiStyles(string requested)
+        {
+            if (Prefs.LangFolderName != "Japanese (日本語)" ||
+                requested != "Noto Sans JP")
+                throw new InvalidOperationException("Diagnostic font object: invalid locale/family");
+            Type fontType = LoadedType("UnityEngine.Font");
+            if (fontType == null)
+                throw new InvalidOperationException("No loaded Unity.Font API");
+            var creator = fontType.GetMethod("CreateDynamicFontFromOSFont",
+                new[] { typeof(string), typeof(int) });
+            if (creator == null)
+                throw new InvalidOperationException("Unity.Font.CreateDynamicFontFromOSFont unavailable");
+            object obj = creator.Invoke(null, new object[] { requested, 20 });
+            UnityEngine.Object newFont = obj as UnityEngine.Object;
+            if (newFont == null)
+                throw new InvalidOperationException("Native Unity could not create Japanese font object");
+            newFont.name = "AMJ_Test_NotoSansJP";
+
+            var fields = typeof(Verse.Text).GetFields(
+                BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+            int assigned = 0;
+            var report = new StringBuilder();
+            report.AppendLine("font_object_requested=" + requested);
+            report.AppendLine("font_object_actual=" + newFont.name);
+            report.AppendLine("font_object_fontNames=" +
+                string.Join(",", fontType.GetProperty("fontNames").GetValue(obj, null) as string[]
+                          ?? new string[0]));
+            foreach (var field in fields)
+            {
+                if (field.Name != "fonts" && field.Name != "fontStyles" &&
+                    field.Name != "textFieldStyles" && field.Name != "textAreaStyles" &&
+                    field.Name != "textAreaReadOnlyStyles")
+                    continue;
+                var value = field.GetValue(null) as Array;
+                if (value == null || value.Length != 3)
+                    throw new InvalidOperationException("Original Verse field not three fonts: " +
+                        field.Name);
+                for (int i = 0; i < value.Length; ++i)
+                {
+                    if (field.Name == "fonts")
+                    {
+                        value.SetValue(obj, i);
+                    }
+                    else
+                    {
+                        object style = value.GetValue(i);
+                        var property = style.GetType().GetProperty("font");
+                        if (property == null || !property.CanWrite)
+                            throw new InvalidOperationException("Verse GUIStyle font not writable");
+                        property.SetValue(style, obj, null);
+                        if (!Object.ReferenceEquals(property.GetValue(style, null), obj))
+                            throw new InvalidOperationException("Verse font assignment was ignored");
+                    }
+                    ++assigned;
+                }
+                report.AppendLine("assigned_verse_field=" + field.Name + " count=3");
+            }
+            report.AppendLine("assigned_verse_font_slots=" + assigned);
+            if (assigned != 15)
+                throw new InvalidOperationException("Expected exactly 15 original Verse font slots");
+            return report.ToString();
+        }
+
         // Disposable rendering A/B only. The author game, production Grains, and
         // all non-Japanese UI profiles retain their original fontNames.
         private static int ApplyDiagnosticFontNames(string family)
@@ -169,7 +236,8 @@ namespace AncientMedievalJapanCore.E2E
             {
                 var unity = value as UnityEngine.Object;
                 if (unity == null || (unity.name != "Arial_small" &&
-                    unity.name != "Arial_medium" && unity.name != "Calibri_tiny"))
+                    unity.name != "Arial_medium" && unity.name != "Calibri_tiny" &&
+                    unity.name != "AMJ_Test_NotoSansJP"))
                     continue;
                 var previous = names.GetValue(value, null) as string[];
                 var updated = new List<string> { family };
@@ -576,14 +644,33 @@ namespace AncientMedievalJapanCore.E2E
                 {
                     string forceFamily = Environment.GetEnvironmentVariable(
                         "RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_FAMILY");
-                    if (!string.IsNullOrEmpty(forceFamily))
+                    string fontObject = Environment.GetEnvironmentVariable(
+                        "RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT");
+                    if (!string.IsNullOrEmpty(fontObject))
+                    {
+                        if (!string.IsNullOrEmpty(forceFamily))
+                            throw new InvalidOperationException(
+                                "Font object and fontNames A/B cannot run together");
+                        string recordPath = Environment.GetEnvironmentVariable(
+                            "RIMWORLD_GRAINS_UI_FONT_OBJECT_REPORT");
+                        ctx.Require(!string.IsNullOrWhiteSpace(recordPath),
+                            "Diagnostic active font assignment requires exact report path");
+                        await RuntimeThread.Run(delegate
+                        {
+                            File.WriteAllText(recordPath,
+                                ApplyExplicitTestFontToGuiStyles(fontObject), Encoding.UTF8);
+                        });
+                        ctx.Assert(File.Exists(recordPath) &&
+                            new FileInfo(recordPath).Length > 150,
+                            "New Japanese GUI font object was not verified");
+                        await Task.Delay(650);
+                    }
+                    else if (!string.IsNullOrEmpty(forceFamily))
                     {
                         await RuntimeThread.Run(delegate
                         {
                             ApplyDiagnosticFontNames(forceFamily);
                         });
-                        // Let the original IMGUI InfoCard render additional frames
-                        // before taking screenshots; no owner/game font is persisted.
                         await Task.Delay(500);
                     }
                     string geometryPath = Environment.GetEnvironmentVariable(
