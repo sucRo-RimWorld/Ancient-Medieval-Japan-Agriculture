@@ -101,7 +101,7 @@ namespace AncientMedievalJapanCore.E2E
                     scope.AssertElectricRecipes();
                     scope.StageIngredient("AMJC_RawMillet", 20);
                 });
-                await scope.Bill("AMJC_ThreshMilletBulk", scope.Stove, "AMJC_RawMillet", 10);
+                await scope.Bill("AMJC_ThreshMilletBulk", scope.Stove, "AMJC_RawMillet", 10, true);
                 await scope.Bill("AMJC_HullMilletBulk", scope.Spot, "AMJC_MilletInHull", 10);
                 await scope.Bill("AMJC_ThreshMilletBulk", scope.Spot, "AMJC_RawMillet", 10);
                 await scope.Bill("AMJC_HullMilletBulk", scope.Stove, "AMJC_MilletInHull", 10);
@@ -516,7 +516,14 @@ namespace AncientMedievalJapanCore.E2E
                             + ", zoneCrop=" + barleyZone.GetPlantDefToGrow().defName);
                         barleyJob = NativeSowOffer(barleyCell);
                         ctx.Require(barleyJob != null && barleyJob.def == JobDefOf.Sow &&
-                            barleyJob.plantDefToSow == barley, "Barley needs a native sow job at 5 C.");
+                            barleyJob.plantDefToSow == barley,
+                            "Barley needs a native sow job at 5 C; barleyGrowingSeason=" + PlantUtility.GrowthSeasonNow(barleyCell, map, barley)
+                            + ", zoneCrop=" + barleyZone.GetPlantDefToGrow().defName
+                            + ", job=" + (barleyJob == null ? "null" : barleyJob.def.defName)
+                            + ", cellThings=" + string.Join(",", barleyCell.GetThingList(map)
+                                .Select(t => t.def.defName).ToArray())
+                            + ", actualTemperature=" + barleyCell.GetTemperature(map)
+                            + ", currentHour=" + GenLocalDate.HourOfDay(map));
                         Start(barleyJob, "ColdSeason/BarleySow");
                     });
                     await Complete(barleyJob, () => barleyCell.GetPlant(map) != null &&
@@ -820,7 +827,8 @@ namespace AncientMedievalJapanCore.E2E
                 });
             }
 
-            public async Task Bill(string recipeName, Building_WorkTable bench, string ingredient, int consumed)
+            public async Task Bill(string recipeName, Building_WorkTable bench, string ingredient, int consumed,
+                bool untilTarget = false)
             {
                 Job job = null; Bill_Production bill = null; RecipeDef recipe = null;
                 int before = 0, straw = 0, hay = 0;
@@ -833,10 +841,19 @@ namespace AncientMedievalJapanCore.E2E
                     straw = Count("DankPyon_Straw"); hay = Count("Hay");
                     products = recipe.products.ToDictionary(p => p.thingDef.defName, p => Count(p.thingDef.defName));
                     bill = (Bill_Production)recipe.MakeNewBill();
-                    bill.repeatMode = BillRepeatModeDefOf.RepeatCount; bill.repeatCount = 1;
+                    bill.repeatMode = untilTarget ? BillRepeatModeDefOf.TargetCount : BillRepeatModeDefOf.RepeatCount;
+                    bill.repeatCount = 1;
                     bill.SetStoreMode(BillStoreModeDefOf.DropOnFloor);
                     bill.ingredientSearchRadius = 10f;
                     bench.BillStack.AddBill(bill);
+                    if (untilTarget)
+                    {
+                        ctx.Assert(recipe.WorkerCounter.CanCountProducts(bill),
+                            "TargetCount must allow a mixed grain + Straw MO recipe.");
+                        bill.targetCount = recipe.WorkerCounter.CountProducts(bill)
+                            + recipe.products[0].count;
+                        ctx.Assert(bill.ShouldDoNow(), "A below-target thresh Bill must be available.");
+                    }
                     foreach (WorkGiverDef def in DefDatabase<WorkGiverDef>.AllDefsListForReading)
                     {
                         if (def.giverClass == null || !typeof(WorkGiver_DoBill).IsAssignableFrom(def.giverClass)) continue;
@@ -848,12 +865,49 @@ namespace AncientMedievalJapanCore.E2E
                     }
                     Start(job, recipeName);
                 });
-                await Complete(job, () => bill.repeatCount == 0 && recipe.products.All(p =>
-                    Count(p.thingDef.defName) == products[p.thingDef.defName] + p.count), recipeName);
+                // The pawn may be carrying finished products; the normal counter
+                // intentionally counts spawned stock only. Complete the native job
+                // and drop carried output before asserting the TargetCount threshold.
+                await Complete(job, () => recipe.products.All(p =>
+                    Count(p.thingDef.defName) == products[p.thingDef.defName] + p.count)
+                    && (untilTarget || bill.repeatCount == 0), recipeName);
                 await RuntimeThread.Run(delegate
                 {
                     ctx.Assert(Count(ingredient) == before - consumed, recipeName + " consumed the wrong ingredient quantity.");
-                    ctx.Assert(bill.repeatCount == 0, recipeName + " must finish exactly one Bill iteration.");
+                    if (untilTarget)
+                    {
+                        // Vanilla's resource counter counts stored resources, not
+                        // loose products dropped on the floor. Keep the product
+                        // generated by the actual DoBill, then move that exact stack
+                        // into a disposable stockpile before checking TargetCount.
+                        Thing primary = map.listerThings.ThingsOfDef(recipe.products[0].thingDef)
+                            .FirstOrDefault(t => t.Spawned);
+                        ctx.Require(primary != null, "Native DoBill did not spawn the primary grain.");
+                        IntVec3 storageCell = center + new IntVec3(0, 0, 2);
+                        ctx.Require(!storageCell.GetThingList(map).Any(t => t is Building || t is Pawn),
+                            "TargetCount fixture storage cell is obstructed.");
+                        Zone_Stockpile stockpile = new Zone_Stockpile(StorageSettingsPreset.DefaultStockpile, map.zoneManager);
+                        map.zoneManager.RegisterZone(stockpile);
+                        try
+                        {
+                            stockpile.AddCell(storageCell);
+                            primary.DeSpawn();
+                            GenSpawn.Spawn(primary, storageCell, map);
+                            map.resourceCounter.UpdateResourceCounts();
+                            int counted = recipe.WorkerCounter.CountProducts(bill);
+                            bool shouldContinue = bill.ShouldDoNow();
+                            ctx.Assert(counted >= bill.targetCount && !shouldContinue,
+                                recipeName + " failed to stop with stored primary grain: counted="
+                                + counted + ", target=" + bill.targetCount + ", shouldContinue=" + shouldContinue);
+                        }
+                        finally
+                        {
+                            stockpile.Delete(false);
+                            map.resourceCounter.UpdateResourceCounts();
+                        }
+                    }
+                    else
+                        ctx.Assert(bill.repeatCount == 0, recipeName + " must finish exactly one Bill iteration.");
                     foreach (ThingDefCountClass product in recipe.products)
                         ctx.Assert(Count(product.thingDef.defName) == products[product.thingDef.defName] + product.count,
                             recipeName + " produced the wrong quantity: " + product.thingDef.defName);

@@ -248,6 +248,17 @@ def validate():
                     "Approved English crop description changed: " + name
                 )
                 normalized.find("description").text = HISTORICAL_MO_PLANT_DESCRIPTIONS[name]
+            # Counter is a new, independently checked MO-only addition.
+            # Keep the immutable historical recipe fixture unchanged.
+            if node.tag == "RecipeDef" and name in {
+                "AMJC_Thresh" + crop + bulk
+                for crop in ("Millet", "Buckwheat", "Barley", "Rice", "Wheat")
+                for bulk in ("", "Bulk")
+            }:
+                counter = normalized.find("workerCounterClass")
+                assert counter is not None and counter.text == "AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain", (
+                    "MO primary-grain target-count counter missing: " + name)
+                normalized.remove(counter)
             raw = json.dumps(contract_signature(normalized), ensure_ascii=False, separators=(",", ":"))
             actual[node.tag + ":" + name] = hashlib.sha256(raw.encode()).hexdigest()
     from validate_grains_chain import SHARED_NAMES
