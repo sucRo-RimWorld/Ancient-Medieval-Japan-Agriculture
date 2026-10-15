@@ -123,7 +123,7 @@ OTF from the disposable HOME was provided as the **full file path** to
 `AMJ_Test_NotoPath` was assigned to 15 live `Verse.Text` font/style
 slots, with explicit test-only provenance. **All four** original owner
 loaded UI scenarios were again **Pickle PASS, Unity ERROR0, exit0**;
-all 16 screenshots were saved. But the actual TestGenerator
+all 16 screenshots were saved. But the actual TextGenerator
 `UIVertex` result for **both Latin A and Japanese 稲/あ/中** in the new
 object was **0×0 quad size with all UV coordinates zero**. All 8 Japanese
 screenshots changed from the earlier Noto family-name trial by losing
