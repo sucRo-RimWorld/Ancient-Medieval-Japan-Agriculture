@@ -4,8 +4,8 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[2]
-CLASS = "AMJ.Grains.RecipeWorkerCounter_ThreshGrain"
-SOURCE = ROOT / "Source/Grains/RecipeWorkerCounter_ThreshGrain.cs"
+CLASS = "AMJ.Grains.RecipeWorkerCounter_PrimaryGrain"
+SOURCE = ROOT / "Source/AMJGrains/RecipeWorkerCounter_PrimaryGrain.cs"
 MO_PATCH = ROOT / "Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Base.xml"
 MO_WHEAT = ROOT / "Compatibility/MedievalOverhaul/Defs/Recipes_MOWheat.xml"
 BASE = ROOT / "Defs/RecipeDefs/Recipes_GrainProcessing.xml"
@@ -14,7 +14,7 @@ BASE = ROOT / "Defs/RecipeDefs/Recipes_GrainProcessing.xml"
 def main():
     code = SOURCE.read_text(encoding="utf-8")
     assert "override bool CanCountProducts(Bill_Production bill)" in code
-    assert "RecipeWorkerCounter_ThreshGrain : RecipeWorkerCounter" in code
+    assert "RecipeWorkerCounter_PrimaryGrain : RecipeWorkerCounter" in code
     patch = ET.parse(MO_PATCH)
     names = {f"AMJC_Thresh{grain}{bulk}"
              for grain in ("Millet", "Buckwheat", "Barley", "Rice")
