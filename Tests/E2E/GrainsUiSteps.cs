@@ -304,6 +304,96 @@ namespace AncientMedievalJapanCore.E2E
             return evidence.ToString();
         }
 
+
+        // Read-only shape diagnosis for generated Unity IMGUI text. We do not
+        // install fonts, alter production GUIStyle, or interpret glyph count as
+        // pixel/visual approval. TextGenerator is loaded by reflection because
+        // Unity splits text APIs into optional managed modules by game version.
+        private static string CaptureTextGeometryEvidence()
+        {
+            var b = new StringBuilder();
+            b.AppendLine("probe=real-unity-textgenerator-legacy-imgui-v1");
+            b.AppendLine("language=" + Prefs.LangFolderName);
+            Type generator = LoadedType("UnityEngine.TextGenerator");
+            Type settingsType = LoadedType("UnityEngine.TextGenerationSettings");
+            Type fontType = LoadedType("UnityEngine.Font");
+            b.AppendLine("generator_type=" + (generator == null ? "MISSING" : generator.AssemblyQualifiedName));
+            b.AppendLine("settings_type=" + (settingsType == null ? "MISSING" : settingsType.AssemblyQualifiedName));
+            if (generator == null || settingsType == null || fontType == null)
+                return b.AppendLine("probe_status=API_UNAVAILABLE").ToString();
+            var populate = generator.GetMethod("Populate", new[] { typeof(string), settingsType });
+            var ctor = generator.GetConstructor(new[] { typeof(int) }) ??
+                       generator.GetConstructor(Type.EmptyTypes);
+            if (populate == null || ctor == null)
+                return b.AppendLine("probe_status=SIGNATURE_UNAVAILABLE").ToString();
+            var objects = typeof(Resources).GetMethod("FindObjectsOfTypeAll",
+                new[] { typeof(Type) }).Invoke(null, new object[] { fontType }) as Array;
+            if (objects == null)
+                return b.AppendLine("probe_status=FONT_INVENTORY_UNAVAILABLE").ToString();
+            int found = 0;
+            foreach (object font in objects)
+            {
+                var unity = font as UnityEngine.Object;
+                if (unity == null || (unity.name != "Arial_small" &&
+                    unity.name != "Arial_medium" && unity.name != "Calibri_tiny"))
+                    continue;
+                ++found;
+                b.AppendLine("font=" + unity.name);
+                foreach (string sample in new[] { "A", "稲", "あ", "中", "A稲あ中" })
+                {
+                    string sampleId = string.Join("_", sample.Select(
+                        c => ((int)c).ToString("X4")).ToArray());
+                    try
+                    {
+                        object settings = Activator.CreateInstance(settingsType);
+                        Action<string, object> field = (name, val) =>
+                        {
+                            FieldInfo fi = settingsType.GetField(name);
+                            if (fi != null) fi.SetValue(settings, val);
+                        };
+                        field("font", font);
+                        field("fontSize", 20);
+                        field("color", Color.white);
+                        field("fontStyle", FontStyle.Normal);
+                        field("textAnchor", TextAnchor.UpperLeft);
+                        field("horizontalOverflow", HorizontalWrapMode.Overflow);
+                        field("verticalOverflow", VerticalWrapMode.Overflow);
+                        field("scaleFactor", 1f);
+                        field("lineSpacing", 1f);
+                        field("generationExtents", new Vector2(700f, 350f));
+                        field("pivot", new Vector2(0f, 1f));
+                        field("richText", false);
+                        field("resizeTextForBestFit", false);
+                        object instance = ctor.GetParameters().Length == 1 ?
+                            ctor.Invoke(new object[] { 256 }) : ctor.Invoke(new object[0]);
+                        bool ok = (bool)populate.Invoke(instance, new[] { (object)sample, settings });
+                        var vertices = generator.GetProperty("vertexCount");
+                        var characters = generator.GetProperty("characterCountVisible");
+                        var verts = generator.GetProperty("verts");
+                        object vertexCount = vertices == null ? null : vertices.GetValue(instance, null);
+                        object characterCount = characters == null ? null : characters.GetValue(instance, null);
+                        object list = verts == null ? null : verts.GetValue(instance, null);
+                        var countProp = list == null ? null : list.GetType().GetProperty("Count");
+                        object actualCount = countProp == null ? null : countProp.GetValue(list, null);
+                        b.AppendLine("generated=" + unity.name + " sample=" + sampleId +
+                            " populate=" + ok + " vertex_count=" +
+                            (vertexCount ?? "UNAVAILABLE") + " char_count=" +
+                            (characterCount ?? "UNAVAILABLE") + " verts_count=" +
+                            (actualCount ?? "UNAVAILABLE"));
+                    }
+                    catch (Exception ex)
+                    {
+                        b.AppendLine("generation_error=" + unity.name + " sample=" + sampleId +
+                            " type=" + ex.GetType().Name + " message=" +
+                            (ex.InnerException == null ? ex.Message : ex.InnerException.Message));
+                    }
+                }
+            }
+            b.AppendLine("text_generator_font_count=" + found);
+            b.AppendLine("probe_status=" + (found == 3 ? "COLLECTED" : "WRONG_FONT_COUNT"));
+            return b.ToString();
+        }
+
         private static string CaptureRuntimeFontEvidence()
         {
             var b = new StringBuilder();
@@ -473,6 +563,19 @@ namespace AncientMedievalJapanCore.E2E
                         // Let the original IMGUI InfoCard render additional frames
                         // before taking screenshots; no owner/game font is persisted.
                         await Task.Delay(500);
+                    }
+                    string geometryPath = Environment.GetEnvironmentVariable(
+                        "RIMWORLD_GRAINS_UI_TEXT_GEOMETRY_REPORT");
+                    if (!string.IsNullOrEmpty(geometryPath))
+                    {
+                        await RuntimeThread.Run(delegate
+                        {
+                            File.WriteAllText(geometryPath,
+                                CaptureTextGeometryEvidence(), Encoding.UTF8);
+                        });
+                        ctx.Assert(File.Exists(geometryPath) &&
+                            new FileInfo(geometryPath).Length > 200,
+                            "Unity text geometry report missing or empty.");
                     }
                     string glyphsPath = Environment.GetEnvironmentVariable(
                         "RIMWORLD_GRAINS_UI_GLYPH_REPORT");
