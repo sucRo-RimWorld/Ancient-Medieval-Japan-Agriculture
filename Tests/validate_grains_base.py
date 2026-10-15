@@ -248,6 +248,20 @@ def validate():
                     "Approved English crop description changed: " + name
                 )
                 normalized.find("description").text = HISTORICAL_MO_PLANT_DESCRIPTIONS[name]
+            # Approved 2026-10-15 MO-only TargetCount repair:
+            # validate the new counter and strip only this known extra field
+            # from a deepcopy before the immutable pre-split comparison.
+            historical_thresh = {
+                "AMJC_Thresh" + crop + size
+                for crop in ("Millet", "Buckwheat", "Barley", "Wheat")
+                for size in ("", "Bulk")
+            }
+            if name in historical_thresh:
+                counter = normalized.find("workerCounterClass")
+                assert counter is not None and counter.text == (
+                    "AMJ.Grains.RecipeWorkerCounter_PrimaryProduct"
+                ), "MO thresh TargetCount counter missing: " + name
+                normalized.remove(counter)
             raw = json.dumps(contract_signature(normalized), ensure_ascii=False, separators=(",", ":"))
             actual[node.tag + ":" + name] = hashlib.sha256(raw.encode()).hexdigest()
     from validate_grains_chain import SHARED_NAMES
