@@ -144,11 +144,57 @@ namespace AncientMedievalJapanCore.E2E
             return b.ToString();
         }
 
+
+        // Disposable rendering A/B only. The author game, production Grains, and
+        // all non-Japanese UI profiles retain their original fontNames.
+        private static int ApplyDiagnosticFontNames(string family)
+        {
+            if (string.IsNullOrWhiteSpace(family))
+                return 0;
+            if (Prefs.LangFolderName != "Japanese (日本語)" || family != "Noto Sans JP")
+                throw new InvalidOperationException("Unapproved native font experiment locale/family");
+            Type fontType = LoadedType("UnityEngine.Font");
+            if (fontType == null)
+                throw new InvalidOperationException("Unity Font type is unavailable");
+            var method = typeof(Resources).GetMethod("FindObjectsOfTypeAll",
+                new[] { typeof(Type) });
+            var names = fontType.GetProperty("fontNames");
+            if (method == null || names == null || !names.CanWrite)
+                throw new InvalidOperationException("Unity dynamic fontNames setter is unavailable");
+            var objects = method.Invoke(null, new object[] { fontType }) as Array;
+            if (objects == null)
+                throw new InvalidOperationException("Loaded Unity Font inventory unavailable");
+            int changed = 0;
+            foreach (object value in objects)
+            {
+                var unity = value as UnityEngine.Object;
+                if (unity == null || (unity.name != "Arial_small" &&
+                    unity.name != "Arial_medium" && unity.name != "Calibri_tiny"))
+                    continue;
+                var previous = names.GetValue(value, null) as string[];
+                var updated = new List<string> { family };
+                if (previous != null)
+                    foreach (string item in previous)
+                        if (!string.IsNullOrEmpty(item) && !updated.Contains(item))
+                            updated.Add(item);
+                names.SetValue(value, updated.ToArray(), null);
+                var observed = names.GetValue(value, null) as string[];
+                if (observed == null || observed.Length == 0 || observed[0] != family)
+                    throw new InvalidOperationException("Unity ignored selected diagnostic fallback");
+                changed++;
+            }
+            if (changed != 3)
+                throw new InvalidOperationException("Expected three original Verse UI fonts, got " + changed);
+            return changed;
+        }
+
         private static string CaptureRuntimeFontEvidence()
         {
             var b = new StringBuilder();
             b.AppendLine("probe=real-rimworld-native-Unity-font-after-InfoCard-render");
             b.AppendLine("language=" + Prefs.LangFolderName);
+            b.AppendLine("diagnostic_font_override=" +
+                (Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_FAMILY") ?? "NONE"));
             Type fontType = LoadedType("UnityEngine.Font");
             b.AppendLine("unity_font_type=" + (fontType == null ? "UNAVAILABLE" : fontType.AssemblyQualifiedName));
             if (fontType != null)
@@ -300,6 +346,18 @@ namespace AncientMedievalJapanCore.E2E
                 await Task.Delay(350);
                 if (index == 0)
                 {
+                    string forceFamily = Environment.GetEnvironmentVariable(
+                        "RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_FAMILY");
+                    if (!string.IsNullOrEmpty(forceFamily))
+                    {
+                        await RuntimeThread.Run(delegate
+                        {
+                            ApplyDiagnosticFontNames(forceFamily);
+                        });
+                        // Let the original IMGUI InfoCard render additional frames
+                        // before taking screenshots; no owner/game font is persisted.
+                        await Task.Delay(500);
+                    }
                     string fontsPath = Environment.GetEnvironmentVariable(
                         "RIMWORLD_GRAINS_UI_FONT_REPORT");
                     if (!string.IsNullOrEmpty(fontsPath))
