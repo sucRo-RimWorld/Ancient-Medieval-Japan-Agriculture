@@ -199,7 +199,7 @@ namespace AncientMedievalJapanCore.E2E
                         if (property == null || !property.CanWrite)
                             throw new InvalidOperationException("Verse GUIStyle font not writable");
                         property.SetValue(style, obj, null);
-                        if (!Object.ReferenceEquals(property.GetValue(style, null), obj))
+                        if (!System.Object.ReferenceEquals(property.GetValue(style, null), obj))
                             throw new InvalidOperationException("Verse font assignment was ignored");
                     }
                     ++assigned;
