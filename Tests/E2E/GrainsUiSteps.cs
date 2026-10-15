@@ -693,6 +693,82 @@ namespace AncientMedievalJapanCore.E2E
             return b.ToString();
         }
 
+        // Internal TMP font asset coverage inventory. This probes existing game
+        // resources only and never modifies the actual IMGUI font selection.
+        // A TMP glyph's presence is not proof that Verse.Text uses this atlas.
+        private static string CaptureInternalTmpCoverage()
+        {
+            var b = new StringBuilder();
+            b.AppendLine("tmp_coverage_probe=read-only-existing-resources-v1");
+            Type tmp = LoadedType("TMPro.TMP_FontAsset");
+            if (tmp == null)
+                return b.AppendLine("tmp_coverage_status=API_UNAVAILABLE").ToString();
+            MethodInfo load = typeof(Resources).GetMethod("Load",
+                new[] { typeof(string), typeof(Type) });
+            if (load == null)
+                return b.AppendLine("tmp_coverage_status=LOAD_UNAVAILABLE").ToString();
+            string[] ids = {
+                "fonts & materials/liberationsans sdf",
+                "fonts & materials/liberationsans sdf misc non-english"
+            };
+            int seen = 0;
+            foreach (string id in ids)
+            {
+                b.AppendLine("tmp_resource=" + id);
+                try
+                {
+                    object asset = load.Invoke(null, new object[] { id, tmp });
+                    if (asset == null)
+                    {
+                        b.AppendLine("tmp_resource_status=NOT_FOUND");
+                        continue;
+                    }
+                    ++seen;
+                    b.AppendLine("tmp_resource_status=FOUND");
+                    var objectName = asset as UnityEngine.Object;
+                    b.AppendLine("tmp_resource_name=" +
+                        (objectName == null ? "<unknown>" : objectName.name));
+                    PropertyInfo atlasProp = tmp.GetProperty("atlasTexture");
+                    object atlas = atlasProp == null ? null : atlasProp.GetValue(asset, null);
+                    var texture = atlas as Texture;
+                    b.AppendLine("tmp_atlas_dimensions=" + (texture == null ?
+                        "UNAVAILABLE" : texture.width + "x" + texture.height));
+                    MethodInfo has = tmp.GetMethod("HasCharacter",
+                        new[] { typeof(int) }) ??
+                        tmp.GetMethod("HasCharacter", new[] { typeof(char) });
+                    b.AppendLine("tmp_has_character_api=" + (has == null ? "UNAVAILABLE" : "PRESENT"));
+                    foreach (char c in new[] { 'A', '稲', 'あ', '中', '籾' })
+                    {
+                        if (has == null)
+                        {
+                            b.AppendLine("tmp_character_U+" + ((int)c).ToString("X4") + "=UNAVAILABLE");
+                            continue;
+                        }
+                        try
+                        {
+                            Type argType = has.GetParameters()[0].ParameterType;
+                            object arg = argType == typeof(char) ? (object)c : (int)c;
+                            bool found = (bool)has.Invoke(asset, new[] { arg });
+                            b.AppendLine("tmp_character_U+" + ((int)c).ToString("X4") +
+                                "=" + found);
+                        }
+                        catch (Exception ex)
+                        {
+                            b.AppendLine("tmp_character_U+" + ((int)c).ToString("X4") +
+                                "=ERROR:" + ex.GetType().Name);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    b.AppendLine("tmp_resource_status=ERROR:" + ex.GetType().Name);
+                }
+            }
+            b.AppendLine("tmp_resources_found=" + seen);
+            b.AppendLine("tmp_coverage_status=" + (seen == 2 ? "COLLECTED" : "INCOMPLETE"));
+            return b.ToString();
+        }
+
         private static string CaptureRuntimeFontEvidence()
         {
             var b = new StringBuilder();
@@ -788,6 +864,7 @@ namespace AncientMedievalJapanCore.E2E
                 }
             }
             b.Append(CaptureFontResolverEvidence(fontType));
+            b.Append(CaptureInternalTmpCoverage());
             return b.ToString();
         }
 
