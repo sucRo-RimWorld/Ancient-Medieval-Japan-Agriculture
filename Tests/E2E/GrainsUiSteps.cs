@@ -839,7 +839,7 @@ namespace AncientMedievalJapanCore.E2E
                     object font = fieldName == "fonts" ? entry :
                         entry?.GetType().GetProperty("font")?.GetValue(entry, null);
                     slotCount++;
-                    if (font is Font) legacyFontCount++;
+                    if (LoadedType("UnityEngine.Font").IsInstanceOfType(font)) legacyFontCount++;
                     if (font != null && type.IsInstanceOfType(font)) tmpCount++;
                 }
             }
