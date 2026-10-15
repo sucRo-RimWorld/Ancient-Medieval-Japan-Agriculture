@@ -5,6 +5,7 @@
     <workSkill>Crafting</workSkill>
     <workSkillLearnFactor>0.1</workSkillLearnFactor>
     <allowMixingIngredients>false</allowMixingIngredients>
+    <workerCounterClass>AMJ.Grains.RecipeWorkerCounter_ThreshGrain</workerCounterClass>
     <recipeUsers>
       <li>AMJC_GrainProcessingSpot</li>
       <li>AMJC_GrainProcessingTable</li>
