@@ -876,7 +876,7 @@ namespace AncientMedievalJapanCore.E2E
                         Thing primary = map.listerThings.ThingsOfDef(recipe.products[0].thingDef)
                             .FirstOrDefault(t => t.Spawned);
                         ctx.Require(primary != null, "Native DoBill did not spawn the primary grain.");
-                        IntVec3 storageCell = center + new IntVec3(6, 0, 6);
+                        IntVec3 storageCell = center + new IntVec3(0, 0, 2);
                         ctx.Require(!storageCell.GetThingList(map).Any(t => t is Building || t is Pawn),
                             "TargetCount fixture storage cell is obstructed.");
                         Zone_Stockpile stockpile = new Zone_Stockpile(StorageSettingsPreset.DefaultStockpile, map.zoneManager);
