@@ -85,4 +85,12 @@
     <xpath>/Defs/RecipeDef[defName="AMJC_ThreshRiceBulk"]</xpath>
     <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
   </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshWheat"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshWheatBulk"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
 </Patch>

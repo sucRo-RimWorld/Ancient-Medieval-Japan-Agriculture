@@ -4,7 +4,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 R = Path(__file__).resolve().parents[2]
 C = "AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain"
-expected = {"AMJC_Thresh" + crop + batch for crop in ("Millet", "Buckwheat", "Barley", "Rice") for batch in ("", "Bulk")}
+expected = {"AMJC_Thresh" + crop + batch for crop in ("Millet", "Buckwheat", "Barley", "Rice", "Wheat") for batch in ("", "Bulk")}
 patch = ET.parse(R / "Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Base.xml").getroot()
 seen = {}
 for op in patch.findall("Operation"):
@@ -27,7 +27,7 @@ wheat = ET.parse(R / "Compatibility/MedievalOverhaul/Defs/Recipes_MOWheat.xml").
 wheat_recs = [r for r in wheat.findall("RecipeDef") if r.findtext("defName")]
 assert {r.findtext("defName") for r in wheat_recs} == {"AMJC_ThreshWheat", "AMJC_ThreshWheatBulk"}
 for r in wheat_recs:
-    assert r.findtext("workerCounterClass") == C
+    assert r.find("workerCounterClass") is None
     assert [o.tag for o in r.findall("products/*")] == ["AMJC_Wheat", "DankPyon_Straw"]
 assert all(r.find("workerCounterClass") is None for r in ET.parse(R / "BaseWithoutMO/Defs/Recipes_Wheat.xml").getroot().findall("RecipeDef"))
 s = (R / "Source/AMJGrains/RecipeWorkerCounter_PrimaryGrain.cs").read_text()
