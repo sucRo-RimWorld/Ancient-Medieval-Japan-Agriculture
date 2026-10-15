@@ -769,6 +769,45 @@ namespace AncientMedievalJapanCore.E2E
             return b.ToString();
         }
 
+        private static string InspectTmpLookupTables()
+        {
+            var result = new StringBuilder();
+            result.AppendLine("tmp_tables_probe=v1");
+            Type type = LoadedType("TMPro.TMP_FontAsset");
+            if (type == null) return result.AppendLine("tmp_tables_status=UNAVAILABLE").ToString();
+            var flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+            var load = typeof(Resources).GetMethod("Load",
+                new[] { typeof(string), typeof(Type) });
+            int found = 0;
+            foreach (string name in new[] {
+                "fonts & materials/liberationsans sdf",
+                "fonts & materials/liberationsans sdf misc non-english" })
+            {
+                object asset = load.Invoke(null, new object[] { name, type });
+                if (asset == null) continue;
+                found++;
+                result.AppendLine("tmp_table_name=" + name);
+                foreach (string fieldName in new[] {
+                    "m_CharacterTable", "m_GlyphTable",
+                    "m_CharacterLookupDictionary", "m_FallbackFontAssetTable" })
+                {
+                    var field = type.GetField(fieldName, flags);
+                    object val = field == null ? null : field.GetValue(asset);
+                    var collection = val as System.Collections.ICollection;
+                    result.AppendLine("tmp_" + fieldName + "=" +
+                        (collection == null ? "UNAVAILABLE" : collection.Count.ToString()));
+                }
+                var p = type.GetProperty("characterLookupTable", flags);
+                var lookup = p == null ? null : p.GetValue(asset, null)
+                    as System.Collections.IDictionary;
+                result.AppendLine("tmp_lookup_initialized_count=" +
+                    (lookup == null ? "UNAVAILABLE" : lookup.Count.ToString()));
+            }
+            result.AppendLine("tmp_tables_found=" + found);
+            result.AppendLine("tmp_tables_status=" + (found == 2 ? "COLLECTED" : "INCOMPLETE"));
+            return result.ToString();
+        }
+
         private static string CaptureRuntimeFontEvidence()
         {
             var b = new StringBuilder();
@@ -865,6 +904,7 @@ namespace AncientMedievalJapanCore.E2E
             }
             b.Append(CaptureFontResolverEvidence(fontType));
             b.Append(CaptureInternalTmpCoverage());
+            b.Append(InspectTmpLookupTables());
             return b.ToString();
         }
 
