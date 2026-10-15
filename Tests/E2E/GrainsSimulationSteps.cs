@@ -517,10 +517,7 @@ namespace AncientMedievalJapanCore.E2E
                         barleyJob = NativeSowOffer(barleyCell);
                         ctx.Require(barleyJob != null && barleyJob.def == JobDefOf.Sow &&
                             barleyJob.plantDefToSow == barley,
-                            "Barley needs a native sow job at 5 C; nativeSowingSeason="
-                            + PlantUtility.GrowthSeasonNow(barleyCell, map, true)
-                            + ", nativeGrowingSeason=" + PlantUtility.GrowthSeasonNow(barleyCell, map, false)
-                            + ", barleyGrowingSeason=" + PlantUtility.GrowthSeasonNow(barleyCell, map, barley)
+                            "Barley needs a native sow job at 5 C; barleyGrowingSeason=" + PlantUtility.GrowthSeasonNow(barleyCell, map, barley)
                             + ", zoneCrop=" + barleyZone.GetPlantDefToGrow().defName
                             + ", job=" + (barleyJob == null ? "null" : barleyJob.def.defName)
                             + ", cellThings=" + string.Join(",", barleyCell.GetThingList(map)
