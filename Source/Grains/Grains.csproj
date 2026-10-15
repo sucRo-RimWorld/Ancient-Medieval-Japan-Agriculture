@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>AMJ.Grains</AssemblyName>
+    <RootNamespace>AMJ.Grains</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputPath>../../Assemblies/</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(RimWorldManagedDir)/Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(RimWorldManagedDir)/UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <Target Name="RequireGameManagedAssemblies" BeforeTargets="ResolveReferences">
+    <Error Condition="'$(RimWorldManagedDir)' == ''" Text="Pass -p:RimWorldManagedDir=/path/to/RimWorldLinux_Data/Managed; do not build against unrelated game versions." />
+    <Error Condition="!Exists('$(RimWorldManagedDir)/Assembly-CSharp.dll')" Text="RimWorld Assembly-CSharp.dll not found." />
+  </Target>
+</Project>
