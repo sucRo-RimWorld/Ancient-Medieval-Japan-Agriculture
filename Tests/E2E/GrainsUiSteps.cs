@@ -22,7 +22,7 @@ namespace AncientMedievalJapanCore.E2E
             "rice plant", "rice sheaf", "rice in hull", "rice"
         };
         private static readonly string[] RiceJapanese = {
-            "稲", "稲束", "籾", "米"
+            "稲", "稲束", "籾", "米(生)"
         };
         private static readonly int[] RiceParagraphs = { 2, 2, 2, 4 };
         private static readonly string[] FoodDefs = {
