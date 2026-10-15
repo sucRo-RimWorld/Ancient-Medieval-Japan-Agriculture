@@ -14,6 +14,7 @@
   </RecipeDef>
   <RecipeDef ParentName="AMJC_WheatProcessingBase">
     <defName>AMJC_ThreshWheat</defName>
+    <workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass>
     <label>thresh wheat</label>
     <description>Thresh a harvested wheat sheaf to separate edible grain from the straw.</description>
     <jobString>Threshing wheat.</jobString>
@@ -44,6 +45,7 @@
   </RecipeDef>
   <RecipeDef ParentName="AMJC_WheatProcessingBase">
     <defName>AMJC_ThreshWheatBulk</defName>
+    <workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass>
     <label>thresh wheat x10</label>
     <description>Thresh ten harvested wheat sheaves in one batch.</description>
     <jobString>Threshing wheat in bulk.</jobString>

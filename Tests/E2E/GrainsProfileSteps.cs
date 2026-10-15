@@ -83,6 +83,22 @@ namespace AncientMedievalJapanCore.E2E
                         ctx.Assert(recipe.products.Count == 1 && recipe.products.All(p => p.thingDef.defName.StartsWith("AMJC_")),
                             "Base threshing must produce only its AMJ grain: " + recipe.defName);
                 }
+                // MO produces Straw as a byproduct, but TargetCount tracks grain only.
+                bool moThresh = Active("dankpyon.medieval.overhaul");
+                foreach (RecipeDef thresh in DefDatabase<RecipeDef>.AllDefsListForReading.Where(
+                    r => r.defName.StartsWith("AMJC_Thresh")))
+                {
+                    ctx.Assert(thresh.products.Count == (moThresh ? 2 : 1)
+                        && (!moThresh || thresh.products[1].thingDef.defName == "DankPyon_Straw"),
+                        "Thresh outputs must keep primary grain followed by optional MO Straw: " + thresh.defName);
+                    if (moThresh)
+                    {
+                        ctx.Assert(thresh.WorkerCounter.GetType().FullName == "AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain",
+                            "MO thresh must use the primary-grain counter: " + thresh.defName);
+                        ctx.Assert(thresh.WorkerCounter.CanCountProducts(new Bill_Production(thresh)),
+                            "MO thresh must allow TargetCount: " + thresh.defName);
+                    }
+                }
                 ThingDef rice = DefDatabase<ThingDef>.GetNamed("Plant_Rice");
                 ThingDef rawRice = DefDatabase<ThingDef>.GetNamed("RawRice");
                 ThingDef riceSheaf = DefDatabase<ThingDef>.GetNamed("AMJC_RiceSheaf");

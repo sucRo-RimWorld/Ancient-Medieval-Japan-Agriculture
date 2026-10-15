@@ -414,6 +414,8 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 | 繊維・紡績・製紙 | 所有しない | Grains-MO互換にも置かない | **Grains外。将来のMaterials/Textiles等で決定** |
 | 根菜・一般野菜 | 所有しない | 所有しない | **Grains外。将来所有先を決定** |
 
+**脱穀「Xまで実行」の修正仕様（2026-10-15）:** MO併用時の脱穀10レシピは主製品（穀粒・籾）と副産物 `DankPyon_Straw` を出力する。`workerCounterClass` はGrains専用 `AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain` とし、先頭の主製品だけをカウントする。ゾーン・品質・在庫条件はRimWorld標準 `CountProducts` を継承する。従来の藁、材料、歩留まり、作業量、DefName、`targetCountAdjustment` を変更しない。Vanillaは標準カウンターのままとする。MO向け配布前に `Assemblies/AMJGrains.dll` を公式ゲーム参照に対してビルドし、ロード・Billの実行・配布物への同梱を確認する。C#ソースのみの変更を実機PASSやリリース完成とはみなさない。
+
 **β暫定脱穀・殻取り経路（2026-10-13 作者確定）:** AMJ専用加工設備の完成まで、**Vanilla・MO両構成**で、既存の簡易加工場 `AMJC_GrainProcessingSpot` と加工台 `AMJC_GrainProcessingTable` に加え、Vanilla燃料式調理台 `FueledStove` と電気式調理台 `ElectricStove` にも脱穀・殻取りRecipeを登録する。雑穀・蕎麦・大麦・米の脱穀・殻取り各単品/10個、および小麦脱穀の単品/10個、計18Recipeを対象とし、共通加工親RecipeとMO有無別の小麦親Recipeにだけ設備を追加する。既存の材料・加工量・作業量（脱穀1個15／10個120、殻取り1個10／10個80）・研究条件・Craftingスキルは変更しない。MO導入時のみ従来の脱穀Strawを維持し、VanillaにはStrawを追加しない。独立WorkGiverや新しい設備Defは作らない。AMJ設備完成時に調理台経路を撤去検討する。**製粉のMO石臼専用経路はこの変更に含めない。** 実ゲームで両構成の調理台Billを実行し、ERROR 0を確認するまでは動作確認済みとしない。
 
 **小麦統合の固定ルール**

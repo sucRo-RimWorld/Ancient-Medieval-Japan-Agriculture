@@ -52,4 +52,37 @@
   </Operation>
   <Operation Class="PatchOperationAdd"><xpath>/Defs/RecipeDef[defName="AMJC_ThreshRice"]/products</xpath><value><DankPyon_Straw>1</DankPyon_Straw></value></Operation>
   <Operation Class="PatchOperationAdd"><xpath>/Defs/RecipeDef[defName="AMJC_ThreshRiceBulk"]/products</xpath><value><DankPyon_Straw>10</DankPyon_Straw></value></Operation>
+  <!-- MO threshing's first product is grain; its second product is Straw. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshMillet"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshMilletBulk"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshBuckwheat"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshBuckwheatBulk"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshBarley"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshBarleyBulk"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshRice"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef[defName="AMJC_ThreshRiceBulk"]</xpath>
+    <value><workerCounterClass>AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain</workerCounterClass></value>
+  </Operation>
 </Patch>
