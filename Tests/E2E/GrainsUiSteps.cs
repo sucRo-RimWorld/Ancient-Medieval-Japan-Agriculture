@@ -354,10 +354,10 @@ namespace AncientMedievalJapanCore.E2E
                         field("font", font);
                         field("fontSize", 20);
                         field("color", Color.white);
-                        field("fontStyle", FontStyle.Normal);
-                        field("textAnchor", TextAnchor.UpperLeft);
-                        field("horizontalOverflow", HorizontalWrapMode.Overflow);
-                        field("verticalOverflow", VerticalWrapMode.Overflow);
+                        field("fontStyle", Enum.Parse(LoadedType("UnityEngine.FontStyle"), "Normal"));
+                        field("textAnchor", Enum.Parse(LoadedType("UnityEngine.TextAnchor"), "UpperLeft"));
+                        field("horizontalOverflow", Enum.Parse(LoadedType("UnityEngine.HorizontalWrapMode"), "Overflow"));
+                        field("verticalOverflow", Enum.Parse(LoadedType("UnityEngine.VerticalWrapMode"), "Overflow"));
                         field("scaleFactor", 1f);
                         field("lineSpacing", 1f);
                         field("generationExtents", new Vector2(700f, 350f));
