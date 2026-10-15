@@ -151,27 +151,56 @@ namespace AncientMedievalJapanCore.E2E
         // object to the real Verse GUIStyles and fonts[] in this process only.
         private static string ApplyExplicitTestFontToGuiStyles(string requested)
         {
+            bool directFile = requested == "Noto Sans JP Path";
             if (Prefs.LangFolderName != "Japanese (日本語)" ||
-                requested != "Noto Sans JP")
-                throw new InvalidOperationException("Diagnostic font object: invalid locale/family");
+                (!directFile && requested != "Noto Sans JP"))
+                throw new InvalidOperationException("Diagnostic font object: invalid locale/mode");
             Type fontType = LoadedType("UnityEngine.Font");
             if (fontType == null)
                 throw new InvalidOperationException("No loaded Unity.Font API");
-            var creator = fontType.GetMethod("CreateDynamicFontFromOSFont",
-                new[] { typeof(string), typeof(int) });
-            if (creator == null)
-                throw new InvalidOperationException("Unity.Font.CreateDynamicFontFromOSFont unavailable");
-            object obj = creator.Invoke(null, new object[] { requested, 20 });
+            object obj;
+            if (directFile)
+            {
+                // The exact OTF has already been verified by the private host
+                // and placed ONLY inside the disposable Japanese game's HOME.
+                // Do not resolve the OS font family, because actual Unity
+                // GetPathsToOSFonts showed that Noto is absent from its list.
+                string input = Environment.GetEnvironmentVariable(
+                    "RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_FILE");
+                string home = Environment.GetEnvironmentVariable("HOME");
+                if (string.IsNullOrWhiteSpace(input) || string.IsNullOrWhiteSpace(home))
+                    throw new InvalidOperationException("Missing isolated exact font file");
+                string path = Path.GetFullPath(input);
+                string expected = Path.GetFullPath(Path.Combine(home,
+                    ".local/share/fonts/NotoSansJP-Regular.otf"));
+                if (path != expected || !File.Exists(path) ||
+                    new FileInfo(path).Length != 4533028)
+                    throw new InvalidOperationException("Unverified or nonisolated OTF font path");
+                var ctor = fontType.GetConstructor(new[] { typeof(string) });
+                if (ctor == null)
+                    throw new InvalidOperationException("Unity Font(string filePath) unavailable");
+                obj = ctor.Invoke(new object[] { path });
+            }
+            else
+            {
+                var creator = fontType.GetMethod("CreateDynamicFontFromOSFont",
+                    new[] { typeof(string), typeof(int) });
+                if (creator == null)
+                    throw new InvalidOperationException("Unity Font OS family creator unavailable");
+                obj = creator.Invoke(null, new object[] { requested, 20 });
+            }
             UnityEngine.Object newFont = obj as UnityEngine.Object;
             if (newFont == null)
-                throw new InvalidOperationException("Native Unity could not create Japanese font object");
-            newFont.name = "AMJ_Test_NotoSansJP";
+                throw new InvalidOperationException("Unity did not create test font object");
+            newFont.name = directFile ? "AMJ_Test_NotoPath" : "AMJ_Test_NotoSansJP";
 
             var fields = typeof(Verse.Text).GetFields(
                 BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             int assigned = 0;
             var report = new StringBuilder();
             report.AppendLine("font_object_requested=" + requested);
+            report.AppendLine("font_object_source=" +
+                (directFile ? "direct-verified-otf-path" : "os-family"));
             report.AppendLine("font_object_actual=" + newFont.name);
             report.AppendLine("font_object_fontNames=" +
                 string.Join(",", fontType.GetProperty("fontNames").GetValue(obj, null) as string[]
@@ -404,7 +433,8 @@ namespace AncientMedievalJapanCore.E2E
                 var unity = font as UnityEngine.Object;
                 if (unity == null || (unity.name != "Arial_small" &&
                     unity.name != "Arial_medium" && unity.name != "Calibri_tiny" &&
-                    unity.name != "AMJ_Test_NotoSansJP"))
+                    unity.name != "AMJ_Test_NotoSansJP" &&
+                    unity.name != "AMJ_Test_NotoPath"))
                     continue;
                 ++found;
                 b.AppendLine("font=" + unity.name);
@@ -481,9 +511,11 @@ namespace AncientMedievalJapanCore.E2E
                 }
             }
             b.AppendLine("new_font_object_in_probe=" +
-                (Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT") == "Noto Sans JP"));
+                (Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT") == "Noto Sans JP" ||
+                 Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT") == "Noto Sans JP Path"));
             b.AppendLine("text_generator_font_count=" + found);
-            bool testFontInjected = Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT") == "Noto Sans JP";
+            string requestedFont = Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_DIAGNOSTIC_FONT_OBJECT");
+            bool testFontInjected = requestedFont == "Noto Sans JP" || requestedFont == "Noto Sans JP Path";
             b.AppendLine("probe_status=" + (found == (testFontInjected ? 4 : 3) ? "COLLECTED" : "WRONG_FONT_COUNT"));
             return b.ToString();
         }
