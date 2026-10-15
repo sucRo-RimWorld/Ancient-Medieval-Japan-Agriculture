@@ -84,6 +84,12 @@ The Project private isolated native game must preserve this nonempty text report
 
 **Still open:** Japanese glyph/actual InfoCard text visibility, real normal-map-zoom crop and item composition (not merely `MatSingle`), loaded MO/MO+CCTO bilingual UI under original/controlled media, final manual graphic quality and private-play release gate. No text, recipe, gameplay, image, save, original MO media or Steam Workshop source was modified in this test.
 
+## MO脱穀「Xまで実行」ネイティブ回帰（2026-10-15）
+
+- **プロファイル:** Vanilla・CCTOは単一生成物による標準TargetCountを維持。MO・MO+CCTOは稲/雑穀/蕎麦/大麦/小麦の各x1/x10脱穀が `AMJ.Grains.RecipeWorkerCounter_PrimaryProduct` を利用し、`CanCountProducts` がtrueであることを実ロードで検証する。
+- **実行:** 脱穀レシピの実Billを「Xまで実行」に切り替え、主製品だけの既存在庫を数えること、閾値未満で実行し閾値到達後に停止すること、主製品消費後に再開することを確認する。生成物の主穀と藁の出力数は単品それぞれ1、x10はそれぞれ10。藁だけを増減させてもTargetCountの現在数を変えない。料理・製粉・籾摺りはこの修正で変更しない。
+- **証拠区分:** C#ソース、XML、静的テスト、CIコンパイルは実ゲームPASSではない。正規の1.6 native hostに配置された **実DLL**、Pickleシナリオ、Unity ERROR0と完了ログで別途確定する。1.7は分岐対応時に再検証する。
+
 ## Next consolidated native food-Bill matrix: missing execution coverage (2026-10-13)
 
 **2026-10-13 implementation update — SOURCE ONLY:** `Tests/E2E/GrainsSimulationSteps.cs` now includes an independent `CommonFoodJobs` / `CommonFoodBill` scenario in every real-provider profile. It stages exactly the declared 0.5/2.0 Nutrition in **one input Def** or **two different permitted input Defs** and has the *actual* `WorkGiver_DoBill` produce 1/4 food servings. For each of 飯、粥、粉食, both batch sizes and both input modes run once: **12 native Bill cases per profile**. The fixture uses `ThingMaker` to create **test-only input stacks** rather than harvesting them; the separate unchanged harvest/processing E2E scenario supplies end-to-end crop evidence. Product and per-ingredient counts must match, and setup/teardown must restore its isolated map. At the time of this seven-case expansion, the four profile lists expected **7 scenarios per profile (28/28 across four profiles)** rather than the preceding historical six; the current ten-case V1 suite is specified in the reconciliation below. The 1.7 runner prints the dynamic configured scenario count. `Tests/Production/test_grains_mixed_meals.py` guards scenario wiring in CI; it **does not compile C# or prove native gameplay**. A new exact-head 1.6/1.7 runtime, ERROR 0, job timing and UI remain OPEN. The prior 24/24 real 1.7 evidence is historical, not a current 40/40 result.

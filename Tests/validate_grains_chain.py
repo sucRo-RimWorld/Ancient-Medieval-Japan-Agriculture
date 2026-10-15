@@ -83,6 +83,20 @@ def validate(root=ROOT):
                     rec = defs[name]
                     assert rec.get('ParentName') == parent and rec.find('recipeUsers') is None, (
                         'Processing recipe must inherit shared bench users', name)
+                    # MO adds straw to thresh Bills. TargetCount must count only
+                    # the FIRST output, never the incidental straw.
+                    expected_counter = (
+                        'AMJ.Grains.RecipeWorkerCounter_PrimaryProduct' if profile == 'mo' and operation == 'Thresh'
+                        else None
+                    )
+                    assert rec.findtext('workerCounterClass') == expected_counter, (
+                        'MO target-count thresh counter', profile, name)
+                    if expected_counter:
+                        products = rec.findall('products/*')
+                        assert len(products) == 2 and products[0].tag != 'DankPyon_Straw' and (
+                            products[1].tag == 'DankPyon_Straw'
+                        ), ('Primary grain must precede straw for target counting', name)
+
         for name, count in [('AMJC_ThreshWheat',1), ('AMJC_ThreshWheatBulk',10)]:
             rec = defs[name]
             expected = 'DankPyon_RawWheat' if profile == 'mo' else 'AMJC_RawWheat'

@@ -426,6 +426,12 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 - 既存MO+Coreセーブで参照されているMO小麦/RawWheatと AMJC_Wheat の関係は維持する。Core更新と同時にMOを既存セーブから外す移行は別ケースとして扱う。
 - MO小麦の成長・肥沃度等はGrainsの穀物バランスに合わせて条件付きPatchし、供給元がMOであることを理由に未調整値へ戻さない。
 
+**脱穀Bill「Xまで実行」の固定ルール（2026-10-15）**
+
+- MOありの脱穀は穀粒と `DankPyon_Straw` の2製品を生むが、`Xまで実行` は主製品の在庫数で判定する。主製品は必ず `products` の先頭とし、副産物の藁はカウントに含めない。
+- MOありの全5穀・単品／10個脱穀Bill（計10 Recipe）に `AMJ.Grains.RecipeWorkerCounter_PrimaryProduct` を設定する。Baseの単一出力Recipeには不要。対象数、材料、作業量、歩留まり、藁量、既存DefNameを変えない。
+- カウンターはバニラ `RecipeWorkerCounter` の在庫集計・作業台のストック設定を継承し、2製品の場合にも `CanCountProducts` を有効とする。UIの製品説明も主製品に一致させる。RimWorld 1.6向け `Assemblies/AMJ.Grains.dll` の実体と、MOありの実ゲーム「Xまで実行」完了・再開確認を導入条件とする。ソース／CIコンパイルだけでは実プレイ修正とは認めない。
+
 **Strawの固定ルール**
 - Grains単体ではStraw ThingDefを所有しない。
 - Vanilla + Grainsの主要ループで独立した需要先を持たず、依存解除のためだけに追加すると用途の薄い在庫を増やすためである。

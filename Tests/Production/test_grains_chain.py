@@ -27,6 +27,23 @@ class ChainRegressionTests(unittest.TestCase):
 
     def test_current_chain(self):validate(self.root)
 
+    def test_mo_rice_target_counter_cannot_be_removed(self):
+        path = self.root/'Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Base.xml'
+        doc = ET.parse(path)
+        target = '/Defs/RecipeDef[defName="AMJC_ThreshRiceBulk"]'
+        operation = next(op for op in doc.findall('Operation')
+                         if op.findtext('xpath') == target)
+        operation.find('value/workerCounterClass').text = 'Verse.RecipeWorkerCounter'
+        doc.write(path)
+        with self.assertRaisesRegex(AssertionError, 'MO target-count thresh counter'):
+            validate(self.root)
+
+    def test_mo_wheat_target_counter_cannot_be_removed(self):
+        self.mutate('Compatibility/MedievalOverhaul/Defs/Recipes_MOWheat.xml',
+                    'RecipeDef[defName="AMJC_ThreshWheatBulk"]/workerCounterClass',
+                    'Verse.RecipeWorkerCounter')
+
+
     def test_both_ccto_provider_titles_are_retained(self):
         validate_ccto_detection(self.root)
         for path in ('Patches/Compatibility/CCTO_StageA.xml',

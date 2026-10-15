@@ -1,0 +1,33 @@
+name: Build Grains primary-product counter (1.6)
+
+on:
+  pull_request:
+    paths:
+      - 'Source/AMJ.Grains/**'
+      - 'Compatibility/MedievalOverhaul/**'
+      - '.github/workflows/build-grains-counter.yml'
+      - 'Assemblies/AMJ.Grains.dll'
+  push:
+    branches: [main]
+    paths:
+      - 'Source/AMJ.Grains/**'
+      - 'Compatibility/MedievalOverhaul/**'
+      - '.github/workflows/build-grains-counter.yml'
+      - 'Assemblies/AMJ.Grains.dll'
+
+jobs:
+  build-runtime-assembly:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Compile against RimWorld 1.6 reference assemblies
+        run: dotnet build Source/AMJ.Grains/AMJ.Grains.csproj --configuration Release
+      - name: Upload compiled runtime assembly for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: amj-grains-primary-counter-1.6
+          path: Source/AMJ.Grains/bin/Release/net472/AMJ.Grains.dll
+          if-no-files-found: error
