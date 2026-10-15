@@ -824,8 +824,31 @@ namespace AncientMedievalJapanCore.E2E
                     result.AppendLine("tmp_lookup_U+" + code.ToString("X4") + "=" +
                         (lookup != null && lookup.Contains((uint)code)));
             }
+            int slotCount = 0;
+            int legacyFontCount = 0;
+            int tmpCount = 0;
+            foreach (string fieldName in new[] { "fonts", "fontStyles",
+                "textFieldStyles", "textAreaStyles", "textAreaReadOnlyStyles" })
+            {
+                var field = typeof(Verse.Text).GetField(fieldName,
+                    BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                var slots = field == null ? null : field.GetValue(null) as Array;
+                if (slots == null) continue;
+                foreach (object entry in slots)
+                {
+                    object font = fieldName == "fonts" ? entry :
+                        entry?.GetType().GetProperty("font")?.GetValue(entry, null);
+                    slotCount++;
+                    if (font is Font) legacyFontCount++;
+                    if (font != null && type.IsInstanceOfType(font)) tmpCount++;
+                }
+            }
+            result.AppendLine("verse_font_slot_count=" + slotCount);
+            result.AppendLine("verse_unity_font_count=" + legacyFontCount);
+            result.AppendLine("verse_tmp_font_count=" + tmpCount);
             result.AppendLine("tmp_tables_found=" + found);
-            result.AppendLine("tmp_tables_status=" + (found == 2 ? "COLLECTED" : "INCOMPLETE"));
+            result.AppendLine("tmp_tables_status=" +
+                (found == 2 && slotCount == 15 ? "COLLECTED" : "INCOMPLETE"));
             return result.ToString();
         }
 
