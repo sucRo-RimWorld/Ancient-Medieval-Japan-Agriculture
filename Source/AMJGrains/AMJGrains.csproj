@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net481</TargetFramework>
+    <AssemblyName>AMJGrains</AssemblyName>
+    <RootNamespace>AMJ.Grains</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net481" Version="1.0.3" PrivateAssets="all" />
+    <Compile Include="RecipeWorkerCounter_PrimaryGrain.cs" />
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(RimWorldManagedDir)/Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(RimWorldManagedDir)/UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <Target Name="RequireGameAssembly" BeforeTargets="ResolveReferences">
+    <Error Condition="'$(RimWorldManagedDir)' == ''" Text="Pass -p:RimWorldManagedDir=/path/to/game/Managed." />
+    <Error Condition="!Exists('$(RimWorldManagedDir)/Assembly-CSharp.dll')" Text="Assembly-CSharp.dll not available." />
+  </Target>
+</Project>
