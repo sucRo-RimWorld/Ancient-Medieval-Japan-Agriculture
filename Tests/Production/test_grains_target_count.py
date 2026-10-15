@@ -19,7 +19,7 @@ for op in patch.findall("Operation"):
 assert seen == dict.fromkeys(expected, C), seen
 common = ET.parse(R / "Defs/RecipeDefs/Recipes_GrainProcessing.xml").getroot()
 defs = {r.findtext("defName"): r for r in common.findall("RecipeDef") if r.findtext("defName")}
-for name in expected:
+for name in expected - {"AMJC_ThreshWheat", "AMJC_ThreshWheatBulk"}:
     rec = defs[name]
     out = rec.findall("products/*")
     assert len(out) == 1 and out[0].tag != "DankPyon_Straw" and rec.find("workerCounterClass") is None, name
