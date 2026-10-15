@@ -858,9 +858,12 @@ namespace AncientMedievalJapanCore.E2E
                     }
                     Start(job, recipeName);
                 });
-                await Complete(job, () => (untilTarget ? recipe.WorkerCounter.CountProducts(bill) >= bill.targetCount : bill.repeatCount == 0)
-                    && recipe.products.All(p =>
-                    Count(p.thingDef.defName) == products[p.thingDef.defName] + p.count), recipeName);
+                // The pawn may be carrying finished products; the normal counter
+                // intentionally counts spawned stock only. Complete the native job
+                // and drop carried output before asserting the TargetCount threshold.
+                await Complete(job, () => recipe.products.All(p =>
+                    Count(p.thingDef.defName) == products[p.thingDef.defName] + p.count)
+                    && (untilTarget || bill.repeatCount == 0), recipeName);
                 await RuntimeThread.Run(delegate
                 {
                     ctx.Assert(Count(ingredient) == before - consumed, recipeName + " consumed the wrong ingredient quantity.");
