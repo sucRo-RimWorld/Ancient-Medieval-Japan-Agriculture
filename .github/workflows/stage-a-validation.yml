@@ -52,6 +52,9 @@ jobs:
       - name: Reject flour-chain balance and provider regressions
         run: python Tests/Production/test_grains_chain.py
 
+      - name: Audit MO thresh target-count source contract
+        run: python Tests/Production/test_grains_target_count.py
+
       - name: Validate shared mixed cereal and flour meals (Base/MO)
         run: python Tests/Production/test_grains_mixed_meals.py
 
