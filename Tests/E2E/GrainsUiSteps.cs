@@ -194,10 +194,33 @@ namespace AncientMedievalJapanCore.E2E
                 throw new InvalidOperationException("Unity did not create test font object");
             newFont.name = directFile ? "AMJ_Test_NotoPath" : "AMJ_Test_NotoSansJP";
 
+            var originals = typeof(Verse.Text).GetField("fonts",
+                BindingFlags.Static | BindingFlags.Public |
+                BindingFlags.NonPublic)?.GetValue(null) as Array;
+            var originalStyles = typeof(Verse.Text).GetField("fontStyles",
+                BindingFlags.Static | BindingFlags.Public |
+                BindingFlags.NonPublic)?.GetValue(null) as Array;
+            var originalMetrics = new StringBuilder();
+            for (int index = 0; index < 3; index++)
+            {
+                object old = originals == null ? null : originals.GetValue(index);
+                object style = originalStyles == null ? null : originalStyles.GetValue(index);
+                var oldSizeProperty = fontType.GetProperty("fontSize");
+                int oldSize = old == null || oldSizeProperty == null ? -1 :
+                    Convert.ToInt32(oldSizeProperty.GetValue(old, null));
+                int styleSize = style == null ? -1 :
+                    Convert.ToInt32(style.GetType().GetProperty("fontSize")
+                        .GetValue(style, null));
+                var oldFont = old as UnityEngine.Object;
+                originalMetrics.AppendLine("original_font_index=" + index +
+                    " name=" + (oldFont == null ? "UNAVAILABLE" : oldFont.name) +
+                    " font_size=" + oldSize + " style_size=" + styleSize);
+            }
             var fields = typeof(Verse.Text).GetFields(
                 BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
             int assigned = 0;
             var report = new StringBuilder();
+            report.Append(originalMetrics.ToString());
             report.AppendLine("font_object_requested=" + requested);
             report.AppendLine("font_object_source=" +
                 (directFile ? "direct-verified-otf-path" : "os-family"));
