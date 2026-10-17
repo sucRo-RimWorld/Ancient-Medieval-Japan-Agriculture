@@ -204,11 +204,76 @@ def validate():
     assert translations == golden["recipeTranslations"], "MO recipe translations changed during split"
     crop_descriptions = approved_plant_descriptions(ROOT)
     stage_descriptions = reviewed_stage_descriptions(ROOT)
+    # The Grains storage filter hierarchy is separate from MO's recipe filter.
+    categories = {n.findtext("defName"): n.findtext("parent") for n in base.findall("ThingCategoryDef")}
+    assert {n: categories[n] for n in (
+        "AMJC_Grains", "AMJC_GrainSheaves", "AMJC_GrainKernels", "AMJC_GrainFlour"
+    )} == {
+        "AMJC_Grains": "PlantFoodRaw", "AMJC_GrainSheaves": "AMJC_Grains",
+        "AMJC_GrainKernels": "AMJC_Grains", "AMJC_GrainFlour": "AMJC_Grains",
+    }, "Grain storage category hierarchy"
+    grain_members = {
+        "AMJC_GrainSheaves": ("AMJC_RawMillet", "AMJC_RawBuckwheat", "AMJC_RawBarley", "AMJC_RiceSheaf"),
+        "AMJC_GrainKernels": ("AMJC_MilletInHull", "AMJC_BuckwheatInHull",
+            "AMJC_BarleyInHull", "AMJC_RiceInHull", "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley"),
+        "AMJC_GrainFlour": ("AMJC_BuckwheatFlour", "AMJC_MilletFlour",
+            "AMJC_BarleyFlour", "AMJC_RiceFlour"),
+    }
+    for doc in (base, mo):
+        items = {n.findtext("defName"): n for n in doc.findall("ThingDef")}
+        for category, names in grain_members.items():
+            for name in names:
+                assert [li.text for li in items[name].findall("thingCategories/li")] == [category], (
+                    "Grain storage membership: " + name)
+    for path, item, category in (
+        ("BaseWithoutMO/Defs/Items_Wheat.xml", "AMJC_RawWheat", "AMJC_GrainSheaves"),
+        ("BaseWithoutMO/Defs/Items_Flour.xml", "AMJC_WheatFlour", "AMJC_GrainFlour"),
+    ):
+        defs = ET.parse(ROOT / path)
+        assert defs.findtext("ThingDef/defName") == item
+        assert [n.text for n in defs.findall("ThingDef/thingCategories/li")] == [category], item
+    wheat_patch = ET.parse(ROOT / "BaseWithoutMO/Patches/GrainCategories_Wheat.xml")
+    assert wheat_patch.findtext("Operation/xpath") == '/Defs/ThingDef[defName="AMJC_Wheat"]'
+    assert wheat_patch.findtext("Operation/value/thingCategories/li") == "AMJC_GrainKernels"
+    rice_patch = ET.parse(ROOT / "Patches/GrainCategories_Rice.xml")
+    assert rice_patch.findtext("Operation/xpath") == '/Defs/ThingDef[defName="RawRice"]/thingCategories'
+    assert rice_patch.findtext("Operation/match/xpath") == '/Defs/ThingDef[defName="RawRice"]/thingCategories'
+    assert rice_patch.findtext("Operation/match/value/li") == "AMJC_GrainKernels"
+    assert rice_patch.findtext("Operation/nomatch/xpath") == '/Defs/ThingDef[defName="RawRice"]'
+    assert rice_patch.findtext("Operation/nomatch/value/thingCategories/li") == "AMJC_GrainKernels"
+    mo_patch = ET.parse(ROOT / MO_FOLDER / "Patches/ZZ_GrainCategories_MO.xml")
+    mo_ops = mo_patch.findall("Operation")
+    assert [(op.get("Class"), op.findtext("xpath")) for op in mo_ops] == [
+        ("PatchOperationReplace", '/Defs/ThingDef[defName="DankPyon_RawWheat"]/thingCategories'),
+        ("PatchOperationAdd", '/Defs/ThingDef[defName="AMJC_Wheat"]/thingCategories'),
+        ("PatchOperationAdd", '/Defs/ThingDef[defName="DankPyon_Flour"]/thingCategories'),
+    ], "MO storage categories"
+    assert mo_ops[0].findtext("value/thingCategories/li") == "AMJC_GrainSheaves"
+    assert mo_ops[1].findtext("value/li") == "AMJC_GrainKernels"
+    assert mo_ops[2].findtext("value/li") == "AMJC_GrainFlour"
+    mo_wheat = next(n for n in mo.findall("ThingDef") if n.findtext("defName") == "AMJC_Wheat")
+    assert [li.text for li in mo_wheat.findall("thingCategories/li")] == ["DankPyon_Cereal"]
     actual = {}
     for node in mo:
         name = node.findtext("defName") or node.get("Name")
+        if node.tag == "ThingCategoryDef":
+            continue  # New storage UI categories are absent from the historical MO fixture.
         if name and name.startswith("AMJC_"):
             normalized = deepcopy(node)
+            if node.tag == "ThingDef" and name in {
+                "AMJC_RawMillet", "AMJC_RawBuckwheat", "AMJC_RawBarley",
+                "AMJC_MilletInHull", "AMJC_BuckwheatInHull", "AMJC_BarleyInHull",
+                "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley",
+            }:
+                category = ("AMJC_GrainSheaves" if name.startswith("AMJC_Raw")
+                            else "AMJC_GrainKernels")
+                found = normalized.find("thingCategories")
+                assert found is not None and [li.text for li in found.findall("li")] == [category], (
+                    "Grain category contract drift: " + name)
+                normalized.remove(found)
+                if name.startswith("AMJC_Raw") or name.endswith("InHull"):
+                    historical = ET.SubElement(normalized, "thingCategories")
+                    ET.SubElement(historical, "li").text = "Foods"
             for element, (expected, historical) in AMJ_GRAPHICS.get(name, {}).items():
                 normalized.find(element).text = historical
             # Normalize only the three superseded MO settings on a deepcopy

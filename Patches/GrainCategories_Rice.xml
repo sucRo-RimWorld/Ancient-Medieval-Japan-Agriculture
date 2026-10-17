@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Preserve Vanilla RawRice's cooking compatibility: AMJC_Grains descends from PlantFoodRaw. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="RawRice"]/thingCategories</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="RawRice"]/thingCategories</xpath>
+      <value><li>AMJC_GrainKernels</li></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="RawRice"]</xpath>
+      <value><thingCategories><li>AMJC_GrainKernels</li></thingCategories></value>
+    </nomatch>
+  </Operation>
+</Patch>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="AMJC_Wheat"]</xpath>
+    <value><thingCategories><li>AMJC_GrainKernels</li></thingCategories></value>
+  </Operation>
+</Patch>

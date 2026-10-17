@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- Storage filter hierarchy is independent of MO's milling/brewing category. -->
+  <ThingCategoryDef><defName>AMJC_Grains</defName><label>grains</label><parent>PlantFoodRaw</parent></ThingCategoryDef>
+  <ThingCategoryDef><defName>AMJC_GrainSheaves</defName><label>grain sheaves</label><parent>AMJC_Grains</parent></ThingCategoryDef>
+  <ThingCategoryDef><defName>AMJC_GrainKernels</defName><label>grain kernels</label><parent>AMJC_Grains</parent></ThingCategoryDef>
+  <ThingCategoryDef><defName>AMJC_GrainFlour</defName><label>grain flour</label><parent>AMJC_Grains</parent></ThingCategoryDef>
+</Defs>
