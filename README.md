@@ -33,7 +33,9 @@ These values are implemented in the current Defs. Four-profile loaded-game valid
 
 **Required:** RimWorld 1.6. **No mandatory additional Mods or DLC.**
 
-**Optional:** Medieval Overhaul (MO) and [Crop Cold Tolerance Overhaul](https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548) (CCTO).
+**Strongly recommended (optional):** [Adaptive Primitive Storage](https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215). Its existing granary can store Grains' grain sheaves, kernels and flours, including MO wheat. When both MO and Adaptive Primitive Storage are active, Grains' compatibility patch replaces Hay with MO Straw as a construction ingredient for the granary and woven baskets.
+
+**Other optional integrations:** Medieval Overhaul (MO) and [Crop Cold Tolerance Overhaul](https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548) (CCTO).
 
 The `loadAfter` entry for MO is an **optional ordering hint, not a hard dependency**. MO-specific definitions and patches load only when MO is active through `loadFolders.xml`; `BaseWithoutMO` supplies the fallback path otherwise. CCTO adds explicit cold-death support when installed.
 
