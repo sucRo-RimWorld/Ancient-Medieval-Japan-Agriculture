@@ -49,6 +49,25 @@ def require_recipe(recipes, name, grain, quantity, item, produced, work):
 
 
 class SevenGrainChainBalance(unittest.TestCase):
+    def test_threshing_improves_storage_life(self):
+        shared = defined("Defs/ThingDefs_Items/Items_StageA_Grains.xml", "ThingDef")
+        for crop, (sheaf, hull, _) in PROCESSED.items():
+            with self.subTest(crop=crop):
+                self.assertEqual(float(shared[sheaf].findtext("comps/li/daysToRotStart")), 30)
+                self.assertEqual(float(shared[hull].findtext("comps/li/daysToRotStart")), 120)
+        base_wheat = defined("BaseWithoutMO/Defs/Items_Wheat.xml", "ThingDef")
+        self.assertEqual(float(base_wheat["AMJC_RawWheat"].findtext(
+            "comps/li/daysToRotStart")), 30)
+        mo_patch = ET.parse(ROOT / "Compatibility/MedievalOverhaul/Patches/"
+                            "MedievalOverhaul_StageA_Wheat.xml")
+        xpath = ('/Defs/ThingDef[defName="DankPyon_RawWheat"]'
+                 '/comps/li[@Class="CompProperties_Rottable"]/daysToRotStart')
+        ops = [op for op in mo_patch.findall("Operation") if op.findtext("xpath") == xpath]
+        self.assertEqual(len(ops), 1)
+        self.assertEqual(ops[0].get("Class"), "PatchOperationReplace")
+        self.assertEqual(ops[0].findtext("value/daysToRotStart"), "30")
+
+
     def test_two_stage_processing_and_bulk_labor(self):
         recipes = defined("Defs/RecipeDefs/Recipes_GrainProcessing.xml", "RecipeDef")
         for crop, (raw, hull, edible) in PROCESSED.items():

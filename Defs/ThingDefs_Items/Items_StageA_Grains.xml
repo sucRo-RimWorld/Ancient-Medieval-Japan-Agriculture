@@ -23,7 +23,7 @@
     </ingestible>
     <comps>
       <li Class="CompProperties_Rottable">
-        <daysToRotStart>120</daysToRotStart>
+        <daysToRotStart>30</daysToRotStart>
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
@@ -103,7 +103,7 @@
     </ingestible>
     <comps>
       <li Class="CompProperties_Rottable">
-        <daysToRotStart>120</daysToRotStart>
+        <daysToRotStart>30</daysToRotStart>
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
@@ -182,7 +182,7 @@
     </ingestible>
     <comps>
       <li Class="CompProperties_Rottable">
-        <daysToRotStart>120</daysToRotStart>
+        <daysToRotStart>30</daysToRotStart>
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
@@ -277,7 +277,7 @@
     <graphicData><texPath>Things/Item/Resource/AMJC_Rice/RiceSheaf</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
     <statBases><MarketValue>1.1</MarketValue></statBases>
     <ingestible><foodType>Seed</foodType><preferability>NeverForNutrition</preferability></ingestible>
-    <comps><li Class="CompProperties_Rottable"><daysToRotStart>120</daysToRotStart><rotDestroys>true</rotDestroys></li></comps>
+    <comps><li Class="CompProperties_Rottable"><daysToRotStart>30</daysToRotStart><rotDestroys>true</rotDestroys></li></comps>
     <thingCategories><li>AMJC_GrainSheaves</li></thingCategories>
   </ThingDef>
   <ThingDef ParentName="RoughPlantBase">

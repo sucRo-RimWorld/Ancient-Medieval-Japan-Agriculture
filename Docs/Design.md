@@ -482,7 +482,7 @@ Production About.xmlを変えずにruntimeファイルをそのままテスト�
 **2026-10-07 step 3 小麦・製粉・最低限粉食の初期実装:**
 
 - `loadFolders.xml` はrootと、MO時の `Compatibility/MedievalOverhaul`、非MO時の `BaseWithoutMO` を排他的に読み込む。IfModNotActiveは添付MO 1.6 LoadFolders.xmlの実使用を確認した。Base専用小麦/小麦束/小麦粉/石臼/小麦製粉がMO時に重複しない。
-- 非MO小麦は `AMJC_Plant_Wheat` → `AMJC_RawWheat` →既存 `AMJC_ThreshWheat` / Bulk →既存 `AMJC_Wheat`。12日・収量28・肥沃度最低0.7/感応度0.9、研究なし、束120日、脱穀1:1・Strawなし。最低成長0℃、高温側58℃、最適10～42℃をBaseの明示初期値とする（Vanilla標準値との実機比較は未実施）。CCTO時だけ-6℃固定枯死拡張を付ける。
+- 非MO小麦は `AMJC_Plant_Wheat` → `AMJC_RawWheat` →既存 `AMJC_ThreshWheat` / Bulk →既存 `AMJC_Wheat`。12日・収量28・肥沃度最低0.7/感応度0.9、研究なし、束30日、脱穀1:1・Strawなし。最低成長0℃、高温側58℃、最適10～42℃をBaseの明示初期値とする（Vanilla標準値との実機比較は未実施）。CCTO時だけ-6℃固定枯死拡張を付ける。
 - 製粉は `AMJC_MillWheat` / `AMJC_MillBuckwheat` / `AMJC_MillMillet`。可食穀粒10→粉10、各0.05栄養で総栄養0.5を保存、workAmount 300、Crafting。粉は60日保存・直接摂食不可。小麦粉 `AMJC_WheatFlour` はBaseだけ、`AMJC_BuckwheatFlour` / `AMJC_MilletFlour` は両プロファイルで所有する。
 - Base設備は `AMJC_ManualMillstone`（BlocksGranite 30 / WoodLog 20）。MO時は既存 `DankPyon_CraftFlour` でAMJC_Wheat→DankPyon_Flourへ進み、蕎麦/雑穀製粉を `DankPyon_Millstone` に接続する。最低限製粉を研究で止めないためMO石臼のresearchPrerequisitesを条件付きで除去する。MO小麦の既存研究と旧38件のAMJC契約は維持する。MO側の研究除去Patchは実ソースに対する静的参照確認であり、他Modとの実ロード優先順位は未検証。
 - 最低限粉食の初期値は以下。各Recipeは研究・Cooking最低技能なし、Campfire / ElectricStove / FueledStoveで利用可能、workAmount 300、Nutrition換算入力0.5→料理1個0.9、2.5日保存、`AMJC_AteFlourFood` のMood +2（0.5日、stackLimit 1）。MO時だけ餺飥の入力をDankPyon_Flourへ置換する。
@@ -785,14 +785,14 @@ AMJC固有作物の耐寒値と保存候補範囲の正本は [AMJC作物の耐�
 
 #### 穀物の保存期間・一次加工
 
-Stage Aの穀物は、加工前後の保存性も作物選択と備蓄判断に使う。共通基準は **未脱穀穀束120日 → 殻付き穀粒120日 → 可食穀粒90日 → 粉60日** とし、ソバと小麦に下記の例外を持たせる。
+Stage Aの穀物は、加工前後の保存性も作物選択と備蓄判断に使う。共通基準は **未脱穀穀束30日 → 殻付き穀粒120日 → 可食穀粒90日 → 粉60日** とし、ソバと小麦に下記の例外を持たせる。束は早期脱穀が必要で、籾などの殻付き穀粒は長期備蓄に向く。日数は乾燥と気候差を省略したゲーム内バランス値であり、現実の保存期間を一律に断定するものではない。
 
 | 作物 | 一次加工経路 | 保存期間 | 収穫直後の生食 |
 |---|---|---|---|
-| アワ / ヒエ / キビ | 雑穀束 → 脱穀 → 殻付き雑穀 → 殻取り → 雑穀 | 120日 → 120日 → 90日 | 不可。可食化は殻取り後 |
-| 大麦 | 穀束 → 脱穀 → 殻付き大麦 → 殻取り → 大麦穀粒 | 120日 → 120日 → 90日 | 不可。可食化は殻取り後 |
-| 小麦（MO） | 小麦束 → 脱穀 → 小麦穀粒 + `DankPyon_Straw` → 必要に応じてMO製粉 | 120日 → 90日。小麦粉は60日 | 不可。小麦は殻付き中間状態を省略 |
-| ソバ | 穀束 → 脱穀 → 殻付きソバ → 殻取り → ソバ穀粒 | 120日 → 120日 → 60日。実装済みの蕎麦粉は60日 | 不可。可食化は殻取り後 |
+| アワ / ヒエ / キビ | 雑穀束 → 脱穀 → 殻付き雑穀 → 殻取り → 雑穀 | 30日 → 120日 → 90日 | 不可。可食化は殻取り後 |
+| 大麦 | 穀束 → 脱穀 → 殻付き大麦 → 殻取り → 大麦穀粒 | 30日 → 120日 → 90日 | 不可。可食化は殻取り後 |
+| 小麦（MO） | 小麦束 → 脱穀 → 小麦穀粒 + `DankPyon_Straw` → 必要に応じてMO製粉 | 30日 → 90日。小麦粉は60日 | 不可。小麦は殻付き中間状態を省略 |
+| ソバ | 穀束 → 脱穀 → 殻付きソバ → 殻取り → ソバ穀粒 | 30日 → 120日 → 60日。実装済みの蕎麦粉は60日 | 不可。可食化は殻取り後 |
 
 - 雑穀粉 `AMJC_MilletFlour` は実装済み。保存期間60日で、雑穀団子に使用する。
 - 蕎麦粉 `AMJC_BuckwheatFlour` はそばがきとともに実装済み。保存期間60日。蕎麦切りは初期範囲外とする。
@@ -800,7 +800,7 @@ Stage Aの穀物は、加工前後の保存性も作物選択と備蓄判断に�
 - Straw副産物は製粉ではなく脱穀段階へ統一する。ただし `DankPyon_Straw` はMO併用時だけ出力し、BaseではStraw ThingDefを所有しない。
 - **MO併用時は** `DankPyon_Plant_Wheat` / `DankPyon_RawWheat` を可視供給元として再利用し、`DankPyon_RawWheat` を未脱穀の小麦束として `DankPyon_Cereal` から外す。脱穀後の `AMJC_Wheat` だけをMO製粉へ接続する。BaseではGrains所有の小麦Plant/穀束を同じ `AMJC_Wheat` へ合流させる。
 - MO 1.6の**上流原本**では小麦収穫時の `Plant_SecondaryDrop` と製粉Recipe3種でHayが生じる。GrainsのMO条件付き `MedievalOverhaul_StageA_Wheat.xml` は収穫時副産物拡張を除去し、`DankPyon_CraftFlour_Manual` / `DankPyon_CraftFlour` / `DankPyon_CraftFlourBulk` の `products/Hay` を削除する。したがって**Grains適用後の製粉成果物は小麦粉のみ**であり、`DankPyon_Straw` はAMJ脱穀Recipeでのみ生じる。上流MOのHay存在とGrains適用後の製粉仕様を混同しない。
-- MO `DankPyon_Flour` の保存期間はAMJ共通粉基準に合わせて60日へ調整する。
+- MO `DankPyon_RawWheat` は原本120日から、Base `AMJC_RawWheat` と同じ束30日へ条件付きPatchで変更する。脱穀後の `AMJC_Wheat` は90日、MO `DankPyon_Flour` は60日。
 
 この確定表は「一種類の最適作物」を作らないための基準である。短期・痩せ地はソバ/キビ、標準～肥沃な畑で収穫回数を抑える雑穀はアワ、寒冷側はヒエ/大麦、肥沃地で長期高収量・粉食は小麦、という役割差を維持する。
 
