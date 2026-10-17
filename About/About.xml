@@ -11,6 +11,7 @@
   <loadAfter>
     <li>DankPyon.Medieval.Overhaul</li>
     <li>sucro.cropcoldtoleranceoverhaul</li>
+    <li>Adaptive.PrimitiveStorage</li>
   </loadAfter>
 
   <description>Development build of Ancient &amp; Medieval Japan - Grains.

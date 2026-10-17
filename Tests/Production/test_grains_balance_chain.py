@@ -79,6 +79,47 @@ class SevenGrainChainBalance(unittest.TestCase):
                 require_recipe(recipes, "AMJC_Hull" + crop + "Bulk",
                                hull, 10, edible, 10, 80)
 
+    def test_adaptive_primitive_storage_granary_and_mo_straw_patch(self):
+        import xml.etree.ElementTree as ET
+
+        granary = ET.parse(ROOT / "Patches/ZZ_AdaptivePrimitiveStorage_Granary.xml").getroot()
+        self.assertEqual(len(granary.findall("Operation")), 1)
+        root = granary.find("Operation")
+        self.assertEqual(root.get("Class"), "PatchOperationFindMod")
+        self.assertEqual(root.findtext("mods/li"), "Adaptive Primitive Storage")
+        inserts = root.findall("match/operations/li")
+        self.assertEqual(len(inserts), 2)
+        for target, node in zip(("fixedStorageSettings", "defaultStorageSettings"), inserts):
+            self.assertEqual(node.get("Class"), "PatchOperationConditional")
+            self.assertEqual(node.findtext("match/value/li"), "AMJC_Grains")
+            self.assertIn("/" + target + "/filter/categories", node.findtext("match/xpath"))
+
+        straw = ET.parse(ROOT / "Compatibility/MedievalOverhaul/Patches/"
+                         "ZZ_AdaptivePrimitiveStorage_Straw.xml").getroot()
+        op = straw.find("Operation")
+        self.assertEqual(op.get("Class"), "PatchOperationFindMod")
+        self.assertEqual(op.findtext("mods/li"), "Adaptive Primitive Storage")
+        expected = {
+            "ASF_Granary": "50",
+            "ASF_WovenBasket": "75",
+            "ASF_WovenBasketDouble": "150",
+            "ASF_WovenBasketTriple": "225",
+        }
+        applied = {}
+        for step in op.findall("match/operations/li"):
+            self.assertEqual(step.get("Class"), "PatchOperationConditional")
+            path = step.findtext("xpath")
+            self.assertEqual(step.findtext("match/xpath"), path)
+            self.assertEqual(step.find("match").get("Class"), "PatchOperationReplace")
+            found = next((name for name in expected if f'defName="{name}"' in path), None)
+            self.assertIsNotNone(found)
+            self.assertTrue(path.endswith("/costList/Hay"))
+            applied[found] = step.findtext("match/value/DankPyon_Straw")
+        self.assertEqual(applied, expected)
+        meta = ET.parse(ROOT / "About/About.xml").getroot()
+        self.assertIn("Adaptive.PrimitiveStorage",
+                      [node.text for node in meta.findall("loadAfter/li")])
+
     def test_wheat_processing_profiles_keep_output_and_straw_separate(self):
         for mode, path, raw in (
             ("base", "BaseWithoutMO/Defs/Recipes_Wheat.xml", "AMJC_RawWheat"),
