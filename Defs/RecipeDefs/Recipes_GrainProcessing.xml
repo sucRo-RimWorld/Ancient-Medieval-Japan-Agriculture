@@ -3,7 +3,7 @@
 
   <RecipeDef Name="AMJC_MilletProcessingBase" Abstract="True">
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <workSkill>Crafting</workSkill>
+    <workSkill>Cooking</workSkill>
     <workSkillLearnFactor>0.1</workSkillLearnFactor>
     <allowMixingIngredients>false</allowMixingIngredients>
     <recipeUsers>
@@ -137,7 +137,7 @@
 
   <RecipeDef Name="AMJC_BuckwheatProcessingBase" Abstract="True">
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <workSkill>Crafting</workSkill>
+    <workSkill>Cooking</workSkill>
     <workSkillLearnFactor>0.1</workSkillLearnFactor>
     <allowMixingIngredients>false</allowMixingIngredients>
     <recipeUsers>
@@ -235,7 +235,7 @@
 
   <RecipeDef Name="AMJC_BarleyProcessingBase" Abstract="True">
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <workSkill>Crafting</workSkill>
+    <workSkill>Cooking</workSkill>
     <workSkillLearnFactor>0.1</workSkillLearnFactor>
     <allowMixingIngredients>false</allowMixingIngredients>
     <recipeUsers>
@@ -332,7 +332,7 @@
 
   <RecipeDef Name="AMJC_RiceProcessingBase" Abstract="True">
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <workSkill>Crafting</workSkill>
+    <workSkill>Cooking</workSkill>
     <workSkillLearnFactor>0.1</workSkillLearnFactor>
     <allowMixingIngredients>false</allowMixingIngredients>
     <recipeUsers><li>AMJC_GrainProcessingSpot</li><li>AMJC_GrainProcessingTable</li><li>FueledStove</li><li>ElectricStove</li></recipeUsers>

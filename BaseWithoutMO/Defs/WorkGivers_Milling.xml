@@ -4,7 +4,7 @@
     <defName>AMJC_DoGrainsMilling</defName>
     <label>mill grains</label>
     <giverClass>WorkGiver_DoBill</giverClass>
-    <workType>Crafting</workType>
+    <workType>Cooking</workType>
     <priorityInType>110</priorityInType>
     <fixedBillGiverDefs>
       <li>AMJC_ManualMillstone</li>

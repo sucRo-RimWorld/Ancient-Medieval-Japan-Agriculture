@@ -7,7 +7,7 @@
     <jobString>Milling wheat.</jobString>
     <workAmount>300</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
-    <workSkill>Crafting</workSkill>
+    <workSkill>Cooking</workSkill>
     <allowMixingIngredients>false</allowMixingIngredients>
     <targetCountAdjustment>10</targetCountAdjustment>
     <recipeUsers>
