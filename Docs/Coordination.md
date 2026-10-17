@@ -60,6 +60,10 @@ Use whichever label best fits the task:
 
 ## Current coordination items
 
+### GRAINS-PLAYTHROUGH-BEFORE-17-20261017 — flour-food play first
+
+**Owner:** Grains gameplay/acceptance. **Status:** HOLD RimWorld 1.7 new testing pending ordinary-game flour-food confirmation. **Author decision (2026-10-17):** Verify the existing crop → harvest → thresh → hull where applicable → mill → cooked/eaten flour-food loop in real gameplay first, resolve concrete gameplay faults, then run a proportionate consolidated current-source 1.7 compatibility test. The past source-scoped 1.7 24/24 is retained but does not cover later changes. Do not auto-start native tests, add another verification matrix, declare 1.7 supported, or release as a result of this note. Canonical acceptance sequence: `Docs/GrainsProfileTesting.md` § “Author-ordered validation sequence”. No runtime tests or production changes performed by this scheduling update.
+
 ### GRAINS-V1-PHASE-20261013 — simplified first release
 
 **Owner:** Grains design/processing, equipment, and testing. **Status:** DONE — V1 scope policy integrated in Docs/Design.md; the equipment-specialization work remains OPEN for later releases.
