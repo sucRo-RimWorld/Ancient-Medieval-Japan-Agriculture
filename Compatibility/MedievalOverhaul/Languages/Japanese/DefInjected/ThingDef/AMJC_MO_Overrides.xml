@@ -3,5 +3,7 @@
 
   <!-- AMJ grain-state naming: harvested stalk + head grain uses the ～束 convention. -->
   <DankPyon_RawWheat.label>小麦束</DankPyon_RawWheat.label>
+  <!-- The stage is already clear from its grain-flour category. -->
+  <DankPyon_Flour.label>小麦粉</DankPyon_Flour.label>
 
 </LanguageData>
