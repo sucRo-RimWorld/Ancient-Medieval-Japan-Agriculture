@@ -2,6 +2,6 @@
 <Patch>
   <Operation Class="PatchOperationAdd">
     <xpath>/Defs/ThingDef[defName="AMJC_Wheat"]</xpath>
-    <value><thingCategories><li>AMJC_GrainKernels</li></thingCategories></value>
+    <value><thingCategories Inherit="False"><li>AMJC_GrainKernels</li></thingCategories></value>
   </Operation>
 </Patch>

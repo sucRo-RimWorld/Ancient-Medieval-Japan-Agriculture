@@ -225,6 +225,12 @@ def validate():
             for name in names:
                 assert [li.text for li in items[name].findall("thingCategories/li")] == [category], (
                     "Grain storage membership: " + name)
+    # PlantFoodRawBase lists are additive: edible grains must not inherit a second
+    # direct PlantFoodRaw leaf beside their dedicated grain-kernel category.
+    for doc in (base, mo):
+        for name in ("AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley"):
+            assert doc.find('ThingDef[defName="' + name + '"]/thingCategories').get("Inherit") == "False", (
+                "Duplicate raw-vegetable membership: " + name)
     for path, item, category in (
         ("BaseWithoutMO/Defs/Items_Wheat.xml", "AMJC_RawWheat", "AMJC_GrainSheaves"),
         ("BaseWithoutMO/Defs/Items_Flour.xml", "AMJC_WheatFlour", "AMJC_GrainFlour"),
@@ -235,12 +241,22 @@ def validate():
     wheat_patch = ET.parse(ROOT / "BaseWithoutMO/Patches/GrainCategories_Wheat.xml")
     assert wheat_patch.findtext("Operation/xpath") == '/Defs/ThingDef[defName="AMJC_Wheat"]'
     assert wheat_patch.findtext("Operation/value/thingCategories/li") == "AMJC_GrainKernels"
+    assert wheat_patch.find("Operation/value/thingCategories").get("Inherit") == "False"
     rice_patch = ET.parse(ROOT / "Patches/GrainCategories_Rice.xml")
     assert rice_patch.findtext("Operation/xpath") == '/Defs/ThingDef[defName="RawRice"]/thingCategories'
     assert rice_patch.findtext("Operation/match/xpath") == '/Defs/ThingDef[defName="RawRice"]/thingCategories'
     assert rice_patch.findtext("Operation/match/value/li") == "AMJC_GrainKernels"
     assert rice_patch.findtext("Operation/nomatch/xpath") == '/Defs/ThingDef[defName="RawRice"]'
     assert rice_patch.findtext("Operation/nomatch/value/thingCategories/li") == "AMJC_GrainKernels"
+    assert rice_patch.find("Operation/nomatch/value/thingCategories").get("Inherit") == "False"
+    assert rice_patch.findtext("Operation[@Class='PatchOperationAttributeSet']/attribute") == "Inherit"
+    assert rice_patch.findtext("Operation[@Class='PatchOperationAttributeSet']/value") == "False"
+    assert rice_patch.findall("Operation[@Class='PatchOperationConditional']")[-1].findtext("match/xpath") == (
+        '/Defs/ThingDef[defName="RawRice"]/thingCategories/li[text()="PlantFoodRaw"]')
+    mo_base = ET.parse(ROOT / MO_FOLDER / "Patches/MedievalOverhaul_StageA_Base.xml")
+    mo_cereal = mo_base.find('Operation/value/thingCategories')
+    assert mo_cereal is not None and mo_cereal.get("Inherit") == "False"
+    assert [x.text for x in mo_cereal.findall("li")] == ["DankPyon_Cereal"]
     mo_patch = ET.parse(ROOT / MO_FOLDER / "Patches/ZZ_GrainCategories_MO.xml")
     mo_ops = mo_patch.findall("Operation")
     assert [(op.get("Class"), op.findtext("xpath")) for op in mo_ops] == [
