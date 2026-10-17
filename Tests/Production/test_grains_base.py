@@ -176,6 +176,18 @@ class BaseBoundaryTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'pre-split snapshot'):
             self.validate()
 
+    def test_aps_hay_costs_not_replaced(self):
+        # APS construction costs belong to APS, even when MO Straw exists.
+        patch_dir = self.root / MO_FOLDER / 'Patches'
+        for path in patch_dir.glob('*.xml'):
+            tree = ET.parse(path)
+            for operation in tree.iter('Operation'):
+                if operation.get('Class') not in ('PatchOperationReplace', 'PatchOperationRemove'):
+                    continue
+                xpath = operation.findtext('xpath') or ''
+                if 'ASF_' in xpath and '/costList/Hay' in xpath:
+                    self.fail(f'APS Hay construction cost replaced by {path.name}')
+
 
 if __name__ == '__main__':
     unittest.main()

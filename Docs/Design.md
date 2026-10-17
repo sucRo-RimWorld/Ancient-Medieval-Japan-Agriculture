@@ -650,7 +650,7 @@ MOの `DankPyon_Cereal` は製粉・醸造レシピの材料カテゴリなの�
 
 新たな穀倉DefをGrainsに追加しない。Adaptive Primitive Storage（Workshop 3400037215／packageId `Adaptive.PrimitiveStorage`）既存の `ASF_Granary`（3×3、54スタック）を利用する。同設備の固定・既定収納フィルタは `PlantFoodRaw` と `PlantMatter` を受け入れ、`AMJC_Grains` は `PlantFoodRaw` の子孫であるためGrainsの穀物束・穀粒・穀粉（MO小麦を含む）は階層上対象に入る。APS存在時だけ両フィルタへ `AMJC_Grains` を明示追加し、親カテゴリ・既存食材を除外しない。Grainsのハード依存にAPSやAdaptive Storage Frameworkを加えない。
 
-APSの1.6現物Defが `Hay` を建築材料に使う4設備（`ASF_Granary` 50、`ASF_WovenBasket` 75、`ASF_WovenBasketDouble` 150、`ASF_WovenBasketTriple` 225）を、**Grains + MO + APSの三者併用時のみ**同数量の `DankPyon_Straw` に変更する。MOなしでは元の `Hay` のまま。ほかの素材・研究・容量・収納時の腐敗仕様・穀物加工/藁産出量には手を加えない。MO Strawは既定のGrains脱穀副産物から供給する。素材置換はJapanization専用にしないため、MO+Grainsのみのプレイでも有効。なお、この互換はGrainsに同梱するため、GrainsなしでのAPS+MO一般互換まで提供するものではない。**利用者向け推奨度は「併用を強く推奨（任意）」とする。** 大容量の穀物保管を既存の穀倉で実現し、重複したGrains独自の穀倉を追加しないため。README・Workshop英日・2game・About.xmlにも同じ位置づけを掲載する。1.6実機での収納フィルタ操作・MO条件付き費用表示は未検証。
+APSの1.6現物Defが `Hay` を建築材料に使う4設備（`ASF_Granary` 50、`ASF_WovenBasket` 75、`ASF_WovenBasketDouble` 150、`ASF_WovenBasketTriple` 225）は、**MO併用時も干し草（`Hay`）と元の必要数を維持**する。Grainsの互換パッチで `Hay` を `DankPyon_Straw` に置換しない。`costList` に藁を追加すると二種類の材料を同時に要求するため、藁を干し草の代替として選べる機能は未実装とする。既存のほかの素材・研究・容量・収納時の腐敗仕様・穀物加工/藁産出量には手を加えない。なお、この互換はGrainsに同梱するため、GrainsなしでのAPS+MO一般互換まで提供するものではない。**利用者向け推奨度は「併用を強く推奨（任意）」とする。** 大容量の穀物保管を既存の穀倉で実現し、重複したGrains独自の穀倉を追加しないため。README・Workshop英日・2game・About.xmlにも同じ位置づけを掲載する。1.6実機での収納フィルタ操作・MO条件付き費用表示は未検証。
 
 ## 3. Grains本体（他AMJ Modなし）の位置づけ
 

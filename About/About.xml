@@ -18,7 +18,7 @@
 
 Adds dry-field grains, harvesting and processing, flour milling, and basic grain foods inspired by pre-Edo Japan. Mixed grain meals, grain porridge and mixed flour foods can combine leftover cereals; five ingredient-specific flour dishes give a small mood and storage advantage. When used with Medieval Overhaul, AMJG's owned crop and processing settings take precedence, while shared MO wheat, flour, milling, and straw assets are reused where appropriate.
 
-Medieval Overhaul is optional: when loaded, AMJG uses conditional compatibility Defs and patches. Crop Cold Tolerance Overhaul is also optional. Adaptive Primitive Storage is strongly recommended, not required, for granary bulk storage; with MO, its granary and baskets use MO Straw for construction. New Village is provided exclusively by the separate AMJ Scenarios mod; Grains contains no starting scenario.
+Medieval Overhaul is optional: when loaded, AMJG uses conditional compatibility Defs and patches. Crop Cold Tolerance Overhaul is also optional. Adaptive Primitive Storage is strongly recommended, not required, for granary bulk storage; its granary and baskets retain the original Hay construction material even with MO. New Village is provided exclusively by the separate AMJ Scenarios mod; Grains contains no starting scenario.
 
 Development status: Fresh-start Vanilla/MO/CCTO gameplay tests, final artwork and runtime validation remain outstanding. This development build has not been cleared for public release.
 
@@ -26,7 +26,7 @@ Ancient &amp; Medieval Japan - Grainsの開発版。
 
 江戸以前の日本を参考に、畑作穀類、収穫と加工、製粉、基本的な穀物料理を追加する。余った穀類を混ぜて使える飯・粥・粉食があり、5種類の材料指定粉食は心情・保存性で有利になる。Medieval Overhaulとの併用時はAMJ Grainsが所有する作物・加工の設定を優先し、MOの既存の小麦・粉・製粉設備・藁の素材は適切な場合に再利用する。
 
-Medieval Overhaulは任意。導入時は条件付きの互換Defおよびパッチを使用する。Crop Cold Tolerance Overhaulも任意。Adaptive Primitive Storageは穀倉で穀物を大量収納できるため併用を強く推奨するが、必須ではない。MO併用時は穀倉と編み籠の建築材料にMOの藁を使用する。新しい村シナリオは別ModのAMJ Scenariosだけが提供する。Grainsには開始シナリオを含めない。
+Medieval Overhaulは任意。導入時は条件付きの互換Defおよびパッチを使用する。Crop Cold Tolerance Overhaulも任意。Adaptive Primitive Storageは穀倉で穀物を大量収納できるため併用を強く推奨するが、必須ではない。MO併用時も穀倉と編み籠の建築材料はAPS標準の干し草を維持する。新しい村シナリオは別ModのAMJ Scenariosだけが提供する。Grainsには開始シナリオを含めない。
 
 開発状況：バニラ／MO／CCTOでの新規開始プレイテスト、最終画像、実行時検証には未完了の作業がある。この開発版は一般公開に必要な確認を終えていない。</description>
 </ModMetaData>
