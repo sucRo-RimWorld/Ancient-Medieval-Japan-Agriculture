@@ -27,9 +27,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories>
-      <li>Foods</li>
-    </thingCategories>
+    <thingCategories><li>AMJC_GrainSheaves</li></thingCategories>
   </ThingDef>
 
   <ThingDef ParentName="RoughPlantBase">
@@ -53,9 +51,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories>
-      <li>Foods</li>
-    </thingCategories>
+    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
   <ThingDef ParentName="PlantFoodRawBase">
@@ -80,6 +76,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
+    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
 
@@ -110,9 +107,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories>
-      <li>Foods</li>
-    </thingCategories>
+    <thingCategories><li>AMJC_GrainSheaves</li></thingCategories>
   </ThingDef>
 
   <ThingDef ParentName="RoughPlantBase">
@@ -136,9 +131,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories>
-      <li>Foods</li>
-    </thingCategories>
+    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
   <ThingDef ParentName="PlantFoodRawBase">
@@ -163,6 +156,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
+    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
 
@@ -192,9 +186,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories>
-      <li>Foods</li>
-    </thingCategories>
+    <thingCategories><li>AMJC_GrainSheaves</li></thingCategories>
   </ThingDef>
 
   <ThingDef ParentName="RoughPlantBase">
@@ -218,9 +210,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories>
-      <li>Foods</li>
-    </thingCategories>
+    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
   <ThingDef ParentName="PlantFoodRawBase">
@@ -245,6 +235,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
+    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
 
@@ -287,7 +278,7 @@
     <statBases><MarketValue>1.1</MarketValue></statBases>
     <ingestible><foodType>Seed</foodType><preferability>NeverForNutrition</preferability></ingestible>
     <comps><li Class="CompProperties_Rottable"><daysToRotStart>120</daysToRotStart><rotDestroys>true</rotDestroys></li></comps>
-    <thingCategories><li>Foods</li></thingCategories>
+    <thingCategories><li>AMJC_GrainSheaves</li></thingCategories>
   </ThingDef>
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_RiceInHull</defName>
@@ -297,7 +288,7 @@
     <statBases><MarketValue>1.1</MarketValue></statBases>
     <ingestible><foodType>Seed</foodType><preferability>NeverForNutrition</preferability></ingestible>
     <comps><li Class="CompProperties_Rottable"><daysToRotStart>120</daysToRotStart><rotDestroys>true</rotDestroys></li></comps>
-    <thingCategories><li>Foods</li></thingCategories>
+    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
 </Defs>

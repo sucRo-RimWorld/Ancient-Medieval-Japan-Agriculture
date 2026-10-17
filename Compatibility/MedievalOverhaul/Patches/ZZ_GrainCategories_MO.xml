@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- StageA has already removed the harvested sheaf from DankPyon_Cereal.
+       That recipe category must remain exclusive of unthreshed wheat. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_RawWheat"]/thingCategories</xpath>
+    <value><thingCategories><li>AMJC_GrainSheaves</li></thingCategories></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="AMJC_Wheat"]/thingCategories</xpath>
+    <value><li>AMJC_GrainKernels</li></value>
+  </Operation>
+  <!-- MO's DankPyon_Flour category stays intact for its recipes and other mods. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Flour"]/thingCategories</xpath>
+    <value><li>AMJC_GrainFlour</li></value>
+  </Operation>
+</Patch>

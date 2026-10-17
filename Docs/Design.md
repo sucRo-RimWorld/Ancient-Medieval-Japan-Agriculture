@@ -634,6 +634,16 @@ MO 1.6.2.2の研究ツリー全67ノード（MO独自51 + MOが移動/再構成�
 ### 2.10 MOの研究フローを古代～中世日本史へ再構成する
 
 MO全体の研究再構成はGrainsの責務外で、AMJ - Medieval Overhaul Japanizationが所有する。専用リポジトリ作成前の詳細設計はProjectの [MedievalOverhaulJapanizationCandidate.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/MedievalOverhaulJapanizationCandidate.md) を正本とする。Grainsは自分が所有する作物・加工の研究解禁と、MO併用時の条件付き接続だけを管理する。
+### 2.11 保管フィルタの穀物分類（2026-10-17）
+
+Grainsは `PlantFoodRaw → AMJC_Grains（穀物）` の下に、`AMJC_GrainSheaves（穀物束）`・`AMJC_GrainKernels（穀粒）`・`AMJC_GrainFlour（穀粉）` の3分類を設ける。備蓄ゾーン・棚などの食料フィルタを整理するための分類であり、作物・加工工程・栄養・保存期間・DefNameは変更しない。
+
+- **穀物束:** 雑穀束、ソバ束、大麦束、稲束、小麦束（Vanilla：`AMJC_RawWheat`、MO：`DankPyon_RawWheat`）。
+- **穀粒:** 殻付き雑穀・ソバ・大麦・籾、可食雑穀・ソバ・大麦・小麦穀粒、Vanilla `RawRice`。
+- **穀粉:** 雑穀粉、蕎麦粉、大麦粉、米粉、小麦粉（Vanilla：`AMJC_WheatFlour`、MO：`DankPyon_Flour`）。
+
+MOの `DankPyon_Cereal` は製粉・醸造レシピの材料カテゴリなので、未脱穀の小麦束をその子孫に入れると一次加工を迂回できる。Grainsの保管用「穀物」は独立させ、`DankPyon_Cereal` の材料判定は既存の可食小麦穀粒で維持する。MO小麦粉は `DankPyon_Flour` の材料カテゴリも維持し、MOその他の穀物の分類を変更しない。新カテゴリは `PlantFoodRaw` の下に置き、米と可食穀粒の料理材料としての扱いを保持する。
+
 ## 3. Grains本体（他AMJ Modなし）の位置づけ
 
 現CoreはAMJ Mod群すべての共通基盤ではなく、**乾田穀物の選択と一次加工を扱うGrains系独立コンテンツMod**として再編する。

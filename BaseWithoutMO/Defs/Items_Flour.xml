@@ -23,8 +23,6 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories>
-      <li>Foods</li>
-    </thingCategories>
+    <thingCategories><li>AMJC_GrainFlour</li></thingCategories>
   </ThingDef>
 </Defs>
