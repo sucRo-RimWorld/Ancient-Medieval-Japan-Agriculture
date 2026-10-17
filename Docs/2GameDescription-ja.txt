@@ -11,6 +11,7 @@
 ・追加の必須Modなし
 ・MOは任意。併用時は小麦・製粉・藁を連携し、Grains側の設定を優先
 ・CCTOは任意
+・強く推奨（任意）：Adaptive Primitive Storage（穀物の大容量収納、MO併用時の藁による建築） https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215
 
 ▼ 開発状況
 ・公開準備未完了。新規開始の実機・画像確認を継続

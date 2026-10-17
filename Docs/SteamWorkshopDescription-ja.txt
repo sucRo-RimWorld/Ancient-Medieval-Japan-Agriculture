@@ -18,6 +18,8 @@ AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う�
 [h2]必須Mod・互換性[/h2]
 [b]RimWorld 1.6対応。追加の必須Modはありません。[/b] Medieval Overhaul（MO）は任意です。MO併用時はMOの小麦・小麦粉・石臼・藁を連携利用し、MOなしではGrains側の小麦・製粉を利用します。いずれもGrains所有の作物・加工設定を優先します。[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul（CCTO）[/url]も任意です。
 
+[b]併用を強く推奨（必須ではない）：[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215]Adaptive Primitive Storage[/url]。既存の穀倉でGrainsの穀物束・穀粒・穀粉を大量収納できる。MOも導入している場合は、穀倉・編み籠の建築材料を干し草からMOの藁へ切り替える。
+
 [h2]開発状況[/h2]
 [b]開発ビルドであり、公開準備は完了していません。[/b] MO必須指定は解除しました。旧ソースのRimWorld 1.7四構成実機検証には合格記録がありますが、現行1.6の配布版・日英UI・設備別の実動作・バランス・専用画像は未確認です。
 
