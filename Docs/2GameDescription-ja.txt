@@ -15,4 +15,7 @@
 ▼ 開発状況
 ・公開準備未完了。新規開始の実機・画像確認を継続
 
+▼ 今後の予定
+・穀物束・穀粒・穀粉などの画像の輪郭を太くし、通常ズームでの視認性と画風の統一感を改善する
+
 詳細：https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains
