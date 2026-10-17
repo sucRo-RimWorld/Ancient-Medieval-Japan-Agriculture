@@ -45,6 +45,10 @@ The author confirmed on 2026-10-10 that Grains has not been installed or used. *
 
 The mandatory MO dependency has been removed. Previous fresh-start Vanilla / MO × CCTO tests passed on their tested revisions; current-revision game loading and native Bills, final graphics, UI/language and gameplay balance remain to be verified. This development build has not been publicly released.
 
+## Planned improvements
+
+- Refine Grains' sheaf, grain and flour item graphics with thicker outer outlines so they remain legible at normal game zoom and visually consistent alongside Vanilla and Medieval Overhaul items. This is a future art update; existing accepted images remain unchanged for now.
+
 ## Documentation
 
 - [Design and ownership](Docs/Design.md)
