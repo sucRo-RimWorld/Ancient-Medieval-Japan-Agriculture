@@ -377,15 +377,17 @@ def rot_days(node):
             return float(text(comp, "daysToRotStart"))
     raise AssertionError("missing rottable comp")
 
-assert rot_days(raw) == 120
+assert rot_days(raw) == 30
 assert rot_days(in_hull) == 120
 assert rot_days(millet) == 90
-assert rot_days(raw_buckwheat) == 120
+assert rot_days(raw_buckwheat) == 30
 assert rot_days(buckwheat_in_hull) == 120
 assert rot_days(buckwheat) == 60
-assert rot_days(raw_barley) == 120
+assert rot_days(raw_barley) == 30
 assert rot_days(barley_in_hull) == 120
 assert rot_days(barley_grain) == 90
+assert rot_days(find_def(items, "ThingDef", "AMJC_RiceSheaf")) == 30
+assert rot_days(find_def(items, "ThingDef", "AMJC_RiceInHull")) == 120
 assert rot_days(wheat_grain) == 90
 assert num(millet, "statBases/Nutrition") == 0.05
 assert num(buckwheat, "statBases/Nutrition") == 0.05

@@ -274,6 +274,14 @@ def validate():
                 if name.startswith("AMJC_Raw") or name.endswith("InHull"):
                     historical = ET.SubElement(normalized, "thingCategories")
                     ET.SubElement(historical, "li").text = "Foods"
+            # Preserve the immutable six-crop snapshot by undoing only
+            # the explicitly checked storage correction on the comparison copy.
+            if node.tag == "ThingDef" and name in {
+                "AMJC_RawMillet", "AMJC_RawBuckwheat", "AMJC_RawBarley",
+            }:
+                rot = normalized.find("comps/li[@Class='CompProperties_Rottable']/daysToRotStart")
+                assert rot is not None and rot.text == "30", "Sheaf spoilage regression: " + name
+                rot.text = "120"
             for element, (expected, historical) in AMJ_GRAPHICS.get(name, {}).items():
                 normalized.find(element).text = historical
             # Normalize only the three superseded MO settings on a deepcopy

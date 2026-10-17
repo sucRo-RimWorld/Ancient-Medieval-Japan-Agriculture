@@ -46,6 +46,12 @@
     </value>
   </Operation>
 
+  <!-- MO 1.6 RawWheat starts at 120 days; normalize to 30 days for sheaves. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_RawWheat"]/comps/li[@Class="CompProperties_Rottable"]/daysToRotStart</xpath>
+    <value><daysToRotStart>30</daysToRotStart></value>
+  </Operation>
+
   <!-- AMJ's flour storage baseline is 60 days. -->
   <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[defName="DankPyon_Flour"]/comps/li[@Class="CompProperties_Rottable"]/daysToRotStart</xpath>

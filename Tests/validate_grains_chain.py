@@ -52,7 +52,7 @@ def validate(root=ROOT):
                 assert float(p.findtext(key)) == value, key
             assert p.findtext('harvestedThingDef') == 'AMJC_RawWheat'
             assert p.find('sowResearchPrerequisites') is None
-            assert float(defs['AMJC_RawWheat'].findtext('comps/li/daysToRotStart')) == 120
+            assert float(defs['AMJC_RawWheat'].findtext('comps/li/daysToRotStart')) == 30
             assert defs['AMJC_RawWheat'].findtext('ingestible/preferability') == 'NeverForNutrition'
             stone = defs['AMJC_ManualMillstone']
             assert stone.find('researchPrerequisites') is None

@@ -112,13 +112,13 @@ def validate():
     for profile in ('vanilla', 'mo'):
         projected = profile_xml(profile)
         defs = {node.findtext('defName'): node for node in projected if node.findtext('defName')}
-        for name, graphic in (
-            ('AMJC_RiceSheaf', 'Things/Item/Resource/AMJC_Rice/RiceSheaf'),
-            ('AMJC_RiceInHull', 'Things/Item/Resource/AMJC_Rice/RiceInHull'),
+        for name, graphic, rot_days in (
+            ('AMJC_RiceSheaf', 'Things/Item/Resource/AMJC_Rice/RiceSheaf', 30),
+            ('AMJC_RiceInHull', 'Things/Item/Resource/AMJC_Rice/RiceInHull', 120),
         ):
             item = defs[name]
             assert item.findtext('ingestible/preferability') == 'NeverForNutrition'
-            assert float(item.findtext('comps/li/daysToRotStart')) == 120
+            assert float(item.findtext('comps/li/daysToRotStart')) == rot_days
             assert item.findtext('graphicData/texPath') == graphic
         for op, ingredient, result, single_work, bulk_work in (
             ('Thresh', 'AMJC_RiceSheaf', 'AMJC_RiceInHull', 15, 120),
