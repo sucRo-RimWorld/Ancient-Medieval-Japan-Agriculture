@@ -644,6 +644,12 @@ Grainsは `PlantFoodRaw → AMJC_Grains（穀物）` の下に、`AMJC_GrainShea
 
 MOの `DankPyon_Cereal` は製粉・醸造レシピの材料カテゴリなので、未脱穀の小麦束をその子孫に入れると一次加工を迂回できる。Grainsの保管用「穀物」は独立させ、`DankPyon_Cereal` の材料判定は既存の可食小麦穀粒で維持する。MO小麦粉は `DankPyon_Flour` の材料カテゴリも維持し、MOその他の穀物の分類を変更しない。新カテゴリは `PlantFoodRaw` の下に置き、米と可食穀粒の料理材料としての扱いを保持する。
 
+#### Adaptive Primitive Storage任意互換（2026-10-17）
+
+新たな穀倉DefをGrainsに追加しない。Adaptive Primitive Storage（Workshop 3400037215／packageId `Adaptive.PrimitiveStorage`）既存の `ASF_Granary`（3×3、54スタック）を利用する。同設備の固定・既定収納フィルタは `PlantFoodRaw` と `PlantMatter` を受け入れ、`AMJC_Grains` は `PlantFoodRaw` の子孫であるためGrainsの穀物束・穀粒・穀粉（MO小麦を含む）は階層上対象に入る。APS存在時だけ両フィルタへ `AMJC_Grains` を明示追加し、親カテゴリ・既存食材を除外しない。Grainsのハード依存にAPSやAdaptive Storage Frameworkを加えない。
+
+APSの1.6現物Defが `Hay` を建築材料に使う4設備（`ASF_Granary` 50、`ASF_WovenBasket` 75、`ASF_WovenBasketDouble` 150、`ASF_WovenBasketTriple` 225）を、**Grains + MO + APSの三者併用時のみ**同数量の `DankPyon_Straw` に変更する。MOなしでは元の `Hay` のまま。ほかの素材・研究・容量・収納時の腐敗仕様・穀物加工/藁産出量には手を加えない。MO Strawは既定のGrains脱穀副産物から供給する。素材置換はJapanization専用にしないため、MO+Grainsのみのプレイでも有効。なお、この互換はGrainsに同梱するため、GrainsなしでのAPS+MO一般互換まで提供するものではない。1.6実機での収納フィルタ操作・MO条件付き費用表示は未検証。
+
 ## 3. Grains本体（他AMJ Modなし）の位置づけ
 
 現CoreはAMJ Mod群すべての共通基盤ではなく、**乾田穀物の選択と一次加工を扱うGrains系独立コンテンツMod**として再編する。

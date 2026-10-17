@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Optional APS 1.6 integration. ASF_Granary already allows PlantFoodRaw,
+       the ancestor of AMJC_Grains. Add the explicit category so the new
+       sheaf / kernel / flour subdivisions are visible as storage choices.
+       Never replace PlantFoodRaw or PlantMatter: preserve the original foods. -->
+  <Operation Class="PatchOperationFindMod">
+    <mods><li>Adaptive Primitive Storage</li></mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+      <li Class="PatchOperationConditional">
+        <xpath>/Defs/ThingDef[defName="ASF_Granary"]/building/fixedStorageSettings/filter/categories[not(li="AMJC_Grains")]</xpath>
+        <match Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="ASF_Granary"]/building/fixedStorageSettings/filter/categories</xpath>
+          <value><li>AMJC_Grains</li></value>
+        </match>
+      </li>
+      <li Class="PatchOperationConditional">
+        <xpath>/Defs/ThingDef[defName="ASF_Granary"]/building/defaultStorageSettings/filter/categories[not(li="AMJC_Grains")]</xpath>
+        <match Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="ASF_Granary"]/building/defaultStorageSettings/filter/categories</xpath>
+          <value><li>AMJC_Grains</li></value>
+        </match>
+      </li>
+      </operations>
+    </match>
+  </Operation>
+</Patch>
