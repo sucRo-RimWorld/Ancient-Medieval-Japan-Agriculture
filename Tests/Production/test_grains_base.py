@@ -185,7 +185,7 @@ class BaseBoundaryTests(unittest.TestCase):
                 if operation.get('Class') not in ('PatchOperationReplace', 'PatchOperationRemove'):
                     continue
                 xpath = operation.findtext('xpath') or ''
-                if 'ASF_' in xpath and '/costList/Hay' in xpath:
+                if 'ASF_' in xpath and '/costList' in xpath:
                     self.fail(f'APS Hay construction cost replaced by {path.name}')
 
 
