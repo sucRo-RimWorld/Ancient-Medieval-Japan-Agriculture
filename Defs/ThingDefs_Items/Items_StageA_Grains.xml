@@ -76,7 +76,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
+    <thingCategories Inherit="False"><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
 
@@ -156,7 +156,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
+    <thingCategories Inherit="False"><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
 
@@ -235,7 +235,7 @@
         <rotDestroys>true</rotDestroys>
       </li>
     </comps>
-    <thingCategories><li>AMJC_GrainKernels</li></thingCategories>
+    <thingCategories Inherit="False"><li>AMJC_GrainKernels</li></thingCategories>
   </ThingDef>
 
 

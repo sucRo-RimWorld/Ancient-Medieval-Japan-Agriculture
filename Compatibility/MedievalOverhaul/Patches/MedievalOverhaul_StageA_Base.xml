@@ -3,7 +3,7 @@
   <Operation Class="PatchOperationAdd">
     <xpath>/Defs/ThingDef[defName="AMJC_Wheat"]</xpath>
     <value>
-      <thingCategories>
+      <thingCategories Inherit="False">
         <li>DankPyon_Cereal</li>
       </thingCategories>
     </value>

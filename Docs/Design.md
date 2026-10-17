@@ -644,6 +644,8 @@ Grainsは `PlantFoodRaw → AMJC_Grains（穀物）` の下に、`AMJC_GrainShea
 
 MOの `DankPyon_Cereal` は製粉・醸造レシピの材料カテゴリなので、未脱穀の小麦束をその子孫に入れると一次加工を迂回できる。Grainsの保管用「穀物」は独立させ、`DankPyon_Cereal` の材料判定は既存の可食小麦穀粒で維持する。MO小麦粉は `DankPyon_Flour` の材料カテゴリも維持し、MOその他の穀物の分類を変更しない。新カテゴリは `PlantFoodRaw` の下に置き、米と可食穀粒の料理材料としての扱いを保持する。
 
+**生野菜の重複表示を防ぐ:** 穀類の可食穀粒は `PlantFoodRawBase` 由来の `thingCategories/PlantFoodRaw` を直接継承させず、`Inherit="False"` で `AMJC_GrainKernels` のみに分類する。Vanilla `RawRice` でも親由来の直接所属を無効化し、すでに明示されている他Modのカテゴリは保持したまま `PlantFoodRaw` の明示所属だけを除外する。MOの `AMJC_Wheat` も同様にしつつ、製粉用 `DankPyon_Cereal` は維持する。`AMJC_Grains` 自体は `PlantFoodRaw` の子孫のままとするため、料理・材料フィルタの親カテゴリ互換を維持する。
+
 #### Adaptive Primitive Storage任意互換（2026-10-17）
 
 新たな穀倉DefをGrainsに追加しない。Adaptive Primitive Storage（Workshop 3400037215／packageId `Adaptive.PrimitiveStorage`）既存の `ASF_Granary`（3×3、54スタック）を利用する。同設備の固定・既定収納フィルタは `PlantFoodRaw` と `PlantMatter` を受け入れ、`AMJC_Grains` は `PlantFoodRaw` の子孫であるためGrainsの穀物束・穀粒・穀粉（MO小麦を含む）は階層上対象に入る。APS存在時だけ両フィルタへ `AMJC_Grains` を明示追加し、親カテゴリ・既存食材を除外しない。Grainsのハード依存にAPSやAdaptive Storage Frameworkを加えない。
