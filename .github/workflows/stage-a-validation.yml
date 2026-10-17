@@ -1,10 +1,7 @@
 name: Stage A validation
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-
+  workflow_dispatch:
 jobs:
   validate-png-assets:
     runs-on: ubuntu-latest
