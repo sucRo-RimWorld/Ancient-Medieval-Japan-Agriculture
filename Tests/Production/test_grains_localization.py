@@ -128,6 +128,8 @@ class JapaneseLocalizationAudit(unittest.TestCase):
             self.assertIn('`' + name + '`', audit, name)
         for name in BASE_THINGS | BASE_RECIPES:
             self.assertNotIn(name + '.label', medieval, 'Base-only label leaked into MO: ' + name)
+        self.assertEqual(medieval.get('DankPyon_RawWheat.label'), '小麦束')
+        self.assertEqual(medieval.get('DankPyon_Flour.label'), '小麦粉')
         for name in ('AMJC_ThreshWheat', 'AMJC_ThreshWheatBulk'):
             self.assertIn(name + '.description', vanilla)
             self.assertIn(name + '.description', medieval)

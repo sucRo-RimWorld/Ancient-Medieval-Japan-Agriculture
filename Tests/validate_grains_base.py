@@ -263,10 +263,14 @@ def validate():
         ("PatchOperationReplace", '/Defs/ThingDef[defName="DankPyon_RawWheat"]/thingCategories'),
         ("PatchOperationAdd", '/Defs/ThingDef[defName="AMJC_Wheat"]/thingCategories'),
         ("PatchOperationAdd", '/Defs/ThingDef[defName="DankPyon_Flour"]/thingCategories'),
+        ("PatchOperationAttributeSet", '/Defs/ThingDef[defName="DankPyon_Flour"]/thingCategories'),
     ], "MO storage categories"
     assert mo_ops[0].findtext("value/thingCategories/li") == "AMJC_GrainSheaves"
+    assert mo_ops[0].find("value/thingCategories").get("Inherit") == "False"
     assert mo_ops[1].findtext("value/li") == "AMJC_GrainKernels"
     assert mo_ops[2].findtext("value/li") == "AMJC_GrainFlour"
+    assert mo_ops[3].findtext("attribute") == "Inherit"
+    assert mo_ops[3].findtext("value") == "False"
     mo_wheat = next(n for n in mo.findall("ThingDef") if n.findtext("defName") == "AMJC_Wheat")
     assert [li.text for li in mo_wheat.findall("thingCategories/li")] == ["DankPyon_Cereal"]
     actual = {}

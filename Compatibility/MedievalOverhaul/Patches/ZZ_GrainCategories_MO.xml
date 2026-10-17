@@ -4,7 +4,7 @@
        That recipe category must remain exclusive of unthreshed wheat. -->
   <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[defName="DankPyon_RawWheat"]/thingCategories</xpath>
-    <value><thingCategories><li>AMJC_GrainSheaves</li></thingCategories></value>
+    <value><thingCategories Inherit="False"><li>AMJC_GrainSheaves</li></thingCategories></value>
   </Operation>
   <Operation Class="PatchOperationAdd">
     <xpath>/Defs/ThingDef[defName="AMJC_Wheat"]/thingCategories</xpath>
@@ -14,5 +14,12 @@
   <Operation Class="PatchOperationAdd">
     <xpath>/Defs/ThingDef[defName="DankPyon_Flour"]/thingCategories</xpath>
     <value><li>AMJC_GrainFlour</li></value>
+  </Operation>
+  <!-- Keep MO's DankPyon_Flour recipe category, but suppress parent raw-food
+       leaf membership inherited by the MO flour ThingDef. -->
+  <Operation Class="PatchOperationAttributeSet">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Flour"]/thingCategories</xpath>
+    <attribute>Inherit</attribute>
+    <value>False</value>
   </Operation>
 </Patch>
