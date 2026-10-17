@@ -251,7 +251,7 @@ def validate():
     assert rice_patch.find("Operation/nomatch/value/thingCategories").get("Inherit") == "False"
     assert rice_patch.findtext("Operation[@Class='PatchOperationAttributeSet']/attribute") == "Inherit"
     assert rice_patch.findtext("Operation[@Class='PatchOperationAttributeSet']/value") == "False"
-    assert rice_patch.findtext("Operation[@Class='PatchOperationConditional']/match/xpath") == (
+    assert rice_patch.findall("Operation[@Class='PatchOperationConditional']")[-1].findtext("match/xpath") == (
         '/Defs/ThingDef[defName="RawRice"]/thingCategories/li[text()="PlantFoodRaw"]')
     mo_base = ET.parse(ROOT / MO_FOLDER / "Patches/MedievalOverhaul_StageA_Base.xml")
     mo_cereal = mo_base.find('Operation/value/thingCategories')
