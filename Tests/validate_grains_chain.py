@@ -59,12 +59,12 @@ def validate(root=ROOT):
             assert stone.findtext('costList/BlocksGranite') == '30' and stone.findtext('costList/WoodLog') == '20'
         work = defs['AMJC_DoGrainProcessing']
         assert work.tag == 'WorkGiverDef' and work.findtext('giverClass') == 'WorkGiver_DoBill'
-        assert work.findtext('workType') == 'Crafting'
+        assert work.findtext('workType') == 'Cooking'
         assert [n.text for n in work.findall('fixedBillGiverDefs/li')] == ['AMJC_GrainProcessingSpot','AMJC_GrainProcessingTable']
         if profile == 'vanilla':
             work = defs['AMJC_DoGrainsMilling']
             assert work.tag == 'WorkGiverDef' and work.findtext('giverClass') == 'WorkGiver_DoBill'
-            assert work.findtext('workType') == 'Crafting'
+            assert work.findtext('workType') == 'Cooking'
             assert [n.text for n in work.findall('fixedBillGiverDefs/li')] == ['AMJC_ManualMillstone']
         # All single/bulk grain-processing Bills inherit this Base-and-MO stove fallback.
         processing_users = ['AMJC_GrainProcessingSpot', 'AMJC_GrainProcessingTable',
@@ -74,6 +74,8 @@ def validate(root=ROOT):
             matches = [n for n in doc.findall('RecipeDef')
                        if n.get('Name') == parent and n.get('Abstract') == 'True']
             assert len(matches) == 1, ('Processing parent missing', profile, parent)
+            assert matches[0].findtext('workSkill') == 'Cooking', ('Processing skill', profile, parent)
+            assert matches[0].findtext('workSpeedStat') == 'GeneralLaborSpeed', ('Processing labor stat', profile, parent)
             assert [n.text for n in matches[0].findall('recipeUsers/li')] == processing_users, (
                 'Processing stove providers', profile, parent)
             operations = ('Thresh',) if crop == 'Wheat' else ('Thresh', 'Hull')
@@ -107,7 +109,7 @@ def validate(root=ROOT):
             assert rec.findtext('targetCountAdjustment') == '10', ('Bill count step', recipe)
             assert float(rec.findtext('workAmount')) == 300, ('Milling labor', recipe)
             assert rec.findtext('workSpeedStat') == 'GeneralLaborSpeed', ('Milling work stat', recipe)
-            assert rec.findtext('workSkill') == 'Crafting', ('Milling skill', recipe)
+            assert rec.findtext('workSkill') == 'Cooking', ('Milling skill', recipe)
             assert rec.findtext('allowMixingIngredients') == 'false', ('Milling mixed inputs', recipe)
             assert rec.findtext('fixedIngredientFilter/thingDefs/li') == grain, ('Fixed milling ingredient', recipe)
             assert rec.findtext('fixedIngredientFilter/specialFiltersToDisallow/li') == 'AllowRotten', ('Rotten grain filter', recipe)
@@ -271,6 +273,7 @@ def validate_mo_source(mo_root):
         assert float(recipe.findtext('products/DankPyon_Flour')) == count, recipe_name
         assert float(recipe.findtext('products/Hay')) == count, recipe_name
         assert float(recipe.findtext('workAmount')) == work, ('MO grinding work', recipe_name)
+        assert recipe.findtext('workSkill') == 'Cooking', ('MO milling skill', recipe_name)
     # MO's native WorkGiver must actually route bills to the millstone.
     giver = get('WorkGiverDef','DankPyon_DoBillsMillstone')
     assert giver.findtext('giverClass') == 'WorkGiver_DoBill'

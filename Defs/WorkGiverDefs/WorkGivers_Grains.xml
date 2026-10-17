@@ -4,7 +4,7 @@
     <defName>AMJC_DoGrainProcessing</defName>
     <label>process grains</label>
     <giverClass>WorkGiver_DoBill</giverClass>
-    <workType>Crafting</workType>
+    <workType>Cooking</workType>
     <priorityInType>110</priorityInType>
     <fixedBillGiverDefs>
       <li>AMJC_GrainProcessingSpot</li>

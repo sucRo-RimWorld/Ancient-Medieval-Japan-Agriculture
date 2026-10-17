@@ -648,15 +648,15 @@ namespace AncientMedievalJapanCore.E2E
 
             ctx.Assert(Math.Abs(recipe.workAmount - expectedWorkAmount) < 0.001f, defName + " workAmount mismatch.");
             ctx.Assert(recipe.workSpeedStat == StatDefOf.GeneralLaborSpeed, defName + " should use GeneralLaborSpeed.");
-            ctx.Assert(recipe.workSkill == SkillDefOf.Crafting, defName + " should use Crafting.");
+            ctx.Assert(recipe.workSkill == SkillDefOf.Cooking, defName + " should use Cooking.");
 
             List<string> users = recipe.recipeUsers == null
                 ? new List<string>()
                 : recipe.recipeUsers.Where(x => x != null).Select(x => x.defName).OrderBy(x => x).ToList();
 
             ctx.Assert(
-                users.SequenceEqual(new[] { "AMJC_GrainProcessingSpot", "AMJC_GrainProcessingTable" }.OrderBy(x => x)),
-                defName + " must be available on both grain-processing stations and no others.");
+                users.SequenceEqual(new[] { "AMJC_GrainProcessingSpot", "AMJC_GrainProcessingTable", "FueledStove", "ElectricStove" }.OrderBy(x => x)),
+                defName + " must be available on both grain-processing stations and Vanilla stoves.");
 
             ThingDef inputDef = RequireThingDef(ctx, inputDefName);
             IngredientCount ingredient = recipe.ingredients == null

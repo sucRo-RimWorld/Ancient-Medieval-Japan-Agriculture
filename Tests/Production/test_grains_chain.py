@@ -213,9 +213,9 @@ class ChainRegressionTests(unittest.TestCase):
           <ThingDef><defName>DankPyon_RawWheat</defName></ThingDef>
         </Defs>"""
         recipes = """<Defs>
-          <RecipeDef><defName>DankPyon_CraftFlour_Manual</defName><workAmount>300</workAmount><recipeUsers><li>CraftingSpot</li></recipeUsers><ingredients><li><count>1</count></li></ingredients><products><DankPyon_Flour>1</DankPyon_Flour><Hay>1</Hay></products></RecipeDef>
-          <RecipeDef><defName>DankPyon_CraftFlour</defName><workAmount>100</workAmount><recipeUsers><li>DankPyon_Millstone</li></recipeUsers><ingredients><li><count>1</count></li></ingredients><products><DankPyon_Flour>1</DankPyon_Flour><Hay>1</Hay></products></RecipeDef>
-          <RecipeDef><defName>DankPyon_CraftFlourBulk</defName><workAmount>800</workAmount><recipeUsers><li>DankPyon_Millstone</li></recipeUsers><ingredients><li><count>10</count></li></ingredients><products><DankPyon_Flour>10</DankPyon_Flour><Hay>10</Hay></products></RecipeDef>
+          <RecipeDef><defName>DankPyon_CraftFlour_Manual</defName><workSkill>Cooking</workSkill><workAmount>300</workAmount><recipeUsers><li>CraftingSpot</li></recipeUsers><ingredients><li><count>1</count></li></ingredients><products><DankPyon_Flour>1</DankPyon_Flour><Hay>1</Hay></products></RecipeDef>
+          <RecipeDef><defName>DankPyon_CraftFlour</defName><workSkill>Cooking</workSkill><workAmount>100</workAmount><recipeUsers><li>DankPyon_Millstone</li></recipeUsers><ingredients><li><count>1</count></li></ingredients><products><DankPyon_Flour>1</DankPyon_Flour><Hay>1</Hay></products></RecipeDef>
+          <RecipeDef><defName>DankPyon_CraftFlourBulk</defName><workSkill>Cooking</workSkill><workAmount>800</workAmount><recipeUsers><li>DankPyon_Millstone</li></recipeUsers><ingredients><li><count>10</count></li></ingredients><products><DankPyon_Flour>10</DankPyon_Flour><Hay>10</Hay></products></RecipeDef>
         </Defs>"""
         worker = """<Defs><WorkGiverDef><defName>DankPyon_DoBillsMillstone</defName>
           <giverClass>WorkGiver_DoBill</giverClass><workType>Cooking</workType>
