@@ -4,6 +4,12 @@
 
 The four-profile harness was established before changing production dependency metadata. The production `About.xml` now declares **no mandatory MO or other Mod**, while `loadAfter` retains an optional MO ordering hint. The MO conditional and BaseWithoutMO fallback paths remain exclusive. A successful metadata/static tooling test is not a real-game test or public-release clearance.
 
+## Author-ordered validation sequence: ordinary play through flour food before 1.7 (2026-10-17)
+
+**Decision:** Hold new RimWorld 1.7 acceptance runs until the existing Grains game has been played far enough to confirm a complete **cultivation → harvest → threshing → hulling (where applicable) → milling → flour-food cooking and eating** chain in ordinary gameplay. In particular, confirm actual flour-food Bills and resulting pawn consumption; a source/static PASS or isolated pre-staged ingredients alone is not this playthrough checkpoint. Observe and fix concrete gameplay defects before scheduling 1.7 verification. This does not require testing every food variant or repeating prior native passes during play.
+
+**After that checkpoint:** Use the changed/current Grains implementation for a single proportionate, consolidated 1.7 compatibility acceptance, reusing valid unchanged evidence and checking changed behavior rather than launching the game on every PR. The earlier 1.7 24/24 is historical evidence for its recorded source, **not** acceptance of the later food/storage/filter changes. Do not run the 1.7 test now; do not change `About/About.xml` to advertise 1.7 or approve release from this scheduling decision. No automatic game-launch trigger is authorized.
+
 ## Author-deferred batch: loaded-game localization and rendering (2026-10-13)
 
 **Decision:** Do not perform one-off native/game-UI checks after each rice-text edit. Defer actual RimWorld launches and screenshot inspection until the next consolidated Grains native/visual regression session. This is scheduling scope only, **not** a waiver or a PASS. Static XML/document/locale parity tests may continue independently; none can substitute for loaded-game evidence. Do not start a new runtime host or retry incomplete game installation merely for this wording revision.
