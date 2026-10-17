@@ -189,5 +189,31 @@ class BaseBoundaryTests(unittest.TestCase):
                     self.fail(f'APS Hay construction cost replaced by {path.name}')
 
 
+    def test_aps_hay_and_straw_are_alternative_buildings(self):
+        path = self.root / MO_FOLDER / 'Defs/AdaptivePrimitiveStorage_StrawAlternatives.xml'
+        root = ET.parse(path).getroot()
+        expected = {'Granary': 50, 'WovenBasket': 75,
+                    'WovenBasketDouble': 150, 'WovenBasketTriple': 225}
+        actual = {n.findtext('defName'): n for n in root.findall('ThingDef')}
+        self.assertEqual(set(actual),
+                         {'AMJC_APS_' + key + '_Straw' for key in expected})
+        for key, count in expected.items():
+            variant = actual['AMJC_APS_' + key + '_Straw']
+            self.assertEqual(variant.get('ParentName'), 'AdaptiveStorageBase')
+            self.assertEqual(variant.get('MayRequire'), 'Adaptive.PrimitiveStorage')
+            cost = variant.find('costList')
+            self.assertEqual(cost.findtext('DankPyon_Straw'), str(count))
+            self.assertIsNone(cost.find('Hay'))
+            self.assertIsNotNone(variant.find('building/maxItemsInCell'))
+        granary = actual['AMJC_APS_Granary_Straw']
+        self.assertEqual(granary.findtext('costStuffCount'), '75')
+        self.assertEqual(granary.findtext('costList/WoodLog'), '25')
+        self.assertEqual(granary.findtext('building/maxItemsInCell'), '6')
+        for settings in ('defaultStorageSettings', 'fixedStorageSettings'):
+            self.assertIn('AMJC_Grains', [
+                n.text for n in granary.findall('building/' + settings + '/filter/categories/li')
+            ])
+
+
 if __name__ == '__main__':
     unittest.main()
