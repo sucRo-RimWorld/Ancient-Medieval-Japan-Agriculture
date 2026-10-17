@@ -49,7 +49,9 @@ The mandatory MO dependency has been removed. Previous fresh-start Vanilla / MO 
 
 ## Planned improvements
 
-- Refine Grains' sheaf, grain and flour item graphics with thicker outer outlines so they remain legible at normal game zoom and visually consistent alongside Vanilla and Medieval Overhaul items. This is a future art update; existing accepted images remain unchanged for now.
+- **Revise existing graphics:** Improve outer outlines, silhouettes and readability at normal game zoom across crop, sheaf, grain and flour art, with a consistent visual style alongside Medieval Overhaul. The already accepted 14 crop states and five sheaf graphics remain unchanged for now; their aesthetic revisions are deferred.
+- **Add missing dedicated graphics:** Finish incomplete post-harvest grain and rice sprites, replace the shared placeholder art used by all eight cooked foods with food-specific images, and create dedicated graphics for Grains' processing spot, processing table and Base manual millstone. Equipment completion remains a post-V1 improvement.
+- **Add stack-size variants:** Eventually provide distinct small, medium and large sheaf and flour sprites instead of the current single-appearance fallback. Sheaf quantity variants remain deferred; flour variants are not part of that deferral.
 
 ## Documentation
 
