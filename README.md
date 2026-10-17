@@ -33,7 +33,7 @@ These values are implemented in the current Defs. Four-profile loaded-game valid
 
 **Required:** RimWorld 1.6. **No mandatory additional Mods or DLC.**
 
-**Strongly recommended (optional):** [Adaptive Primitive Storage](https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215). Its existing granary can store Grains' grain sheaves, kernels and flours, including MO wheat. When both MO and Adaptive Primitive Storage are active, Grains' compatibility patch replaces Hay with MO Straw as a construction ingredient for the granary and woven baskets.
+**Strongly recommended (optional):** [Adaptive Primitive Storage](https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215). Its existing granary can store Grains' grain sheaves, kernels and flours, including MO wheat. The original granary and woven baskets retain their Hay construction requirements. With both MO and APS active, Grains additionally offers straw-built variants in the construction menu: select either the Hay original or a variant using the same amount of MO Straw. No building requires both.
 
 **Other optional integrations:** Medieval Overhaul (MO) and [Crop Cold Tolerance Overhaul](https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548) (CCTO).
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AMJC_APS_Granary_Straw.label>穀倉（藁使用）</AMJC_APS_Granary_Straw.label>
+  <AMJC_APS_Granary_Straw.description>穀物を乾燥状態で保管する穀倉。建築に干し草ではなく藁を使用する。54スタック収納可能。</AMJC_APS_Granary_Straw.description>
+  <AMJC_APS_WovenBasket_Straw.label>編み籠（藁使用）</AMJC_APS_WovenBasket_Straw.label>
+  <AMJC_APS_WovenBasket_Straw.description>藁を使って作る編み籠。10スタック収納可能。</AMJC_APS_WovenBasket_Straw.description>
+  <AMJC_APS_WovenBasketDouble_Straw.label>二段編み籠（藁使用）</AMJC_APS_WovenBasketDouble_Straw.label>
+  <AMJC_APS_WovenBasketDouble_Straw.description>藁を使って作る二段の編み籠。20スタック収納可能。</AMJC_APS_WovenBasketDouble_Straw.description>
+  <AMJC_APS_WovenBasketTriple_Straw.label>三段編み籠（藁使用）</AMJC_APS_WovenBasketTriple_Straw.label>
+  <AMJC_APS_WovenBasketTriple_Straw.description>藁を使って作る三段の編み籠。30スタック収納可能。</AMJC_APS_WovenBasketTriple_Straw.description>
+</LanguageData>

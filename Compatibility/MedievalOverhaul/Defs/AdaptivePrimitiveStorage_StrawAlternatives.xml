@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- MO + APS only: original Hay-buildable defs remain unchanged.
+       Separate Straw-buildable variants make construction a choice, not a combined bill. -->
+  <ThingDef ParentName="AdaptiveStorageBase" MayRequire="Adaptive.PrimitiveStorage">
+    <defName>AMJC_APS_Granary_Straw</defName>
+    <label>granary (straw)</label>
+    <graphicData>
+      <texPath>Granary/Granary</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(4,4.5)</drawSize>
+      <drawRotated>false</drawRotated>
+      <drawOffset>(0,0,0.45)</drawOffset>
+      <shaderType>CutoutComplex</shaderType>
+    </graphicData>
+    <description>A granary for keeping food dry. Items stored inside will never deteriorate and don't affect the beauty of their surroundings.
+
+Total Capacity: 54 Stacks
+
+Built using straw instead of hay.</description>
+    <fillPercent>1</fillPercent>
+    <researchPrerequisites><li>Stonecutting</li></researchPrerequisites>
+    <uiIconPath>Granary/Granary_UI</uiIconPath>
+    <uiIconScale>1.5</uiIconScale>
+    <size>(3,3)</size>
+    <rotatable>false</rotatable>
+    <statBases>
+      <Beauty>0</Beauty>
+      <MaxHitPoints>600</MaxHitPoints>
+      <WorkToBuild>17500</WorkToBuild>
+      <Flammability>0.75</Flammability>
+      <Mass>140</Mass>
+    </statBases>
+    <stuffCategories><li>Stony</li></stuffCategories>
+    <costStuffCount>75</costStuffCount>
+    <costList>
+      <DankPyon_Straw>50</DankPyon_Straw>
+      <WoodLog>25</WoodLog>
+    </costList>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+      <defaultStorageSettings><priority>Important</priority><filter><categories><li>PlantFoodRaw</li><li>PlantMatter</li><li>AMJC_Grains</li></categories></filter></defaultStorageSettings>
+      <fixedStorageSettings><filter><categories><li>PlantFoodRaw</li><li>PlantMatter</li><li>AMJC_Grains</li></categories></filter></fixedStorageSettings>
+      <maxItemsInCell>6</maxItemsInCell>
+    </building>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories><li>BuildingsFurniture</li></thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="AdaptiveStorageBase" MayRequire="Adaptive.PrimitiveStorage">
+    <defName>AMJC_APS_WovenBasket_Straw</defName>
+    <label>woven basket (straw)</label>
+    <graphicData>
+      <texPath>WovenBasket/WovenBasket</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1.5,1.5)</drawSize>
+      <drawRotated>false</drawRotated>
+      <drawOffset>(0,0,0.125)</drawOffset>
+    </graphicData>
+    <description>A woven basket designed for storing various items. Items stored inside do not affect the beauty of their surroundings.
+
+Total Capacity: 10 Stacks
+
+Rotate to change appearance. Built using straw instead of hay.</description>
+    <fillPercent>0.15</fillPercent>
+    <uiIconPath>WovenBasket/WovenBasket_UI</uiIconPath>
+    <uiIconScale>1.05</uiIconScale>
+    <size>(1,1)</size>
+    <rotatable>true</rotatable>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <statBases>
+      <Beauty>1</Beauty>
+      <MaxHitPoints>30</MaxHitPoints>
+      <WorkToBuild>100</WorkToBuild>
+      <Flammability>1</Flammability>
+      <Mass>5</Mass>
+    </statBases>
+    <costList>
+      <DankPyon_Straw>75</DankPyon_Straw>
+    </costList>
+    <resourcesFractionWhenDeconstructed>0.6</resourcesFractionWhenDeconstructed>
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+      <maxItemsInCell>10</maxItemsInCell>
+    </building>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories><li>BuildingsFurniture</li></thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="AdaptiveStorageBase" MayRequire="Adaptive.PrimitiveStorage">
+    <defName>AMJC_APS_WovenBasketDouble_Straw</defName>
+    <label>woven basket double (straw)</label>
+    <graphicData>
+      <texPath>WovenBasketDouble/WovenBasketDouble</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.5,2.1)</drawSize>
+      <drawRotated>false</drawRotated>
+      <drawOffset>(0,0,0.15)</drawOffset>
+    </graphicData>
+    <description>A stack of two woven baskets designed for storing various items. Items stored inside do not affect the beauty of their surroundings.
+
+Total Capacity: 20 Stacks
+
+Built using straw instead of hay.</description>
+    <fillPercent>0.2</fillPercent>
+    <uiIconPath>WovenBasketDouble/WovenBasketDouble_UI</uiIconPath>
+    <uiIconScale>1.10</uiIconScale>
+    <size>(1,1)</size>
+    <rotatable>false</rotatable>
+    <statBases>
+      <Beauty>1</Beauty>
+      <MaxHitPoints>60</MaxHitPoints>
+      <WorkToBuild>200</WorkToBuild>
+      <Flammability>1</Flammability>
+      <Mass>10</Mass>
+    </statBases>
+    <costList>
+      <DankPyon_Straw>150</DankPyon_Straw>
+    </costList>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+      <maxItemsInCell>20</maxItemsInCell>
+    </building>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories><li>BuildingsFurniture</li></thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="AdaptiveStorageBase" MayRequire="Adaptive.PrimitiveStorage">
+    <defName>AMJC_APS_WovenBasketTriple_Straw</defName>
+    <label>woven basket triple (straw)</label>
+    <graphicData>
+      <texPath>WovenBasketTriple/WovenBasketTriple</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1.6,2.6)</drawSize>
+      <drawRotated>false</drawRotated>
+      <drawOffset>(0,0,0.15)</drawOffset>
+    </graphicData>
+    <description>A stack of three woven baskets designed for storing various items. Items stored inside do not affect the beauty of their surroundings.
+
+Total Capacity: 30 Stacks
+
+Built using straw instead of hay.</description>
+    <fillPercent>0.45</fillPercent>
+    <uiIconPath>WovenBasketTriple/WovenBasketTriple_UI</uiIconPath>
+    <uiIconScale>1.15</uiIconScale>
+    <size>(1,1)</size>
+    <rotatable>false</rotatable>
+    <statBases>
+      <Beauty>1</Beauty>
+      <MaxHitPoints>90</MaxHitPoints>
+      <WorkToBuild>300</WorkToBuild>
+      <Flammability>1</Flammability>
+      <Mass>15</Mass>
+    </statBases>
+    <costList>
+      <DankPyon_Straw>225</DankPyon_Straw>
+    </costList>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <building>
+      <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+      <ignoreStoredThingsBeauty>true</ignoreStoredThingsBeauty>
+      <maxItemsInCell>30</maxItemsInCell>
+    </building>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories><li>BuildingsFurniture</li></thingCategories>
+  </ThingDef>
+</Defs>
