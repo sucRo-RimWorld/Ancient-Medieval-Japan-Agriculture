@@ -31,10 +31,10 @@
       <harvestTag>Standard</harvestTag>
       <maxMeshCount>4</maxMeshCount>
       <harvestedThingDef>AMJC_RawMillet</harvestedThingDef>
-      <harvestYield>13</harvestYield>
+      <harvestYield>27</harvestYield>
       <sowTags><li>Ground</li></sowTags>
       <topWindExposure>0.20</topWindExposure>
-      <growDays>6</growDays>
+      <growDays>9</growDays>
       <minGrowthTemperature>8</minGrowthTemperature>
       <maxGrowthTemperature>42</maxGrowthTemperature>
       <minOptimalGrowthTemperature>18</minOptimalGrowthTemperature>
@@ -72,10 +72,10 @@
       <harvestTag>Standard</harvestTag>
       <maxMeshCount>4</maxMeshCount>
       <harvestedThingDef>AMJC_RawMillet</harvestedThingDef>
-      <harvestYield>12</harvestYield>
+      <harvestYield>18</harvestYield>
       <sowTags><li>Ground</li></sowTags>
       <topWindExposure>0.20</topWindExposure>
-      <growDays>6</growDays>
+      <growDays>7</growDays>
       <minGrowthTemperature>5</minGrowthTemperature>
       <maxGrowthTemperature>40</maxGrowthTemperature>
       <minOptimalGrowthTemperature>15</minOptimalGrowthTemperature>
@@ -113,10 +113,10 @@
       <harvestTag>Standard</harvestTag>
       <maxMeshCount>4</maxMeshCount>
       <harvestedThingDef>AMJC_RawMillet</harvestedThingDef>
-      <harvestYield>11</harvestYield>
+      <harvestYield>9</harvestYield>
       <sowTags><li>Ground</li></sowTags>
       <topWindExposure>0.20</topWindExposure>
-      <growDays>5</growDays>
+      <growDays>4</growDays>
       <minGrowthTemperature>8</minGrowthTemperature>
       <maxGrowthTemperature>42</maxGrowthTemperature>
       <minOptimalGrowthTemperature>18</minOptimalGrowthTemperature>
@@ -177,7 +177,7 @@
   <ThingDef ParentName="PlantBase">
     <defName>AMJC_Plant_Barley</defName>
     <label>barley plant</label>
-    <description>Barley (omugi). A cereal introduced to Japan in the Yayoi period and known to have been cultivated during the Nara period. It has long contributed to diets alongside rice. In AMJGrains it grows well in cooler conditions, takes longer to mature than the millets, and yields a larger harvest. Harvested grain must be threshed and dehulled.</description>
+    <description>Barley (omugi). A cereal introduced to Japan in the Yayoi period and known to have been cultivated during the Nara period. It has long contributed to diets alongside rice. In AMJGrains it grows well in cooler conditions, matures later than the short-season millets, and yields more grain per harvest than kibi. Harvested grain must be threshed and dehulled.</description>
     <descriptionHyperlinks>
       <ThingDef>AMJC_RawBarley</ThingDef>
     </descriptionHyperlinks>
