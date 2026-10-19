@@ -63,7 +63,8 @@ namespace AncientMedievalJapan.Grains
             var growers = new List<IPlantToGrowSettable> { zone };
             foreach (ThingDef plant in PlantUtility.ValidPlantTypesForGrowers(growers))
             {
-                if (plant?.plant == null || plant.plant.harvestedThingDef == null
+                if (plant?.plant == null || plant.plant.purpose != PlantPurpose.Food
+                    || plant.plant.harvestedThingDef == null
                     || plant.plant.harvestYield <= 0f || plant.plant.growDays <= 0f)
                     continue;
                 var snap = new CropSnapshot
