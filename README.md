@@ -8,11 +8,12 @@ A standalone grain-growing and food-processing Mod inspired by agriculture in pr
 
 - Awa, Hie and Kibi, with different growing seasons, soil fertility requirements and temperature preferences.
 - Soba, barley, wheat and upland rice (using Vanilla `Plant_Rice`).
+- Integrated crop growth balancing for six Vanilla crops and seven optional MO crops (formerly the separate Crop Growth Balance Mod). MO lentils require Plants skill 2; all seven inherited crop growth periods retain their previous CGB values.
 - Harvested sheaves, threshing and hulling, grain milling, and basic flour foods.
 - Vanilla-only wheat, wheat flour and manual millstone when Medieval Overhaul is absent.
 - MO wheat/RawWheat/flour/millstone reuse and thresh-time Straw integration when MO is present, without duplicate default wheat or milling routes. AMJG-owned balance and processing settings take priority.
 
-The balancing model and crops are specified in [Design](Docs/Design.md) and [cultivation balance](Docs/Balance/Crops/Millet_Cultivation_Balance.md).
+The balancing model, including the inherited Vanilla/MO growth periods and provisional MO lentil skill 2, is specified in [Design](Docs/Design.md) and [cultivation balance](Docs/Balance/Crops/Millet_Cultivation_Balance.md).
 
 ## V1 food options
 
@@ -48,6 +49,8 @@ These values reflect the current source definitions. Current-revision loaded-gam
 **Strongly recommended (optional):** [Adaptive Primitive Storage](https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215). Its existing granary can store Grains' grain sheaves, kernels and flours, including MO wheat. The original granary and woven baskets retain their Hay construction requirements. With both MO and APS active, Grains additionally offers straw-built variants in the construction menu: select either the Hay original or a variant using the same amount of MO Straw. No building requires both.
 
 **Other optional integrations:** Medieval Overhaul (MO) and [Crop Cold Tolerance Overhaul](https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548) (CCTO).
+
+**The former Crop Growth Balance Mod has been merged into Grains and is no longer needed or released separately.** Do not enable an old standalone CGB copy alongside the integrated Grains build.
 
 The `loadAfter` entry for MO is an **optional ordering hint, not a hard dependency**. MO-specific definitions and patches load only when MO is active through `loadFolders.xml`; `BaseWithoutMO` supplies the fallback path otherwise. CCTO adds explicit cold-death support when installed.
 
