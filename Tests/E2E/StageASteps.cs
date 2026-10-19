@@ -61,7 +61,7 @@ namespace AncientMedievalJapanCore.E2E
                 throw new InvalidOperationException("AMJC_Plant_FoxtailMillet_Awa is not a plant.");
             }
 
-            ctx.Assert(Math.Abs(awa.plant.growDays - 6f) < 0.001f, "Awa growDays should be 6.");
+            ctx.Assert(Math.Abs(awa.plant.growDays - 9f) < 0.001f, "Awa growDays should be 9.");
             ctx.Assert(Math.Abs(awa.plant.fertilityMin - 0.5f) < 0.001f, "Awa fertilityMin should be 0.5.");
             ctx.Assert(Math.Abs(awa.plant.fertilitySensitivity - 0.4f) < 0.001f, "Awa fertilitySensitivity should be 0.4.");
             ctx.Assert(Math.Abs(awa.plant.minGrowthTemperature - 8f) < 0.001f, "Awa minimum growth temperature should be 8 C.");
@@ -69,12 +69,12 @@ namespace AncientMedievalJapanCore.E2E
             ctx.Assert(Math.Abs(awa.plant.minOptimalGrowthTemperature - 18f) < 0.001f, "Awa minimum optimal growth temperature should be 18 C.");
             ctx.Assert(Math.Abs(awa.plant.maxOptimalGrowthTemperature - 32f) < 0.001f, "Awa maximum optimal growth temperature should be 32 C.");
             ctx.Assert(awa.plant.sowMinSkill == 0, "Awa sowMinSkill should be 0.");
-            ctx.Assert(Math.Abs(awa.plant.harvestYield - 13f) < 0.001f, "Awa harvest yield should be 13.");
+            ctx.Assert(Math.Abs(awa.plant.harvestYield - 27f) < 0.001f, "Awa harvest yield should be 27.");
             ctx.Assert(awa.plant.harvestedThingDef != null && awa.plant.harvestedThingDef.defName == "AMJC_RawMillet", "Awa must harvest AMJC_RawMillet.");
 
                 checkpoint = "Hie and Kibi crop Defs";
-            AssertLoadedMilletCrop(ctx, "AMJC_Plant_BarnyardMillet_Hie", 6f, 12f, 0.5f, 5f, 40f, 15f, 30f);
-            AssertLoadedMilletCrop(ctx, "AMJC_Plant_ProsoMillet_Kibi", 5f, 11f, 0.3f, 8f, 42f, 18f, 32f);
+            AssertLoadedMilletCrop(ctx, "AMJC_Plant_BarnyardMillet_Hie", 7f, 18f, 0.5f, 5f, 40f, 15f, 30f);
+            AssertLoadedMilletCrop(ctx, "AMJC_Plant_ProsoMillet_Kibi", 4f, 9f, 0.3f, 8f, 42f, 18f, 32f);
                 checkpoint = "Soba and Barley crop Defs";
             AssertLoadedCrop(ctx, "AMJC_Plant_Buckwheat_Soba", 4f, 8f, 0.4f, 0.25f, 5f, 35f, 12f, 25f, 1, "AMJC_RawBuckwheat");
             AssertLoadedCrop(ctx, "AMJC_Plant_Barley", 10f, 22f, 0.5f, 0.6f, 0f, 35f, 5f, 22f, 2, "AMJC_RawBarley");
@@ -332,20 +332,20 @@ namespace AncientMedievalJapanCore.E2E
                 "Wheat must remain a post-Basic-Agriculture crop.");
 
             ctx.Assert(
-                soba.plant.growDays < kibi.plant.growDays
-                && kibi.plant.growDays < awa.plant.growDays
-                && Math.Abs(awa.plant.growDays - hie.plant.growDays) < 0.001f
+                soba.plant.growDays <= kibi.plant.growDays
+                && kibi.plant.growDays + 2f <= hie.plant.growDays
+                && hie.plant.growDays + 2f <= awa.plant.growDays
                 && awa.plant.growDays < barley.plant.growDays
                 && barley.plant.growDays < wheat.plant.growDays,
-                "Stage A growth times must preserve the Soba < Kibi < Awa/Hie < Barley < Wheat progression.");
+                "Millet maturity must differ substantially: Kibi 4 < Hie 7 < Awa 9; Soba 4, Barley 10, Wheat 12.");
 
             ctx.Assert(
                 soba.plant.harvestYield < kibi.plant.harvestYield
-                && kibi.plant.harvestYield < hie.plant.harvestYield
-                && hie.plant.harvestYield < awa.plant.harvestYield
-                && awa.plant.harvestYield < barley.plant.harvestYield
-                && barley.plant.harvestYield < wheat.plant.harvestYield,
-                "Shorter Stage A crops must retain lower per-harvest output than the longer grain crops.");
+                && kibi.plant.harvestYield + 7f <= hie.plant.harvestYield
+                && hie.plant.harvestYield + 7f <= awa.plant.harvestYield
+                && barley.plant.harvestYield < awa.plant.harvestYield
+                && awa.plant.harvestYield < wheat.plant.harvestYield,
+                "Millet harvest yields must be visibly different: Kibi 9 < Hie 18 < Awa 27.");
 
             ctx.Assert(
                 barley.plant.minGrowthTemperature < soba.plant.minGrowthTemperature
