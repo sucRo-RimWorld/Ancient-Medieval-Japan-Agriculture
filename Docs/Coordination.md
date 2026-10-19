@@ -110,18 +110,18 @@ Use whichever label best fits the task:
 
 **Requested by:** Alpha visual-completion audit  \
 **Owner:** Art/graphics  \
-**Status:** OPEN
+**Status:** IN PROGRESS — spot adopted and wired; loaded-game visual check OPEN
 
-The AMJ-specific `AMJC_GrainProcessingSpot` and `AMJC_GrainProcessingTable` are functionally validated but still use Medieval Overhaul StonecuttingSpot / Millstone graphics as development placeholders. Because these are AMJ-owned BuildingDefs normally visible during Stage A play, `Docs/Design.md §12.1.2` requires production graphics before the public Alpha.
+The author approved a horizontal grain-processing spot source and its exact 90-degree clockwise derivative. Four direction names use only two distinct production PNGs. The processing table still uses its development placeholder. Because these are AMJ-owned BuildingDefs normally visible during Stage A play, `Docs/Design.md §12.1.2` requires production graphics before the public Alpha.
 
 The two buildings should remain visually related but clearly communicate the existing gameplay distinction:
 - simple spot: improvised/manual, 1x1, slow;
 - processing table: purpose-built, 1x1, normal speed;
 - no gameplay/XML balance changes are part of the art task.
 
-**Next action:** Art/graphics should create production textures for both grain-processing buildings after the crop-art backlog, then perform the normal in-game size/readability check.
+**Next action:** Verify the spot's loaded north/east/south/west directions at normal game zoom and check ERROR 0; then separately complete the processing table artwork. Do not regenerate the accepted spot. Canonical source: Docs/Design.md §12.1.2.
 
-**Result / references:** `Defs/ThingDefs_Buildings/Buildings_GrainProcessing.xml`; current temporary paths are `Things/Building/Production/StonecuttingSpot` and `Things/Building/Production/Millstone`.
+**Result / references:** `Defs/ThingDefs_Buildings/Buildings_GrainProcessing.xml`; spot dedicated Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot; table keeps Things/Building/Production/TableStonecutter.
 
 ### AMJ-013 — Wheat grain graphics
 
