@@ -464,6 +464,11 @@ namespace AncientMedievalJapanCore.E2E
                         ThingDef rice = zone.GetPlantDefToGrow();
                         ctx.Require(PlantUtility.GrowthSeasonNow(riceCell, map, rice),
                             "Upland rice must be in a native growth season at 25 C.");
+                        ctx.Require(rice.plant.sowMinSkill == 4, "Rice must require Plants level 4.");
+                        worker.skills.GetSkill(SkillDefOf.Plants).Level = 3;
+                        ctx.Assert(NativeSowOffer(riceCell) == null,
+                            "A Plants level 3 grower must not receive a native rice sow job.");
+                        worker.skills.GetSkill(SkillDefOf.Plants).Level = 4;
                         riceJob = NativeSowOffer(riceCell);
                         ctx.Require(riceJob != null && riceJob.def == JobDefOf.Sow &&
                             riceJob.plantDefToSow == rice, "Rice needs a native sow job at 25 C.");
@@ -476,6 +481,8 @@ namespace AncientMedievalJapanCore.E2E
                     await RuntimeThread.Run(delegate
                     {
                         phase = "cold season transition";
+                        // Harvest/processing checks use the original full-skill test worker.
+                        worker.skills.GetSkill(SkillDefOf.Plants).Level = 20;
                         ricePlant = riceCell.GetPlant(map);
                         ctx.Require(ricePlant != null && ricePlant.sown, "Real sow must produce sown Plant_Rice.");
                         int priorDay = GenLocalDate.DayOfYear(map);
