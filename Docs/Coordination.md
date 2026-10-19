@@ -66,11 +66,9 @@ Use whichever label best fits the task:
 
 ## Current coordination items
 
-### GRAINS-STORAGE-CATEGORY-20261019 — Foods直下への移設とMO小麦粉重複分類削除
+### GRAINS-STORAGE-CATEGORY-20261019 — Foods直下のGrains穀物へMO穀物・小麦粉を一本化
 
-**Owner:** Grains XML/UI compatibility. **Status:** SOURCE IMPLEMENTED / static XML cross-check (MO 1.6 archive) PASS; current loaded-game UI/recipe/stockpile test OPEN. **Decision:** Place `AMJC_Grains` directly under `Foods`, at the same depth as MO `DankPyon_Cereal`. MO `DankPyon_Flour` ThingDef belongs only to `AMJC_GrainFlour` for storage; keep legacy MO category Def empty, remap known MO recipes and grain shelf to direct item authorization. Bridge old `PlantFoodRaw` / `FoodRaw` filters with the AMJC category without duplicate direct parent membership. Formal source: `Docs/Design.md §2.11` and production XML patches. Existing provider processing identities/recipes unchanged; native UI/compatibility still to be checked, no Steam action.
-
-
+**Owner:** Grains XML/UI compatibility. **Status:** SOURCE IMPLEMENTED, structural/source validation only; latest loaded-game storage tree, MO milling/brewing and Processor Framework runtime test OPEN. **2026-10-19 follow-up:** Move MO processed wheat `AMJC_Wheat` exclusively to `AMJC_GrainKernels` (MO raw wheat sheaf remains `AMJC_GrainSheaves`), while keeping `DankPyon_Cereal` as an empty compatibility category Def. Replace MO 1.6 grinding, ale wort, windmill/watermill and legacy stockpile category filters with direct `AMJC_Wheat` authorization; never route sheaves or all grains into generic MO processing. Previously integrated: `AMJC_Grains` under `Foods`, MO `DankPyon_Flour` only under `AMJC_GrainFlour`, explicit flour filter bridges. Canonical source: `Docs/Design.md §2.11/§6.5`, `Compatibility/MedievalOverhaul/Patches/ZZ_GrainCategories_MO.xml`, and test assertions. No fresh actual game run, no Steam action. Third-party mods adding to obsolete MO cereal category may require separate compatibility.
 
 ### GRAINS-PLAYTHROUGH-BEFORE-17-20261017 — flour-food play first
 
