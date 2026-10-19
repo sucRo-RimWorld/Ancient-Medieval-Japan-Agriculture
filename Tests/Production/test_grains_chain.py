@@ -125,9 +125,9 @@ class ChainRegressionTests(unittest.TestCase):
         self.mutate('Compatibility/MedievalOverhaul/Defs/Recipes_MOWheat.xml',
                     'RecipeDef[@Name="AMJC_WheatProcessingBase"]/recipeUsers/li[4]', 'Campfire')
 
-    def test_v1_beta_shared_mill_requires_fueled_stove(self):
+    def test_v1_beta_active_mill_requires_fueled_stove(self):
         self.mutate('Defs/RecipeDefs/Recipes_GrainsMilling.xml',
-                    'RecipeDef[defName="AMJC_MillRice"]/recipeUsers/li[2]', 'Campfire')
+                    'RecipeDef[defName="AMJC_MillBarley"]/recipeUsers/li[2]', 'Campfire')
 
     def test_v1_beta_wheat_mill_requires_electric_stove(self):
         self.mutate('BaseWithoutMO/Defs/Recipes_Milling.xml',
