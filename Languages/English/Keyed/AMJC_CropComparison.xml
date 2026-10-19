@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AMJC_CompareCropsButton>Compare crop output</AMJC_CompareCropsButton>
+  <AMJC_CropCompareTitle>Crop production comparison</AMJC_CropCompareTitle>
+  <AMJC_CropCompareDisclaimer>Estimates for the selected zone, using current soil fertility and temperature held constant, optimal light and about 13 growing hours/day. No forecast of frost, work time, disease or skill-based harvest losses. Reopen after conditions change.</AMJC_CropCompareDisclaimer>
+  <AMJC_CropCompareZoneInfo>{0} cells, average fertility {1}</AMJC_CropCompareZoneInfo>
+  <AMJC_Days>days</AMJC_Days>
+  <AMJC_CropComparePlant>Crop</AMJC_CropComparePlant>
+  <AMJC_CropCompareOnce>Per harvest</AMJC_CropCompareOnce>
+  <AMJC_CropCompareMaturity>First harvest</AMJC_CropCompareMaturity>
+  <AMJC_CropComparePerDay>Items/day/cell</AMJC_CropComparePerDay>
+  <AMJC_CropCompareTotal>Total / {0}d</AMJC_CropCompareTotal>
+  <AMJC_CropCompareCycles>Cycles/cell</AMJC_CropCompareCycles>
+  <AMJC_CropCompareSkill>Plants</AMJC_CropCompareSkill>
+</LanguageData>
