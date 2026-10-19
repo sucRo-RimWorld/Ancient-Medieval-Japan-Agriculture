@@ -1,63 +1,28 @@
-# 現行六穀の環境比較回帰（陸稲統合前）
+# Grains 六穀／七穀の環境比較回帰（2026-10-19改訂）
 
-> 2026-10-08のGrains再監査で、Vanilla `Plant_Rice` を陸稲として実装済み。本書は**陸稲追加前の六穀履歴Fixture**の説明として残し、現行七穀の静的比較は `Tests/test_upland_rice.py` と [SevenGrainFoodChainAudit.md](SevenGrainFoodChainAudit.md) を参照する。六穀FixtureのPASSだけでは最終リリース判定を満たさない。
-
-2026-10-07。実装値の正本は各PlantDefと `Docs/Balance/Crops/Millet_Cultivation_Balance.md`。
-この比較は既存値を変更せず、有限の成長時間で成熟収穫できる量を固定する。
+このドキュメントは **現在の** `Tests/Fixtures/Grains_Environment.json` を説明する。2026-10-07時点の旧アワ6/13・ヒエ6/12・キビ5/11の六穀FixtureはGit履歴に保存した。最新の実装値はキビ4/9・ヒエ7/18・アワ9/27であり、設計正本は `Docs/Design.md §4.2.1`。
 
 | 軸 | 代表値 |
 |---|---|
 | 肥沃度 | 0.5 / 1.0 / 1.4 |
 | 定温 | 10 / 20 / 30℃ |
-| 有効成長日 | 5 / 10 / 20日 |
+| 有効生育日 | 5 / 10 / 20日 |
 
-有効成長日は完全光量・休眠なしで成長できる時間の合計であり、暦日ではない。
-種まき・収穫・加工の労働時間、初期成長、部分成熟収穫、作物間の栄養差、
-播種研究の取得、天候、病害、霜、室内設備、栽培者技能・難易度は評価へ混ぜない。
-初期成長は0、成熟収穫後の再播種は即時、共通の難易度・収穫技能倍率は1とする。
+有効生育日は完全光量・休眠なしの時間を指し、実際の暦日ではない。成熟回数の整数部分だけを収穫し、播種・収穫・脱穀の労働、自然気象、搬送、霜での枯死、MOの藁副産物は含まない。
 
-計算は `floor(有効成長日 × 肥沃度係数 × 温度係数 / growDays) × harvestYield`。
-肥沃度が fertilityMin 未満なら播種できないため0。肥沃度係数は
-`1 - fertilitySensitivity + 肥沃度 × fertilitySensitivity`。
-温度係数は minGrowthTemperature ～ minOptimalGrowthTemperature で0→1、
-最適範囲で1、maxOptimalGrowthTemperature ～ maxGrowthTemperature で1→0。
-境界の浮動小数点誤差だけを1e-6で補う。成熟未満の端数は収量に算入しない。
+改訂後は27セル中**24セル**で成熟可能。Base/MOの六穀収穫量の同率を含む勝利数はアワ4・ヒエ4・キビ10・ソバ2・大麦2・小麦6。各作物に代表条件があり、一種類が有効セルの2/3以上で最多にならない。これは実ゲームでの作物優位を証明するものではない。
 
-Base小麦は明示値0/10/42/58℃、MO小麦の静的モデルは0/6/42/58℃を仮定する。
-提供されたMO 1.6 Plants_Cultivated_Farm.xml はPlantBaseを継承し温度を指定しない。
-参照したPlantPropertiesの既定値に基づく仮定であり、他ModのPatchやVanilla XMLの
-継承を静的投影で再現したものではない。今回の10/20/30℃のセルでは両者の結果は等しい。
-Pickle側はロード済みDefと実ゲームのPlantUtilityで別途検証する。
-
-ゲーム実装参照（インストール済みゲームの代わりにはしない）:
-[PlantUtility.cs](https://github.com/Chillu1/RimWorldDecompiled/blob/2d508035082e7cb0c8e29e230d26bda6e546928f/RimWorld/PlantUtility.cs)、
-[PlantProperties.cs](https://github.com/Chillu1/RimWorldDecompiled/blob/2d508035082e7cb0c8e29e230d26bda6e546928f/RimWorld/PlantProperties.cs)、
-[Plant.cs](https://github.com/Chillu1/RimWorldDecompiled/blob/2d508035082e7cb0c8e29e230d26bda6e546928f/RimWorld/Plant.cs)。
-係数関数とgrowDaysの時間単位を確認した。休眠等を外した範囲を上記で明示する。
-
-27セル中23セルで成熟収穫が可能。最大収量の回数（同率を両方へ算入）は
-Awa 1、Hie 2、Kibi 8、Soba 4、Barley 4、Wheat 6。
-同率があるため回数の合計は有効セル数と一致しない。
-
-| 穀物 | 最大収量となる代表セル（肥沃度 / 温度 / 有効成長日） | 収量 |
+| 作物 | 勝利する代表条件（肥沃度/温度/有効生育日） | 収穫数 |
 |---|---|---:|
-| アワ | 0.5 / 30℃ / 10日 | 13 |
-| ヒエ | 1.4 / 20℃ / 5日 | 12 |
-| キビ | 1.0 / 20℃ / 5日 | 11 |
-| ソバ | 0.5 / 10℃ / 10日 | 8 |
-| 大麦 | 1.0 / 10℃ / 10日 | 22 |
+| アワ | 1.0 / 20℃ / 10日 | 27 |
+| ヒエ | 0.5 / 20℃ / 10日 | 18（キビと同率） |
+| キビ | 0.5 / 30℃ / 5日 | 9 |
+| ソバ | 0.5 / 10℃ / 20日 | 24 |
+| 大麦 | 1.0 / 10℃ / 20日 | 44 |
 | 小麦 | 1.4 / 20℃ / 20日 | 56 |
 
-回帰条件は全セルの成熟収量・勝者の固定、六穀それぞれの代表用途維持、
-単一穀物が有効セルの2/3以上で最大にならないこと。
-2/3は回帰の警戒線であり、普遍的なゲームバランスの証明ではない。
-CCTOの枯死・耐霜差とMO Strawの価値はこの穀粒収量へ金額や隠れた重みを足さず、
-別の実機生存・副産物評価で扱う。本比較だけで環境リリースゲート全体を完了としない。
+陸稲は既存 `Patches/UplandRice.xml` による5日/11・最低肥沃度0.7・肥沃度感応度0.8を維持する。七穀の27セルでも24セルが成熟可能で、稲の最多は4セル（すべて独立首位、同率首位0）。現在の米には玄米・白米の製造と料理上の別用途があり、収量のみで作物の優劣は決まらない。
 
-実行: `python Tests/test_grains_environment.py`。
-意図的に値を変更するときはCultivation正本・XML・回帰Fixture・説明を同時に更新し、
-影響する代表セルをレビューする。Fixtureだけを自動更新して失敗を消さない。
+**自動検証:** `python Tests/validate_grains_environment.py`、`python Tests/Production/test_grains_environment.py`、`python Tests/Production/test_upland_rice.py`。実機は `Docs/GrainsProfileTesting.md` の実ロード試験による。新バランスでのゲームネイティブ4構成・自然季節・UI/Nice Plants Menu表示は未検証。
 
-## 2026-10-08 陸稲追加後の現行七穀解析ゲート
-
-`Patches/UplandRice.xml` にVanilla `Plant_Rice` を陸稲化し、5日/収量11/最低肥沃度0.7/肥沃度感応度0.8/成長10～42℃・最適18～32℃を設定する。既存六穀Fixtureは履歴として維持し、`Tests/test_upland_rice.py` が各27セルに陸稲を加えて再計算する。七穀すべてに**同率を含む**最大収量条件があり、単一作物が2/3以上の有効セルで勝たないことを確認する。**陸稲の最大収量6セルはすべて同率、単独首位は0セル**。これは陸稲固有の収量ニッチが確認済みという意味ではない。旧実装で存在した陸稲の加工労働ゼロという不整合（現行は必須2段階加工）と、MOの製粉作業量の差は [SevenGrainFoodChainAudit.md](SevenGrainFoodChainAudit.md) に分離して記録した。CCTOの既存米枯死-1℃は変更しない。これは解析ゲートであり、Pickleでのロード済み七穀比較・実播種・実収穫・画像・旧セーブの確認は未完了。2026-10-08に陸稲の籾摺り・脱穀を必須化する設計修正を採用した（[RicePostHarvestProcessing.md](RicePostHarvestProcessing.md)）。**このFixtureとテストは栽培の収量比較だけを表し、直接RawRice収穫を最終仕様として保証しない**。新加工経路を実装後、労働込みの比較は別途更新する。
+AMJ Crop Growth Balanceは独立の既存Vanilla/MO13作物の `growDays` を所有し、Grainsの七穀の値をパッチしない。Grains改訂との相対比較はCrop Growth Balance側に引き継ぐ。

@@ -25,7 +25,7 @@
 
 
   <AMJC_Plant_Barley.label>大麦</AMJC_Plant_Barley.label>
-  <AMJC_Plant_Barley.description>大麦（おおむぎ）。弥生時代に日本へ伝わり、奈良時代にも栽培が確認される麦類。米とともに食生活を支えてきた。AMJGrainsでは冷涼な気温での栽培に向き、雑穀より生育期間は長いが収量が多い。収穫後は脱穀と殻取りを行う。</AMJC_Plant_Barley.description>
+  <AMJC_Plant_Barley.description>大麦（おおむぎ）。弥生時代に日本へ伝わり、奈良時代にも栽培が確認される麦類。米とともに食生活を支えてきた。AMJGrainsでは冷涼な気温での栽培に向き、短期作のキビより生育期間は長いが、一度の収穫量は多い。収穫後は脱穀と殻取りを行う。</AMJC_Plant_Barley.description>
 
   <AMJC_RawBarley.label>大麦束</AMJC_RawBarley.label>
   <AMJC_RawBarley.description>茎と穂を付けたまま刈り取った大麦束。脱穀と殻取りを行うまでは食べられないが、収穫直後の状態で長く保存できる。</AMJC_RawBarley.description>
