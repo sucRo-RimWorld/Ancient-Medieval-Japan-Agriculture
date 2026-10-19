@@ -359,7 +359,7 @@
 
   <RecipeDef ParentName="AMJC_RiceProcessingBase">
     <defName>AMJC_HullRice</defName><label>hull rice</label>
-    <description>Remove the husks from threshed rice to obtain edible Vanilla rice.</description><jobString>Hulling rice.</jobString>
+    <description>Remove the husks from threshed rice to obtain dehulled brown rice.</description><jobString>Hulling rice.</jobString>
     <workAmount>10</workAmount><targetCountAdjustment>1</targetCountAdjustment>
     <ingredients><li><filter><thingDefs><li>AMJC_RiceInHull</li></thingDefs></filter><count>1</count></li></ingredients>
     <fixedIngredientFilter><thingDefs><li>AMJC_RiceInHull</li></thingDefs>
@@ -369,11 +369,23 @@
 
   <RecipeDef ParentName="AMJC_RiceProcessingBase">
     <defName>AMJC_HullRiceBulk</defName><label>hull rice x10</label>
-    <description>Remove the husks from ten portions of threshed rice to obtain edible Vanilla rice.</description><jobString>Hulling rice in bulk.</jobString>
+    <description>Remove the husks from ten portions of threshed rice to obtain ten portions of brown rice.</description><jobString>Hulling rice in bulk.</jobString>
     <workAmount>80</workAmount><targetCountAdjustment>10</targetCountAdjustment>
     <ingredients><li><filter><thingDefs><li>AMJC_RiceInHull</li></thingDefs></filter><count>10</count></li></ingredients>
     <fixedIngredientFilter><thingDefs><li>AMJC_RiceInHull</li></thingDefs>
       <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
     <products><RawRice>10</RawRice></products>
+  </RecipeDef>
+
+  <!-- Select brown or white rice by using different Bills on the same bench. -->
+  <RecipeDef ParentName="AMJC_RiceProcessingBase">
+    <defName>AMJC_PolishWhiteRiceBulk</defName>
+    <label>polish white rice x10</label>
+    <description>Remove the husks and polish ten portions of paddy into eight portions of white rice.</description>
+    <jobString>Polishing white rice.</jobString>
+    <workAmount>240</workAmount><targetCountAdjustment>8</targetCountAdjustment>
+    <ingredients><li><filter><thingDefs><li>AMJC_RiceInHull</li></thingDefs></filter><count>10</count></li></ingredients>
+    <fixedIngredientFilter><thingDefs><li>AMJC_RiceInHull</li></thingDefs><specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
+    <products><AMJC_WhiteRice>8</AMJC_WhiteRice></products>
   </RecipeDef>
 </Defs>

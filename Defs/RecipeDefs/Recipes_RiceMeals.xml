@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <RecipeDef>
+    <defName>AMJC_CookRiceMeal</defName>
+    <label>cook 1 rice meal</label>
+    <description>Cook 1 servings of rice meal using only dehulled rice.</description>
+    <jobString>Cooking rice meal.</jobString>
+    <workAmount>220</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat><workSkill>Cooking</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers><li>Campfire</li><li>ElectricStove</li><li>FueledStove</li></recipeUsers>
+    <ingredients><li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>0.5</count></li></ingredients>
+    <fixedIngredientFilter><thingDefs><li>RawRice</li></thingDefs><specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
+    <products><AMJC_RiceMeal>1</AMJC_RiceMeal></products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>AMJC_CookRiceMealBulk</defName>
+    <label>cook 4 rice meal</label>
+    <description>Cook 4 servings of rice meal using only dehulled rice.</description>
+    <jobString>Cooking rice meal.</jobString>
+    <workAmount>880</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat><workSkill>Cooking</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers><li>Campfire</li><li>ElectricStove</li><li>FueledStove</li></recipeUsers>
+    <ingredients><li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>2</count></li></ingredients>
+    <fixedIngredientFilter><thingDefs><li>RawRice</li></thingDefs><specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
+    <products><AMJC_RiceMeal>4</AMJC_RiceMeal></products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>AMJC_CookWhiteRiceMeal</defName>
+    <label>cook 1 white rice meal</label>
+    <description>Cook 1 servings of white rice meal using only polished white rice.</description>
+    <jobString>Cooking white rice meal.</jobString>
+    <workAmount>220</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat><workSkill>Cooking</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers><li>Campfire</li><li>ElectricStove</li><li>FueledStove</li></recipeUsers>
+    <ingredients><li><filter><thingDefs><li>AMJC_WhiteRice</li></thingDefs></filter><count>0.5</count></li></ingredients>
+    <fixedIngredientFilter><thingDefs><li>AMJC_WhiteRice</li></thingDefs><specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
+    <products><AMJC_WhiteRiceMeal>1</AMJC_WhiteRiceMeal></products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>AMJC_CookWhiteRiceMealBulk</defName>
+    <label>cook 4 white rice meal</label>
+    <description>Cook 4 servings of white rice meal using only polished white rice.</description>
+    <jobString>Cooking white rice meal.</jobString>
+    <workAmount>880</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat><workSkill>Cooking</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers><li>Campfire</li><li>ElectricStove</li><li>FueledStove</li></recipeUsers>
+    <ingredients><li><filter><thingDefs><li>AMJC_WhiteRice</li></thingDefs></filter><count>2</count></li></ingredients>
+    <fixedIngredientFilter><thingDefs><li>AMJC_WhiteRice</li></thingDefs><specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
+    <products><AMJC_WhiteRiceMeal>4</AMJC_WhiteRiceMeal></products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>AMJC_CookRicePorridge</defName>
+    <label>cook 1 rice porridge</label>
+    <description>Cook 1 servings of rice porridge using only dehulled rice.</description>
+    <jobString>Cooking rice porridge.</jobString>
+    <workAmount>180</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat><workSkill>Cooking</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers><li>Campfire</li><li>ElectricStove</li><li>FueledStove</li></recipeUsers>
+    <ingredients><li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>0.5</count></li></ingredients>
+    <fixedIngredientFilter><thingDefs><li>RawRice</li></thingDefs><specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
+    <products><AMJC_RicePorridge>1</AMJC_RicePorridge></products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>AMJC_CookRicePorridgeBulk</defName>
+    <label>cook 4 rice porridge</label>
+    <description>Cook 4 servings of rice porridge using only dehulled rice.</description>
+    <jobString>Cooking rice porridge.</jobString>
+    <workAmount>720</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat><workSkill>Cooking</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers><li>Campfire</li><li>ElectricStove</li><li>FueledStove</li></recipeUsers>
+    <ingredients><li><filter><thingDefs><li>RawRice</li></thingDefs></filter><count>2</count></li></ingredients>
+    <fixedIngredientFilter><thingDefs><li>RawRice</li></thingDefs><specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
+    <products><AMJC_RicePorridge>4</AMJC_RicePorridge></products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>AMJC_CookWhiteRicePorridge</defName>
+    <label>cook 1 white rice porridge</label>
+    <description>Cook 1 servings of white rice porridge using only polished white rice.</description>
+    <jobString>Cooking white rice porridge.</jobString>
+    <workAmount>180</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat><workSkill>Cooking</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers><li>Campfire</li><li>ElectricStove</li><li>FueledStove</li></recipeUsers>
+    <ingredients><li><filter><thingDefs><li>AMJC_WhiteRice</li></thingDefs></filter><count>0.5</count></li></ingredients>
+    <fixedIngredientFilter><thingDefs><li>AMJC_WhiteRice</li></thingDefs><specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
+    <products><AMJC_WhiteRicePorridge>1</AMJC_WhiteRicePorridge></products>
+  </RecipeDef>
+
+  <RecipeDef>
+    <defName>AMJC_CookWhiteRicePorridgeBulk</defName>
+    <label>cook 4 white rice porridge</label>
+    <description>Cook 4 servings of white rice porridge using only polished white rice.</description>
+    <jobString>Cooking white rice porridge.</jobString>
+    <workAmount>720</workAmount>
+    <workSpeedStat>CookSpeed</workSpeedStat><workSkill>Cooking</workSkill>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <recipeUsers><li>Campfire</li><li>ElectricStove</li><li>FueledStove</li></recipeUsers>
+    <ingredients><li><filter><thingDefs><li>AMJC_WhiteRice</li></thingDefs></filter><count>2</count></li></ingredients>
+    <fixedIngredientFilter><thingDefs><li>AMJC_WhiteRice</li></thingDefs><specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow></fixedIngredientFilter>
+    <products><AMJC_WhiteRicePorridge>4</AMJC_WhiteRicePorridge></products>
+  </RecipeDef>
+</Defs>

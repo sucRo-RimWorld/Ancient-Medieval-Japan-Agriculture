@@ -35,7 +35,7 @@ def all_localizations(*bases):
 
 RICE_ITEMS = {'AMJC_RiceSheaf', 'AMJC_RiceInHull', 'RawRice'}
 RICE_RECIPES = {'AMJC_ThreshRice', 'AMJC_ThreshRiceBulk',
-                'AMJC_HullRice', 'AMJC_HullRiceBulk'}
+                'AMJC_HullRice', 'AMJC_HullRiceBulk', 'AMJC_PolishWhiteRiceBulk'}
 
 
 def validate_rice_localizations(root):
@@ -69,9 +69,9 @@ def validate_rice_localizations(root):
     jp_recipes = ET.parse(root / 'Languages/Japanese/DefInjected/RecipeDef/AMJC_RiceProcessing.xml').getroot()
     for name, (ja_label, ja_desc, en_label, en_desc) in entries.items():
         if name == 'RawRice':
-            assert ja_label == '米' and en_label == 'rice'
+            assert ja_label == '玄米' and en_label == 'brown rice'
             assert jp_items.findtext('RawRice.description') == ja_desc
-            assert jp_items.find('RawRice.label') is None
+            assert jp_items.findtext('RawRice.label') == '玄米'
             assert not any(x.findtext('defName') == 'RawRice' for x in thing_source)
             patch = ET.parse(root / 'Patches/RawRiceDescription.xml').getroot()
             patch_ops = patch.findall('.//li')
@@ -80,7 +80,7 @@ def validate_rice_localizations(root):
             assert operation.get('Class') == 'PatchOperationReplace'
             assert operation.findtext('xpath') == '/Defs/ThingDef[defName="RawRice"]/description'
             assert operation.findtext('value/description') == en_desc
-            assert ja_desc.startswith('米（こめ）。')
+            assert ja_desc.startswith('玄米（げんまい）。')
             for term in ('江戸患い', '高木兼寛', '疫学', '1910年', '鈴木梅太郎', 'オリザニン'):
                 assert term in ja_desc
             for term in ('Edo sickness', 'Kanehiro Takaki', 'epidemiological', '1910', 'Umetaro Suzuki', 'oryzanin'):
@@ -103,7 +103,7 @@ def validate_rice_localizations(root):
                 assert '年貢' in ja_desc and 'commodity money' in en_desc
             else:
                 assert all(term in ja_desc for term in ('玄米', '白米', 'ビタミンB1'))
-                assert 'brown rice' in en_desc and 'white rice' in en_desc
+                assert 'brown rice' in en_desc.lower() and 'white rice' in en_desc.lower()
         if name in RICE_RECIPES:
             assert node.findtext('jobString') == jobs[name][1], 'English rice jobString drift: ' + name
             assert jp_group.findtext(name + '.jobString') == jobs[name][0], 'Japanese rice jobString drift: ' + name

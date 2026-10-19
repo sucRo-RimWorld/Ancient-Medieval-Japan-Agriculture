@@ -114,7 +114,7 @@
   <RecipeDef>
     <defName>AMJC_MillRice</defName>
     <label>mill rice</label>
-    <description>Grind 10 units of edible rice into 10 units of rice flour.</description>
+    <description>Grind 10 units of dehulled or polished rice into 10 units of rice flour.</description>
     <jobString>Milling rice.</jobString>
     <workAmount>300</workAmount>
     <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
@@ -130,7 +130,7 @@
       <li>
         <filter>
           <thingDefs>
-            <li>RawRice</li>
+            <li>RawRice</li><li>AMJC_WhiteRice</li>
           </thingDefs>
         </filter>
         <count>10</count>
@@ -138,7 +138,7 @@
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>RawRice</li>
+        <li>RawRice</li><li>AMJC_WhiteRice</li>
       </thingDefs>
       <specialFiltersToDisallow>
         <li>AllowRotten</li>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AMJC_CookRiceMeal.label>米飯を炊く</AMJC_CookRiceMeal.label>
+  <AMJC_CookRiceMeal.description>玄米だけから米飯を炊く。</AMJC_CookRiceMeal.description>
+  <AMJC_CookRiceMeal.jobString>米飯を炊いている。</AMJC_CookRiceMeal.jobString>
+  <AMJC_CookRiceMealBulk.label>米飯を炊く x4</AMJC_CookRiceMealBulk.label>
+  <AMJC_CookRiceMealBulk.description>玄米だけから米飯を炊く。4食まとめて作る。</AMJC_CookRiceMealBulk.description>
+  <AMJC_CookRiceMealBulk.jobString>米飯を炊いている。</AMJC_CookRiceMealBulk.jobString>
+  <AMJC_CookWhiteRiceMeal.label>白飯を炊く</AMJC_CookWhiteRiceMeal.label>
+  <AMJC_CookWhiteRiceMeal.description>白米だけから白飯を炊く。</AMJC_CookWhiteRiceMeal.description>
+  <AMJC_CookWhiteRiceMeal.jobString>白飯を炊いている。</AMJC_CookWhiteRiceMeal.jobString>
+  <AMJC_CookWhiteRiceMealBulk.label>白飯を炊く x4</AMJC_CookWhiteRiceMealBulk.label>
+  <AMJC_CookWhiteRiceMealBulk.description>白米だけから白飯を炊く。4食まとめて作る。</AMJC_CookWhiteRiceMealBulk.description>
+  <AMJC_CookWhiteRiceMealBulk.jobString>白飯を炊いている。</AMJC_CookWhiteRiceMealBulk.jobString>
+  <AMJC_CookRicePorridge.label>米粥を煮る</AMJC_CookRicePorridge.label>
+  <AMJC_CookRicePorridge.description>玄米だけから米粥を煮る。</AMJC_CookRicePorridge.description>
+  <AMJC_CookRicePorridge.jobString>米粥を煮ている。</AMJC_CookRicePorridge.jobString>
+  <AMJC_CookRicePorridgeBulk.label>米粥を煮る x4</AMJC_CookRicePorridgeBulk.label>
+  <AMJC_CookRicePorridgeBulk.description>玄米だけから米粥を煮る。4食まとめて作る。</AMJC_CookRicePorridgeBulk.description>
+  <AMJC_CookRicePorridgeBulk.jobString>米粥を煮ている。</AMJC_CookRicePorridgeBulk.jobString>
+  <AMJC_CookWhiteRicePorridge.label>白粥を煮る</AMJC_CookWhiteRicePorridge.label>
+  <AMJC_CookWhiteRicePorridge.description>白米だけから白粥を煮る。</AMJC_CookWhiteRicePorridge.description>
+  <AMJC_CookWhiteRicePorridge.jobString>白粥を煮ている。</AMJC_CookWhiteRicePorridge.jobString>
+  <AMJC_CookWhiteRicePorridgeBulk.label>白粥を煮る x4</AMJC_CookWhiteRicePorridgeBulk.label>
+  <AMJC_CookWhiteRicePorridgeBulk.description>白米だけから白粥を煮る。4食まとめて作る。</AMJC_CookWhiteRicePorridgeBulk.description>
+  <AMJC_CookWhiteRicePorridgeBulk.jobString>白粥を煮ている。</AMJC_CookWhiteRicePorridgeBulk.jobString>
+</LanguageData>

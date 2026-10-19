@@ -379,7 +379,7 @@
           <li>AMJC_Buckwheat</li>
           <li>AMJC_Barley</li>
           <li>AMJC_Wheat</li>
-          <li>RawRice</li>
+          <li>RawRice</li><li>AMJC_WhiteRice</li>
       </thingDefs></filter><count>0.5</count></li>
     </ingredients>
     <fixedIngredientFilter>
@@ -388,7 +388,7 @@
         <li>AMJC_Buckwheat</li>
         <li>AMJC_Barley</li>
         <li>AMJC_Wheat</li>
-        <li>RawRice</li>
+        <li>RawRice</li><li>AMJC_WhiteRice</li>
       </thingDefs>
       <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
     </fixedIngredientFilter>
@@ -413,7 +413,7 @@
           <li>AMJC_Buckwheat</li>
           <li>AMJC_Barley</li>
           <li>AMJC_Wheat</li>
-          <li>RawRice</li>
+          <li>RawRice</li><li>AMJC_WhiteRice</li>
       </thingDefs></filter><count>2</count></li>
     </ingredients>
     <fixedIngredientFilter>
@@ -422,7 +422,7 @@
         <li>AMJC_Buckwheat</li>
         <li>AMJC_Barley</li>
         <li>AMJC_Wheat</li>
-        <li>RawRice</li>
+        <li>RawRice</li><li>AMJC_WhiteRice</li>
       </thingDefs>
       <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
     </fixedIngredientFilter>
@@ -447,7 +447,7 @@
           <li>AMJC_Buckwheat</li>
           <li>AMJC_Barley</li>
           <li>AMJC_Wheat</li>
-          <li>RawRice</li>
+          <li>RawRice</li><li>AMJC_WhiteRice</li>
       </thingDefs></filter><count>0.5</count></li>
     </ingredients>
     <fixedIngredientFilter>
@@ -456,7 +456,7 @@
         <li>AMJC_Buckwheat</li>
         <li>AMJC_Barley</li>
         <li>AMJC_Wheat</li>
-        <li>RawRice</li>
+        <li>RawRice</li><li>AMJC_WhiteRice</li>
       </thingDefs>
       <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
     </fixedIngredientFilter>
@@ -481,7 +481,7 @@
           <li>AMJC_Buckwheat</li>
           <li>AMJC_Barley</li>
           <li>AMJC_Wheat</li>
-          <li>RawRice</li>
+          <li>RawRice</li><li>AMJC_WhiteRice</li>
       </thingDefs></filter><count>2</count></li>
     </ingredients>
     <fixedIngredientFilter>
@@ -490,7 +490,7 @@
         <li>AMJC_Buckwheat</li>
         <li>AMJC_Barley</li>
         <li>AMJC_Wheat</li>
-        <li>RawRice</li>
+        <li>RawRice</li><li>AMJC_WhiteRice</li>
       </thingDefs>
       <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
     </fixedIngredientFilter>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <ThingDef ParentName="MealCookedIngredientless">
+    <defName>AMJC_RiceMeal</defName><label>rice meal</label><description>Cooked rice made only from dehulled, less-polished rice, without other grains.</description>
+    <!-- Provisional common-meal graphic until the dedicated dish is approved. -->
+    <graphicData><texPath>Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
+    <statBases><Nutrition>0.9</Nutrition><MarketValue>11</MarketValue></statBases>
+    <ingestible><preferability>MealSimple</preferability></ingestible>
+    <comps Inherit="False">
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Ingredients" />
+      <li Class="CompProperties_FoodPoisonable" />
+      <li Class="CompProperties_Rottable"><daysToRotStart>3.5</daysToRotStart><rotDestroys>true</rotDestroys></li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="MealCookedIngredientless">
+    <defName>AMJC_WhiteRiceMeal</defName><label>white rice meal</label><description>A special bowl of cooked rice made entirely from carefully polished white rice.</description>
+    <!-- Provisional common-meal graphic until the dedicated dish is approved. -->
+    <graphicData><texPath>Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
+    <statBases><Nutrition>0.9</Nutrition><MarketValue>11</MarketValue></statBases>
+    <ingestible><preferability>MealSimple</preferability><tasteThought>AMJC_AteWhiteRiceMeal</tasteThought></ingestible>
+    <comps Inherit="False">
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Ingredients" />
+      <li Class="CompProperties_FoodPoisonable" />
+      <li Class="CompProperties_Rottable"><daysToRotStart>3.5</daysToRotStart><rotDestroys>true</rotDestroys></li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="MealCookedIngredientless">
+    <defName>AMJC_RicePorridge</defName><label>rice porridge</label><description>Porridge made solely from dehulled, less-polished rice.</description>
+    <!-- Provisional common-meal graphic until the dedicated dish is approved. -->
+    <graphicData><texPath>Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
+    <statBases><Nutrition>0.9</Nutrition><MarketValue>11</MarketValue></statBases>
+    <ingestible><preferability>MealSimple</preferability></ingestible>
+    <comps Inherit="False">
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Ingredients" />
+      <li Class="CompProperties_FoodPoisonable" />
+      <li Class="CompProperties_Rottable"><daysToRotStart>1.75</daysToRotStart><rotDestroys>true</rotDestroys></li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="MealCookedIngredientless">
+    <defName>AMJC_WhiteRicePorridge</defName><label>white rice porridge</label><description>Porridge made solely from carefully polished white rice.</description>
+    <!-- Provisional common-meal graphic until the dedicated dish is approved. -->
+    <graphicData><texPath>Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
+    <statBases><Nutrition>0.9</Nutrition><MarketValue>11</MarketValue></statBases>
+    <ingestible><preferability>MealSimple</preferability><tasteThought>AMJC_AteWhiteRicePorridge</tasteThought></ingestible>
+    <comps Inherit="False">
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Ingredients" />
+      <li Class="CompProperties_FoodPoisonable" />
+      <li Class="CompProperties_Rottable"><daysToRotStart>1.75</daysToRotStart><rotDestroys>true</rotDestroys></li>
+    </comps>
+  </ThingDef>
+</Defs>

@@ -145,7 +145,7 @@ Coreは古代～中世日本を厳密に再現する歴史シミュレーター�
 稲作ではこの原則を次のように扱う。
 
 - **共通の必須加工**は `稲束 → 籾 → 米` とする。Grainsは共通稲Plantの収穫先を未脱穀の稲束とし、既存の穀物加工設備で脱穀・籾摺りを提供する。最終食材はVanilla `RawRice` を再利用する
-- 「籾」は独立した中間物、玄米・精白米は必須の別ThingDefにはしない。籾摺りからVanillaの日常食用の「米」までを抽象化する。**Grains現行XMLは稲束を収穫し、2段階のRecipeでRawRiceを得る。実機検証は未完了**
+- 「籾」は独立した中間物。**籾摺りBillで玄米（Vanilla `RawRice`）または白米（`AMJC_WhiteRice`）を選択**する。玄米は籾10→10・作業量80、白米は籾10→8・作業量240とし、後者に明確な労力差・歩留まり損失を設ける。**Grains現行XMLは稲束を収穫し、2段階のRecipeでRawRiceを得る。実機検証は未完了**
 - 稲架掛け、乾燥した稲、乾燥の歩留まり差等は**Rice Cultivation側の水田栽培向け任意追加工程**とする。MO Drying Rack／Processor Frameworkを必須依存とはしない。通常の収穫と必須加工を経るだけで食事に利用でき、乾燥工程は任意
 - MO Strawは条件付きの副産物として検討するが、BaseにMO Defを参照させない。稲藁の発生箇所と任意乾燥での二重発生を防ぐ
 
@@ -818,14 +818,14 @@ Stage Aの穀物は、加工前後の保存性も作物選択と備蓄判断に�
 
 ### 4.2.2 共通の稲（Vanilla Rice）とV1の畑地栽培
 
-GrainsではVanillaの `Plant_Rice` を削除・複製せず、**V1では畑地栽培向けに上書きし、将来は同じPlantを水田でも利用する**。旧XMLでは `RawRice` を直接収穫する実装上の近道があった。**現行XMLは `稲束（AMJC_RiceSheaf）→脱穀→籾（AMJC_RiceInHull）→籾摺り→RawRice` を必須とし、既存料理と他Mod参照の互換性は最終食材のVanilla `RawRice` を維持して守る。**** 実装前の確定・未確定条件は [RicePostHarvestProcessing.md](Balance/Crops/RicePostHarvestProcessing.md) を参照する。
+GrainsではVanillaの `Plant_Rice` を削除・複製せず、**V1では畑地栽培向けに上書きし、将来は同じPlantを水田でも利用する**。旧XMLでは `RawRice` を直接収穫する実装上の近道があった。**収穫後の共通経路は `稲束（AMJC_RiceSheaf）→脱穀→籾（AMJC_RiceInHull）→籾摺り→RawRice（玄米）／AMJC_WhiteRice（白米）`。既存のVanilla `RawRice` のDefNameと料理参照を残して互換性を守る。**** 実装前の確定・未確定条件は [RicePostHarvestProcessing.md](Balance/Crops/RicePostHarvestProcessing.md) を参照する。
 
 固定方針:
-- `AMJC_UplandRice` や水稲専用PlantDef、**別の可食米**ThingDefは作らない。稲束・籾の非可食中間物2件は共通加工経路として維持する。
+- `AMJC_UplandRice` や水稲専用PlantDefは作らないが、**可食米は玄米 `RawRice` と別の白米 `AMJC_WhiteRice`** に分ける。稲束・籾の非可食中間物2件は共通加工経路として維持する。
 - **V1から** `Plant_Rice` の表示名を日本語「稲」・英語「rice plant」に統一する。ゲーム内説明には畑の陸稲と水田の水稲、同種ながら適応品種群が異なること、AMJでは1つの稲に抽象化することを記す。**ゲーム内説明にV1などの版数、未実装の水田機能、別Modへの機能分担は記載しない。** V1の栽培条件は畑地基準のままで、水田機能はGrainsに追加しない。採用済みの画像・栽培値・加工経路は変更しない。表示本文・出典の正本は [LocalizationHistoricalReview.md §7–8](LocalizationHistoricalReview.md)。
-- 米の史実を工程別に割り当てる。**稲Plant**は栽培史と水稲・陸稲の違い、**稲束**は古代中世の食料・年貢・貨幣、**籾**は籾摺り・玄米／白米と精白によるビタミンB1減少、**Vanilla `RawRice`**は江戸患い・庶民の白米食・明治の高木兼寛による海軍兵食の疫学研究・1910年の鈴木梅太郎のオリザニン研究。各説明を意味ごとに分割し、ゲーム内には未実装の病気や玄米／白米Defを追加しない。史料・日英文言の正本は [LocalizationHistoricalReview.md §7–8/§10](LocalizationHistoricalReview.md)。
+- 史実説明は工程ごとに割り当てる。稲Plantは栽培史、稲束は古代・中世の租税、籾は籾摺り・精白によるビタミンB1の減少を説明する。`RawRice` は玄米と低精白米を代表し、`AMJC_WhiteRice` は精白工程と身分による利用の差を説明する。江戸患い・近代栄養学の経緯は参考史実であり病気のゲーム実装を意味しない。史料・日英文言の正本は [LocalizationHistoricalReview.md §7–8/§10](LocalizationHistoricalReview.md)。
 - Vanillaの `Hydroponic` sowTagを除き、`Ground` のみとする。実ゲームの播種可否は別途検証する。
-- `RawRice` は籾摺り**後**の共通米食材として再利用する。畑地・水田・うるち・もちの違いで最終食材を分けない。現行では収穫先とRecipe・E2Eのソースを二段階加工へ更新済み（実ゲームテストは未実行）。
+- `RawRice` は籾摺り**後**の玄米として再利用する。`AMJC_WhiteRice` は追加の精白加工と歩留まり損失を必要とする。陸稲・水稲、うるち・もちの違いでさらにPlantや米Defを分割しない。現行では収穫先とRecipe・E2Eのソースを二段階加工へ更新済み（実ゲームテストは未実行）。
 - CCTO導入時はCCTOが既に `Plant_Rice` へ設定する最低生育10℃・固定枯死-1℃を利用し、Grains側に重複したColdToleranceExtensionを追加しない。
 - Vanilla Riceの現行3日成長・収量6は採用せず、初期実装値を **growDays 5、harvestYield 11、fertilityMin 0.7、fertilitySensitivity 0.8、成長10～42℃・最適18～32℃** とする。既存六穀との七穀27セル分析で全作物の勝利条件と単一作物の支配防止を確認し、実機挙動は未検証とする。
 - 米粉は穀粉全般を扱う方針により本番ThingDef・製粉Recipeと最低限料理をソース実装済み（実機未検証）。可食米はVanilla `RawRice` を維持し、製粉入力とする。
@@ -920,6 +920,15 @@ Grainsが対象とする穀粉は**雑穀粉・蕎麦粉・大麦粉・小麦粉
 - Recipeの作業SkillはBase/MOともCookingに統一する。既存の材料・出力・設備・Billは維持する。
 
 ### 5.3 完成料理
+
+**2026-10-19 米の精白・料理分化（作者採用、実ゲーム未検証）**
+
+- 玄米はVanilla `RawRice`を再利用（旧DefName/旧Bill/加工1:1を保護）。籾10→玄米10はworkAmount 80、籾10→白米8はworkAmount 240の二択Bill。白米単品の端数レシピは設けず、10個単位の加工で数量減を表現する。白米栄養は1個0.05とし、8個分の栄養に減る。白米を作ると米が増える経路を作らない。
+- 共通の飯・粥・粉食を削除しない。米飯・白飯・米粥・白粥を材料限定の指定料理として追加し、単品と4食Billを備える。玄米側の米飯/米粥は共通飯・粥より調理workを軽くする（220<240、180<200）。白飯は食後Mood +3/0.5日、白粥は+1/0.5日を仮採用し、実プレイで再評価する。白飯と白粥以外はこの指定料理によるMoodバフを持たない。
+- 白米は余りを共通飯・粥にも入れられ、玄米・白米の両方から従来の共通米粉を作れる。米粉を二種類に分けない。専用の白米/米飯/白飯/粥画像は未承認のため既存米・共通料理画像を暫定参照し、ゲーム内識別と正式画風は未確認。
+- 裕福な出自を理由に全員が玄米・雑穀食を嫌うとは決めない。食事への明確な期待が書かれた一部背景への条件付き心情は、Culture Characters側で背景と特性の整合を先に検討し、Grains本体は背景名へ直接依存しない。
+- **既存Mod比較（VE/非VEの実装入口）:** VEのVanilla Cooking ExpandedとVanilla Plants Expanded More Plantsは粉・作物・料理の追加に先行例があるが、本件の玄米/白米を同一籾から異なる歩留まり・労力で選択するBillを既存のGrains/Vanilla互換へ提供しない。非VEのMedieval Overhaulには独自の穀物処理・料理があるが、GrainsのVanilla `RawRice` を維持したこの二択経路を代替しない。調査範囲は既存の本Repo VE/MO調査と公開説明の確認に限り、他の全Modとの競合不存在を断定しない。独立の新たな精米Frameworkは導入せず、既存AMJ加工台のBillとして最小差分にとどめる。
+
 
 **2026-10-19 共通料理の画像（実ゲーム確認待ち）:** 作者は飯 `AMJC_MixedGrainMeal`、粥 `AMJC_MixedGrainPorridge`、粉食 `AMJC_MixedFlourFood` の生成画像3点を、通常ズームでの実ゲーム確認用として暫定採用。原画は `Art/Sources/Things/Item/Meal/<DefName>/<DefName>.png` に無加工で保存し、対応する256×256透過PNGは `Textures/Things/Item/Meal/<DefName>/<DefName>_a,b,c.png` に同一内容で書き出す。各ThingDefの`graphicData/texPath`のみ固有パスへ切替え、`Graphic_StackCount`、DefName、Recipe、素材条件、栄養、心情、保存期間は維持。実ロード時のBadTex・通常ズームの見た目・3品の識別性は未確認。確認前に公開・正式画像完成と主張しない。
 
