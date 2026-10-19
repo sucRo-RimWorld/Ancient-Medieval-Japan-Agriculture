@@ -1045,6 +1045,92 @@ namespace AncientMedievalJapanCore.E2E
             return b.ToString();
         }
 
+
+        // Test-only. Photograph actual game-rendered buildings after spawning them
+        // on the 50x50 isolated Quickstart map. No fixture or changed texture is
+        // included in the production distribution or any player save.
+        private static async Task CaptureProcessingEquipmentMap(PickleContext ctx)
+        {
+            string folder = Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_SHOTS");
+            ctx.Require(Prefs.LangFolderName == "English" && !string.IsNullOrEmpty(folder)
+                && Directory.Exists(folder), "Equipment screenshot needs an English disposable map.");
+            string shot = Path.Combine(folder, "equipment-map-vanilla-en.png");
+            string layout = Path.Combine(folder, "equipment-map-layout.txt");
+            Map map = null;
+            var placed = new List<Thing>();
+            IntVec3 focus = new IntVec3(21, 0, 25);
+            var inventory = new StringBuilder();
+            Exception error = null;
+            try
+            {
+                await RuntimeThread.Run(delegate
+                {
+                    map = Find.CurrentMap;
+                    ctx.Require(map != null && map.Size.x == 50 && map.Size.z == 50,
+                        "Equipment photo requires the existing 50x50 isolated Quickstart map.");
+                    string[] ids = {
+                        "AMJC_GrainProcessingSpot", "AMJC_GrainProcessingTable",
+                        "AMJC_ManualMillstone"
+                    };
+                    Rot4[] directions = { Rot4.North, Rot4.East, Rot4.South, Rot4.West };
+                    for (int row = 0; row < ids.Length; row++)
+                    {
+                        ThingDef def = DefDatabase<ThingDef>.GetNamed(ids[row]);
+                        ctx.Require(def != null && def.size.x == 1 && def.size.z == 1,
+                            ids[row] + " actual map fixture must stay 1x1.");
+                        for (int column = 0; column < directions.Length; column++)
+                        {
+                            IntVec3 cell = new IntVec3(16 + column * 3, 0, 22 + row * 3);
+                            ctx.Require(cell.InBounds(map), "Equipment placement outside test map.");
+                            ctx.Require(!cell.GetThingList(map).Any(t => t is Building || t is Pawn),
+                                "Equipment screenshot cell obstructed: " + cell);
+                            Thing building = ThingMaker.MakeThing(def,
+                                def.MadeFromStuff ? GenStuff.DefaultStuffFor(def) : null);
+                            building.SetFaction(Faction.OfPlayer);
+                            placed.Add(building);
+                            GenSpawn.Spawn(building, cell, map, directions[column]);
+                            ctx.Assert(building.Spawned && building.Position == cell
+                                && building.Rotation == directions[column],
+                                ids[row] + " failed real map spawn/rotation " + directions[column]);
+                            inventory.AppendLine(ids[row] + " " + directions[column]
+                                + " cell=" + cell + " spawned=" + building.Spawned);
+                        }
+                    }
+                    CameraJumper.TryJump(focus, map);
+                });
+                // Give the regular map graphics/render frames time to update.
+                await Task.Delay(1000);
+                await RuntimeThread.Run(delegate
+                {
+                    CellRect view = Find.CameraDriver.CurrentViewRect;
+                    inventory.AppendLine("camera_view=" + view);
+                    foreach (Thing building in placed)
+                        ctx.Assert(view.Contains(building.Position),
+                            building.def.defName + " outside screenshot view at " + building.Position);
+                    File.WriteAllText(layout, inventory.ToString(), Encoding.UTF8);
+                    var captureType = Type.GetType(
+                        "UnityEngine.ScreenCapture, UnityEngine.ScreenCaptureModule", true);
+                    MethodInfo capture = captureType.GetMethod(
+                        "CaptureScreenshot", new[] { typeof(string) });
+                    ctx.Require(capture != null, "Unity screenshot API missing.");
+                    capture.Invoke(null, new object[] { shot });
+                });
+                await Task.Delay(1400);
+                ctx.Assert(File.Exists(shot) && new FileInfo(shot).Length > 1024,
+                    "Actual map screenshot missing/empty");
+                ctx.Assert(File.Exists(layout) && new FileInfo(layout).Length > 200,
+                    "Actual placement/rotation evidence missing");
+            }
+            catch (Exception failure) { error = failure; }
+            // Keep the map under the fixture's control. This is not user save data.
+            await RuntimeThread.Run(delegate
+            {
+                foreach (Thing building in placed)
+                    if (!building.Destroyed) building.Destroy(DestroyMode.Vanish);
+            });
+            if (error != null) throw error;
+        }
+
         [Then("Grains loaded bilingual Info strings and production graphics resolve")]
         public async Task Verify(PickleContext ctx)
         {
@@ -1195,6 +1281,8 @@ namespace AncientMedievalJapanCore.E2E
                 ctx.Assert(File.Exists(filename) && new FileInfo(filename).Length > 1024,
                     "Native InfoCard screenshot missing or empty: " + filename);
             }
+            if (Environment.GetEnvironmentVariable("RIMWORLD_GRAINS_UI_EQUIPMENT_MAP_SHOTS") == "1")
+                await CaptureProcessingEquipmentMap(ctx);
         }
     }
 }
