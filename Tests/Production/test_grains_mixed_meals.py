@@ -13,7 +13,7 @@ from amj_profile_xml import profile_xml
 from stack_graphics import stack_textures
 
 GRAINS = {'AMJC_Millet','AMJC_Buckwheat','AMJC_Barley','AMJC_Wheat','RawRice','AMJC_WhiteRice'}
-OWN_FLOURS = {'AMJC_MilletFlour','AMJC_BuckwheatFlour','AMJC_BarleyFlour','AMJC_RiceFlour'}
+OWN_FLOURS = {'AMJC_MilletFlour','AMJC_BuckwheatFlour','AMJC_BarleyFlour'}
 MENU = {
     'MixedGrainMeal': (GRAINS, 240, 3.0,
                        'Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal'),
@@ -57,7 +57,7 @@ def validate(root=ROOT):
         flour_set = OWN_FLOURS | {
             'DankPyon_Flour' if profile == 'mo' else 'AMJC_WheatFlour'
         }
-        assert len(flour_set) == 5
+        assert len(flour_set) == 4
         for suffix, (raw, work, spoil, tex) in MENU.items():
             item = defs['AMJC_'+suffix]
             # The Vanilla FineMeal parent inherits AteFineMeal (+5), even if XML
@@ -91,11 +91,13 @@ def validate(root=ROOT):
                     recipe.findtext('allowMixingIngredients') == 'false')
                 assert len(recipe.findall('fixedIngredientFilter/thingDefs/li')) == 1
                 assert len(recipe.findall('ingredients/li/filter/thingDefs/li')) == 1
+                if suffix == 'RiceFlourDumplings':
+                    assert recipe.findall('recipeUsers/li') == [], 'Retired rice dumplings re-enabled'
     patch = ET.parse(root/'Compatibility/MedievalOverhaul/Patches/'
                      'MedievalOverhaul_GrainsFlour.xml').getroot()
     for suff in ('MixedFlourFood','MixedFlourFoodBulk'):
-        for tail in ('ingredients/li/filter/thingDefs/li[5]',
-                     'fixedIngredientFilter/thingDefs/li[5]'):
+        for tail in ('ingredients/li/filter/thingDefs/li[4]',
+                     'fixedIngredientFilter/thingDefs/li[4]'):
             path = '/Defs/RecipeDef[defName="AMJC_Cook'+suff+'"]/'+tail
             matches = [x for x in patch.findall('Operation') if x.findtext('xpath') == path]
             assert len(matches) == 1, path
