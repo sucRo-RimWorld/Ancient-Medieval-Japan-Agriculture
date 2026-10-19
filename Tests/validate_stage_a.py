@@ -405,22 +405,28 @@ spot = find_def(buildings, "ThingDef", "AMJC_GrainProcessingSpot")
 table = find_def(buildings, "ThingDef", "AMJC_GrainProcessingTable")
 assert num(spot, "costStuffCount") == 10
 assert num(spot, "statBases/WorkTableWorkSpeedFactor") == 0.5
-spot_texture_path = "Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot"
-assert text(spot, "graphicData/texPath") == spot_texture_path
-assert text(spot, "graphicData/graphicClass") == "Graphic_Multi"
-assert text(spot, "graphicData/drawSize") == "(1,1)"
-assert text(spot, "graphicData/drawRotated") == "false"
-assert text(spot, "size") == "(1,1)"
-spot_textures = {
-    direction: ROOT / "Textures" / f"{spot_texture_path}_{direction}.png"
-    for direction in ("north", "south", "east", "west")
-}
-for direction, file in spot_textures.items():
-    assert file.is_file(), f"missing processing spot {direction} texture: {file}"
-    validate_png(file)
-assert spot_textures["north"].read_bytes() == spot_textures["south"].read_bytes()
-assert spot_textures["east"].read_bytes() == spot_textures["west"].read_bytes()
-assert spot_textures["north"].read_bytes() != spot_textures["east"].read_bytes()
+# Accepted 1x1 spot and table use one exact PNG duplicated to all four direction slots.
+for bench, basename in (
+    (spot, "AMJC_GrainProcessingSpot/GrainProcessingSpot"),
+    (table, "AMJC_GrainProcessingTable/GrainProcessingTable"),
+):
+    tex_path = f"Things/Building/Production/{basename}"
+    assert text(bench, "graphicData/texPath") == tex_path
+    assert text(bench, "graphicData/graphicClass") == "Graphic_Multi"
+    assert text(bench, "graphicData/drawSize") == "(1,1)"
+    assert text(bench, "graphicData/drawRotated") == "false"
+    assert text(bench, "size") == "(1,1)"
+    sprites = [
+        ROOT / "Textures" / f"{tex_path}_{direction}.png"
+        for direction in ("north", "east", "south", "west")
+    ]
+    for sprite in sprites:
+        assert sprite.is_file(), f"missing directional sprite: {sprite}"
+        validate_png(sprite)
+    assert all(sprite.read_bytes() == sprites[0].read_bytes() for sprite in sprites), (
+        f"{basename}: all four directions must use the exact same PNG bytes"
+    )
+
 assert num(table, "costList/Steel") == 30 and len(table.find("costList")) == 1
 assert num(table, "statBases/WorkTableWorkSpeedFactor") == 1.0
 assert table.find("researchPrerequisites") is None, "AMJG processing table must remain research-free"
