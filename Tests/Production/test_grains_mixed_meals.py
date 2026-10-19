@@ -16,11 +16,11 @@ GRAINS = {'AMJC_Millet','AMJC_Buckwheat','AMJC_Barley','AMJC_Wheat','RawRice'}
 OWN_FLOURS = {'AMJC_MilletFlour','AMJC_BuckwheatFlour','AMJC_BarleyFlour','AMJC_RiceFlour'}
 MENU = {
     'MixedGrainMeal': (GRAINS, 240, 3.0,
-                       'Things/Item/Resource/AMJC_Rice/Rice'),
+                       'Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal'),
     'MixedGrainPorridge': (GRAINS, 200, 1.5,
-                           'Things/Item/Resource/AMJC_Barley/Barley'),
+                           'Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge'),
     'MixedFlourFood': (None, 300, 2.0,
-                       'Things/Item/Resource/AMJC_Millet/Millet')
+                       'Things/Item/Meal/AMJC_MixedFlourFood/AMJC_MixedFlourFood')
 }
 SPECIFIC = ('Houtou','Sobagaki','MilletDumplings',
             'BarleyFlourGruel','RiceFlourDumplings')
