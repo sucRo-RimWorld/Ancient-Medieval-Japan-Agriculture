@@ -3,5 +3,7 @@
 
 0.1.0-dev - Development metadata for the independent grain-processing module / 穀類Modの開発版メタデータを整備
 - Versioned Workshop changenotes prepared for the ongoing Grains development branch.
+- Integrated the formerly separate Crop Growth Balance crop-timing scope (six Vanilla, seven optional MO crops) and moved MO lentils sow skill 2 from Japanization. No separate CGB release.
+- 旧Crop Growth Balanceの生育日数調整を統合し、MOレンズ豆の播種スキル2をJapanizationから移管。CGB単独公開は行わない。
 - 穀類の開発中機能向けに、Workshop更新履歴の管理を整えました。
 - This does not certify a public release or completed runtime tests. / 公開済み・実機検証完了を意味しません。
