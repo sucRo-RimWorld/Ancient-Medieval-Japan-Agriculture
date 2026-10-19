@@ -1,5 +1,11 @@
 # AMJ Grains Coordination
 
+## GRAINS-RICE-WHITE-20261019 — separated brown/white rice and meals
+
+**Owner:** Grains processing/cooking and graphics. **Status:** XML and documentation integrated on main in [PR #163](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/pull/163), merge `7a166f3425777d319035f0ec0f2478c54b55fe37`; native execution/UI/approved distinct images **OPEN**. Brown rice retains Vanilla `RawRice`; white rice is `AMJC_WhiteRice`. Existing paddy10→brown10 Work80 Bill stays; new paddy10→white8 Work240 Bill. Four brown/white rice-specific meals (rice meal, white meal, rice porridge, white porridge) with eight 1/4-food Bills; white meal Mood+3 and white porridge Mood+1 (0.5 days), both provisional game-balance values. Preserve mixed meal/porridge and common rice flour. Formal source: `Docs/Design.md §5.3`, `Docs/Balance/Crops/RicePostHarvestProcessing.md`, exact Def/Recipe/Thought/XML.
+
+**Cross-owner decision:** Do **not** apply “dislike non-white rice” universally to pawns with wealthy backgrounds. Evaluate limited learned refined-food expectations only for specifically fitting character backgrounds. Eligible backgrounds belong to Culture Characters; conditional meal-Thought gameplay belongs to Culture, not to Grains or the Characters build. This is a proposal, not an implemented mood penalty. Avoid treating character repository's unresolved paired 1.6 native cutover as proof the effect exists.
+
 This file is the authoritative coordination surface for separate chats, agents, and workstreams working on **Ancient & Medieval Japan Grains**.
 
 Use it instead of asking the user to manually relay messages between workstreams.
