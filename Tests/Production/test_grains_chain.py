@@ -1,4 +1,5 @@
 """Reject nutrition multiplication, bread-like storage and new research gates."""
+import re
 import shutil
 import tempfile
 from pathlib import Path
@@ -26,6 +27,22 @@ class ChainRegressionTests(unittest.TestCase):
         with self.assertRaises(AssertionError):validate(self.root)
 
     def test_current_chain(self):validate(self.root)
+
+    def test_native_milling_profile_only_has_four_active_flours(self):
+        # The loaded-game scenario must not index three parallel lists with
+        # the retired fifth rice-milling input (RawRice).
+        source = (ROOT/'Tests/E2E/GrainsProfileSteps.cs').read_text(encoding='utf-8')
+        arrays = {}
+        for name in ('grains', 'powders', 'recipes'):
+            match = re.search(r'\bstring\[\]\s+' + name + r'\s*=\s*\{([^}]*)\};', source)
+            self.assertIsNotNone(match, name)
+            arrays[name] = [part.strip() for part in match.group(1).split(',')
+                            if part.strip()]
+        self.assertEqual([len(arrays[name]) for name in ('grains','powders','recipes')],
+                         [4,4,4])
+        self.assertEqual(arrays['grains'], [
+            '"AMJC_Buckwheat"', '"AMJC_Millet"',
+            '"AMJC_Wheat"', '"AMJC_Barley"'])
 
     def test_both_ccto_provider_titles_are_retained(self):
         validate_ccto_detection(self.root)
