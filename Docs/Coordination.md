@@ -110,20 +110,15 @@ The 2026-10-10 author-approved hulled-barley source is preserved at `Art/Sources
 
 ### AMJ-017 — Grain-processing station graphics
 
-**Requested by:** Alpha visual-completion audit  \
-**Owner:** Art/graphics  \
-**Status:** IN PROGRESS — spot adopted and wired; loaded-game visual check OPEN
+**Requested by:** Author image production and 1×1 acceptance
+**Owner:** Art/graphics
+**Status:** PRODUCTION WIRED — both spot and table have accepted single sprites copied bit-identically to all four directions; loaded-game rendering remains OPEN.
 
-The author approved a horizontal grain-processing spot source and its exact 90-degree clockwise derivative. Four direction names use only two distinct production PNGs. The processing table still uses its development placeholder. Because these are AMJ-owned BuildingDefs normally visible during Stage A play, `Docs/Design.md §12.1.2` requires production graphics before the public Alpha.
+**2026-10-19 latest decision:** The simple grain-processing spot uses the accepted 1×1 no-paddle candidate and the processing table uses the latest four-visible-feet candidate. Each equipment has one distinct image, duplicated exactly for north/east/south/west. Rotation and generated direction variants are explicitly withdrawn. `Graphic_Multi` and `drawRotated=false` retained. Both remain 1×1. Authors' acceptance of source art does not establish actual runtime display acceptance.
 
-The two buildings should remain visually related but clearly communicate the existing gameplay distinction:
-- simple spot: improvised/manual, 1x1, slow;
-- processing table: purpose-built, 1x1, normal speed;
-- no gameplay/XML balance changes are part of the art task.
+**Canonical implementation:** `Docs/Design.md §12.1.2`, `Defs/ThingDefs_Buildings/Buildings_GrainProcessing.xml`, `Art/Sources/Things/Building/Production/AMJC_GrainProcessing{Spot,Table}/`, `Textures/Things/Building/Production/AMJC_GrainProcessing{Spot,Table}/`, and `Tests/validate_stage_a.py`.
 
-**Next action:** Verify the spot's loaded north/east/south/west directions at normal game zoom and check ERROR 0; then separately complete the processing table artwork. Do not regenerate the accepted spot. Canonical source: Docs/Design.md §12.1.2.
-
-**Result / references:** `Defs/ThingDefs_Buildings/Buildings_GrainProcessing.xml`; spot dedicated Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot; table keeps Things/Building/Production/TableStonecutter.
+**Next action:** One consolidated real-game normal zoom, orientation and error-log inspection. No new art generation, gameplay balancing, source regeneration or Steam upload for this decision.
 
 ### AMJ-013 — Wheat grain graphics
 

@@ -1422,9 +1422,10 @@ PNG全53枚の構造検査と生成原本／書き出しの機械QAは合格。�
 
 **2026-10-17 今後の画像修正・追加を公開予定に明記:** 既存の作物・穀物束・穀粒・穀粉の輪郭・可読性改善（採用済み作物14状態と束5種の美観修正は延期）に加え、未完成の穀粒・米関連の専用画像整備、既存料理8品の共有仮画像から各料理の専用画像への置換、Grains所有の加工場所・加工台・非MO石臼の専用画像追加、穀物束・穀粉の数量別表示画像を将来の画像作業として掲示する。穀物束の数量別画像は引き続き延期、粉の数量別画像は延期対象外。正式な対象・表示状態・現行採用版の区別は§12.1.2～12.1.4およびV1後の設備整備方針に従う。既存画像・ゲーム機能・数値・配布版は本記録では変更しない。
 
-**2026-10-19 簡易穀物加工場所の暫定採用・実装:** 作者が承認した真上寄りの「敷物・箕・穂・木製道具」の横向き画像を AMJC_GrainProcessingSpot（1×1）の専用画像とする。縦向きはその承認原画を画像処理で正確に時計回り90度回転したもの（再生成・描き直しを行わない）。North/Southに横向き、East/Westに縦向きを割り当て、Graphic_Multiの4方位PNGは向かい合う方位ごとに同一バイトを用いる。
-高解像度の承認原画は Art/Sources/Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot_Horizontal.png に無加工保存。縦向き高解像度は承認原画を時計回り90度回転する決定的派生画像とする。256×256のゲーム用PNGは Textures/Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot_{north,south,east,west}.png。graphicDataは同ファミリーを参照し、drawSize=(1,1)・drawRotated=false とする。コスト・工数・作業速度・Recipe・DefNameは不変。
-本採用は原画と本番接続の暫定確定であり、実ゲームの方向別表示・通常ズーム・ERROR 0確認は未完了。加工台・石臼候補は未承認のまま保持。
+**2026-10-19 加工場所・穀物加工台の採用および全方位画像仕様（後続の作者指示を反映）:**
+既存の `AMJC_GrainProcessingSpot` と `AMJC_GrainProcessingTable` は各々1×1マスの独立した設備。中世日本の穀物加工を示す俯瞰画像を使う。簡易加工場所は作者が許容したへら無し・1×1構図、加工台は脚が切れない最新版の作者承認画像を使用する。両設備とも**各設備につき1枚のPNGを東西南北の4ファイルに全く同じバイトでコピー**する。向きによる回転・左右反転・再生成はしない。`Graphic_Multi` のまま `drawRotated=false`、`drawSize=(1,1)`。
+簡易加工場所の今回の原本は `Art/Sources/Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot_1x1_NoPaddle.png`、加工台の原本は `Art/Sources/Things/Building/Production/AMJC_GrainProcessingTable/GrainProcessingTable.png`。どちらも原本を無加工保存し、本番PNGは原本から等比縮小し透明な256×256キャンバスへ中央配置する。出力は `Textures/Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot_{north,east,south,west}.png` と `Textures/Things/Building/Production/AMJC_GrainProcessingTable/GrainProcessingTable_{north,east,south,west}.png`。以前の簡易加工場所の「北南は横／東西は90度回転版」という仕様は撤回した。過去の採用原画を再生成・破棄せず、旧ソースは履歴として保持する。
+XMLの設備サイズ・作業速度・素材コスト・Recipe・DefName・操作位置の機能値は変更しない。画像参照と4方向のPNGのみ変更する。通常ズーム・4方向・ERROR 0の実ゲーム描画確認は別途必要。
 
 #### 12.1.3 加工後の雑穀画像の採用状況（2026-10-19確認）
 

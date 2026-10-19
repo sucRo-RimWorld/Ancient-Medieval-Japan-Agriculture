@@ -7,7 +7,7 @@
     <description>A simple place for threshing and hulling grain by hand. It requires almost no infrastructure, but processing is slower than at a proper grain processing table.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
-      <!-- Two approved graphics: North/South horizontal; East/West vertical. -->
+      <!-- Same approved 1x1 texture in all four directions; drawRotated remains false. -->
       <texPath>Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
@@ -53,8 +53,8 @@
     <description>A dedicated worktable for threshing and hulling grain efficiently. It performs the same jobs as the simple processing spot, but at normal work speed.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
-      <!-- TEMP: Vanilla stonecutter placeholder selected by AMJ in all profiles; not final processing-table art. -->
-      <texPath>Things/Building/Production/TableStonecutter</texPath>
+      <!-- Same approved 1x1 texture in all four directions; drawRotated remains false. -->
+      <texPath>Things/Building/Production/AMJC_GrainProcessingTable/GrainProcessingTable</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1,1)</drawSize>
