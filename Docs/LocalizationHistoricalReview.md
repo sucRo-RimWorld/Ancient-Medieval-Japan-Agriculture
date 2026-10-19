@@ -213,6 +213,8 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 `AMJC_AteFlourFood` の心情付与は+2（0.5日、重複1回）のまま維持する。実機ログでStageの説明が空であるため、英語 `I ate a dish made from ground grain.`、日本語ラベル「粉食を食べた」、日本語説明「挽いた穀物から作った料理を食べた。」を追加。歴史的な新説や未実装の調理法を主張せず、実装済みの粉食心情だけを説明する。
 
 
+**2026-10-19現行方針（§12–15の2026-10-13判断に優先）:** 中世日本で米粉は知られていたが、玄米粉や米粉をGrainsの通常生産品として必須にする根拠がないため、米粉の製粉Billと米粉団子の単品/4食Billを設備に登録しない。現行の4穀粉は小麦粉・蕎麦粉・雑穀粉・大麦粉。米粉の旧アイテム・料理・Recipe名、承認済み画像、史料調査記録は旧セーブ・将来の検証のため保存する。現在の仕様は `Docs/Design.md §5.2–5.3` と本番XMLで確定し、§12–15の「現行維持」など過去文言は失効する。
+
 ## 12. 大麦粉・米粉の追加食用途候補（2026-10-13、実装前の史料調査記録）
 
 本節は**候補比較を行った時点の履歴**である。後続の§13に記録されたとおり、大麦粉・米粉と麦粉粥・米粉団子は**材料・方法を表す機能的総称としてソース実装済み**。以下の「未承認・不採用」はその時点の**史実上の固有料理名としての採否**を指し、現在のThingDef・RecipeDefの実装状況ではない。§2／§6／§7／§8／§10の承認済み日本語と英語は維持する。
@@ -293,15 +295,15 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 | `AMJC_Barley` | 殻を取り除いた食用大麦の穀粒。大麦は古くから米や雑穀と混ぜた飯や粥にも利用された。AMJGrainsでは粒のまま調理するほか、大麦粉に挽いて麦粉粥にも使える。 | Edible barley kernels with the hulls removed. Barley has long been cooked with rice or other grains in Japanese meals and porridge. In AMJGrains it can be cooked as grain or milled into barley flour for gruel. |
 | `AMJC_MixedGrainMeal` | 米・麦・雑穀などの可食穀粒を炊いた飯。一種類だけでも、複数を混ぜても作れる。米以外の穀物も主食に取り入れてきた食生活を表現し、粥より日持ちする一方、調理にはやや手間がかかる。 | A cooked grain meal made from edible rice, barley, millet and other kernels. It accepts one grain or a mixture, reflecting the use of grains alongside rice in Japanese staple foods. It keeps longer than porridge but takes somewhat more work to cook. |
 | `AMJC_MixedGrainPorridge` | 米・麦・雑穀などの可食穀粒を水分多めに煮た粥。一種類だけでも、複数を混ぜても作れる。飯より少ない作業量で調理できるが、常温では傷みやすい。 | Porridge made by simmering edible rice, barley, millet or other kernels with extra water. It accepts one grain or a mixture. Cooking requires less work than cooked grains, but the porridge spoils sooner at room temperature. |
-| `AMJC_MixedFlourFood` | 雑穀粉・蕎麦粉・大麦粉・小麦粉・米粉などを使う簡素な粉食。一種類の粉でも複数の粉を混ぜても作れる。麺に限らない穀粉食を表現し、餺飥やそばがきなどに比べ、常温では少し傷みやすい。 | A simple cooked flour dish made from millet, buckwheat, barley, wheat or rice flour. One flour or several may be used together. It represents flour-based foods other than noodles and spoils a little sooner at room temperature than hakutaku or sobagaki. |
+| `AMJC_MixedFlourFood` | 雑穀粉・蕎麦粉・大麦粉・小麦粉などを使う簡素な粉食。一種類の粉でも複数の粉を混ぜても作れる。麺に限らない穀粉食を表現し、餺飥やそばがきなどに比べ、常温では少し傷みやすい。 | A simple cooked flour dish made from millet, buckwheat, barley or wheat flour. One flour or several may be used together. It represents flour-based foods other than noodles and spoils a little sooner at room temperature than hakutaku or sobagaki. |
 
 **共通料理のプレイヤー向け名称（2026-10-13改訂）:** 「混合」はRecipeの**許容機能**であって必須材料条件でも料理の固有名でもないため、3品の表示名をそれぞれ **飯 / cooked grains、粥 / porridge、粉食 / flour dish** とする。作者確定の3系統「飯・粥・粉食」を表示にも採用し、DefName `AMJC_MixedGrainMeal` / `AMJC_MixedGrainPorridge` / `AMJC_MixedFlourFood` と計6件の単品・4食Recipe DefNameは維持する。各Recipeの表示・作業文は統一した料理名を使い、原料は1種類でも複数種類でも使用可能と明示する。粉食の保存性は抽象的な「材料を指定した粉食」ではなく、実装済みの餺飥・そばがき等を比較対象として表現する。これらは元からある料理・調理法の説明整理であり、新たな歴史的固有料理名の採用ではない。英語は変更後の日本語と機能上同義の内容に限る。
 
-**加工設備／小麦束（Baseのみ）:** `AMJC_ManualMillstone` はセーブとRecipe参照を守るため内部DefNameを変更しない。プレイヤー表示は日本語 `石臼` ／英語 `stone mill`。現行の大麦・米を含むAMJ全5穀粉を記述し、MO構成ではMO自身の石臼 `DankPyon_Millstone` に切り替わる。小麦束 `AMJC_RawWheat` は「小麦束（こむぎたば）。」という説明先頭の重複表現だけを日英から除き、表示ラベル「小麦束」を維持する。§2/§6の正本と本番XMLを対応更新済み。
+**加工設備／小麦束（Baseのみ）:** `AMJC_ManualMillstone` はセーブとRecipe参照を守るため内部DefNameを変更しない。プレイヤー表示は日本語 `石臼` ／英語 `stone mill`。現行の大麦を含むAMJ全4穀粉を記述し、MO構成ではMO自身の石臼 `DankPyon_Millstone` に切り替わる。小麦束 `AMJC_RawWheat` は「小麦束（こむぎたば）。」という説明先頭の重複表現だけを日英から除き、表示ラベル「小麦束」を維持する。§2/§6の正本と本番XMLを対応更新済み。
 
 **根拠の境界:** 雑穀が日本の主食を補ってきたことは§7のアワ・ヒエ・キビの承認済み説明と文化庁「にし阿波地域の雑穀食」（https://www.bunka.go.jp/seisaku/bunkazai/joseishien/syokubunka_story/93727709.html）に基づくが、特定地域の近代まで続いた慣習を中世全国の標準食と断定しない。蕎麦の粒食・粥食・そばがきと後の蕎麦切りの区別は農林水産省「特集2 新そば」（https://www.maff.go.jp/j/pr/aff/1811/characterinformation.html）。大麦が米・雑穀との混食や粥に利用されたことは農林水産省中国四国農政局「大麦について」（https://www.maff.go.jp/chushi/seisan/mugi/attach/pdf/project-41.pdf）。ゲームの腐敗期間・調理Workは `Docs/Balance/Crops/SevenGrainFoodChainAudit.md §3` の実装値であり歴史時代の実際の保存日数を断定しない。
 
-**静的確認対象:** 12組の日英本文がThingDefと完全一致、異種穀粒・異種穀粉を混ぜられるが単一原料も可、飯はWork240/腐敗3日、粥はWork200/腐敗1.5日、共通粉食はWork300/腐敗2日、既存指定粉食5品は不変、石臼は日本語/英語名とBaseの5製粉Recipeに対応、MOがいる場合はBase石臼を重複しない。ロード済みUI・実調理Bill・グラフィックは後日の一括実機確認に残す。
+**静的確認対象:** 12組の日英本文がThingDefと完全一致、異種穀粒・異種穀粉を混ぜられるが単一原料も可、飯はWork240/腐敗3日、粥はWork200/腐敗1.5日、共通粉食はWork300/腐敗2日、現行の指定粉食4品が有効で、米粉団子のDefは非生産のまま保持、石臼は日本語/英語名とBaseの4製粉Recipeに対応、MOがいる場合はBase石臼を重複しない。ロード済みUI・実調理Bill・グラフィックは後日の一括実機確認に残す。
 
 
 ## 17. 餺飥の英語表示名・訳語整合（2026-10-13）
