@@ -135,6 +135,8 @@ namespace AncientMedievalJapanCore.E2E
                     "Rice temperatures differ from design.");
                 ctx.Assert(rice.plant.sowTags.Count == 1 && rice.plant.sowTags[0] == "Ground",
                     "Rice must sow on ground and not in hydroponics.");
+                ctx.Assert(rice.plant.sowMinSkill == 4,
+                    "Rice sowing must require Plants level 4; all other crops keep their owner-defined requirements.");
                 RecipeDef meal = DefDatabase<RecipeDef>.GetNamed("CookMealSimple");
                 ctx.Assert(meal.fixedIngredientFilter != null && meal.fixedIngredientFilter.Allows(rawRice),
                     "RawRice must still be a simple-meal ingredient.");

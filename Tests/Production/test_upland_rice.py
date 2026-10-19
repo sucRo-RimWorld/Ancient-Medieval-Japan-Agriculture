@@ -11,7 +11,7 @@ from stack_graphics import stack_textures
 ROOT = Path(__file__).resolve().parents[2]
 NAME = 'Plant_Rice'
 PATCH = ROOT / 'Patches/UplandRice.xml'
-FIELDS = {'growDays': 5, 'harvestYield': 11, 'fertilityMin': .7,
+FIELDS = {'growDays': 5, 'harvestYield': 11, 'fertilityMin': .7, 'sowMinSkill': 4,
           'fertilitySensitivity': .8, 'minGrowthTemperature': 10,
           'minOptimalGrowthTemperature': 18, 'maxOptimalGrowthTemperature': 32,
           'maxGrowthTemperature': 42}
@@ -33,7 +33,7 @@ def validate():
         assert (ROOT / 'Textures' / path / ('AMJC_Rice_' + state + '.png')).is_file()
     stack_textures(ROOT, 'Things/Item/Resource/AMJC_Rice/RiceSheaf')
     operations = ET.parse(PATCH).getroot().findall('./Operation/operations/li')
-    assert len(operations) == 12, 'Six replaces and six guarded additions'
+    assert len(operations) == 13, 'Six replaces and seven guarded replacements/additions'
     values, guarded, replaced = {}, set(), set()
     for op in operations:
         kind, xpath = op.attrib.get('Class'), op.findtext('xpath', '')
