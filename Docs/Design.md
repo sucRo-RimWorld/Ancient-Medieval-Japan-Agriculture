@@ -769,17 +769,19 @@ AMJC固有作物の耐寒値と保存候補範囲の正本は [AMJC作物の耐�
 | 作物 | growDays | 可食穀粒の基準収量 | fertilityMin | fertilitySensitivity | 成長可能温度 | 最適温度 | CCTO固定枯死温度 | sowMinSkill | 栽培解禁 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---|
 | ソバ | 4 | 8 | 0.4 | 0.25 | 5～35℃ | 12～25℃ | -2℃ | 1 | 初期 |
-| キビ | 5 | 11 | 0.5 | 0.3 | 8～42℃ | 18～32℃ | -3℃ | 0 | 初期 |
-| アワ | 6 | 13 | 0.5 | 0.4 | 8～42℃ | 18～32℃ | -3℃ | 0 | 初期 |
-| ヒエ | 6 | 12 | 0.5 | 0.5 | 5～40℃ | 15～30℃ | -2℃ | 0 | 初期 |
+| キビ | 4 | 9 | 0.5 | 0.3 | 8～42℃ | 18～32℃ | -3℃ | 0 | 初期 |
+| アワ | 9 | 27 | 0.5 | 0.4 | 8～42℃ | 18～32℃ | -3℃ | 0 | 初期 |
+| ヒエ | 7 | 18 | 0.5 | 0.5 | 5～40℃ | 15～30℃ | -2℃ | 0 | 初期 |
 | 大麦 | 10 | 22 | 0.5 | 0.6 | 0～35℃ | 5～22℃ | -8℃ | 2 | 初期（MO併用時も同じ） |
 | 小麦（MO） | 12 | 28 | 0.7 | 0.9 | 最低0℃。高温側はMO/RimWorld基準を維持 | MO/RimWorld基準 | -6℃ | 0（MO 1.6で明示なし） | MO `DankPyon_BasicAgriculture` |
 
+**2026-10-19 実プレイ後の雑穀差別化改訂:** 従来のアワ6/13、ヒエ6/12、キビ5/11は、収穫日数と収量が近すぎて作物選択に結びつかなかった。アワ9/27、ヒエ7/18、キビ4/9へ変更し、収穫1回の数量差を9個ずつ、生育日数差を2日以上とする。キビは短期間・少量、ヒエは冷涼期も育つ中期作、アワは長期・多収で植え直し回数を減らす主力とする。ソバ・大麦・小麦・稲、CCTOの低温枯死閾値、脱穀後の保存性と加工・調理数値は変更しない。Finite-season検証の前提と結果は[Millet Cultivation Balance](Balance/Crops/Millet_Cultivation_Balance.md)に示す。農作業・季節変化・実ゲームUIでは未確認であり、`growDays` は実際の暦日を意味しない。
+
 ### 4.2.1a Vanilla/MO既存作物との生育期間整合（2026-10-15 公開連携確定）
 
-**作者決定：Grainsの生育日数のバランスを基準に、バニラ・MOの既存作物の相対的な生育期間を揃えるための任意姉妹Modが [AMJ Crop Growth Balance](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Crop-Growth-Balance) である。** CCTOの耐寒性・枯死温度調整とは別目的。Grains側は七穀（アワ6・ヒエ6・キビ5・ソバ4・大麦10・小麦12・稲5）と加工・収穫量・栽培条件、Vanilla `Plant_Rice` とMO小麦の統合だけを所有する。Crop Growth Balance側がバニラ6作物とMO導入時の7作物の `growDays` だけを変更し、Grainsの作物をパッチしない。
+**作者決定：Grainsの生育日数のバランスを基準に、バニラ・MOの既存作物の相対的な生育期間を揃えるための任意姉妹Modが [AMJ Crop Growth Balance](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Crop-Growth-Balance) である。** CCTOの耐寒性・枯死温度調整とは別目的。Grains側は七穀（アワ9・ヒエ7・キビ4・ソバ4・大麦10・小麦12・稲5）と加工・収穫量・栽培条件、Vanilla `Plant_Rice` とMO小麦の統合だけを所有する。Crop Growth Balance側がバニラ6作物とMO導入時の7作物の `growDays` だけを変更し、Grainsの作物をパッチしない。
 
-両Modは技術的には独立して単独導入可能。ただし**目的はGrainsの数値基準との整合性**であり、現実の暦日への厳密な換算、全作物の収量・栄養・労働効率の均等化は採用しない。Grains自体の作物値は今回の方針転換で変更しない。元の広域パッチは旧Grains PR #99から所有分離PR #101で削除済み。Crop Growth Balanceの正式仕様・実装正本はそのリポジトリの `Docs/Design.md` とXML。
+両Modは技術的には独立して単独導入可能。ただし**目的はGrainsの数値基準との整合性**であり、現実の暦日への厳密な換算、全作物の収量・栄養・労働効率の均等化は採用しない。2026-10-15のMod分離時点ではGrainsの作物値を変更していなかったが、2026-10-19の実プレイを踏まえた雑穀数値改訂は上記§4.2.1に反映した。CGB所有の既存作物13件はこの変更で自動上書きしない。元の広域パッチは旧Grains PR #99から所有分離PR #101で削除済み。Crop Growth Balanceの正式仕様・実装正本はそのリポジトリの `Docs/Design.md` とXML。
 
 **GitHub Actions配布方針（2026-10-15）：** GrainsとCrop Growth Balanceを含む今後のAMJ各ModのWorkshopアップロードでは**YADAを使わずGitHub Actionsに統一**する。実際の配布物をGitHub Actionsで許可リストにより構築し、その成果物とSHAを検証した上で、明示的な手動公開操作による保護されたSteamCMD／Steamworks経路から送信する。既存のGrains `.rimignore` は歴史的なYADAフィルタの静的検査資料であり、**Actions配布物の抽出に用いない**。同一Modの著者アカウント、Workshop ID、公開状態、バージョンおよびタグは独立の確認対象。Grains用の実Steamアップロードworkflow／対象アイテムの確定は未完了。push/PRで勝手にアップロードしない。
 
