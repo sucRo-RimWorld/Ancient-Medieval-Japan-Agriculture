@@ -21,7 +21,7 @@
 | 大麦 | 1.0 / 10℃ / 20日 | 44 |
 | 小麦 | 1.4 / 20℃ / 20日 | 56 |
 
-陸稲は既存 `Patches/UplandRice.xml` による5日/11・最低肥沃度0.7・肥沃度感応度0.8を維持する。七穀の27セルでも24セルが成熟可能で、稲の最多は4セル（すべて同率、独立首位0）。現在の米には玄米・白米の製造と料理上の別用途があり、収量のみで作物の優劣は決まらない。
+陸稲は既存 `Patches/UplandRice.xml` による5日/11・最低肥沃度0.7・肥沃度感応度0.8を維持する。七穀の27セルでも24セルが成熟可能で、稲の最多は4セル（すべて独立首位、同率首位0）。現在の米には玄米・白米の製造と料理上の別用途があり、収量のみで作物の優劣は決まらない。
 
 **自動検証:** `python Tests/validate_grains_environment.py`、`python Tests/Production/test_grains_environment.py`、`python Tests/Production/test_upland_rice.py`。実機は `Docs/GrainsProfileTesting.md` の実ロード試験による。新バランスでのゲームネイティブ4構成・自然季節・UI/Nice Plants Menu表示は未検証。
 
