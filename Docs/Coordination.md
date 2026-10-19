@@ -118,17 +118,19 @@ The 2026-10-10 author-approved hulled-barley source is preserved at `Art/Sources
 
 **Requested by:** Author image production and 1×1 acceptance
 **Owner:** Art/graphics
-**Status:** PRODUCTION WIRED — both spot and table have accepted single sprites copied bit-identically to all four directions; loaded-game rendering remains OPEN.
+**Status:** PRODUCTION WIRED — both spot and table have accepted single sprites copied bit-identically to all four directions; real 1.6 loaded-material regression 4/4 PASS; actual map-zoom rendering remains OPEN.
 
 **2026-10-19 latest decision:** The simple grain-processing spot uses the accepted 1×1 no-paddle candidate and the processing table uses the latest four-visible-feet candidate. Each equipment has one distinct image, duplicated exactly for north/east/south/west. Rotation and generated direction variants are explicitly withdrawn. `Graphic_Multi` and `drawRotated=false` retained. Both remain 1×1. Authors' acceptance of source art does not establish actual runtime display acceptance.
 
 **Canonical implementation:** `Docs/Design.md §12.1.2`, `Defs/ThingDefs_Buildings/Buildings_GrainProcessing.xml`, `Art/Sources/Things/Building/Production/AMJC_GrainProcessing{Spot,Table}/`, `Textures/Things/Building/Production/AMJC_GrainProcessing{Spot,Table}/`, and `Tests/validate_stage_a.py`.
 
-**Next action:** One consolidated real-game normal zoom, orientation and error-log inspection. No new art generation, gameplay balancing, source regeneration or Steam upload for this decision.
+**Next action:** One focused normal-map-zoom placement/orientation visual inspection for all three facilities. The directional-material and Unity-ERROR0 1.6 check is already verified; do not rerun it without a material change. No new art generation, gameplay balancing, source regeneration or Steam upload for this decision.
 
 **2026-10-19 native-test refresh:** The existing manually dispatched RimWorld 1.6 Grains UI scenario now checks the loaded AMJ spot/table/Base mill in four cardinal rotations (valid 256px non-BadTex materials, dedicated paths, 1x1 size). Canonical test assumptions in `Docs/GrainsProfileTesting.md`; Project host runner must pin this exact new Grains commit. Actual native PASS and map-zoom screenshot remain OPEN, no 1.7 or Steam action.
 
 **2026-10-19 author acceptance and integration of non-MO stone mill:** `AMJC_ManualMillstone` is assigned the confirmed 256px no-table/no-container stone mill graphic, same exact PNG for N/E/S/W; the available 1254px related original and byte-exact approved 256px version are preserved separately in `Art/Sources/Things/Building/Production/AMJC_ManualMillstone/`. The BaseWithoutMO-only Def now uses `Things/Building/Production/AMJC_ManualMillstone/ManualMillstone`. Source of truth `Docs/Design.md §12.1.2`. MO continues to use its own `DankPyon_Millstone`. No gameplay or Recipe changes. **Remaining:** a consolidated loaded-game visual/BadTex/ERROR 0 check for all three facilities. Historical backlog statements claiming the millstone sprite does not exist are obsolete.
+
+**2026-10-19 actual native result (supersedes preceding 'not yet run' status):** [Project Actions #39231163509](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39231163509), Grains exact source `b2c1a81c1ff763633f2c2c91a1cce8edcea7e820`, original 1.6 slot2, Vanilla EN/JA and CCTO EN/JA **4/4 PASS**, native Unity ERROR 0, normal exits, all 16 *rice InfoCard* screenshots. The three AMJ devices' loaded 1x1/Graphic_Multi/dedicated path and N/E/S/W 256px non-BadTex materials **PASS in Base/CCTO**. **No equipment map-zoom captures**, no MO loaded test, no 1.7, no current post-PR #163 rice-meal acceptance; default Japanese text pixels are not certified by this run. Formal evidence and further limits: `Docs/GrainsProfileTesting.md`.
 
 ### AMJ-013 — Wheat grain graphics
 
