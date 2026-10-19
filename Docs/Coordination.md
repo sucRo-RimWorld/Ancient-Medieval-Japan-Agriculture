@@ -90,6 +90,9 @@ Use whichever label best fits the task:
 **Remaining:** native-current-source end-to-end flour and meal Bills including cooking input selection/Thought, bilingual actual loaded UI, and normal-zoom evaluation of the provisionally adopted common 飯・粥・粉食 images and specific-food placeholders. Steam publisher and actual distribution remain separate; historical static/native PASS logs do not certify current source. Earlier process snapshots and individual native font experiments are retained in Git history and `Docs/GrainsProfileTesting.md` / Project test records, not repeated in this coordination queue.
 
 
+**2026-10-20 food/graphics blocker:** [Native #39303924920](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39303924920), source `76975bde6a41690747f0e98a5ec02e6a42cb4b14`: Vanilla/CCTO **20/20 Pickle PASS**, but **seven raw Unity `[ERROR]` per profile**: `Collection cannot init: No textures found` for `AMJC_MixedGrainMeal`, `AMJC_MixedGrainPorridge`, `AMJC_MixedFlourFood`. Structured error_count=0 missed them. Three families' `_a/_b/_c` PNGs exist in Git. Food owner: check staged files and loaded `Graphic_StackCount` lookup, correct without art regeneration, then focused runtime validation. Separate from stone-mill graphics.
+
+
 ### AMJ-011 — Barley post-harvest grain graphics
 
 **Owner:** Art/graphics. **Status:** PRODUCTION WIRED / loaded-game visual and high-resolution source review OPEN (2026-10-19).
