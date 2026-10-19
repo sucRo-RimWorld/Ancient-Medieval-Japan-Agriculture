@@ -116,6 +116,7 @@
       </li>
     </comps>
   </ThingDef>
+  <!-- Historical compatibility: no active cooking Bill; retain existing item references. -->
   <ThingDef ParentName="MealFineBase">
     <defName>AMJC_RiceFlourDumplings</defName>
     <label>rice-flour dumplings</label>
@@ -190,7 +191,7 @@
   <ThingDef ParentName="MealCookedIngredientless">
     <defName>AMJC_MixedFlourFood</defName>
     <label>flour dish</label>
-    <description>A simple cooked flour dish made from millet, buckwheat, barley, wheat or rice flour. One flour or several may be used together. It represents flour-based foods other than noodles and spoils a little sooner at room temperature than hakutaku or sobagaki.</description>
+    <description>A simple cooked flour dish made from millet, buckwheat, barley or wheat flour. One flour or several may be used together. It represents flour-based foods other than noodles and spoils a little sooner at room temperature than hakutaku or sobagaki.</description>
     <!-- Author-approved provisional art for loaded-game visual review. -->
     <graphicData>
       <texPath>Things/Item/Meal/AMJC_MixedFlourFood/AMJC_MixedFlourFood</texPath>

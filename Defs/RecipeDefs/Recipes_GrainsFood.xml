@@ -153,11 +153,7 @@
     <workSpeedStat>CookSpeed</workSpeedStat>
     <workSkill>Cooking</workSkill>
     <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
-    <recipeUsers>
-      <li>Campfire</li>
-      <li>ElectricStove</li>
-      <li>FueledStove</li>
-    </recipeUsers>
+    <recipeUsers />
     <ingredients>
       <li>
         <filter>
@@ -333,11 +329,7 @@
     <workSpeedStat>CookSpeed</workSpeedStat>
     <workSkill>Cooking</workSkill>
     <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
-    <recipeUsers>
-      <li>Campfire</li>
-      <li>ElectricStove</li>
-      <li>FueledStove</li>
-    </recipeUsers>
+    <recipeUsers />
     <ingredients>
       <li>
         <filter>
@@ -514,7 +506,6 @@
           <li>AMJC_MilletFlour</li>
           <li>AMJC_BuckwheatFlour</li>
           <li>AMJC_BarleyFlour</li>
-          <li>AMJC_RiceFlour</li>
           <li>AMJC_WheatFlour</li>
       </thingDefs></filter><count>0.5</count></li>
     </ingredients>
@@ -523,7 +514,6 @@
         <li>AMJC_MilletFlour</li>
         <li>AMJC_BuckwheatFlour</li>
         <li>AMJC_BarleyFlour</li>
-        <li>AMJC_RiceFlour</li>
         <li>AMJC_WheatFlour</li>
       </thingDefs>
       <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
@@ -548,7 +538,6 @@
           <li>AMJC_MilletFlour</li>
           <li>AMJC_BuckwheatFlour</li>
           <li>AMJC_BarleyFlour</li>
-          <li>AMJC_RiceFlour</li>
           <li>AMJC_WheatFlour</li>
       </thingDefs></filter><count>2</count></li>
     </ingredients>
@@ -557,7 +546,6 @@
         <li>AMJC_MilletFlour</li>
         <li>AMJC_BuckwheatFlour</li>
         <li>AMJC_BarleyFlour</li>
-        <li>AMJC_RiceFlour</li>
         <li>AMJC_WheatFlour</li>
       </thingDefs>
       <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>

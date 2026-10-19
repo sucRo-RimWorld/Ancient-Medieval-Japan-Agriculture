@@ -37,14 +37,6 @@
     </value>
   </Operation>
   <Operation Class="PatchOperationReplace">
-    <xpath>/Defs/RecipeDef[defName="AMJC_MillRice"]/recipeUsers</xpath>
-    <value>
-      <recipeUsers>
-        <li>DankPyon_Millstone</li>
-      </recipeUsers>
-    </value>
-  </Operation>
-  <Operation Class="PatchOperationReplace">
     <xpath>/Defs/RecipeDef[defName="AMJC_CookHoutouBulk"]/ingredients/li/filter/thingDefs/li</xpath>
     <value>
       <li>DankPyon_Flour</li>
@@ -57,19 +49,19 @@
     </value>
   </Operation>
   <Operation Class="PatchOperationReplace">
-    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFood"]/ingredients/li/filter/thingDefs/li[5]</xpath>
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFood"]/ingredients/li/filter/thingDefs/li[4]</xpath>
     <value><li>DankPyon_Flour</li></value>
   </Operation>
   <Operation Class="PatchOperationReplace">
-    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFood"]/fixedIngredientFilter/thingDefs/li[5]</xpath>
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFood"]/fixedIngredientFilter/thingDefs/li[4]</xpath>
     <value><li>DankPyon_Flour</li></value>
   </Operation>
   <Operation Class="PatchOperationReplace">
-    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFoodBulk"]/ingredients/li/filter/thingDefs/li[5]</xpath>
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFoodBulk"]/ingredients/li/filter/thingDefs/li[4]</xpath>
     <value><li>DankPyon_Flour</li></value>
   </Operation>
   <Operation Class="PatchOperationReplace">
-    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFoodBulk"]/fixedIngredientFilter/thingDefs/li[5]</xpath>
+    <xpath>/Defs/RecipeDef[defName="AMJC_CookMixedFlourFoodBulk"]/fixedIngredientFilter/thingDefs/li[4]</xpath>
     <value><li>DankPyon_Flour</li></value>
   </Operation>
 </Patch>
