@@ -104,7 +104,9 @@ Use whichever label best fits the task:
 
 ### AMJ-011 — Barley post-harvest grain graphics
 
-**Owner:** Art/graphics. **Status:** IN PROGRESS — hulled barley accepted and integrated; edible barley remains OPEN (2026-10-10 JST). Immature/mature crop and sheaf art were integrated on PR #20; do not reopen those assets. The author accepted the hulled barley image. Preserve its exact 1429×1100 source at `Art/Sources/Things/Item/Resource/AMJC_Barley/BarleyInHull/BarleyInHull.png` (Git blob `2cb0f5eb972e3b0f574ae61c7b4150336c5adbff`) and three identical 256px textures at `Textures/Things/Item/Resource/AMJC_Barley/BarleyInHull/BarleyInHull_{a,b,c}.png` (Git blob `b047aaccdbbc3f31c3a0be3eb57f4077eb42c3d4`). `AMJC_BarleyInHull` now uses the dedicated texPath; its gameplay/recipe/nutrition values are unchanged. Dedicated edible barley artwork and real-game normal-zoom appearance checks are still pending. Crop/sheaf source provenance remains in `Docs/References/GrainsCropSourceManifest.json`.
+**Owner:** Art/graphics. **Status:** PRODUCTION WIRED / loaded-game visual and high-resolution source review OPEN (2026-10-19).
+
+The 2026-10-10 author-approved hulled-barley source is preserved at `Art/Sources/Things/Item/Resource/AMJC_Barley/BarleyInHull/BarleyInHull.png` (Git blob `2cb0f5eb972e3b0f574ae61c7b4150336c5adbff`); the then-current three identical 256px derivatives (blob `b047aaccdbbc3f31c3a0be3eb57f4077eb42c3d4`) are historical. The 2026-10-11 author-pushed 128×128 single-`_a` grain sprites include dedicated edible barley `AMJC_Barley`; PR #40 wired the edible-barley texPath. **Do not list edible barley as having no production image.** The corresponding image's high-resolution source/final visual acceptance and ordinary-zoom game display remain to be confirmed, without changing gameplay, DefNames, or accepted crop/sheaf art.
 
 ### AMJ-017 — Grain-processing station graphics
 
@@ -125,27 +127,19 @@ The two buildings should remain visually related but clearly communicate the exi
 
 ### AMJ-013 — Wheat grain graphics
 
-**Requested by:** Agriculture/XML  \
-**Owner:** Art/graphics  \
-**Status:** OPEN
+**Owner:** Art/graphics. **Status:** PRODUCTION WIRED / loaded-game visual and high-resolution source review OPEN (2026-10-19).
 
-`AMJC_Wheat` is a new processed grain state introduced by AMJ-012. The data slice temporarily reuses the accepted AMJ edible-millet stack texture. Because `AMJC_Wheat` is a distinct player-visible ThingDef rather than a deliberately shared post-harvest state, `Docs/Design.md §12.1.2` requires a dedicated production texture before the public Alpha. This does not block the already validated wheat data slice.
-
-**Next action:** Art/graphics should provide a dedicated wheat-grain texture before the public Alpha and wire only the graphic path; do not change the validated wheat processing/balance.
-
-**Result / references:** target DefName is `AMJC_Wheat`; harvested `DankPyon_RawWheat` remains the MO wheat-sheaf asset/display override.
+`AMJC_Wheat` now uses the dedicated 128×128 author-pushed single-`_a` wheat grain icon wired by the 2026-10-11 PR #40 (main `73b1ee429fb5690a333abbcef2857dba69d47456`). The older note that it reuses the edible-millet stack sprite describes the **pre-2026-10-11** interim state, not current production. Do not create a second wheat-grain texture merely because that note was stale. Final in-game zoom, source provenance/archiving, and style acceptance remain OPEN. MO wheat sheaves still use the conditional MO-owned `DankPyon_RawWheat` provider with Grains graphical overrides. No balance or recipe change.
 
 ### AMJ-019 — Millet hulled / edible grain production artwork
 
-**Owner:** Grains Art/graphics. **Status:** IN PROGRESS — author-accepted in-hull image integrated; edible image and in-game review OPEN (2026-10-10 JST).
+**Owner:** Grains Art/graphics. **Status:** BOTH PRODUCTION WIRED / edible-millet master provenance and loaded-game visual check OPEN (2026-10-19).
 
-`AMJC_MilletInHull`（殻付き雑穀）は作者が新たに提示・承認した**枡入り**PNGへPR #31で差し替え済み。原画（1429×1100）を `Art/Sources/Things/Item/Resource/AMJC_Millet/MilletInHull/MilletInHull.png` に無加工で保存し、既存 `texPath` の `Graphic_StackCount` 用 `MilletInHull_a/b/c.png` を256×256、3枚同一データで置換した。新原画Git blob `61d6720c7354107424400dd9abf0edc0a118b859`、出力Git blob `039c6f11bbe5426d169b011a706cfcb3e6802c2f`。旧採用原画はGit履歴に保持。定量・レシピ・DefName・既存texPathは変更なし。PR #31の4チェックはPASS、main反映コミット `604ac338ac344981c101d3fbeb186e2c239bbc69`。実ゲームの見た目は未検証。
+**Current source:** The author-pushed 128×128 `Textures/Things/Item/Resource/AMJC_Millet/Millet/Millet_a.png` (with `Millet_a.dds`) exists on `main` as of commit `5111980e13983125fc50b1368b4800fa61429090` (2026-10-11). `Defs/ThingDefs_Items/Items_StageA_Grains.xml` references `Things/Item/Resource/AMJC_Millet/Millet` for `AMJC_Millet`; `Graphic_StackCount` uses the single `_a` appearance, as confirmed in `Docs/Design.md §12.1.4`. The images are shared by Awa/Hie/Kibi after hulling. **The previous OPEN request to make a new edible-millet image is superseded; do not regenerate it.** `Art/Sources/Things/Item/Resource/AMJC_Millet/Millet/` currently contains only `.gitkeep`, so a verified high-resolution original remains to be recovered, if it exists. A 128px derivative must not be misrepresented as an original. Normal-zoom actual-game appearance and final visual acceptance are not established by the presence of a PNG/DDS.
 
-`AMJC_Millet`（殻なし・可食雑穀）は旧テクスチャのままで、作者採用済みの新画像がないため引き続きOPEN。アワ・ヒエ・キビの加工後状態は同一ThingDefを共有し、種別ごとの重複画像は不要。19種の栽培・束画像とは別計上する。正本: `Docs/Design.md §12.1.3`。
+**Accepted in-hull history:** On 2026-10-10 the author approved the boxed `AMJC_MilletInHull` PNG; PR #31 preserved its 1429×1100 source at `Art/Sources/Things/Item/Resource/AMJC_Millet/MilletInHull/MilletInHull.png` (Git blob `61d6720c7354107424400dd9abf0edc0a118b859`) and replaced the old three-stack derivatives (then blob `039c6f11bbe5426d169b011a706cfcb3e6802c2f`, merge `604ac338ac344981c101d3fbeb186e2c239bbc69`). The later 2026-10-11 main commit `5111980e13983125fc50b1368b4800fa61429090` superseded those three production slots with one 128×128 `_a`; PR #38 (main `a27c19544e86375e7aa6ac108b63ef9129ce4a85`) updated tests to allow one `_a`, with optional contiguous `_b/_c`. Accepted 14 crop states and 5 sheaf images remain unchanged.
 
-**2026-10-11 current status:** Main commit `5111980e13983125fc50b1368b4800fa61429090` replaced the hulled-millet production family with a single 128×128 `_a.png` and removed its duplicate `_b/_c` PNGs; this supersedes the earlier PR #31 three-file inventory, not the accepted high-resolution source/master. PR #38 (main merge `a27c19544e86375e7aa6ac108b63ef9129ce4a85`) updated the art/processing tests and `Docs/Design.md §12.1.4` so one `_a` is valid; optional `_b/_c` must be contiguous and valid and may differ. Main push checks all passed. No new grain image was authored by PR #38.
-
-**Next:** 殻なし雑穀の採用・原画保存・実際に必要な数量別PNGの書き出し後、両方の通常ズームでの実ゲーム表示を確認。
+**Next:** Use the already-loaded grain-icon Pickle checks and a proportionate regular-zoom private-play inspection when Grains' existing author-ordered gameplay review runs. Resolve only concrete defects. Archive a genuine edible-millet high-resolution master only if its identity can be demonstrated, not by upscaling the current PNG. New art remains needed for the five specific dishes, dedicated processing table/non-MO stone mill, and flour quantity variants; those are distinct workstreams.
 
 ### AMJ-018 — Current private-play and eventual public readiness
 
@@ -167,7 +161,7 @@ Author-pushed 128px single `_a` grain icons are integrated for millet, buckwheat
 - Vanilla/MO normal-zoom review of the 14 crop stages, five sheaves and grain icons; no current loaded-game graphics PASS is claimed.
 - **DEFERRED — future only:** aesthetic improvements to the 14 planted crop states and five sheaves, including distinct low/middle/high stack appearances. Keep current accepted assets unchanged. **Still OPEN separately:** three flour quantity appearances; preserve accepted flour artwork. MO wheat remains `DankPyon_RawWheat`, with Grains graphics; MO flour remains `DankPyon_Flour`.
 - High-resolution sources for the newly author-pushed grain icons: **temporarily deferred by the author**; do not relabel production derivatives as original masters or block independent loaded-texture tests on this archival task.
-- Three finished foods (`AMJC_Houtou`, `AMJC_Sobagaki`, `AMJC_MilletDumplings`), and Grains processing spot/table/non-MO manual millstone imagery. Source-work folders are placeholders only, not completed art.
+- Five specific cooked foods (`AMJC_Houtou`, `AMJC_Sobagaki`, `AMJC_MilletDumplings`, `AMJC_BarleyFlourGruel`, `AMJC_RiceFlourDumplings`) still need dedicated sprites. Common 飯・粥・粉食 have distinct provisionally accepted and wired game textures (2026-10-19; loaded visuals OPEN). The processing spot is provisionally accepted/wired with two exact orientations; the processing table and non-MO manual millstone still need dedicated art. Do not treat accepted spot or common foods as still lacking source images.
 - Source/runtime/UI/release evidence must retain its actual revision and profile scope. Old-save migration is out of scope because Grains was never installed.
 
 **Verification for sheaf cleanup:** PNG integrity, existing Base/MO reference and historical-contract checks, upland rice, Stage A, source mapping and subscriber-payload checks passed locally. Exact-head PR and push checks are separate merge evidence. No image generation or RimWorld runtime was performed.
