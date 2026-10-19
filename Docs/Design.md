@@ -927,6 +927,7 @@ Grainsが対象とする穀粉は**雑穀粉・蕎麦粉・大麦粉・小麦粉
 - 共通の飯・粥・粉食を削除しない。米飯・白飯・米粥・白粥を材料限定の指定料理として追加し、単品と4食Billを備える。玄米側の米飯/米粥は共通飯・粥より調理workを軽くする（220<240、180<200）。白飯は食後Mood +3/0.5日、白粥は+1/0.5日を仮採用し、実プレイで再評価する。白飯と白粥以外はこの指定料理によるMoodバフを持たない。
 - 白米は余りを共通飯・粥にも入れられ、玄米・白米の両方から従来の共通米粉を作れる。米粉を二種類に分けない。専用の白米/米飯/白飯/粥画像は未承認のため既存米・共通料理画像を暫定参照し、ゲーム内識別と正式画風は未確認。
 - 裕福な出自を理由に全員が玄米・雑穀食を嫌うとは決めない。食事への明確な期待が書かれた一部背景への条件付き心情は、Culture Characters側で背景と特性の整合を先に検討し、Grains本体は背景名へ直接依存しない。
+- **既存Mod比較（VE/非VEの実装入口）:** VEのVanilla Cooking ExpandedとVanilla Plants Expanded More Plantsは粉・作物・料理の追加に先行例があるが、本件の玄米/白米を同一籾から異なる歩留まり・労力で選択するBillを既存のGrains/Vanilla互換へ提供しない。非VEのMedieval Overhaulには独自の穀物処理・料理があるが、GrainsのVanilla `RawRice` を維持したこの二択経路を代替しない。調査範囲は既存の本Repo VE/MO調査と公開説明の確認に限り、他の全Modとの競合不存在を断定しない。独立の新たな精米Frameworkは導入せず、既存AMJ加工台のBillとして最小差分にとどめる。
 
 
 **2026-10-19 共通料理の画像（実ゲーム確認待ち）:** 作者は飯 `AMJC_MixedGrainMeal`、粥 `AMJC_MixedGrainPorridge`、粉食 `AMJC_MixedFlourFood` の生成画像3点を、通常ズームでの実ゲーム確認用として暫定採用。原画は `Art/Sources/Things/Item/Meal/<DefName>/<DefName>.png` に無加工で保存し、対応する256×256透過PNGは `Textures/Things/Item/Meal/<DefName>/<DefName>_a,b,c.png` に同一内容で書き出す。各ThingDefの`graphicData/texPath`のみ固有パスへ切替え、`Graphic_StackCount`、DefName、Recipe、素材条件、栄養、心情、保存期間は維持。実ロード時のBadTex・通常ズームの見た目・3品の識別性は未確認。確認前に公開・正式画像完成と主張しない。
