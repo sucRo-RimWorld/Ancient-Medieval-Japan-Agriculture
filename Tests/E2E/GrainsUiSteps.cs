@@ -1075,6 +1075,7 @@ namespace AncientMedievalJapanCore.E2E
                         "AMJC_ManualMillstone"
                     };
                     Rot4[] directions = { Rot4.North, Rot4.East, Rot4.South, Rot4.West };
+                    string[] directionNames = { "North", "East", "South", "West" };
                     for (int row = 0; row < ids.Length; row++)
                     {
                         ThingDef def = DefDatabase<ThingDef>.GetNamed(ids[row]);
@@ -1094,11 +1095,15 @@ namespace AncientMedievalJapanCore.E2E
                             ctx.Assert(building.Spawned && building.Position == cell
                                 && building.Rotation == directions[column],
                                 ids[row] + " failed real map spawn/rotation " + directions[column]);
-                            inventory.AppendLine(ids[row] + " " + directions[column]
+                            inventory.AppendLine(ids[row] + " " + directionNames[column]
                                 + " cell=" + cell + " spawned=" + building.Spawned);
                         }
                     }
-                    CameraJumper.TryJump(focus, map);
+                    // Stage A defaults to an 89x50-cell distant overview, too small
+                    // for sprite review. Use stock Vanilla camera zoom within its
+                    // supported 11-60 range; never use Camera+ or resize textures.
+                    Find.CameraDriver.SetRootPosAndSize(focus.ToVector3Shifted(), 11.5f);
+                    inventory.AppendLine("camera_root_size=11.5");
                 });
                 // Give the regular map graphics/render frames time to update.
                 await Task.Delay(1000);
