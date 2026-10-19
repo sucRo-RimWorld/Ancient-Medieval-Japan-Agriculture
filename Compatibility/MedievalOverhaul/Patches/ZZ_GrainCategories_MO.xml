@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
-  <!-- MO's wheat sheaf is not edible cereal input. Its processed grain stays
-       eligible for MO recipes through the separate DankPyon_Cereal tag. -->
+  <!-- MO wheat sheaves are unthreshed. The processed grain is stored under
+       AMJC_GrainKernels, while MO milling receives it through direct filters. -->
   <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[defName="DankPyon_RawWheat"]/thingCategories</xpath>
     <value><thingCategories Inherit="False"><li>AMJC_GrainSheaves</li></thingCategories></value>
   </Operation>
-  <Operation Class="PatchOperationAdd">
+  <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[defName="AMJC_Wheat"]/thingCategories</xpath>
-    <value><li>AMJC_GrainKernels</li></value>
+    <value><thingCategories Inherit="False"><li>AMJC_GrainKernels</li></thingCategories></value>
   </Operation>
   <!-- Single visible flour branch: retain MO's item/DefName, but not its
        independent storage-category membership. Leave the empty MO category Def
@@ -42,5 +42,44 @@
   </Operation>
   <Operation Class="PatchOperationRemove">
     <xpath>/Defs/ThingDef//filter/categories/li[text()="DankPyon_Flour"]</xpath>
+  </Operation>
+
+  <!-- MO 1.6 uses DankPyon_Cereal for three grinding Bills, ale wort and the
+       wind/watermill Processor Framework filters. The category Def remains as
+       a legacy reference but has no default ThingDef members in Grains+MO. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef//*[categories/li="DankPyon_Cereal"]/thingDefs[not(li="AMJC_Wheat")]</xpath>
+    <value><li>AMJC_Wheat</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef//*[categories/li="DankPyon_Cereal" and not(thingDefs)]</xpath>
+    <value><thingDefs><li>AMJC_Wheat</li></thingDefs></value>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/RecipeDef//categories/li[text()="DankPyon_Cereal"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ProcessorFramework.ProcessDef/ingredientFilter[categories/li="DankPyon_Cereal"]/thingDefs[not(li="AMJC_Wheat")]</xpath>
+    <value><li>AMJC_Wheat</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ProcessorFramework.ProcessDef/ingredientFilter[categories/li="DankPyon_Cereal" and not(thingDefs)]</xpath>
+    <value><thingDefs><li>AMJC_Wheat</li></thingDefs></value>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ProcessorFramework.ProcessDef/ingredientFilter/categories/li[text()="DankPyon_Cereal"]</xpath>
+  </Operation>
+  <!-- Retain explicit wheat authorization in an existing MO storage filter,
+       rather than retaining an otherwise duplicate visible cereal category. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef//filter[categories/li="DankPyon_Cereal"]/thingDefs[not(li="AMJC_Wheat")]</xpath>
+    <value><li>AMJC_Wheat</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef//filter[categories/li="DankPyon_Cereal" and not(thingDefs)]</xpath>
+    <value><thingDefs><li>AMJC_Wheat</li></thingDefs></value>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ThingDef//filter/categories/li[text()="DankPyon_Cereal"]</xpath>
   </Operation>
 </Patch>

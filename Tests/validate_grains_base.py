@@ -261,7 +261,7 @@ def validate():
     mo_ops = mo_patch.findall("Operation")
     assert [(op.get("Class"), op.findtext("xpath")) for op in mo_ops] == [
         ("PatchOperationReplace", '/Defs/ThingDef[defName="DankPyon_RawWheat"]/thingCategories'),
-        ("PatchOperationAdd", '/Defs/ThingDef[defName="AMJC_Wheat"]/thingCategories'),
+        ("PatchOperationReplace", '/Defs/ThingDef[defName="AMJC_Wheat"]/thingCategories'),
         ("PatchOperationReplace", '/Defs/ThingDef[defName="DankPyon_Flour"]/thingCategories'),
         ("PatchOperationAdd", '/Defs/RecipeDef//*[categories/li="DankPyon_Flour"]/thingDefs[not(li="DankPyon_Flour")]'),
         ("PatchOperationAdd", '/Defs/RecipeDef//*[categories/li="DankPyon_Flour" and not(thingDefs)]'),
@@ -269,17 +269,36 @@ def validate():
         ("PatchOperationAdd", '/Defs/ThingDef//filter[categories/li="DankPyon_Flour"]/thingDefs[not(li="DankPyon_Flour")]'),
         ("PatchOperationAdd", '/Defs/ThingDef//filter[categories/li="DankPyon_Flour" and not(thingDefs)]'),
         ("PatchOperationRemove", '/Defs/ThingDef//filter/categories/li[text()="DankPyon_Flour"]'),
-    ], "MO flour tag removal must preserve recipe and shelf item filters"
+        ("PatchOperationAdd", '/Defs/RecipeDef//*[categories/li="DankPyon_Cereal"]/thingDefs[not(li="AMJC_Wheat")]'),
+        ("PatchOperationAdd", '/Defs/RecipeDef//*[categories/li="DankPyon_Cereal" and not(thingDefs)]'),
+        ("PatchOperationRemove", '/Defs/RecipeDef//categories/li[text()="DankPyon_Cereal"]'),
+        ("PatchOperationAdd", '/Defs/ProcessorFramework.ProcessDef/ingredientFilter[categories/li="DankPyon_Cereal"]/thingDefs[not(li="AMJC_Wheat")]'),
+        ("PatchOperationAdd", '/Defs/ProcessorFramework.ProcessDef/ingredientFilter[categories/li="DankPyon_Cereal" and not(thingDefs)]'),
+        ("PatchOperationRemove", '/Defs/ProcessorFramework.ProcessDef/ingredientFilter/categories/li[text()="DankPyon_Cereal"]'),
+        ("PatchOperationAdd", '/Defs/ThingDef//filter[categories/li="DankPyon_Cereal"]/thingDefs[not(li="AMJC_Wheat")]'),
+        ("PatchOperationAdd", '/Defs/ThingDef//filter[categories/li="DankPyon_Cereal" and not(thingDefs)]'),
+        ("PatchOperationRemove", '/Defs/ThingDef//filter/categories/li[text()="DankPyon_Cereal"]'),
+    ], "MO flour/cereal category removal must preserve explicit recipe, mill and storage inputs"
     assert mo_ops[0].findtext("value/thingCategories/li") == "AMJC_GrainSheaves"
     assert mo_ops[0].find("value/thingCategories").get("Inherit") == "False"
-    assert mo_ops[1].findtext("value/li") == "AMJC_GrainKernels"
+    assert [n.text for n in mo_ops[1].findall("value/thingCategories/li")] == ["AMJC_GrainKernels"]
+    assert mo_ops[1].find("value/thingCategories").get("Inherit") == "False"
     assert [n.text for n in mo_ops[2].findall("value/thingCategories/li")] == ["AMJC_GrainFlour"]
     assert mo_ops[2].find("value/thingCategories").get("Inherit") == "False"
+    assert len(mo_ops) == 18, "MO flour/cereal redirect operation count"
+    for i in (9, 10, 12, 13, 15, 16):
+        assert mo_ops[i].findtext("value/li") == "AMJC_Wheat" or (
+            mo_ops[i].findtext("value/thingDefs/li") == "AMJC_Wheat"
+        ), "MO milling/brewing/processor/storage must still accept wheat"
+    assert all("DankPyon_Cereal" in (op.findtext("xpath") or "") for op in mo_ops[9:]), (
+        "MO cereal redirect coverage"
+    )
     bridge = ET.parse(ROOT / "Patches/GrainCategories_RawFoodFilters.xml")
     assert len(bridge.findall("Operation[@Class='PatchOperationConditional']")) == 2
     for op in bridge.findall("Operation"):
         assert 'AMJC_Grains' in op.findtext("match/value/li"), "Raw-food category acceptance bridge"
     mo_wheat = next(n for n in mo.findall("ThingDef") if n.findtext("defName") == "AMJC_Wheat")
+    # Historical MO projection is pre-ZZ patch; the final XML replaces it with AMJC_GrainKernels.
     assert [li.text for li in mo_wheat.findall("thingCategories/li")] == ["DankPyon_Cereal"]
     actual = {}
     for node in mo:

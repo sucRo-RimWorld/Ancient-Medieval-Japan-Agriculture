@@ -644,7 +644,9 @@ GrainsはMOの `DankPyon_Cereal` と同じ **`Foods` 直下**に `AMJC_Grains（
 - **穀粒:** 殻付き雑穀・ソバ・大麦・籾、可食雑穀・ソバ・大麦・小麦穀粒、Vanilla `RawRice` と白米。
 - **穀粉:** 雑穀粉、蕎麦粉、大麦粉、米粉、小麦粉（Vanilla：`AMJC_WheatFlour`、MO：`DankPyon_Flour`）。
 
-MOの `DankPyon_Cereal` は独立した製粉・醸造用の材料フィルタであり、穀物という名前だけで穀束やソバ等を登録しない。可食小麦穀粒 `AMJC_Wheat` のみ必要なMO材料カテゴリへ継続登録する。グラフィックやアイテムの合一ではない。
+**MO穀物カテゴリの統合（2026-10-19）:** MOの `DankPyon_Cereal` に分類されていた可食小麦穀粒 `AMJC_Wheat` を `AMJC_GrainKernels` だけへ移し、MO/Grainsの保管表示を `Foods > AMJC_Grains > AMJC_GrainKernels` に一本化する。MO小麦束 `DankPyon_RawWheat` は従来どおり `AMJC_GrainSheaves`。MO側の独立カテゴリ `DankPyon_Cereal` のDefは互換参照用として保持するが、標準の小麦アイテムは所属させない。小麦DefName・栄養・加工段階は変更しない。
+
+**MO製粉・醸造の入力互換:** MO 1.6の製粉レシピ3件、エール麦汁レシピ、Processor Frameworkの風車・水車の `DankPyon_Cereal` 入力を、可食小麦穀粒 `AMJC_Wheat` の直接指定に置換する。MOの製粉・醸造で未脱穀束や他の穀粒を誤消費させず、Grainsの既存専用粉・レシピも変更しない。MOの収納フィルタ内に旧カテゴリ参照がある場合も同様に小麦直接指定へ置き換える。未把握の第三者Modが旧カテゴリを動的に使う場合は互換性を保証しない。実機で表示と投入を確認する。
 
 **MO粉カテゴリの整理:** `DankPyon_Flour` の独立した備蓄表示への所属を除き、`AMJC_GrainFlour` のみへ所属させる。MOが定義する `DankPyon_Flour` ThingCategoryDefそのものは、他Modの参照を直ちに未定義にしないため空の互換Defとして維持する。MOの既存料理Recipe・穀物棚がこの旧カテゴリを材料/収納許可に用いる箇所は、`DankPyon_Flour` ThingDefを直接許可するPatchに置換し、他のGrains穀粉をMO料理へ無条件追加しない。第三者の未把握の旧カテゴリ参照については動作保証しない。
 
@@ -1096,18 +1098,17 @@ GrainsはBase主要ループに必要なDefを自分で所有し、MO併用時�
 | 小麦粉 | DankPyon_Flour | MO時の唯一の標準小麦粉 |
 | 製粉設備 | `DankPyon_Millstone` | MO時に石臼と既存の製粉Recipeを再利用する。CraftingSpot・風車・水車による別経路は現行Grainsの正式互換対象ではなく、未脱穀束から工程を飛ばさない |
 | 藁 | DankPyon_Straw | MO時だけ脱穀副産物として利用 |
-| 穀物カテゴリ | DankPyon_Cereal | MO製粉/醸造へ参加させる対象だけ条件付き登録 |
+| 穀物カテゴリ | DankPyon_Cereal | MO時も `AMJC_Grains` へ保管表示を統合。旧カテゴリDefは空の参照として残し、MO製粉・醸造の入力は `AMJC_Wheat` 直接指定へ移行 |
 | 農業研究 | DankPyon_BasicAgriculture 等 | Grains主要ループの必須依存にはしない |
 
 #### DankPyon_Cereal は汎用穀物カテゴリとして使わない
 
-MO 1.6では DankPyon_Cereal は製粉RecipeとAle wort Recipeの入力契約である。このため、Grains作物を「穀物だから」という理由だけで登録しない。
+MO 1.6の `DankPyon_Cereal` は製粉Recipe、Ale wort Recipe、風車・水車のProcessor Framework入力に使われる旧材料カテゴリであり、Grains併用時は標準アイテムを所属させず空の互換Defとして残す。保管は `AMJC_Grains` へ一本化し、加工入力は `AMJC_Wheat` を直接指定する。
 
-- DankPyon_RawWheat は未脱穀小麦束としてCereal入力から外す。
-- 脱穀後の AMJC_Wheat はMO小麦粉へ接続するため登録してよい。
-- 雑穀・ソバは専用粉を持つためgeneric Cerealへ登録しない。
-- 大麦の専用粉はGrainsで所有し、MO generic Flour/Aleへ穀粒を登録するかは別の明示的な互換判断とする。
-- Strawの発生点はカテゴリではなく脱穀Recipeで制御する。
+- `DankPyon_RawWheat` は未脱穀小麦束として `AMJC_GrainSheaves` へ入れる。MO製粉へ直接投入しない。
+- 脱穀後の `AMJC_Wheat` は `AMJC_GrainKernels` に単独所属させ、MO製粉・醸造のレシピ/Processor FrameworkフィルタからThingDef名で許可する。
+- 雑穀・ソバ・大麦は従来どおり専用粉経路を持ち、MOの汎用製粉・醸造に自動追加しない。
+- Strawの発生点はカテゴリではなく脱穀Recipeで制御する。第三者の旧カテゴリ依存は実機未検証とする。
 
 #### MO紙・紡績等はGrains外
 
