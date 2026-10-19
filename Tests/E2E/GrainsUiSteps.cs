@@ -96,6 +96,42 @@ namespace AncientMedievalJapanCore.E2E
         }
 
 
+
+        // Check Unity-loaded directional materials; byte equality is protected by static QA.
+        private static void CheckProcessingEquipmentMaterials(PickleContext ctx)
+        {
+            bool mo = LoadedModManager.RunningModsListForReading.Any(mod =>
+                string.Equals(mod.PackageIdPlayerFacing, "dankpyon.medieval.overhaul",
+                    StringComparison.OrdinalIgnoreCase));
+            var targets = new[] {
+                new { Name = "AMJC_GrainProcessingSpot", Tex = "Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot" },
+                new { Name = "AMJC_GrainProcessingTable", Tex = "Things/Building/Production/AMJC_GrainProcessingTable/GrainProcessingTable" },
+                new { Name = "AMJC_ManualMillstone", Tex = "Things/Building/Production/AMJC_ManualMillstone/ManualMillstone" }
+            };
+            ctx.Assert(!mo || DefDatabase<ThingDef>.GetNamedSilentFail("AMJC_ManualMillstone") == null,
+                "MO must not load the duplicate non-MO manual stone mill.");
+            foreach (var target in targets)
+            {
+                if (mo && target.Name == "AMJC_ManualMillstone")
+                    continue; // MO retains DankPyon_Millstone graphics.
+                ThingDef def = DefDatabase<ThingDef>.GetNamed(target.Name);
+                ctx.Require(def != null && def.graphicData != null, target.Name + " graphics missing");
+                ctx.Assert(def.size.x == 1 && def.size.z == 1, target.Name + " must remain 1x1");
+                ctx.Assert(def.graphicData.texPath == target.Tex,
+                    target.Name + " did not load the dedicated approved texture path");
+                Graphic graphic = def.graphicData.Graphic;
+                ctx.Require(graphic is Graphic_Multi, target.Name + " must load Graphic_Multi");
+                foreach (Rot4 direction in new[] { Rot4.North, Rot4.East, Rot4.South, Rot4.West })
+                {
+                    Material material = graphic.MatAt(direction);
+                    Texture texture = material == null ? null : material.mainTexture;
+                    ctx.Assert(texture != null && texture != BaseContent.BadTex
+                        && texture.width == 256 && texture.height == 256,
+                        target.Name + " failed to resolve 256px non-BadTex material for " + direction);
+                }
+            }
+        }
+
         // Diagnostic evidence from the actual Unity UI process, not from the host's
         // fontconfig inventory. This runs only in the disposable test target.
         private static Type LoadedType(string fullname)
@@ -1037,6 +1073,7 @@ namespace AncientMedievalJapanCore.E2E
                 }
                 foreach (string name in RenderedGrains.Concat(SpecialtyFoods))
                     CheckMaterial(ctx, DefDatabase<ThingDef>.GetNamed(name));
+                CheckProcessingEquipmentMaterials(ctx);
                 foreach (string name in new[] {
                     "AMJC_Plant_FoxtailMillet_Awa", "AMJC_Plant_BarnyardMillet_Hie",
                     "AMJC_Plant_ProsoMillet_Kibi", "AMJC_Plant_Buckwheat_Soba",

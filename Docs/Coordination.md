@@ -120,6 +120,8 @@ The 2026-10-10 author-approved hulled-barley source is preserved at `Art/Sources
 
 **Next action:** One consolidated real-game normal zoom, orientation and error-log inspection. No new art generation, gameplay balancing, source regeneration or Steam upload for this decision.
 
+**2026-10-19 native-test refresh:** The existing manually dispatched RimWorld 1.6 Grains UI scenario now checks the loaded AMJ spot/table/Base mill in four cardinal rotations (valid 256px non-BadTex materials, dedicated paths, 1x1 size). Canonical test assumptions in `Docs/GrainsProfileTesting.md`; Project host runner must pin this exact new Grains commit. Actual native PASS and map-zoom screenshot remain OPEN, no 1.7 or Steam action.
+
 **2026-10-19 author acceptance and integration of non-MO stone mill:** `AMJC_ManualMillstone` is assigned the confirmed 256px no-table/no-container stone mill graphic, same exact PNG for N/E/S/W; the available 1254px related original and byte-exact approved 256px version are preserved separately in `Art/Sources/Things/Building/Production/AMJC_ManualMillstone/`. The BaseWithoutMO-only Def now uses `Things/Building/Production/AMJC_ManualMillstone/ManualMillstone`. Source of truth `Docs/Design.md §12.1.2`. MO continues to use its own `DankPyon_Millstone`. No gameplay or Recipe changes. **Remaining:** a consolidated loaded-game visual/BadTex/ERROR 0 check for all three facilities. Historical backlog statements claiming the millstone sprite does not exist are obsolete.
 
 ### AMJ-013 — Wheat grain graphics
