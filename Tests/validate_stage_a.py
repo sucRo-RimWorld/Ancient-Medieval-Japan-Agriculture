@@ -431,6 +431,27 @@ assert num(table, "costList/Steel") == 30 and len(table.find("costList")) == 1
 assert num(table, "statBases/WorkTableWorkSpeedFactor") == 1.0
 assert table.find("researchPrerequisites") is None, "AMJG processing table must remain research-free"
 
+# Non-MO manual stone mill: keep its approved 1x1 graphics dedicated and
+# byte-identical for all four Graphic_Multi slots; MO reuses its own millstone.
+base_mill = find_def(ET.parse(ROOT / "BaseWithoutMO/Defs/Buildings_Millstone.xml").getroot(),
+                     "ThingDef", "AMJC_ManualMillstone")
+mill_path = "Things/Building/Production/AMJC_ManualMillstone/ManualMillstone"
+assert text(base_mill, "graphicData/texPath") == mill_path
+assert text(base_mill, "graphicData/graphicClass") == "Graphic_Multi"
+assert text(base_mill, "graphicData/drawSize") == "(1,1)"
+assert text(base_mill, "graphicData/drawRotated") == "false"
+assert text(base_mill, "size") == "(1,1)"
+assert num(base_mill, "costList/BlocksGranite") == 30
+assert num(base_mill, "costList/WoodLog") == 20
+mill_files = [ROOT / "Textures" / f"{mill_path}_{direction}.png"
+              for direction in ("north", "east", "south", "west")]
+for mill_file in mill_files:
+    assert mill_file.is_file(), f"missing accepted manual-millstone texture: {mill_file}"
+    validate_png(mill_file)
+assert all(p.read_bytes() == mill_files[0].read_bytes() for p in mill_files), (
+    "all four manual-millstone directions must use the same accepted PNG bytes"
+)
+
 def recipe(name):
     return find_def(recipes, "RecipeDef", name)
 
