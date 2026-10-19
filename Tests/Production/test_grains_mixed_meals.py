@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / 'Tests'))
 from amj_profile_xml import profile_xml
 from stack_graphics import stack_textures
 
-GRAINS = {'AMJC_Millet','AMJC_Buckwheat','AMJC_Barley','AMJC_Wheat','RawRice'}
+GRAINS = {'AMJC_Millet','AMJC_Buckwheat','AMJC_Barley','AMJC_Wheat','RawRice','AMJC_WhiteRice'}
 OWN_FLOURS = {'AMJC_MilletFlour','AMJC_BuckwheatFlour','AMJC_BarleyFlour','AMJC_RiceFlour'}
 MENU = {
     'MixedGrainMeal': (GRAINS, 240, 3.0,
@@ -36,8 +36,8 @@ def require_recipe(node, ingredient_set, suffix, multiplier, work):
     assert len(node.findall('ingredients/li')) == 1
     actual = {li.text for li in node.findall('ingredients/li/filter/thingDefs/li')}
     fixed = {li.text for li in node.findall('fixedIngredientFilter/thingDefs/li')}
-    assert len(node.findall('ingredients/li/filter/thingDefs/li')) == 5
-    assert len(node.findall('fixedIngredientFilter/thingDefs/li')) == 5
+    assert len(node.findall('ingredients/li/filter/thingDefs/li')) == len(ingredient_set)
+    assert len(node.findall('fixedIngredientFilter/thingDefs/li')) == len(ingredient_set)
     assert actual == fixed == ingredient_set, (suffix, actual, fixed)
     assert node.findtext('fixedIngredientFilter/specialFiltersToDisallow/li') == 'AllowRotten'
     assert float(node.findtext('ingredients/li/count')) == 0.5 * multiplier
