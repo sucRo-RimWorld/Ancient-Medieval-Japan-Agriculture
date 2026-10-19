@@ -3,6 +3,10 @@
 **Date:** 2026-10-13。**Owner:** AMJ Grains。
 **Authority:** 作者はV1での「飯・粥・粉食」3系統への単純化と、アップデートによる段階的分化を容認した。**2026-10-13追加確定：混ぜこぜの共通料理は料理分化後も恒久的に残し、材料指定の固有料理は共通料理より性能を良くする。** 各数値、将来料理の採否と名称は**未承認案**。本書は研究/設計草案で、本番ThingDef・Recipe・画像の変更は行わない。対象年代は古代～中世日本で、江戸期を含めない。
 
+## 2026-10-19 米粉の通常生産廃止（作者確定）
+
+現在の生産対象は小麦・蕎麦・雑穀・大麦の4穀粉。米粉のBill・米粉団子のBillは設備から除外し、共通粉食への米粉投入も無効とする。過去に定義した `AMJC_RiceFlour` / `AMJC_RiceFlourDumplings` と関連Recipeは旧セーブ・画像・史料の参照保持だけを目的に残し、現在の有効な品目数から除外。過去の「5種類の粉／5指定料理／16Bill」は2026-10-13当時の履歴値であり、最新の11料理/22調理Billと混同しない。米飯・白飯・米粥・白粥、および玄米・白米の分岐には影響しない。最新数値と所有は `Docs/Design.md` と `Docs/Balance/Crops/SevenGrainFoodChainAudit.md` に従う。
+
 ## 現行V1と履歴上の候補の区分
 
 **2026-10-19採用分（旧候補表の確定差分）:** 共通飯・粥・粉食は継続し、材料限定の米飯・白飯・米粥・白粥を追加。`RawRice`（玄米）と`AMJC_WhiteRice`（白米）を籾摺りの二者択一Billから生産する。玄米は籾10→10/work80、白米は籾10→8/work240。米飯/米粥は材料限定の代わりに共通飯/粥より調理作業が少ない。白飯Mood+3、白粥Mood+1（各0.5日）、ゲーム内未検証。旧「分割しない」記述と未承認の料理案はこの採用により上書きし、詳細の正本は`Docs/Design.md §5.3`とXML。
@@ -39,7 +43,7 @@
 |---|---|---|
 | 飯（穀粒食） | `AMJC_Millet`、`AMJC_Buckwheat`、`AMJC_Barley`、`AMJC_Wheat`、Vanilla `RawRice` | 炊く・蒸す穀物主食、比較的作り置き可能 |
 | 粥 | 上記可食穀粒 | 短期間で消費する穀物料理、別途製粉不要 |
-| 粉食 | `AMJC_MilletFlour`、`AMJC_BuckwheatFlour`、`AMJC_BarleyFlour`、`AMJC_RiceFlour`、Base `AMJC_WheatFlour` またはMO `DankPyon_Flour` | 製粉を要する。**共通粉食はMood 0**、指定5粉食のみ食後Mood +2 |
+| 粉食 | `AMJC_MilletFlour`、`AMJC_BuckwheatFlour`、`AMJC_BarleyFlour`、Base `AMJC_WheatFlour` またはMO `DankPyon_Flour`（米粉は2026-10-19除外） | 製粉を要する。**共通粉食はMood 0**、指定5粉食のみ食後Mood +2 |
 
 アワ・ヒエ・キビは収穫後 `AMJC_Millet` に統合されるため、その3種の穀粒由来をRecipeで識別することはできない。単に粟飯/稗飯/黍飯を作り分けるための可食Def分割はしない。
 
