@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
-  <!-- StageA has already removed the harvested sheaf from DankPyon_Cereal.
-       That recipe category must remain exclusive of unthreshed wheat. -->
+  <!-- MO's wheat sheaf is not edible cereal input. Its processed grain stays
+       eligible for MO recipes through the separate DankPyon_Cereal tag. -->
   <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[defName="DankPyon_RawWheat"]/thingCategories</xpath>
     <value><thingCategories Inherit="False"><li>AMJC_GrainSheaves</li></thingCategories></value>
@@ -10,16 +10,37 @@
     <xpath>/Defs/ThingDef[defName="AMJC_Wheat"]/thingCategories</xpath>
     <value><li>AMJC_GrainKernels</li></value>
   </Operation>
-  <!-- MO's DankPyon_Flour category stays intact for its recipes and other mods. -->
-  <Operation Class="PatchOperationAdd">
+  <!-- Single visible flour branch: retain MO's item/DefName, but not its
+       independent storage-category membership. Leave the empty MO category Def
+       available for compatibility with third-party patches. -->
+  <Operation Class="PatchOperationReplace">
     <xpath>/Defs/ThingDef[defName="DankPyon_Flour"]/thingCategories</xpath>
-    <value><li>AMJC_GrainFlour</li></value>
+    <value><thingCategories Inherit="False"><li>AMJC_GrainFlour</li></thingCategories></value>
   </Operation>
-  <!-- Keep MO's DankPyon_Flour recipe category, but suppress parent raw-food
-       leaf membership inherited by the MO flour ThingDef. -->
-  <Operation Class="PatchOperationAttributeSet">
-    <xpath>/Defs/ThingDef[defName="DankPyon_Flour"]/thingCategories</xpath>
-    <attribute>Inherit</attribute>
-    <value>False</value>
+  <!-- MO's existing breads and other flour recipes must still accept only
+       DankPyon_Flour (not every flour in AMJC_GrainFlour). -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef//*[categories/li="DankPyon_Flour"]/thingDefs[not(li="DankPyon_Flour")]</xpath>
+    <value><li>DankPyon_Flour</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/RecipeDef//*[categories/li="DankPyon_Flour" and not(thingDefs)]</xpath>
+    <value><thingDefs><li>DankPyon_Flour</li></thingDefs></value>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/RecipeDef//categories/li[text()="DankPyon_Flour"]</xpath>
+  </Operation>
+  <!-- Preserve the MO grain shelf's flour acceptance without restoring a
+       separate, visible flour storage branch. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef//filter[categories/li="DankPyon_Flour"]/thingDefs[not(li="DankPyon_Flour")]</xpath>
+    <value><li>DankPyon_Flour</li></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef//filter[categories/li="DankPyon_Flour" and not(thingDefs)]</xpath>
+    <value><thingDefs><li>DankPyon_Flour</li></thingDefs></value>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>/Defs/ThingDef//filter/categories/li[text()="DankPyon_Flour"]</xpath>
   </Operation>
 </Patch>

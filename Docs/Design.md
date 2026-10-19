@@ -636,23 +636,23 @@ MO 1.6.2.2の研究ツリー全67ノード（MO独自51 + MOが移動/再構成�
 ### 2.10 MOの研究フローを古代～中世日本史へ再構成する
 
 MO全体の研究再構成はGrainsの責務外で、AMJ - Medieval Overhaul Japanizationが所有する。専用リポジトリ作成前の詳細設計はProjectの [MedievalOverhaulJapanizationCandidate.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/MedievalOverhaulJapanizationCandidate.md) を正本とする。Grainsは自分が所有する作物・加工の研究解禁と、MO併用時の条件付き接続だけを管理する。
-### 2.11 保管フィルタの穀物分類（2026-10-17）
+### 2.11 保管フィルタの穀物分類（2026-10-19 改訂）
 
-Grainsは `PlantFoodRaw → AMJC_Grains（穀物）` の下に、`AMJC_GrainSheaves（穀物束）`・`AMJC_GrainKernels（穀粒）`・`AMJC_GrainFlour（穀粉）` の3分類を設ける。備蓄ゾーン・棚などの食料フィルタを整理するための分類であり、作物・加工工程・栄養・保存期間・DefNameは変更しない。
+GrainsはMOの `DankPyon_Cereal` と同じ **`Foods` 直下**に `AMJC_Grains（穀物）` を置き、`AMJC_GrainSheaves（穀物束）`・`AMJC_GrainKernels（穀粒）`・`AMJC_GrainFlour（穀粉）` の3分類を子に置く。表示は `食物 > 穀物` であり、従来の `食物 > 生の食材 > 生野菜 > 穀物` は廃止する。穀物束・殻付き穀粒・可食穀粒・粉の個別DefName、ゲーム数値、Recipeと既存グラフィックは変えない。MOなしでも同じGrains分類を提供する。
 
 - **穀物束:** 雑穀束、ソバ束、大麦束、稲束、小麦束（Vanilla：`AMJC_RawWheat`、MO：`DankPyon_RawWheat`）。
-- **穀粒:** 殻付き雑穀・ソバ・大麦・籾、可食雑穀・ソバ・大麦・小麦穀粒、Vanilla `RawRice`。
+- **穀粒:** 殻付き雑穀・ソバ・大麦・籾、可食雑穀・ソバ・大麦・小麦穀粒、Vanilla `RawRice` と白米。
 - **穀粉:** 雑穀粉、蕎麦粉、大麦粉、米粉、小麦粉（Vanilla：`AMJC_WheatFlour`、MO：`DankPyon_Flour`）。
 
-MOの `DankPyon_Cereal` は製粉・醸造レシピの材料カテゴリなので、未脱穀の小麦束をその子孫に入れると一次加工を迂回できる。Grainsの保管用「穀物」は独立させ、`DankPyon_Cereal` の材料判定は既存の可食小麦穀粒で維持する。MO小麦粉は `DankPyon_Flour` の材料カテゴリも維持し、MOその他の穀物の分類を変更しない。新カテゴリは `PlantFoodRaw` の下に置き、米と可食穀粒の料理材料としての扱いを保持する。
+MOの `DankPyon_Cereal` は独立した製粉・醸造用の材料フィルタであり、穀物という名前だけで穀束やソバ等を登録しない。可食小麦穀粒 `AMJC_Wheat` のみ必要なMO材料カテゴリへ継続登録する。グラフィックやアイテムの合一ではない。
 
-**生野菜の重複表示を防ぐ:** 穀類の可食穀粒は `PlantFoodRawBase` 由来の `thingCategories/PlantFoodRaw` を直接継承させず、`Inherit="False"` で `AMJC_GrainKernels` のみに分類する。Vanilla `RawRice` でも親由来の直接所属を無効化し、すでに明示されている他Modのカテゴリは保持したまま `PlantFoodRaw` の明示所属だけを除外する。MOの `AMJC_Wheat` も同様にしつつ、製粉用 `DankPyon_Cereal` は維持する。`AMJC_Grains` 自体は `PlantFoodRaw` の子孫のままとするため、料理・材料フィルタの親カテゴリ互換を維持する。
+**MO粉カテゴリの整理:** `DankPyon_Flour` の独立した備蓄表示への所属を除き、`AMJC_GrainFlour` のみへ所属させる。MOが定義する `DankPyon_Flour` ThingCategoryDefそのものは、他Modの参照を直ちに未定義にしないため空の互換Defとして維持する。MOの既存料理Recipe・穀物棚がこの旧カテゴリを材料/収納許可に用いる箇所は、`DankPyon_Flour` ThingDefを直接許可するPatchに置換し、他のGrains穀粉をMO料理へ無条件追加しない。第三者の未把握の旧カテゴリ参照については動作保証しない。
 
-MO由来の小麦束 `DankPyon_RawWheat` は `AMJC_GrainSheaves` だけを直接分類先とし、親からの生野菜直接分類を継承しない。MOの小麦粉 `DankPyon_Flour` も `thingCategories Inherit="False"` とし、既存の `DankPyon_Flour` 製粉・料理用カテゴリと `AMJC_GrainFlour` の両所属を維持する。MO併用時の日本語名は `DankPyon_Flour.label` を **小麦粉** とし、従来翻訳の「小麦粉(生)」を表示しない（DefName・食用不可状態は不変）。
+従来 `PlantFoodRaw` や `FoodRaw` の子孫として自動許可されていたRecipeおよびThingDef収納フィルタには、`AMJC_Grains` を明示追加する互換Patchを設ける。親カテゴリそのものを元へ戻したり、`PlantFoodRaw` の直接所属を穀粒へ復活させたりせず、UIに同じ穀粒が複数表示されることを防ぐ。個別料理の材料定義は変更しない。Vanilla/MOのロード後UI・Recipe・フィルタ挙動は最新ソースで別途実機確認する。
 
 #### Adaptive Primitive Storage任意互換（2026-10-17）
 
-Grains単独で使用する独自穀倉は追加しない。MO + APS併用時の藁建築版はAPS既存穀倉の派生Defとして追加する。Adaptive Primitive Storage（Workshop 3400037215／packageId `Adaptive.PrimitiveStorage`）既存の `ASF_Granary`（3×3、54スタック）を利用する。同設備の固定・既定収納フィルタは `PlantFoodRaw` と `PlantMatter` を受け入れ、`AMJC_Grains` は `PlantFoodRaw` の子孫であるためGrainsの穀物束・穀粒・穀粉（MO小麦を含む）は階層上対象に入る。APS存在時だけ両フィルタへ `AMJC_Grains` を明示追加し、親カテゴリ・既存食材を除外しない。Grainsのハード依存にAPSやAdaptive Storage Frameworkを加えない。
+Grains単独で使用する独自穀倉は追加しない。MO + APS併用時の藁建築版はAPS既存穀倉の派生Defとして追加する。Adaptive Primitive Storage（Workshop 3400037215／packageId `Adaptive.PrimitiveStorage`）既存の `ASF_Granary`（3×3、54スタック）を利用する。同設備の固定・既定収納フィルタは `PlantFoodRaw` と `PlantMatter` を受け入れるが、`AMJC_Grains` は今後 `Foods` 直下のため両設定への明示追加が必要となる。APS存在時だけ両フィルタへ `AMJC_Grains` を追加し、親カテゴリ・既存食材を除外しない。Grainsのハード依存にAPSやAdaptive Storage Frameworkを加えない。
 
 APSの1.6現物Defが `Hay` を建築材料に使う4設備（`ASF_Granary` 50、`ASF_WovenBasket` 75、`ASF_WovenBasketDouble` 150、`ASF_WovenBasketTriple` 225）は、**元DefNameと干し草（`Hay`）の必要数を変更しない**。Grains + MO + APSの三者併用時のみ、同じ建築カテゴリに藁版の別建築選択肢 `AMJC_APS_{Granary,WovenBasket,WovenBasketDouble,WovenBasketTriple}_Straw` を提供する。藁版は干し草版と同じ必要数の `DankPyon_Straw` のみを消費し、元の石材（穀倉75）・木材（穀倉25）・研究・外観・収納容量・腐敗防止等はAPSの1.6仕様に合わせる。建築画面で干し草版と藁版を別アイコンから選ぶ（材料切替ギズモではない）。`costList` にHayとStrawを併記して両方を要求することはしない。Grains本体単独・MOなし・APSなしでは派生Defを読み込まない。APS側の仕様が変わった場合は互換先の差分再監査が必要。既存の建築物DefNameとセーブ参照は保護する。なお、この互換はGrainsに同梱するため、GrainsなしでのAPS+MO一般互換まで提供するものではない。**利用者向け推奨度は「併用を強く推奨（任意）」とする。** 大容量の穀物保管を既存の穀倉で実現し、重複したGrains独自の穀倉を追加しないため。README・Workshop英日・2game・About.xmlにも同じ位置づけを掲載する。1.6実機での収納フィルタ操作・建築材料表示は未検証。
 
