@@ -16,18 +16,30 @@ The balancing model and crops are specified in [Design](Docs/Design.md) and [cul
 
 ## V1 food options
 
-The same harvested grains can be used in mixed meals or processed into flour. Mixed dishes remain available for combining leftover cereals even after ingredient-specific recipes are expanded; recipes requiring a particular flour have a small advantage.
+The same harvested grains can be cooked as grain meals or porridge, or milled into flour. Common dishes can combine leftover cereals; flour-specific dishes provide a small mood and preservation advantage. Brown and white rice also have separate meal and porridge recipes.
 
 | Dish | Accepted ingredients | Cooking work (1 serving) | Room-temperature spoilage | Mood on eating |
 |---|---|---:|---:|---|
-| Mixed grain meal | 5 edible grain types (mixing allowed) | 240 | 3 days | No mood bonus |
-| Mixed grain porridge | 5 edible grain types (mixing allowed) | 200 | 1.5 days | No mood bonus |
-| Mixed flour food | 5 cereal flours (mixing allowed) | 300 | 2 days | No mood bonus |
-| 5 ingredient-specific flour dishes | Each recipe's designated flour | 300 | 2.5 days | Mood +2 after eating |
+| Common grain meal | Six edible grain item types, including brown and white rice (mixing allowed) | 240 | 3 days | No extra bonus |
+| Common grain porridge | The same edible grains (mixing allowed) | 200 | 1.5 days | No extra bonus |
+| Common flour food | Four grain flours (mixing allowed) | 300 | 2 days | No extra bonus |
+| Four flour-specific dishes | One designated flour per dish | 300 | 2.5 days | +2 for 0.5 days |
+| Rice meal / white rice meal | Brown rice / white rice, respectively | 220 | 3.5 days | None / +3 for 0.5 days |
+| Rice porridge / white rice porridge | Brown rice / white rice, respectively | 180 | 1.75 days | None / +1 for 0.5 days |
 
-All eight dishes consume 0.5 ingredient nutrition to make one meal worth 0.9 nutrition. Each also has a four-serving cooking Bill, with four times the inputs and work. The five specific flour dishes are *hakutaku (houtou), sobagaki, millet dumplings, barley-flour gruel and rice-flour dumplings*. Grains does not automatically prioritize ingredients by time remaining before spoilage; players can use Bill ingredient filters to select available leftovers.
+There are **11 normally producible dishes with 22 cooking Bills** (one- and four-serving recipes). Every dish uses 0.5 ingredient nutrition for a serving worth 0.9 nutrition; four-serving Bills use four times the ingredients and cooking work. The four flour-specific dishes are *hakutaku (houtou), sobagaki, millet dumplings and barley-flour gruel*. The active flours are wheat, buckwheat, millet and barley; Medieval Overhaul supplies its own wheat flour when installed. Grains does not automatically prioritize ingredients by remaining shelf life, so Bill ingredient filters remain available for leftovers.
 
-These values are implemented in the current Defs. Four-profile loaded-game validation of actual mixed-ingredient cooking Bills is still outstanding; this development build is not a publicly verified release.
+Paddy rice has separate processing Bills: 10 portions of paddy produce 10 brown rice (Work 80) or 8 white rice (Work 240). The common grain dishes remain available alongside rice-only meals and porridges.
+
+### Q.米粉は？
+
+米粉は古代・中世日本にも存在した。ただし、**玄米粉が中世庶民の日常的な食材として使われていたとする十分な根拠は確認できない**。米粉を独立した製粉品・備蓄品として増やしても、現状のGrainsの遊びに必要な選択が増えるとはいえない。そのため、通常の米粉製粉と米粉団子の調理を除外した。玄米・白米、およびそれぞれの飯・粥は残している。旧米粉・米粉団子の定義は互換性のため保持し、史料に基づく儀礼食・菓子を扱う場合に米粉の採用を再検討する。
+
+### Q. What about rice flour?
+
+Rice flour did exist in ancient and medieval Japan. However, there is insufficient evidence to treat flour made from brown rice as an everyday ingredient of medieval commoners. A separate rice-flour production and stockpiling loop also lacks a clear gameplay purpose in Grains. Rice flour milling and rice-flour dumpling cooking are therefore unavailable in normal production; brown and white rice, and their respective meals and porridges, remain available. Legacy definitions are retained for compatibility. Rice flour may be reconsidered for historically supported ceremonial foods or confections.
+
+These values reflect the current source definitions. Current-revision loaded-game verification of cooking Bills and ingredient selection is still outstanding; this development build is not a publicly verified release.
 
 ## Dependencies and compatibility
 
@@ -50,7 +62,7 @@ The mandatory MO dependency has been removed. Previous fresh-start Vanilla / MO 
 ## Planned improvements
 
 - **Revise existing graphics:** Improve outer outlines, silhouettes and readability at normal game zoom across crop, sheaf, grain and flour art, with a consistent visual style alongside Medieval Overhaul. The already accepted 14 crop states and five sheaf graphics remain unchanged for now; their aesthetic revisions are deferred.
-- **Add missing dedicated graphics:** Finish incomplete post-harvest grain and rice sprites, replace the shared placeholder art used by all eight cooked foods with food-specific images, and create dedicated graphics for Grains' processing spot, processing table and Base manual millstone. Equipment completion remains a post-V1 improvement.
+- **Complete and review food/equipment graphics:** Finish remaining grain and rice sprites, replace provisional meal artwork where necessary and review the existing processing spot, table and Base manual millstone graphics at normal game zoom. The three equipment images are already integrated; final visual acceptance remains open.
 - **Add stack-size variants:** Eventually provide distinct small, medium and large sheaf and flour sprites instead of the current single-appearance fallback. Sheaf quantity variants remain deferred; flour variants are not part of that deferral.
 
 ## Documentation
