@@ -133,7 +133,7 @@ namespace AncientMedievalJapanCore.E2E
                     foreach (string family in new[] { "MixedGrainMeal", "MixedGrainPorridge" })
                         scope.RejectFoodInput("AMJC_Cook" + family, "AMJC_MilletFlour");
                     scope.RejectFoodInput("AMJC_CookMixedFlourFood", "AMJC_Millet");
-                    foreach (string food in new[] { "Houtou", "Sobagaki", "BarleyFlourGruel", "RiceFlourDumplings" })
+                    foreach (string food in new[] { "Houtou", "Sobagaki", "BarleyFlourGruel" })
                         scope.RejectFoodInput("AMJC_Cook" + food, "AMJC_MilletFlour");
                     scope.RejectFoodInput("AMJC_CookMilletDumplings", "AMJC_BuckwheatFlour");
                 });
@@ -223,11 +223,6 @@ namespace AncientMedievalJapanCore.E2E
                 await scope.Bill("AMJC_HullBarleyBulk", scope.Processing, "AMJC_BarleyInHull", 10);
                 await scope.Bill("AMJC_MillBarley", scope.Mill, "AMJC_Barley", 10);
                 await scope.Bill("AMJC_CookBarleyFlourGruel", scope.Campfire, "AMJC_BarleyFlour", 10);
-                await scope.Harvest("Plant_Rice", true);
-                await scope.Bill("AMJC_ThreshRiceBulk", scope.Processing, "AMJC_RiceSheaf", 10);
-                await scope.Bill("AMJC_HullRiceBulk", scope.Processing, "AMJC_RiceInHull", 10);
-                await scope.Bill("AMJC_MillRice", scope.Mill, "RawRice", 10);
-                await scope.Bill("AMJC_CookRiceFlourDumplings", scope.Campfire, "AMJC_RiceFlour", 10);
                 // Seasonal checks remain inside the harvested-source scenario;
                 // the separate common-food native Bill scenario is now the seventh
                 // scenario for each provider profile.

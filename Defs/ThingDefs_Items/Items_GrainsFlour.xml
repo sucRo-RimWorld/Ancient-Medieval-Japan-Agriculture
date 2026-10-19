@@ -75,6 +75,7 @@
     </comps>
     <thingCategories><li>AMJC_GrainFlour</li></thingCategories>
   </ThingDef>
+  <!-- Historical compatibility: no active production Bill; retain existing item references. -->
   <ThingDef ParentName="RoughPlantBase">
     <defName>AMJC_RiceFlour</defName>
     <label>rice flour</label>

@@ -142,8 +142,7 @@ def validate(root=ROOT):
             assert [n.tag for n in rec.findall('products/*')] == (['AMJC_Wheat','DankPyon_Straw'] if profile == 'mo' else ['AMJC_Wheat'])
         chains = [('AMJC_MillBuckwheat','AMJC_Buckwheat','AMJC_BuckwheatFlour'),
                   ('AMJC_MillMillet','AMJC_Millet','AMJC_MilletFlour'),
-                  ('AMJC_MillBarley','AMJC_Barley','AMJC_BarleyFlour'),
-                  ('AMJC_MillRice','RawRice','AMJC_RiceFlour')]
+                  ('AMJC_MillBarley','AMJC_Barley','AMJC_BarleyFlour')]
         if profile == 'vanilla':chains += [('AMJC_MillWheat','AMJC_Wheat','AMJC_WheatFlour')]
         for recipe, grain, flour in chains:
             rec = defs[recipe]
@@ -173,6 +172,21 @@ def validate(root=ROOT):
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
             assert float(defs[flour].findtext('comps/li/daysToRotStart')) == 60
             assert defs[flour].findtext('ingestible/preferability') == 'NeverForNutrition'
+        # Retain rice-flour DefNames for old saves, but prohibit production Bills.
+        rice = defs['AMJC_MillRice']
+        assert rice.findtext('ingredients/li/filter/thingDefs/li') == 'RawRice'
+        assert rice.findtext('fixedIngredientFilter/thingDefs/li') == 'RawRice'
+        assert rice.findtext('products/AMJC_RiceFlour') == '10'
+        assert rice.findall('recipeUsers/li') == [], 'Retired rice milling must not be offered'
+        for batch in ('', 'Bulk'):
+            dumplings = defs['AMJC_CookRiceFlourDumplings' + batch]
+            assert dumplings.findall('recipeUsers/li') == [], 'Retired rice dumplings must not be offered'
+        mo_patch = ET.parse(root/'Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_GrainsFlour.xml').getroot()
+        assert not any('AMJC_MillRice' in (op.findtext('xpath') or '') for op in mo_patch.findall('Operation'))
+        for batch in ('', 'Bulk'):
+            common = defs['AMJC_CookMixedFlourFood' + batch]
+            assert all(li.text != 'AMJC_RiceFlour' for li in common.findall('.//thingDefs/li'))
+
         flour_graphics = {
             'AMJC_BuckwheatFlour': 'Things/Item/Resource/AMJC_Buckwheat/BuckwheatFlour',
             'AMJC_MilletFlour': 'Things/Item/Resource/AMJC_Millet/MilletFlour',
@@ -226,7 +240,7 @@ def validate(root=ROOT):
             assert food.findtext('ingestible/tasteThought') == 'AMJC_AteFlourFood'
             assert food.findtext('ingestible/preferability') == 'MealSimple'
             assert rec.find('researchPrerequisite') is None and rec.find('researchPrerequisites') is None
-            assert [n.text for n in rec.findall('recipeUsers/li')] == ['Campfire','ElectricStove','FueledStove']
+            assert [n.text for n in rec.findall('recipeUsers/li')] == ([] if suffix == 'RiceFlourDumplings' else ['Campfire','ElectricStove','FueledStove'])
             # Vanilla 4-meal behavior: one Bill yields four meals, with four
             # times the inputs AND four times the cooking work; savings are
             # fewer jobs/ingredient fetches, not free nutrition or work.
@@ -243,7 +257,7 @@ def validate(root=ROOT):
             assert float(bulk.findtext('workAmount')) == 1200, ('Bulk cooking work', suffix)
             assert bulk.findtext('workSpeedStat') == rec.findtext('workSpeedStat') == 'CookSpeed'
             assert bulk.findtext('workSkill') == rec.findtext('workSkill') == 'Cooking'
-            assert [n.text for n in bulk.findall('recipeUsers/li')] == ['Campfire','ElectricStove','FueledStove']
+            assert [n.text for n in bulk.findall('recipeUsers/li')] == ([] if suffix == 'RiceFlourDumplings' else ['Campfire','ElectricStove','FueledStove'])
             assert bulk.find('researchPrerequisite') is None and bulk.find('researchPrerequisites') is None
             assert bulk.findtext('ingredientValueGetterClass') == rec.findtext('ingredientValueGetterClass')
             assert bulk.find('skillRequirements') is None

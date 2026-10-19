@@ -379,7 +379,7 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         self.assertIn('hakutaku or sobagaki',
                       en.findtext('ThingDef[defName="AMJC_MixedFlourFood"]/description'))
 
-    def test_stone_mill_display_name_and_five_flour_paths(self):
+    def test_stone_mill_display_name_and_four_flour_paths(self):
         """UI label changes; preserve savegame DefName and Base/MO split."""
         lang = labels('BaseWithoutMO/Languages/Japanese/DefInjected/ThingDef/AMJC_WheatFallback.xml')
         wheat = labels('BaseWithoutMO/Defs/Items_Wheat.xml')
@@ -395,9 +395,9 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         self.assertEqual(stone.findtext(
             'ThingDef[defName="AMJC_ManualMillstone"]/label'), 'stone mill')
         description = lang.findtext('AMJC_ManualMillstone.description')
-        for grain in ('小麦', '蕎麦', '雑穀', '大麦', '米'):
+        for grain in ('小麦', '蕎麦', '雑穀', '大麦'):
             self.assertIn(grain, description)
-        for value in ('wheat', 'buckwheat', 'millet', 'barley', 'rice'):
+        for value in ('wheat', 'buckwheat', 'millet', 'barley'):
             self.assertIn(value, stone.findtext(
                 'ThingDef[defName="AMJC_ManualMillstone"]/description'))
 
@@ -407,7 +407,7 @@ class JapaneseLocalizationAudit(unittest.TestCase):
         ]
         expected = {
             'AMJC_MillWheat', 'AMJC_MillBuckwheat', 'AMJC_MillMillet',
-            'AMJC_MillBarley', 'AMJC_MillRice',
+            'AMJC_MillBarley',
         }
         mills = [recipe for source in all_mills for recipe in source
                  if recipe.findtext('defName') in expected]
@@ -416,6 +416,8 @@ class JapaneseLocalizationAudit(unittest.TestCase):
             self.assertIn('AMJC_ManualMillstone',
                           [li.text for li in recipe.findall('recipeUsers/li')])
             self.assertEqual(float(recipe.findtext('workAmount')), 300)
+        legacy_rice = labels('Defs/RecipeDefs/Recipes_GrainsMilling.xml').find('RecipeDef[defName="AMJC_MillRice"]')
+        self.assertEqual(legacy_rice.findall('recipeUsers/li'), [], 'No rice flour production Bill')
         mo = labels('Compatibility/MedievalOverhaul/Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml')
         self.assertIsNone(mo.find('AMJC_ManualMillstone.label'))
 

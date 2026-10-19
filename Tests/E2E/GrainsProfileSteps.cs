@@ -259,8 +259,8 @@ namespace AncientMedievalJapanCore.E2E
                 ctx.Assert(mill.researchPrerequisites == null || mill.researchPrerequisites.Count == 0,
                     "The standard Grains mill must be research-free.");
                 string[] grains = { "AMJC_Buckwheat", "AMJC_Millet", "AMJC_Wheat", "AMJC_Barley", "RawRice" };
-                string[] powders = { "AMJC_BuckwheatFlour", "AMJC_MilletFlour", mo ? "DankPyon_Flour" : "AMJC_WheatFlour", "AMJC_BarleyFlour", "AMJC_RiceFlour" };
-                string[] recipes = { "AMJC_MillBuckwheat", "AMJC_MillMillet", mo ? "DankPyon_CraftFlour" : "AMJC_MillWheat", "AMJC_MillBarley", "AMJC_MillRice" };
+                string[] powders = { "AMJC_BuckwheatFlour", "AMJC_MilletFlour", mo ? "DankPyon_Flour" : "AMJC_WheatFlour", "AMJC_BarleyFlour" };
+                string[] recipes = { "AMJC_MillBuckwheat", "AMJC_MillMillet", mo ? "DankPyon_CraftFlour" : "AMJC_MillWheat", "AMJC_MillBarley" };
                 for (int index = 0; index < grains.Length; index++)
                 {
                     RecipeDef rec = DefDatabase<RecipeDef>.GetNamed(recipes[index]);
@@ -288,7 +288,7 @@ namespace AncientMedievalJapanCore.E2E
                     ctx.Assert(powder.ingestible.preferability == FoodPreferability.NeverForNutrition,
                         "Powders must be used by cooking rather than eaten directly.");
                 }
-                string[] foods = { "Sobagaki", "MilletDumplings", "Houtou", "BarleyFlourGruel", "RiceFlourDumplings" };
+                string[] foods = { "Sobagaki", "MilletDumplings", "Houtou", "BarleyFlourGruel" };
                 for (int index = 0; index < foods.Length; index++)
                 {
                     RecipeDef rec = DefDatabase<RecipeDef>.GetNamed("AMJC_Cook" + foods[index]);
@@ -326,7 +326,7 @@ namespace AncientMedievalJapanCore.E2E
                 string[] rawGrains = { "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley",
                     "AMJC_Wheat", "RawRice" };
                 string[] mixedPowders = { "AMJC_MilletFlour", "AMJC_BuckwheatFlour",
-                    "AMJC_BarleyFlour", "AMJC_RiceFlour",
+                    "AMJC_BarleyFlour",
                     mo ? "DankPyon_Flour" : "AMJC_WheatFlour" };
                 string[] commonFoods = { "MixedGrainMeal", "MixedGrainPorridge", "MixedFlourFood" };
                 float[] commonWork = { 240f, 200f, 300f };
