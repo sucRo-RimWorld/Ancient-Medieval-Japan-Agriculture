@@ -4,6 +4,12 @@
 
 The four-profile harness was established before changing production dependency metadata. The production `About.xml` now declares **no mandatory MO or other Mod**, while `loadAfter` retains an optional MO ordering hint. The MO conditional and BaseWithoutMO fallback paths remain exclusive. A successful metadata/static tooling test is not a real-game test or public-release clearance.
 
+### 2026-10-19 processing-equipment native-material regression (1.6 only)
+
+The existing manually invoked `grains-ui.feature` loaded-InfoCard scenario additionally checks all three author-approved 1x1 processing facilities in real loaded Unity Defs: `AMJC_GrainProcessingSpot`, `AMJC_GrainProcessingTable`, and BaseWithoutMO-only `AMJC_ManualMillstone`. For each active facility it requires the dedicated `Graphic_Multi` texture path, actual 1x1 footprint, and North/East/South/West `MatAt` with non-null, non-`BadTex`, 256x256 main textures. MO must not load the duplicate Base millstone; MO's `DankPyon_Millstone` graphic remains MO-owned. The byte-identical four-PNG contract and CRC/zlib validity are checked by the existing static `Tests/validate_stage_a.py` and `Tests/validate_png_assets.py`.
+
+No additional standalone native launch or test profile is introduced; this uses the already supported manually invoked 1.6 bilingual UI host route. It preserves the four existing rice InfoCard screenshots per language/profile. Success of loaded materials is **not** a map-zoom screenshot or aesthetic approval. A real-game outcome cannot be claimed until the source-pinned Project host runs the new Grains SHA. The 1.7 compatibility test remains deferred until the author's ordinary-play flour-food checkpoint.
+
 ## Author-ordered validation sequence: ordinary play through flour food before 1.7 (2026-10-17)
 
 **Decision:** Hold new RimWorld 1.7 acceptance runs until the existing Grains game has been played far enough to confirm a complete **cultivation → harvest → threshing → hulling (where applicable) → milling → flour-food cooking and eating** chain in ordinary gameplay. In particular, confirm actual flour-food Bills and resulting pawn consumption; a source/static PASS or isolated pre-staged ingredients alone is not this playthrough checkpoint. Observe and fix concrete gameplay defects before scheduling 1.7 verification. This does not require testing every food variant or repeating prior native passes during play.
