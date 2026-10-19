@@ -175,6 +175,7 @@ def validate(root=ROOT):
         # Retain rice-flour DefNames for old saves, but prohibit production Bills.
         rice = defs['AMJC_MillRice']
         assert rice.findtext('ingredients/li/filter/thingDefs/li') == 'RawRice'
+        assert rice.findtext('fixedIngredientFilter/thingDefs/li') == 'RawRice'
         assert rice.findtext('products/AMJC_RiceFlour') == '10'
         assert rice.findall('recipeUsers/li') == [], 'Retired rice milling must not be offered'
         for batch in ('', 'Bulk'):
