@@ -445,7 +445,6 @@ assert text(base_mill, "stuffCategories/li") == "Stony"
 assert num(base_mill, "costStuffCount") == 30
 assert base_mill.find("costList/BlocksGranite") is None
 assert num(base_mill, "costList/WoodLog") == 20
-assert num(base_mill, "costList/WoodLog") == 20
 mill_files = [ROOT / "Textures" / f"{mill_path}_{direction}.png"
               for direction in ("north", "east", "south", "west")]
 for mill_file in mill_files:
