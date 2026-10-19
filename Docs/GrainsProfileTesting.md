@@ -4,6 +4,14 @@
 
 The four-profile harness was established before changing production dependency metadata. The production `About.xml` now declares **no mandatory MO or other Mod**, while `loadAfter` retains an optional MO ordering hint. The MO conditional and BaseWithoutMO fallback paths remain exclusive. A successful metadata/static tooling test is not a real-game test or public-release clearance.
 
+### 2026-10-19 rice-flour retirement — scoped static review and native hold
+
+**Scope / source:** Reviewed Grains `main` at `3561734218a1d074a96e2280bbe9b2fc9d518fc0` and corrected the related native test declaration for four active milling paths. The E2E `GrainsProfileSteps.cs` milling arrays had been 5 grains / 4 powders / 4 recipes; `RawRice` in the fifth milling slot would cause an array-index error. The corrective change removes only that retired milling input, retaining rice as an ingredient for common grain foods. A focused negative-regression assertion was added to the existing production test file.
+
+**Static result:** 30/30 targeted source assertions PASS against the reviewed XML and the proposed corrected C# array: legacy rice flour and dumpling IDs retained, three production Bills without users, shared 1/4 flour foods use four non-rice flours, MO milling has no rice reattachment and substitutes slot four, four active milling routes, all eight brown/white rice cooking Bills, paddy10→brown10 Work80, paddy10→white8 Work240 and white-rice mood Def presence. These were direct GitHub source-string checks, **not** execution of the repository Python/Unity test suites or a fully resolved XML/Mod loader.
+
+**Still OPEN:** Run the existing focused static Python validators on an actual Grains checkout; Vanilla/MO loaded Bill menus, production/use of four active flours, common flour food, brown/white rice Bill branches and food Thoughts on current source; old-save load and retained rice-flour texture resolution if an actual legacy save exists. No automatic RimWorld launch, 1.7 verification or Steam action has been authorized by this record. Historical native art passes above are source-scoped, not acceptance of the current recipe implementation.
+
 ### 2026-10-19 processing-equipment native-material regression (1.6 only)
 
 The existing manually invoked `grains-ui.feature` loaded-InfoCard scenario additionally checks all three author-approved 1x1 processing facilities in real loaded Unity Defs: `AMJC_GrainProcessingSpot`, `AMJC_GrainProcessingTable`, and BaseWithoutMO-only `AMJC_ManualMillstone`. For each active facility it requires the dedicated `Graphic_Multi` texture path, actual 1x1 footprint, and North/East/South/West `MatAt` with non-null, non-`BadTex`, 256x256 main textures. MO must not load the duplicate Base millstone; MO's `DankPyon_Millstone` graphic remains MO-owned. The byte-identical four-PNG contract and CRC/zlib validity are checked by the existing static `Tests/validate_stage_a.py` and `Tests/validate_png_assets.py`.
