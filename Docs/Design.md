@@ -781,46 +781,33 @@ AMJC固有作物の耐寒値と保存候補範囲の正本は [AMJC作物の耐�
 
 **2026-10-19 実プレイ後の雑穀差別化改訂:** 従来のアワ6/13、ヒエ6/12、キビ5/11は、収穫日数と収量が近すぎて作物選択に結びつかなかった。アワ9/27、ヒエ7/18、キビ4/9へ変更し、収穫1回の数量差を9個ずつ、生育日数差を2日以上とする。キビは短期間・少量、ヒエは冷涼期も育つ中期作、アワは長期・多収で植え直し回数を減らす主力とする。ソバ・大麦・小麦・稲、CCTOの低温枯死閾値、脱穀後の保存性と加工・調理数値は変更しない。Finite-season検証の前提と結果は[Millet Cultivation Balance](Balance/Crops/Millet_Cultivation_Balance.md)に示す。農作業・季節変化・実ゲームUIでは未確認であり、`growDays` は実際の暦日を意味しない。
 
-### 4.2.1a Vanilla/MO既存作物との生育期間整合（2026-10-15 公開連携確定）
+### 4.2.1a Vanilla/MO既存作物の生育期間整合（2026-10-19 Grains再統合確定）
 
-**作者決定：Grainsの生育日数のバランスを基準に、バニラ・MOの既存作物の相対的な生育期間を揃えるための任意姉妹Modが [AMJ Crop Growth Balance](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Crop-Growth-Balance) である。** CCTOの耐寒性・枯死温度調整とは別目的。Grains側は七穀（アワ9・ヒエ7・キビ4・ソバ4・大麦10・小麦12・稲5）と加工・収穫量・栽培条件、Vanilla `Plant_Rice` とMO小麦の統合だけを所有する。Crop Growth Balance側がバニラ6作物とMO導入時の7作物の `growDays` だけを変更し、Grainsの作物をパッチしない。
+**作者決定:** 未公開の独立Crop Growth Balance（CGB）をGrainsへ統合し、バニラ6作物とMO7作物の生育日数をGrainsが所有する。**CGBは単独公開せず、同時導入も不要**。GrainsのMod名とpackageId `sucro.ancientmedievaljapan.core`、七穀および食材のDef識別子は維持する。対象は穀物だけでなく、既存農作物のゲーム内生育期間調整に拡大する。
 
-両Modは技術的には独立して単独導入可能。ただし**目的はGrainsの数値基準との整合性**であり、現実の暦日への厳密な換算、全作物の収量・栄養・労働効率の均等化は採用しない。2026-10-15のMod分離時点ではGrainsの作物値を変更していなかったが、2026-10-19の実プレイを踏まえた雑穀数値改訂は上記§4.2.1に反映した。CGB所有の既存作物13件はこの変更で自動上書きしない。元の広域パッチは旧Grains PR #99から所有分離PR #101で削除済み。Crop Growth Balanceの正式仕様・実装正本はそのリポジトリの `Docs/Design.md` とXML。
+| 供給元 | 作物Def | growDays |
+|---|---|---:|
+| Vanilla | `Plant_Potato` | 6 |
+| Vanilla | `Plant_Corn` | 13 |
+| Vanilla | `Plant_Strawberry` | 6 |
+| Vanilla | `Plant_Cotton` | 10 |
+| Vanilla | `Plant_Hops` | 7 |
+| Vanilla | `Plant_Smokeleaf` | 9 |
+| MO（任意） | `DankPyon_Plant_Onions` | 8 |
+| MO（任意） | `DankPyon_Plant_Lentils` | 8 |
+| MO（任意） | `DankPyon_Plant_Garlic` | 10 |
+| MO（任意） | `DankPyon_Plant_Flax` | 9 |
+| MO（任意） | `DankPyon_Plant_Sugarcane` | 12 |
+| MO（任意） | `DankPyon_Plant_Carrots` | 6 |
+| MO（任意） | `DankPyon_Plant_Tomatoes` | 7 |
 
-**GitHub Actions配布方針（2026-10-15）：** GrainsとCrop Growth Balanceを含む今後のAMJ各ModのWorkshopアップロードでは**YADAを使わずGitHub Actionsに統一**する。実際の配布物をGitHub Actionsで許可リストにより構築し、その成果物とSHAを検証した上で、明示的な手動公開操作による保護されたSteamCMD／Steamworks経路から送信する。既存のGrains `.rimignore` は歴史的なYADAフィルタの静的検査資料であり、**Actions配布物の抽出に用いない**。同一Modの著者アカウント、Workshop ID、公開状態、バージョンおよびタグは独立の確認対象。Grains用の実Steamアップロードworkflow／対象アイテムの確定は未完了。push/PRで勝手にアップロードしない。
+**実装正本:** `Patches/ExistingCropGrowthBalance.xml`（バニラ6件）と`Compatibility/MedievalOverhaul/Patches/MO_ExistingCropGrowthBalance.xml`（MO7件+レンズ豆技能）。既存の`loadFolders.xml`によりMO非導入時にMO固有Defを読み込まず、Baseだけでも6件を調整する。異なる相対XML名を維持してLoadFoldersの上書きを避ける。
 
-**公開時期の条件（作者確定）：Crop Growth Balanceを単独先行公開せず、Grainsの初回一般公開と同時に公開する。** CGBのための別個の長期実プレイは求めず、Grainsの実プレイでGrains作物を優先して確認する。CGBの作物Def反映・代表播種/成長/収穫・Grains共存は既存のLinux 1.6 Pickle実機検証済み。MO原本由来FMOD音声ERROR各2件が残るため、ゲーム全体の厳格ERROR0を4/4 PASSと表示しない。CGBの収穫量・栄養・全季節・Pawn作業時間の追加精密監査は同時公開の条件ではない。**Grains本体の加工・料理・画像・セーブ等の独自公開条件は維持**し、それらの未完了をCGBの作物検証へ転嫁しない。Workshop/2gameでの公開実行は両リポジトリが準備できた段階で別途実施する。
+**レンズ豆（作者承認済み）:** MO 1.6.2.2の`DankPyon_Plant_Lentils`は元の播種スキル8が他の作物より高すぎるため**スキル2**へ変更。以前Japanizationにあった同設定を移管し、二重Patchを廃止する。**生育日数8・収穫数10・肥沃度等は暫定据え置き**。要求スキルだけの変更で収量バランスが確定したとは扱わず、七穀・バニラ・MO作物の生育日数・収量・スキルを同時に再評価する。
 
-アワ・ヒエ・キビについて、プレイヤーが「どの土地・気温・残り生育期間ならどれを植えるか」を判断できるよう、肥沃度・温度のゲーム内式を含む比較資料を [`Docs/Balance/Crops/Millet_Cultivation_Balance.md`](Balance/Crops/Millet_Cultivation_Balance.md) に置く。そこに掲載する数値・グラフは**現実の農業値ではなく、史実・農学的特徴を参考にAMJへ落とし込んだゲーム内バランス値**である。
+**維持:** Grainsの七穀（アワ9/ヒエ7/キビ4/ソバ4/大麦10/小麦12/稲5）、米の播種スキル4、穀束30日→殻付き穀物120日の保存性、CCTOの低温・枯死・休眠、他のMO独自研究・加工。肥沃度を生育速度から収量へ移す将来機構と200%上限は§4.3.1が所有し、本統合ではまだ実装しない。
 
-補足:
-- 収量列は、穀束・殻付き中間物を経由する場合も含めた**最終的な可食穀粒量のバランス基準**であり、PlantDefの未脱穀物 `harvestYield` をそのままこの値にするという意味ではない。未脱穀物の収量とRecipe変換比率は、この最終基準値を再現するよう実装時に決める。
-- アワ・ヒエ・キビは栽培中のみ別PlantDefとし、収穫後は共通の「雑穀束」→殻付き雑穀→「雑穀」へ統合するため、収穫後の性能差を残さない。
-- **現行MO必須版では**MO 1.6の `DankPyon_Plant_Wheat` を利用する。Grains移行後はBaseにフォールバック小麦Plant/穀束を持ち、MO併用時だけMO小麦を可視供給元として利用する。growDays 12、収量28、fertilitySensitivity 0.9、AMJ基準 `fertilityMin=0.7` の役割は両プロファイルで維持する。
-- CCTO固定枯死温度は**CCTO導入時のAMJ互換値**である。AMJ CoreはCCTOを内部実装として複製せず、CCTOの `ColdToleranceExtension` を条件付き互換Patchから利用する。小麦はCCTOのMO 1.6バランス（最低成長0℃・固定枯死-6℃）をそのまま使う。
-- 2026-10-04の再監査では、低温で成長できる性質と凍霜害への耐性を分離して評価した。キビは-3℃を維持、アワは-4℃から-3℃、ヒエは-4℃から-2℃へ改定した。詳細な根拠・確度は `Docs/Balance/Crops/ColdTolerance.md` を正本とする。
-- CCTOの固定枯死判定は閾値未満（strict `<`）で発生するため、表の温度ちょうどでは生存する。
-
-#### 穀物の保存期間・一次加工
-
-Stage Aの穀物は、加工前後の保存性も作物選択と備蓄判断に使う。共通基準は **未脱穀穀束30日 → 殻付き穀粒120日 → 可食穀粒90日 → 粉60日** とし、ソバと小麦に下記の例外を持たせる。束は早期脱穀が必要で、籾などの殻付き穀粒は長期備蓄に向く。日数は乾燥と気候差を省略したゲーム内バランス値であり、現実の保存期間を一律に断定するものではない。
-
-| 作物 | 一次加工経路 | 保存期間 | 収穫直後の生食 |
-|---|---|---|---|
-| アワ / ヒエ / キビ | 雑穀束 → 脱穀 → 殻付き雑穀 → 殻取り → 雑穀 | 30日 → 120日 → 90日 | 不可。可食化は殻取り後 |
-| 大麦 | 穀束 → 脱穀 → 殻付き大麦 → 殻取り → 大麦穀粒 | 30日 → 120日 → 90日 | 不可。可食化は殻取り後 |
-| 小麦（MO） | 小麦束 → 脱穀 → 小麦穀粒 + `DankPyon_Straw` → 必要に応じてMO製粉 | 30日 → 90日。小麦粉は60日 | 不可。小麦は殻付き中間状態を省略 |
-| ソバ | 穀束 → 脱穀 → 殻付きソバ → 殻取り → ソバ穀粒 | 30日 → 120日 → 60日。実装済みの蕎麦粉は60日 | 不可。可食化は殻取り後 |
-
-- 雑穀粉 `AMJC_MilletFlour` は実装済み。保存期間60日で、雑穀団子に使用する。
-- 蕎麦粉 `AMJC_BuckwheatFlour` はそばがきとともに実装済み。保存期間60日。蕎麦切りは初期範囲外とする。
-- 大麦粉は穀粉全般を扱う方針により本番ThingDef・製粉Recipeと最低限料理をソース実装済み（実機未検証）。既存の可食大麦穀粒・加工経路・栄養は変更しない。
-- Straw副産物は製粉ではなく脱穀段階へ統一する。ただし `DankPyon_Straw` はMO併用時だけ出力し、BaseではStraw ThingDefを所有しない。
-- **MO併用時は** `DankPyon_Plant_Wheat` / `DankPyon_RawWheat` を可視供給元として再利用し、`DankPyon_RawWheat` を未脱穀の小麦束として `DankPyon_Cereal` から外す。脱穀後の `AMJC_Wheat` だけをMO製粉へ接続する。BaseではGrains所有の小麦Plant/穀束を同じ `AMJC_Wheat` へ合流させる。
-- MO 1.6の**上流原本**では小麦収穫時の `Plant_SecondaryDrop` と製粉Recipe3種でHayが生じる。GrainsのMO条件付き `MedievalOverhaul_StageA_Wheat.xml` は収穫時副産物拡張を除去し、`DankPyon_CraftFlour_Manual` / `DankPyon_CraftFlour` / `DankPyon_CraftFlourBulk` の `products/Hay` を削除する。したがって**Grains適用後の製粉成果物は小麦粉のみ**であり、`DankPyon_Straw` はAMJ脱穀Recipeでのみ生じる。上流MOのHay存在とGrains適用後の製粉仕様を混同しない。
-- MO `DankPyon_RawWheat` は原本120日から、Base `AMJC_RawWheat` と同じ束30日へ条件付きPatchで変更する。脱穀後の `AMJC_Wheat` は90日、MO `DankPyon_Flour` は60日。
-
-この確定表は「一種類の最適作物」を作らないための基準である。短期・痩せ地はソバ/キビ、標準～肥沃な畑で収穫回数を抑える雑穀はアワ、寒冷側はヒエ/大麦、肥沃地で長期高収量・粉食は小麦、という役割差を維持する。
+**検証・リリース:** CGB単体での旧1.6 Native検証は歴史的参考。統合後のGrains`main`のロード結果や播種Jobを実証したものではない。今後はGrainsの単一Workshop/2game候補を使用し、独立CGBの公開はしない。旧CGBリポジトリは資料・Git履歴を残すが配布対象ではない。
 
 ### 4.2.2 共通の稲（Vanilla Rice）とV1の畑地栽培
 
