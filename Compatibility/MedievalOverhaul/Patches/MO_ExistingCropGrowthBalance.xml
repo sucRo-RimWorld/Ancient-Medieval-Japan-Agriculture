@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Former CGB seven-crop MO growDays, now Grains-owned. Keep unique path to avoid LoadFolders root shadowing. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Onions"]/plant/growDays</xpath>
+    <value><growDays>8</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Lentils"]/plant/growDays</xpath>
+    <value><growDays>8</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Garlic"]/plant/growDays</xpath>
+    <value><growDays>10</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Flax"]/plant/growDays</xpath>
+    <value><growDays>9</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Sugarcane"]/plant/growDays</xpath>
+    <value><growDays>12</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Carrots"]/plant/growDays</xpath>
+    <value><growDays>6</growDays></value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Tomatoes"]/plant/growDays</xpath>
+    <value><growDays>7</growDays></value>
+  </Operation>
+  <!-- Lentil sowing difficulty, formerly Japanization-owned: combined with
+       the same MO crop's growth balance, and never loaded without MO. -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Lentils"]/plant/sowMinSkill</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Lentils"]/plant/sowMinSkill</xpath>
+      <value><sowMinSkill>2</sowMinSkill></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Lentils"]/plant</xpath>
+      <value><sowMinSkill>2</sowMinSkill></value>
+    </nomatch>
+  </Operation>
+</Patch>

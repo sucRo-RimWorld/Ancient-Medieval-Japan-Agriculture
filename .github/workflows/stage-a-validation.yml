@@ -61,7 +61,7 @@ jobs:
       - name: Validate upland rice and seven-crop choice
         run: python Tests/Production/test_upland_rice.py
 
-      - name: Verify separate crop growth Mod ownership
+      - name: Verify integrated Vanilla/MO crop growth ownership
         run: python Tests/Production/test_crop_growth_ownership.py
 
       - name: Audit seven-grain harvest-to-meal balance

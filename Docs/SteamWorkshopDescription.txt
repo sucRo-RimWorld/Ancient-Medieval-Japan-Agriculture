@@ -6,6 +6,7 @@
 [*]Soba (buckwheat), barley, wheat and the shared rice plant for ordinary fields (no paddy mechanics)
 [*]Threshing, hulling and four grain flours (wheat, buckwheat, millet and barley); existing Vanilla stoves also handle processing while dedicated equipment is being developed
 [*]Gameplay-oriented differences between grains rather than interchangeable crop statistics
+[*]Includes the former Crop Growth Balance's six Vanilla and seven optional MO crop growth periods; MO lentils require Plants skill 2. No separate Crop Growth Balance Mod needed.
 [/list]
 
 This is a focused agriculture module, not an all-in-one AMJ Core. Rice paddies, fermentation and the broader Japanese settlement systems belong to other independent AMJ projects.
@@ -44,6 +45,7 @@ Documentation: [url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Gra
 [*]ソバ・大麦・小麦と、共通の「稲」を畑地で栽培する（水田機能は含まない）
 [*]脱穀・殻取り・4種（小麦・蕎麦・雑穀・大麦）の穀粉への製粉ができる。暫定的に既存調理台も加工に利用する
 [*]単純な上位互換ではなく、土地や季節に応じて穀物を植え分ける農業
+[*]旧Crop Growth Balanceのバニラ6種・MO7種の生育日数調整も統合。MOレンズ豆の播種スキルは2。別のCrop Growth Balanceは不要
 [/list]
 
 AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う独立した構成要素です。水田稲作・発酵・集落生活のほかの仕組みは別のAMJ Modで扱います。
