@@ -1060,8 +1060,9 @@ namespace AncientMedievalJapanCore.E2E
             string layout = Path.Combine(folder, "equipment-map-layout.txt");
             Map map = null;
             var placed = new List<Thing>();
-            IntVec3 focus = new IntVec3(21, 0, 25);
+            IntVec3 focus = new IntVec3(21, 0, 35);
             var inventory = new StringBuilder();
+            var originalTerrain = new Dictionary<IntVec3, TerrainDef>();
             Exception error = null;
             try
             {
@@ -1070,6 +1071,22 @@ namespace AncientMedievalJapanCore.E2E
                     map = Find.CurrentMap;
                     ctx.Require(map != null && map.Size.x == 50 && map.Size.z == 50,
                         "Equipment photo requires the existing 50x50 isolated Quickstart map.");
+                    // Remove test-map-only plants, rocks and scattered supplies
+                    // from a modest staging rectangle. No player save is involved.
+                    int cleared = 0;
+                    foreach (IntVec3 cell in new CellRect(14, 30, 21, 11).Cells)
+                    {
+                        ctx.Require(!cell.GetThingList(map).Any(t => t is Pawn || t is Building),
+                            "Temporary camera framing intersects an existing structure/pawn: " + cell);
+                        originalTerrain.Add(cell, map.terrainGrid.TerrainAt(cell));
+                        foreach (Thing item in cell.GetThingList(map).ToList())
+                        {
+                            item.Destroy(DestroyMode.Vanish);
+                            cleared++;
+                        }
+                        map.terrainGrid.SetTerrain(cell, TerrainDefOf.Soil);
+                    }
+                    inventory.AppendLine("disposable_frame=soil cleared_things=" + cleared);
                     string[] ids = {
                         "AMJC_GrainProcessingSpot", "AMJC_GrainProcessingTable",
                         "AMJC_ManualMillstone"
@@ -1083,7 +1100,7 @@ namespace AncientMedievalJapanCore.E2E
                             ids[row] + " actual map fixture must stay 1x1.");
                         for (int column = 0; column < directions.Length; column++)
                         {
-                            IntVec3 cell = new IntVec3(16 + column * 3, 0, 22 + row * 3);
+                            IntVec3 cell = new IntVec3(16 + column * 3, 0, 32 + row * 3);
                             ctx.Require(cell.InBounds(map), "Equipment placement outside test map.");
                             ctx.Require(!cell.GetThingList(map).Any(t => t is Building || t is Pawn),
                                 "Equipment screenshot cell obstructed: " + cell);
@@ -1099,6 +1116,17 @@ namespace AncientMedievalJapanCore.E2E
                                 + " cell=" + cell + " spawned=" + building.Spawned);
                         }
                     }
+                    // Stage one reference item from the original Vanilla equipment
+                    // family to make relative sprite scale/outline inspectable.
+                    ThingDef referenceDef = DefDatabase<ThingDef>.GetNamed("FueledStove");
+                    ctx.Require(referenceDef != null, "Vanilla stove graphic reference missing");
+                    Thing stove = ThingMaker.MakeThing(referenceDef,
+                        referenceDef.MadeFromStuff ? GenStuff.DefaultStuffFor(referenceDef) : null);
+                    stove.SetFaction(Faction.OfPlayer);
+                    placed.Add(stove);
+                    GenSpawn.Spawn(stove, new IntVec3(30, 0, 35), map, Rot4.North);
+                    ctx.Assert(stove.Spawned, "Vanilla reference equipment was not spawned");
+                    inventory.AppendLine("VanillaReference FueledStove cell=" + stove.Position);
                     // Stage A defaults to an 89x50-cell distant overview, too small
                     // for sprite review. Use stock Vanilla camera zoom within its
                     // supported 11-60 range; never use Camera+ or resize textures.
@@ -1134,6 +1162,9 @@ namespace AncientMedievalJapanCore.E2E
             {
                 foreach (Thing building in placed)
                     if (!building.Destroyed) building.Destroy(DestroyMode.Vanish);
+                if (map != null)
+                    foreach (KeyValuePair<IntVec3, TerrainDef> cell in originalTerrain)
+                        map.terrainGrid.SetTerrain(cell.Key, cell.Value);
             });
             if (error != null) throw error;
         }
