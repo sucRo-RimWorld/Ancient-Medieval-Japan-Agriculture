@@ -1,13 +1,10 @@
-# White-rice illustration candidates — source-preserving 256px previews
+# White rice image candidates — same original wooden bowls
 
-These two images are NOT approved sources or production Textures. They are visual proofs derived mechanically from the existing accepted game textures, since the high-resolution original PNGs are not available for programmatic transfer in this session.
+**Candidate only.** These derived 256×256 PNGs are not final accepted high-resolution sources or shipped production textures. The two existing wooden bowls remain unchanged; each original retains its own distinct design.
 
-Original 256px baselines, byte-for-byte unchanged:
-- Meal: `Textures/Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal_a.png` (Git blob `dcd01588db4585504551d1ec88358cca5d33ee45`)
-- Porridge: `Textures/Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge_a.png` (Git blob `3c76850ed8e2728c744852de023ca8e8e8704602`)
+- White rice meal: `Art/Candidates/WhiteRice/WhiteRiceMeal_256px_preview.png` — original food texture `Textures/Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal_a.png`, original blob `dcd01588db4585504551d1ec88358cca5d33ee45`.
+- White rice porridge: `Art/Candidates/WhiteRice/WhiteRicePorridge_256px_preview.png` — original food texture `Textures/Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge_a.png`, original blob `3c76850ed8e2728c744852de023ca8e8e8704602`.
 
-The exterior wooden vessels are inherited from the two separate actual originals. Only selected pixels inside the food areas are neutralized from yellow/beige to white; dimensions 256x256 and transparency unchanged. There is NO new pottery, no bowl redraw, and no change to existing originals. A pixel diff confirms zero changes outside their respective inner food-area masks and zero alpha differences.
+2026-10-20 revision: repaired warm/yellow residual grains in the existing 256px food-area previews without image-model generation. Food-zone-only, deterministic RGB neutralization: meal 1633 further pixels; porridge 107 further pixels. Exact old→new decoded RGBA diff outside the food elliptical masks: **zero** in each; alpha differences: **zero**. Previously recorded original→candidate diff was also restricted to those masks, so the bowls remain pixel-identical to the original production images outside the food masks. Corrected outputs round-trip decode to identical 256×256 RGBA values.
 
-Candidate-only files in this folder: `Art/Candidates/WhiteRice/WhiteRiceMeal_256px_preview.png`, `Art/Candidates/WhiteRice/WhiteRicePorridge_256px_preview.png`.
-
-**Do not promote these previews to `Art/Sources` or `Textures` as final without author acceptance.** Production should derive from accepted high-resolution masters, and must pass owner PNG integrity tests. The 256px proof-of-concept is not an accepted replacement for that process.
+Do not conflate this candidate inspection with accepted source-art transfer; existing high-resolution masters in `Art/Sources` are not modified. Before promotion, obtain author visual acceptance, use the applicable high-res-source export process, and run PNG integrity validation on committed production pixels. No Steam publishing or live-game test authorization.
