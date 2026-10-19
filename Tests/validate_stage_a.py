@@ -142,9 +142,9 @@ def assert_crop(def_name, grow_days, harvest_yield, fertility_min, fertility_sen
     assert text(crop, "plant/harvestedThingDef") == harvested_def
     return crop
 
-awa = assert_crop("AMJC_Plant_FoxtailMillet_Awa", 6, 13, 0.5, 0.4, 8, 42, 18, 32, 0, "AMJC_RawMillet")
-hie = assert_crop("AMJC_Plant_BarnyardMillet_Hie", 6, 12, 0.5, 0.5, 5, 40, 15, 30, 0, "AMJC_RawMillet")
-kibi = assert_crop("AMJC_Plant_ProsoMillet_Kibi", 5, 11, 0.5, 0.3, 8, 42, 18, 32, 0, "AMJC_RawMillet")
+awa = assert_crop("AMJC_Plant_FoxtailMillet_Awa", 9, 27, 0.5, 0.4, 8, 42, 18, 32, 0, "AMJC_RawMillet")
+hie = assert_crop("AMJC_Plant_BarnyardMillet_Hie", 7, 18, 0.5, 0.5, 5, 40, 15, 30, 0, "AMJC_RawMillet")
+kibi = assert_crop("AMJC_Plant_ProsoMillet_Kibi", 4, 9, 0.5, 0.3, 8, 42, 18, 32, 0, "AMJC_RawMillet")
 soba = assert_crop("AMJC_Plant_Buckwheat_Soba", 4, 8, 0.4, 0.25, 5, 35, 12, 25, 1, "AMJC_RawBuckwheat")
 barley = assert_crop("AMJC_Plant_Barley", 10, 22, 0.5, 0.6, 0, 35, 5, 22, 2, "AMJC_RawBarley")
 assert barley.find("plant/sowResearchPrerequisites") is None, "AMJG barley must not regain the MO research gate"
