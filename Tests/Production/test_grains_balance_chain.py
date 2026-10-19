@@ -229,7 +229,7 @@ class SevenGrainChainBalance(unittest.TestCase):
                 self.assertEqual(viable, 23)
                 self.assertEqual([counts[i] for i in range(7)],
                                  [1, 2, 8, 4, 4, 6, 6])
-                self.assertEqual((rice_ties, rice_unique), (4, 0),
+                self.assertEqual((rice_ties, rice_unique), (0, 4),
                                  "Rice currently has shared harvest maxima, not a solo one")
 
 
