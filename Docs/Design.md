@@ -921,6 +921,9 @@ Grainsが対象とする穀粉は**雑穀粉・蕎麦粉・大麦粉・小麦粉
 
 ### 5.3 完成料理
 
+**2026-10-19 共通料理の画像（実ゲーム確認待ち）:** 作者は飯 `AMJC_MixedGrainMeal`、粥 `AMJC_MixedGrainPorridge`、粉食 `AMJC_MixedFlourFood` の生成画像3点を、通常ズームでの実ゲーム確認用として暫定採用。原画は `Art/Sources/Things/Item/Meal/<DefName>/<DefName>.png` に無加工で保存し、対応する256×256透過PNGは `Textures/Things/Item/Meal/<DefName>/<DefName>_a,b,c.png` に同一内容で書き出す。各ThingDefの`graphicData/texPath`のみ固有パスへ切替え、`Graphic_StackCount`、DefName、Recipe、素材条件、栄養、心情、保存期間は維持。実ロード時のBadTex・通常ズームの見た目・3品の識別性は未確認。確認前に公開・正式画像完成と主張しない。
+
+
 **2026-10-13 五粉の食用途（ソース実装・実機未検証）:** 大麦粉を湯で煮た `AMJC_BarleyFlourGruel`（麦粉粥）と、米粉を練って加熱する `AMJC_RiceFlourDumplings`（米粉団子）を追加。特定地域・年代の正式な伝統料理名を再現したという主張ではなく、粉の用途を確保する簡素なゲーム的抽象化。はったいは麦を**先に焙煎してから製粉**する別工程であり、これを麦粉粥と同一視しない。両者とも研究不要、既存の調理設備、粉Nutrition 0.5→料理0.9、腐敗2.5日、Mood +2、workAmount 300を初期契約とする。日本語の史料説明は `Docs/LocalizationHistoricalReview.md §12–13`、史実・名称の最終校閲と四プロファイル実機検証は別途必要。
 
 最初の公開Alphaでは専用料理を最小限にする。

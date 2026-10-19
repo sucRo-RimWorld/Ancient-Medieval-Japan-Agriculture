@@ -42,6 +42,15 @@ The complete Core source-recovery inventory is [Inventory.md](Inventory.md): 19 
 
 ## Current authoritative sources
 
+### 2026-10-19 common cooked-food art (provisional until normal-zoom review)
+
+- `Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal.png` — 飯, accepted for in-game check.
+- `Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge.png` — 粥, temporarily accepted for in-game check.
+- `Things/Item/Meal/AMJC_MixedFlourFood/AMJC_MixedFlourFood.png` — 粉食, temporarily accepted for in-game check.
+
+Each original is preserved byte-for-byte. Production PNG families are 256×256 RGBA under matching `Textures/` paths. Formal final-game visual acceptance is pending.
+
+
 - `Workshop/GrainsV1FoodComparison_EN-JA.png` — exact 1672×941 approved V1 bilingual meal comparison PNG, also copied byte-identically to `Docs/Media/GrainsV1FoodComparison_EN-JA.png` for Workshop BBCode hosting. No new or invented food icons. Git blob `18957f3c0d7f4283ab6b3cafd8a50891087db466`.
 
 - `Shared/Containers/AMJ_Masu_Empty_Master.png`
