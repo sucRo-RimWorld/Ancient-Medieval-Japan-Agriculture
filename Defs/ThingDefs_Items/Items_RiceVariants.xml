@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="PlantFoodRawBase">
+    <defName>AMJC_WhiteRice</defName>
+    <label>white rice</label>
+    <description>Carefully polished rice with much of the bran removed. Extra labour and a loss of grain yield make it a prestigious food.</description>
+    <!-- Provisional art: dedicated white rice texture not yet adopted. -->
+    <graphicData><texPath>Things/Item/Resource/AMJC_Rice/Rice</texPath><graphicClass>Graphic_StackCount</graphicClass></graphicData>
+    <statBases><Nutrition>0.05</Nutrition><MarketValue>1.9</MarketValue></statBases>
+    <ingestible><foodType>VegetableOrFruit</foodType><tasteThought>AteRawFood</tasteThought></ingestible>
+    <comps><li Class="CompProperties_Rottable"><daysToRotStart>90</daysToRotStart><rotDestroys>true</rotDestroys></li></comps>
+    <thingCategories Inherit="False"><li>AMJC_GrainKernels</li></thingCategories>
+  </ThingDef>
+</Defs>
