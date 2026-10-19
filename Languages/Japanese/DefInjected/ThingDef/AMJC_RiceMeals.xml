@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AMJC_WhiteRice.label>白米</AMJC_WhiteRice.label>
+  <AMJC_WhiteRice.description>白米（はくまい）。玄米より糠を多く取り除いた米。精白には追加の手間と歩留まりの減少があり、古代・中世では贅沢な食材だった。</AMJC_WhiteRice.description>
+  <AMJC_RiceMeal.label>米飯</AMJC_RiceMeal.label>
+  <AMJC_RiceMeal.description>玄米・低精白米のみを炊いた飯。麦や雑穀を混ぜない。</AMJC_RiceMeal.description>
+  <AMJC_WhiteRiceMeal.label>白飯</AMJC_WhiteRiceMeal.label>
+  <AMJC_WhiteRiceMeal.description>丁寧に精白した白米だけの飯。特に古代・中世の庶民にとって贅沢な食事だった。</AMJC_WhiteRiceMeal.description>
+  <AMJC_RicePorridge.label>米粥</AMJC_RicePorridge.label>
+  <AMJC_RicePorridge.description>玄米・低精白米のみを水で柔らかく煮た粥。</AMJC_RicePorridge.description>
+  <AMJC_WhiteRicePorridge.label>白粥</AMJC_WhiteRicePorridge.label>
+  <AMJC_WhiteRicePorridge.description>丁寧に精白した白米のみを煮た粥。</AMJC_WhiteRicePorridge.description>
+</LanguageData>
