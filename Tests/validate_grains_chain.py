@@ -23,6 +23,53 @@ SHARED_NAMES = {
 FALLBACK_NAMES = {'AMJC_Plant_Wheat','AMJC_RawWheat','AMJC_WheatFlour','AMJC_ManualMillstone','AMJC_MillWheat','AMJC_DoGrainsMilling'}
 
 
+RICE_VARIANTS = {
+    'AMJC_WhiteRice', 'AMJC_RiceMeal', 'AMJC_WhiteRiceMeal',
+    'AMJC_RicePorridge', 'AMJC_WhiteRicePorridge',
+    'AMJC_AteWhiteRiceMeal', 'AMJC_AteWhiteRicePorridge',
+    'AMJC_PolishWhiteRiceBulk',
+    'AMJC_CookRiceMeal', 'AMJC_CookRiceMealBulk',
+    'AMJC_CookWhiteRiceMeal', 'AMJC_CookWhiteRiceMealBulk',
+    'AMJC_CookRicePorridge', 'AMJC_CookRicePorridgeBulk',
+    'AMJC_CookWhiteRicePorridge', 'AMJC_CookWhiteRicePorridgeBulk'
+}
+
+
+def validate_rice_variants(defs):
+    """Assert the authored rice Bill choice and rice-only meal contracts."""
+    assert RICE_VARIANTS <= defs.keys(), 'Missing brown/white rice variants'
+    brown = defs['AMJC_HullRiceBulk']
+    assert brown.findtext('ingredients/li/count') == '10'
+    assert brown.findtext('products/RawRice') == '10'
+    assert brown.findtext('workAmount') == '80'
+    white = defs['AMJC_PolishWhiteRiceBulk']
+    assert white.findtext('ingredients/li/filter/thingDefs/li') == 'AMJC_RiceInHull'
+    assert white.findtext('ingredients/li/count') == '10'
+    assert white.findtext('products/AMJC_WhiteRice') == '8'
+    assert white.findtext('workAmount') == '240'
+    assert white.findtext('targetCountAdjustment') == '8'
+    assert defs['AMJC_WhiteRice'].findtext('statBases/Nutrition') == '0.05'
+    for suffix, grain, work in (
+            ('RiceMeal', 'RawRice', 220),
+            ('WhiteRiceMeal', 'AMJC_WhiteRice', 220),
+            ('RicePorridge', 'RawRice', 180),
+            ('WhiteRicePorridge', 'AMJC_WhiteRice', 180)):
+        for bulk in (False, True):
+            recipe = defs['AMJC_Cook' + suffix + ('Bulk' if bulk else '')]
+            n = 4 if bulk else 1
+            assert recipe.findtext('ingredients/li/filter/thingDefs/li') == grain
+            assert recipe.findtext('fixedIngredientFilter/thingDefs/li') == grain
+            assert recipe.findtext('allowMixingIngredients') == 'false'
+            assert float(recipe.findtext('ingredients/li/count')) == (2 if bulk else 0.5)
+            assert int(recipe.findtext('products/AMJC_' + suffix)) == n
+            assert int(recipe.findtext('workAmount')) == work * n
+            assert defs['AMJC_' + suffix].findtext('statBases/Nutrition') == '0.9'
+    assert defs['AMJC_WhiteRiceMeal'].findtext('ingestible/tasteThought') == 'AMJC_AteWhiteRiceMeal'
+    assert defs['AMJC_AteWhiteRiceMeal'].findtext('stages/li/baseMoodEffect') == '3'
+    assert defs['AMJC_WhiteRicePorridge'].findtext('ingestible/tasteThought') == 'AMJC_AteWhiteRicePorridge'
+    assert defs['AMJC_AteWhiteRicePorridge'].findtext('stages/li/baseMoodEffect') == '1'
+
+
 def validate_ccto_detection(root=ROOT):
     accepted = {'Crop Cold Tolerance Overhaul',
                 'Crop Cold Tolerance Overhaul（作物耐寒性オーバーホール）'}
@@ -42,6 +89,7 @@ def validate(root=ROOT):
         defs = {n.findtext('defName'): n for n in doc if n.findtext('defName')}
         assert len(defs) == len([n for n in doc if n.findtext('defName')]), 'Duplicate DefName'
         assert SHARED_NAMES <= defs.keys()
+        validate_rice_variants(defs)
         if profile == 'mo':
             assert FALLBACK_NAMES.isdisjoint(defs), 'Fallback wheat/flour/mill leaked into MO'
         else:
