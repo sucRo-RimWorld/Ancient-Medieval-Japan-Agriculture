@@ -1063,6 +1063,7 @@ namespace AncientMedievalJapanCore.E2E
             IntVec3 focus = new IntVec3(21, 0, 35);
             var inventory = new StringBuilder();
             var originalTerrain = new Dictionary<IntVec3, TerrainDef>();
+            var parkedPawns = new Dictionary<Pawn, IntVec3>();
             Exception error = null;
             try
             {
@@ -1076,13 +1077,25 @@ namespace AncientMedievalJapanCore.E2E
                     int cleared = 0;
                     foreach (IntVec3 cell in new CellRect(14, 30, 21, 11).Cells)
                     {
-                        ctx.Require(!cell.GetThingList(map).Any(t => t is Pawn || t is Building),
-                            "Temporary camera framing intersects an existing structure/pawn: " + cell);
                         originalTerrain.Add(cell, map.terrainGrid.TerrainAt(cell));
                         foreach (Thing item in cell.GetThingList(map).ToList())
                         {
-                            item.Destroy(DestroyMode.Vanish);
-                            cleared++;
+                            Pawn pawn = item as Pawn;
+                            if (pawn != null)
+                            {
+                                if (!parkedPawns.ContainsKey(pawn))
+                                {
+                                    parkedPawns.Add(pawn, pawn.Position);
+                                    pawn.DeSpawn();
+                                }
+                            }
+                            else
+                            {
+                                // Wild plants, rocks and pre-staged objects in this
+                                // disposable game are not part of a user save.
+                                item.Destroy(DestroyMode.Vanish);
+                                cleared++;
+                            }
                         }
                         map.terrainGrid.SetTerrain(cell, TerrainDefOf.Soil);
                     }
@@ -1165,6 +1178,10 @@ namespace AncientMedievalJapanCore.E2E
                 if (map != null)
                     foreach (KeyValuePair<IntVec3, TerrainDef> cell in originalTerrain)
                         map.terrainGrid.SetTerrain(cell.Key, cell.Value);
+                if (map != null)
+                    foreach (KeyValuePair<Pawn, IntVec3> pawn in parkedPawns)
+                        if (!pawn.Key.Destroyed && !pawn.Key.Spawned)
+                            GenSpawn.Spawn(pawn.Key, pawn.Value, map);
             });
             if (error != null) throw error;
         }
