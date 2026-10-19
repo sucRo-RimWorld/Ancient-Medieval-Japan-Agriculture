@@ -441,7 +441,10 @@ assert text(base_mill, "graphicData/graphicClass") == "Graphic_Multi"
 assert text(base_mill, "graphicData/drawSize") == "(1,1)"
 assert text(base_mill, "graphicData/drawRotated") == "false"
 assert text(base_mill, "size") == "(1,1)"
-assert num(base_mill, "costList/BlocksGranite") == 30
+assert text(base_mill, "stuffCategories/li") == "Stony"
+assert num(base_mill, "costStuffCount") == 30
+assert base_mill.find("costList/BlocksGranite") is None
+assert num(base_mill, "costList/WoodLog") == 20
 assert num(base_mill, "costList/WoodLog") == 20
 mill_files = [ROOT / "Textures" / f"{mill_path}_{direction}.png"
               for direction in ("north", "east", "south", "west")]
@@ -450,6 +453,14 @@ for mill_file in mill_files:
     validate_png(mill_file)
 assert all(p.read_bytes() == mill_files[0].read_bytes() for p in mill_files), (
     "all four manual-millstone directions must use the same accepted PNG bytes"
+)
+mask_files = [ROOT / "Textures" / f"{mill_path}_{direction}m.png"
+              for direction in ("north", "east", "south", "west")]
+for mask_file in mask_files:
+    assert mask_file.is_file(), f"missing Stony mask: {mask_file}"
+    validate_png(mask_file)
+assert all(p.read_bytes() == mask_files[0].read_bytes() for p in mask_files), (
+    "all four manual-millstone mask directions must be byte-identical"
 )
 
 def recipe(name):
