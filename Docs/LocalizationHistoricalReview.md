@@ -180,7 +180,7 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 
 ## 10. 陸稲の新加工語彙（2026-10-08）
 
-承認済みの稲束／籾／脱穀／籾摺りを基礎とし、2026-10-13の工程別解説方針により、栽培・陸稲／水稲の区別は§7/8、古代中世の租税・年貢・貨幣は稲束、籾摺り・玄米・白米・ビタミンB1の違いは籾、江戸患い・白米食・高木兼寛・鈴木梅太郎は食用米 `RawRice` に分ける。英語は日本語の意味に対応させ、改行はRimWorldの `\n\n` を使用する。`RawRice`のDefName／ゲーム値は維持し、説明のみ英語Patchと日本語DefInjectedへ追加する。ゲーム内文言にはV1・未実装機能・別Modの担当を記さない。
+承認済みの稲束／籾／脱穀／籾摺りを基礎とし、2026-10-13の工程別解説方針により、栽培・陸稲／水稲の区別は§7/8、古代中世の租税・年貢・貨幣は稲束、籾摺り・玄米・白米・ビタミンB1の違いは籾、江戸患い・白米食・高木兼寛・鈴木梅太郎は既存の食用米 `RawRice` の史実補足にも保持する。英語は日本語の意味に対応させ、改行はRimWorldの `\n\n` を使用する。`RawRice`のDefName／主要ゲーム値は維持し、2026-10-19に表示名を玄米へ修正し白米 `AMJC_WhiteRice` を別アイテムとして追加した。米を材料とする料理も専用の米飯・白飯・米粥・白粥に分離した。ゲーム内文言にはV1・未実装機能・別Modの担当を記さない。
 
 **収穫物**
 
@@ -189,14 +189,15 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 
 **食用米**
 
-- `RawRice`：**米**。米（こめ）。籾殻を除いた食用米。AMJGrainsでは玄米と白米を別の食材に分けず、料理や製粉に利用する。\n\n江戸の都市では白米食が広まったが、副食の乏しい白米中心の食事から脚気が流行し、「江戸患い」と呼ばれた。農村では麦や雑穀を混ぜた飯が多く、白米を十分に食べられる暮らしが広く実現したのは戦後の経済成長を経てからだった。\n\n明治時代、海軍軍医の高木兼寛は軍艦「龍驤」と「筑波」の航海を比較し、食事改善で脚気が減ることを示した。原因物質が未解明の段階で食事と疾病の関係を検証した、疫学・栄養学上の成果だった。後の日清・日露戦争では陸軍と海軍の脚気被害に大きな差があった。\n\n1910年、鈴木梅太郎は米ぬかから脚気予防に有効な「オリザニン」（後のビタミンB1）を発見した。 English: **rice** — Rice (kome). Edible rice after the husks have been removed. AMJGrains uses one ingredient for both brown and white rice in cooking and milling.\n\nWhite rice became popular in Edo's urban diets, but white-rice-heavy diets with too few side dishes led to beriberi, called "Edo wazurai" (Edo sickness). Rural households often mixed rice with barley or other grains. Eating plentiful white rice became widely attainable only after postwar economic growth.\n\nIn the Meiji period, naval physician Kanehiro Takaki compared the voyages of the warships Ryūjō and Tsukuba and showed that improved diets reduced beriberi. This was an important epidemiological and nutritional finding before the cause was identified. The Army and Navy later suffered greatly different levels of beriberi during the Sino-Japanese and Russo-Japanese wars.\n\nIn 1910, Umetaro Suzuki discovered oryzanin, a beriberi-preventing substance from rice bran later linked to vitamin B1.
+- `RawRice`：**玄米**。玄米（げんまい）。籾殻を除いた、糠の残る米。古代・中世の庶民が食べた精白度の低い米も含む。白米は別途、精白の手間をかけて作る。\n\n江戸の都市では白米食が広まったが、副食の乏しい白米中心の食事から脚気が流行し、「江戸患い」と呼ばれた。農村では麦や雑穀を混ぜた飯が多く、白米を十分に食べられる暮らしが広く実現したのは戦後の経済成長を経てからだった。\n\n明治時代、海軍軍医の高木兼寛は軍艦「龍驤」と「筑波」の航海を比較し、食事改善で脚気が減ることを示した。原因物質が未解明の段階で食事と疾病の関係を検証した、疫学・栄養学上の成果だった。後の日清・日露戦争では陸軍と海軍の脚気被害に大きな差があった。\n\n1910年、鈴木梅太郎は米ぬかから脚気予防に有効な「オリザニン」（後のビタミンB1）を発見した。 English: **brown rice** — Brown rice (genmai). Rice after the husks have been removed, with some bran remaining. It also represents the less-polished rice eaten by ordinary people in premodern Japan. White rice is obtained separately through further polishing.\n\nWhite rice became popular in Edo's urban diets, but white-rice-heavy diets with too few side dishes led to beriberi, called "Edo wazurai" (Edo sickness). Rural households often mixed rice with barley or other grains. Eating plentiful white rice became widely attainable only after postwar economic growth.\n\nIn the Meiji period, naval physician Kanehiro Takaki compared the voyages of the warships Ryūjō and Tsukuba and showed that improved diets reduced beriberi. This was an important epidemiological and nutritional finding before the cause was identified. The Army and Navy later suffered greatly different levels of beriberi during the Sino-Japanese and Russo-Japanese wars.\n\nIn 1910, Umetaro Suzuki discovered oryzanin, a beriberi-preventing substance from rice bran later linked to vitamin B1.
 
 **加工Recipe**
 
 - `AMJC_ThreshRice`：稲を脱穀する。収穫した稲束から籾を分離する。English: **thresh rice** — Separate rice grains enclosed in their husks from the harvested sheaves.
 - `AMJC_ThreshRiceBulk`：稲を脱穀する x10。稲束10個をまとめて脱穀し、籾10個にする。English: **thresh rice x10** — Thresh ten rice sheaves to obtain ten portions of rice in husk.
-- `AMJC_HullRice`：籾摺りをする。籾から籾殻を取り除き、食用の米に加工する。English: **hull rice** — Remove the husks from threshed rice to obtain edible Vanilla rice.
-- `AMJC_HullRiceBulk`：籾摺りをする x10。籾10個をまとめて籾摺りし、食用の米10個にする。English: **hull rice x10** — Remove the husks from ten portions of threshed rice to obtain edible Vanilla rice.
+- `AMJC_HullRice`：玄米に籾摺りする。籾から籾殻を取り除き、玄米にする。English: **hull rice** — Remove the husks from threshed rice to obtain dehulled brown rice.
+- `AMJC_HullRiceBulk`：玄米に籾摺りする x10。籾10個をまとめて籾摺りし、玄米10個にする。English: **hull rice x10** — Remove the husks from ten portions of threshed rice to obtain ten portions of brown rice.
+- `AMJC_PolishWhiteRiceBulk`：白米に精白する x10。籾10個を籾摺り・精白して、白米8個にする。玄米より多くの作業が必要となる。English: **polish white rice x10** — Remove the husks and polish ten portions of paddy into eight portions of white rice.
 
 **加工中表示（日本語 / English）**
 
@@ -204,6 +205,7 @@ These six English strings follow the Japanese §7 descriptions; only Plant_Rice 
 - `AMJC_ThreshRiceBulk.jobString`：稲をまとめて脱穀している。 / Threshing rice in bulk.
 - `AMJC_HullRice.jobString`：籾摺りをしている。 / Hulling rice.
 - `AMJC_HullRiceBulk.jobString`：籾をまとめて籾摺りしている。 / Hulling rice in bulk.
+- `AMJC_PolishWhiteRiceBulk.jobString`：籾を精白している。 / Polishing white rice.
 
 
 ## 11. 粉食心情の実機エラー修正（2026-10-08）
