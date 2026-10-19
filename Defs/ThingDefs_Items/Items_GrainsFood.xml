@@ -3,7 +3,7 @@
   <ThingDef ParentName="MealFineBase">
     <defName>AMJC_Houtou</defName>
     <label>hakutaku</label>
-    <description>Hakutaku (餺飥). A dish representing an old kind of wheat-flour food prepared by kneading flour and heating it. Hakutaku in Heian-period records has been linked to present-day Yamanashi hoto, but the two cannot be assumed to be the same dish. Here it represents a simple wheat-flour food, not a modern miso-simmered dish with many ingredients.</description>
+    <description>Hakutaku (餺飥). A dish representing an old kind of wheat-flour food prepared by kneading flour and heating it. Hakutaku in Heian-period records has been linked to present-day Yamanashi hoto, but the two cannot be assumed to be the same dish. Here it represents a simple wheat-flour food, not a modern miso-simmered dish with many ingredients. Its exact historical appearance and serving style are uncertain; the image is an interpretation.</description>
     <!-- Temporary existing AMJ grain graphics; final prepared-food art is pending. -->
     <graphicData>
       <texPath>Things/Item/Resource/AMJC_Millet/Millet</texPath>
