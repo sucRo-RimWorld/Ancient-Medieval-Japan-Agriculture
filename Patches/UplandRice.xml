@@ -27,6 +27,18 @@
         <xpath>/Defs/ThingDef[defName="Plant_Rice"]/plant/sowTags</xpath>
         <value><sowTags><li>Ground</li></sowTags></value>
       </li>
+      <!-- Rice requires an experienced grower; low-skill staple crops remain accessible. -->
+      <li Class="PatchOperationConditional">
+        <xpath>/Defs/ThingDef[defName="Plant_Rice"]/plant/sowMinSkill</xpath>
+        <match Class="PatchOperationReplace">
+          <xpath>/Defs/ThingDef[defName="Plant_Rice"]/plant/sowMinSkill</xpath>
+          <value><sowMinSkill>4</sowMinSkill></value>
+        </match>
+        <nomatch Class="PatchOperationAdd">
+          <xpath>/Defs/ThingDef[defName="Plant_Rice"]/plant</xpath>
+          <value><sowMinSkill>4</sowMinSkill></value>
+        </nomatch>
+      </li>
       <li Class="PatchOperationConditional">
         <xpath>/Defs/ThingDef[defName="Plant_Rice"]/plant/fertilityMin</xpath>
         <match Class="PatchOperationReplace"><xpath>/Defs/ThingDef[defName="Plant_Rice"]/plant/fertilityMin</xpath><value><fertilityMin>0.7</fertilityMin></value></match>
