@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AMJC_CompareCropsButton>作物の収穫を比較</AMJC_CompareCropsButton>
+  <AMJC_CropCompareTitle>作物の生産性比較</AMJC_CropCompareTitle>
+  <AMJC_CropCompareDisclaimer>選択した栽培ゾーンの現時点の肥沃度・気温が続き、日照は理想的・1日の成長可能時間は約13時間と仮定。将来の霜・作業時間・病害・収穫スキルによる歩留まりは予測しない。環境が変わったら開き直すこと。</AMJC_CropCompareDisclaimer>
+  <AMJC_CropCompareZoneInfo>{0}マス・平均肥沃度{1}</AMJC_CropCompareZoneInfo>
+  <AMJC_Days>日</AMJC_Days>
+  <AMJC_CropComparePlant>作物</AMJC_CropComparePlant>
+  <AMJC_CropCompareOnce>1回/マス</AMJC_CropCompareOnce>
+  <AMJC_CropCompareMaturity>初回収穫(日)</AMJC_CropCompareMaturity>
+  <AMJC_CropComparePerDay>個/日/マス</AMJC_CropComparePerDay>
+  <AMJC_CropCompareTotal>{0}日間の合計</AMJC_CropCompareTotal>
+  <AMJC_CropCompareCycles>回数/マス</AMJC_CropCompareCycles>
+  <AMJC_CropCompareSkill>栽培</AMJC_CropCompareSkill>
+</LanguageData>
