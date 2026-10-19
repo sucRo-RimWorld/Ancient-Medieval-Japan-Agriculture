@@ -6,7 +6,8 @@
     <description>Stone mill (ishi-usu). A stone tool for grinding grain into flour. In AMJGrains it mills five types of grain: wheat, buckwheat, millet, barley and rice.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
-      <texPath>Things/Building/Production/TableStonecutter</texPath>
+      <!-- One accepted 1x1 stone-mill PNG duplicated identically for all four cardinal directions. -->
+      <texPath>Things/Building/Production/AMJC_ManualMillstone/ManualMillstone</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1,1)</drawSize>

@@ -1427,6 +1427,9 @@ PNG全53枚の構造検査と生成原本／書き出しの機械QAは合格。�
 簡易加工場所の今回の原本は `Art/Sources/Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot_1x1_NoPaddle.png`、加工台の原本は `Art/Sources/Things/Building/Production/AMJC_GrainProcessingTable/GrainProcessingTable.png`。どちらも原本を無加工保存し、本番PNGは原本から等比縮小し透明な256×256キャンバスへ中央配置する。出力は `Textures/Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot_{north,east,south,west}.png` と `Textures/Things/Building/Production/AMJC_GrainProcessingTable/GrainProcessingTable_{north,east,south,west}.png`。以前の簡易加工場所の「北南は横／東西は90度回転版」という仕様は撤回した。過去の採用原画を再生成・破棄せず、旧ソースは履歴として保持する。
 XMLの設備サイズ・作業速度・素材コスト・Recipe・DefName・操作位置の機能値は変更しない。画像参照と4方向のPNGのみ変更する。通常ズーム・4方向・ERROR 0の実ゲーム描画確認は別途必要。
 
+**2026-10-19 非MO石臼の採用と表示:** 作者が最終確認した、台・横の容器のない灰色の手挽き石臼（上臼・下臼・木製取手）の透明256×256画像を、非MO用 `AMJC_ManualMillstone` の専用表示として採用する。石臼も北・東・南・西すべてで**同一PNGバイト**を使用し、回転画像・再生成は作らない。`Graphic_Multi` / `drawRotated=false` / `drawSize=(1,1)` / `size=(1,1)` を維持する。ゲーム用パスは `Textures/Things/Building/Production/AMJC_ManualMillstone/ManualMillstone_{north,east,south,west}.png`、XMLの `texPath` は `Things/Building/Production/AMJC_ManualMillstone/ManualMillstone`。
+作者が直接確認・承認した256px確定画像の元バイトを `Art/Sources/Things/Building/Production/AMJC_ManualMillstone/ManualMillstone_Accepted256.png` に保全する。同系列の高解像度参考画像 `ManualMillstone_Reference1254.png` も保全するが、256px承認版とのピクセル単位の派生手順は未検証であり、原画を再書き出しして承認画像を置換しない。非MO Defにのみ画像参照を接続し、MO併用時は従来どおり `DankPyon_Millstone` を使う。設置コスト（花崗岩ブロック30・木材20）、作業量、素材、五粉Recipe、Bill、DefNameは変更しない。実ゲーム描画・通常ズーム・ERROR 0は未確認。
+
 #### 12.1.3 加工後の雑穀画像の採用状況（2026-10-19確認）
 
 2026-10-10に統合済みの **7種の未熟株・7種の成熟株・5種の収穫束（19表示状態）** に、加工後の雑穀2状態は含まれない。殻付き雑穀は作者が新たに提示・採用した枡入り画像に同日差し替え、その原画を本節の専用パスへ無加工保存してゲーム用3枚へ書き出した（旧画像の履歴はGitに保持）。殻なし雑穀は2026-10-11に作者が追加した128×128の単一 `_a` 本番画像が存在し、既存ThingDefの参照パスにも接続されている。画像未制作とは扱わない。
