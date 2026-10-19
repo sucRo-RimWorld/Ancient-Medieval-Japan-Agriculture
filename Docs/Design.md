@@ -1426,22 +1426,22 @@ PNG全53枚の構造検査と生成原本／書き出しの機械QAは合格。�
 高解像度の承認原画は Art/Sources/Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot_Horizontal.png に無加工保存。縦向き高解像度は承認原画を時計回り90度回転する決定的派生画像とする。256×256のゲーム用PNGは Textures/Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot_{north,south,east,west}.png。graphicDataは同ファミリーを参照し、drawSize=(1,1)・drawRotated=false とする。コスト・工数・作業速度・Recipe・DefNameは不変。
 本採用は原画と本番接続の暫定確定であり、実ゲームの方向別表示・通常ズーム・ERROR 0確認は未完了。加工台・石臼候補は未承認のまま保持。
 
-#### 12.1.3 加工後の雑穀画像の採用状況（2026-10-10更新）
+#### 12.1.3 加工後の雑穀画像の採用状況（2026-10-19確認）
 
-2026-10-10に統合済みの **7種の未熟株・7種の成熟株・5種の収穫束（19表示状態）** に、加工後の雑穀2状態は含まれない。殻付き雑穀は作者が新たに提示・採用した枡入り画像に同日差し替え、その原画を本節の専用パスへ無加工保存してゲーム用3枚へ書き出した（旧画像の履歴はGitに保持）。殻なし雑穀は引き続き未完成。
+2026-10-10に統合済みの **7種の未熟株・7種の成熟株・5種の収穫束（19表示状態）** に、加工後の雑穀2状態は含まれない。殻付き雑穀は作者が新たに提示・採用した枡入り画像に同日差し替え、その原画を本節の専用パスへ無加工保存してゲーム用3枚へ書き出した（旧画像の履歴はGitに保持）。殻なし雑穀は2026-10-11に作者が追加した128×128の単一 `_a` 本番画像が存在し、既存ThingDefの参照パスにも接続されている。画像未制作とは扱わない。
 
 | 表示状態 | DefName | `texPath` | 画像・検証状態 |
 | --- | --- | --- | --- |
-| 殻付き雑穀（脱穀後・殻取り前） | `AMJC_MilletInHull` | `Things/Item/Resource/AMJC_Millet/MilletInHull` | 作者採用済み。元画像 `Art/Sources/Things/Item/Resource/AMJC_Millet/MilletInHull/MilletInHull.png` を無加工保存、256×256の `_a/_b/_c` を同一バイトで導入。実ゲーム表示は未検証 |
-| 殻なし雑穀（殻取り後・可食） | `AMJC_Millet` | `Things/Item/Resource/AMJC_Millet/Millet` | 旧画像のまま。完成画像の採用・原本保存・書き出しが未完了 |
+| 殻付き雑穀（脱穀後・殻取り前） | `AMJC_MilletInHull` | `Things/Item/Resource/AMJC_Millet/MilletInHull` | 作者採用済み原本を保全。2026-10-11以降は128×128の単一 `_a` 本番画像に集約。実ゲーム通常ズームは最終確認待ち |
+| 殻なし雑穀（殻取り後・可食） | `AMJC_Millet` | `Things/Item/Resource/AMJC_Millet/Millet` | 作者が2026-10-11に投入した128×128の本番 `Millet_a.png`（同名DDSも存在）を参照済み。専用画像の新規制作は不要。高解像度採用原本は `Art/Sources/.../Millet/` に未保存（現在 `.gitkeep` のみ）。通常ズーム・最終画風確認は未完了 |
 
 アワ・ヒエ・キビの収穫後は `AMJC_RawMillet → AMJC_MilletInHull → AMJC_Millet` の共通ThingDefへ統合するため、作物ごとに加工後画像を増やさない。殻付き／殻なしの違いは穀粒の内容物で表す。枡の画像管理は `Docs/GoldenPaths/BoxedResourceIconPipeline.md` を準拠とする。
 
 殻付き雑穀の新原画のGit blob SHA-1は `61d6720c7354107424400dd9abf0edc0a118b859`、ゲーム用3枚共通のGit blob SHA-1は `039c6f11bbe5426d169b011a706cfcb3e6802c2f`。既存Defの `texPath` を維持し、穀物の歩留まり・保存日数・Recipe・加工設備は変更しない。元画像・本番PNG・Def参照は静的検証し、ゲーム実機でのサイズ・視認性は別途確認する。
 
-殻なし雑穀、殻なし大麦・小麦の加工後画像、籾の専用画像、Vanilla `RawRice` の食用米リテクスチャ、粉・料理・加工設備の未完成は引き続き別件で管理する。殻付き大麦（`AMJC_BarleyInHull`）は作者採用の元画像を `Art/Sources/Things/Item/Resource/AMJC_Barley/BarleyInHull/BarleyInHull.png` に保存し、専用 `Things/Item/Resource/AMJC_Barley/BarleyInHull` パスの256pxスタック画像3枚へ反映済み（ゲーム内表示は未検証）。食用米はGrainsが担当し、既存の `RawRice` DefName・料理互換性・数値を維持して画像参照だけをAMJ画風へ差し替える（画像制作・実装・ゲーム表示検証は未完了）。
+殻なし雑穀・食用大麦・小麦・籾・Vanilla `RawRice` の本番単一 `_a` 画像は2026-10-11に既存／専用パスへ接続済み。これらを「画像未制作」と一律に扱わない。高解像度原本の由来・最終採用状態とゲーム内通常ズームは別途確認する。粉の数量差分・専用料理残品・加工設備の未完成は別件で管理する。殻付き大麦（`AMJC_BarleyInHull`）は作者採用の元画像を `Art/Sources/Things/Item/Resource/AMJC_Barley/BarleyInHull/BarleyInHull.png` に保存し、専用 `Things/Item/Resource/AMJC_Barley/BarleyInHull` パスの256pxスタック画像3枚へ反映済み（ゲーム内表示は未検証）。食用米はGrainsが担当し、既存の `RawRice` DefName・料理互換性・数値を維持して画像参照だけをAMJ画風へ差し替える（画像制作・実装・ゲーム表示検証は未完了）。
 
-2026-10-11 画像参照更新：作者がmainに追加した128×128の穀粒単一_a画像を使用し、AMJC_Barley、AMJC_Wheat、AMJC_RiceInHullのtexPathをそれぞれ大麦・小麦・籾専用に切り替えた。Vanilla RawRiceは新しいDefを作らず、Patches/RawRiceGraphics.xmlで描画パスのみGrainsのRice_aへ切り替え、Graphic_StackCountによる1種類の外観とする。雑穀とソバの既存参照は変更なし。原本のArt/Sourcesへの保全と実ゲームでの表示検証は別途OPEN。栄養・Recipe・農業数値は不変。
+2026-10-11 画像参照更新：作者がmainに追加した128×128の穀粒単一 `_a` 画像を使用し、共有雑穀 `AMJC_Millet` は既存専用パスを継続、`AMJC_Barley`・`AMJC_Wheat`・`AMJC_RiceInHull` はそれぞれ大麦・小麦・籾専用のtexPathに切り替えた。Vanilla RawRiceは新しいDefを作らず、Patches/RawRiceGraphics.xmlで描画パスのみGrainsのRice_aへ切り替え、Graphic_StackCountによる1種類の外観とする。雑穀とソバの既存参照は変更なし。原本のArt/Sourcesへの保全と実ゲームでの表示検証は別途OPEN。栄養・Recipe・農業数値は不変。
 
 #### 12.1.4 穀物・製粉品のスタック画像（2026-10-10確定）
 
