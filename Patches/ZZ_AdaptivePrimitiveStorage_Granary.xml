@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
-  <!-- Optional APS 1.6 integration. ASF_Granary already allows PlantFoodRaw,
-       the ancestor of AMJC_Grains. Add the explicit category so the new
-       sheaf / kernel / flour subdivisions are visible as storage choices.
-       Never replace PlantFoodRaw or PlantMatter: preserve the original foods. -->
+  <!-- Optional APS 1.6 integration. AMJC_Grains is a sibling of the raw-food
+       branch, not a descendant of PlantFoodRaw. Add the explicit category to
+       both storage settings without removing existing foods or PlantMatter. -->
   <Operation Class="PatchOperationFindMod">
     <mods><li>Adaptive Primitive Storage</li></mods>
     <match Class="PatchOperationSequence">

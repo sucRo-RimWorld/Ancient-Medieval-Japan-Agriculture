@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
-  <!-- Preserve Vanilla RawRice's cooking compatibility: AMJC_Grains descends from PlantFoodRaw. -->
+  <!-- Retain RawRice's dedicated storage classification; raw-food recipe filters are bridged separately. -->
   <Operation Class="PatchOperationConditional">
     <xpath>/Defs/ThingDef[defName="RawRice"]/thingCategories</xpath>
     <match Class="PatchOperationAdd">

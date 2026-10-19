@@ -66,6 +66,12 @@ Use whichever label best fits the task:
 
 ## Current coordination items
 
+### GRAINS-STORAGE-CATEGORY-20261019 — Foods直下への移設とMO小麦粉重複分類削除
+
+**Owner:** Grains XML/UI compatibility. **Status:** SOURCE IMPLEMENTED / static XML cross-check (MO 1.6 archive) PASS; current loaded-game UI/recipe/stockpile test OPEN. **Decision:** Place `AMJC_Grains` directly under `Foods`, at the same depth as MO `DankPyon_Cereal`. MO `DankPyon_Flour` ThingDef belongs only to `AMJC_GrainFlour` for storage; keep legacy MO category Def empty, remap known MO recipes and grain shelf to direct item authorization. Bridge old `PlantFoodRaw` / `FoodRaw` filters with the AMJC category without duplicate direct parent membership. Formal source: `Docs/Design.md §2.11` and production XML patches. Existing provider processing identities/recipes unchanged; native UI/compatibility still to be checked, no Steam action.
+
+
+
 ### GRAINS-PLAYTHROUGH-BEFORE-17-20261017 — flour-food play first
 
 **Owner:** Grains gameplay/acceptance. **Status:** HOLD RimWorld 1.7 new testing pending ordinary-game flour-food confirmation. **Author decision (2026-10-17):** Verify the existing crop → harvest → thresh → hull where applicable → mill → cooked/eaten flour-food loop in real gameplay first, resolve concrete gameplay faults, then run a proportionate consolidated current-source 1.7 compatibility test. The past source-scoped 1.7 24/24 is retained but does not cover later changes. Do not auto-start native tests, add another verification matrix, declare 1.7 supported, or release as a result of this note. Canonical acceptance sequence: `Docs/GrainsProfileTesting.md` § “Author-ordered validation sequence”. No runtime tests or production changes performed by this scheduling update.
