@@ -6,10 +6,13 @@
   <AMJC_ThreshRiceBulk.label>稲を脱穀する x10</AMJC_ThreshRiceBulk.label>
   <AMJC_ThreshRiceBulk.description>稲束10個をまとめて脱穀し、籾10個にする。</AMJC_ThreshRiceBulk.description>
   <AMJC_ThreshRiceBulk.jobString>稲をまとめて脱穀している。</AMJC_ThreshRiceBulk.jobString>
-  <AMJC_HullRice.label>籾摺りをする</AMJC_HullRice.label>
-  <AMJC_HullRice.description>籾から籾殻を取り除き、食用の米に加工する。</AMJC_HullRice.description>
+  <AMJC_HullRice.label>玄米に籾摺りする</AMJC_HullRice.label>
+  <AMJC_HullRice.description>籾から籾殻を取り除き、玄米にする。</AMJC_HullRice.description>
   <AMJC_HullRice.jobString>籾摺りをしている。</AMJC_HullRice.jobString>
-  <AMJC_HullRiceBulk.label>籾摺りをする x10</AMJC_HullRiceBulk.label>
-  <AMJC_HullRiceBulk.description>籾10個をまとめて籾摺りし、食用の米10個にする。</AMJC_HullRiceBulk.description>
+  <AMJC_HullRiceBulk.label>玄米に籾摺りする x10</AMJC_HullRiceBulk.label>
+  <AMJC_HullRiceBulk.description>籾10個をまとめて籾摺りし、玄米10個にする。</AMJC_HullRiceBulk.description>
   <AMJC_HullRiceBulk.jobString>籾をまとめて籾摺りしている。</AMJC_HullRiceBulk.jobString>
+  <AMJC_PolishWhiteRiceBulk.label>白米に精白する x10</AMJC_PolishWhiteRiceBulk.label>
+  <AMJC_PolishWhiteRiceBulk.description>籾10個を籾摺り・精白して、白米8個にする。玄米より多くの作業が必要となる。</AMJC_PolishWhiteRiceBulk.description>
+  <AMJC_PolishWhiteRiceBulk.jobString>籾を精白している。</AMJC_PolishWhiteRiceBulk.jobString>
 </LanguageData>
