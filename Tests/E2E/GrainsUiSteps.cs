@@ -21,10 +21,10 @@ namespace AncientMedievalJapanCore.E2E
             "Plant_Rice", "AMJC_RiceSheaf", "AMJC_RiceInHull", "RawRice"
         };
         private static readonly string[] RiceEnglish = {
-            "rice plant", "rice sheaf", "rice in hull", "rice"
+            "rice plant", "rice sheaf", "rice in hull", "brown rice"
         };
         private static readonly string[] RiceJapanese = {
-            "稲", "稲束", "籾", "米(生)"
+            "稲", "稲束", "籾", "玄米"
         };
         private static readonly int[] RiceParagraphs = { 2, 2, 2, 4 };
         private static readonly string[] FoodDefs = {
@@ -71,7 +71,9 @@ namespace AncientMedievalJapanCore.E2E
             else
             {
                 ctx.Assert(content.IndexOf("AMJGrains", StringComparison.Ordinal) >= 0 ||
-                           def.defName == "AMJC_RiceSheaf" || def.defName == "AMJC_RiceInHull",
+                           def.defName == "AMJC_RiceSheaf" || def.defName == "AMJC_RiceInHull" ||
+                           (def.defName == "RawRice" && content.StartsWith("Brown rice (genmai).",
+                               StringComparison.Ordinal)),
                     def.defName + " English description is not the approved owner text.");
             }
         }
