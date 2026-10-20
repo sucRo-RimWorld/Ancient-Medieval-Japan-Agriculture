@@ -4,9 +4,9 @@
     <defName>AMJC_Houtou</defName>
     <label>hakutaku</label>
     <description>Hakutaku (餺飥). A dish representing an old kind of wheat-flour food prepared by kneading flour and heating it. Hakutaku in Heian-period records has been linked to present-day Yamanashi hoto, but the two cannot be assumed to be the same dish. Here it represents a simple wheat-flour food, not a modern miso-simmered dish with many ingredients. The Wamyo Ruijusho describes kneaded wheat dough rolled thin and cut into square pieces. The exact historical appearance and serving style remain uncertain; the image is an interpretation.</description>
-    <!-- Temporary existing AMJ grain graphics; final prepared-food art is pending. -->
+    <!-- Dedicated author-provisionally accepted prepared-food illustration. -->
     <graphicData>
-      <texPath>Things/Item/Resource/AMJC_Millet/Millet</texPath>
+      <texPath>Things/Item/Meal/AMJC_Houtou</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases>
@@ -33,9 +33,9 @@
     <defName>AMJC_Sobagaki</defName>
     <label>sobagaki</label>
     <description>Sobagaki (蕎麦掻き). A flour-based dish made by stirring buckwheat flour into hot water instead of shaping it into noodles. Before soba noodles became widespread, buckwheat was also eaten as cooked grains or kneaded flour.</description>
-    <!-- Temporary existing AMJ grain graphics; final prepared-food art is pending. -->
+    <!-- Dedicated author-provisionally accepted prepared-food illustration. -->
     <graphicData>
-      <texPath>Things/Item/Resource/AMJC_Buckwheat/Buckwheat</texPath>
+      <texPath>Things/Item/Meal/AMJC_Sobagaki</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases>
@@ -62,9 +62,9 @@
     <defName>AMJC_MilletDumplings</defName>
     <label>millet dumplings</label>
     <description>Millet dumplings (雑穀団子). A single game dish representing dumpling-like foods made by mixing flour from awa, hie, or kibi with water and cooking it. It does not recreate the sweet confections of the early modern period or later.</description>
-    <!-- Temporary existing AMJ grain graphics; final prepared-food art is pending. -->
+    <!-- Dedicated author-provisionally accepted prepared-food illustration. -->
     <graphicData>
-      <texPath>Things/Item/Resource/AMJC_Millet/Millet</texPath>
+      <texPath>Things/Item/Meal/AMJC_MilletDumplings</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases>
@@ -91,9 +91,9 @@
     <defName>AMJC_BarleyFlourGruel</defName>
     <label>barley-flour gruel</label>
     <description>A simple gruel made by cooking barley flour with hot water.</description>
-    <!-- Existing grain sprite used as a temporary meal graphic; no new PNG assets. -->
+    <!-- Dedicated author-provisionally accepted prepared-food illustration. -->
     <graphicData>
-      <texPath>Things/Item/Resource/AMJC_Barley/Barley</texPath>
+      <texPath>Things/Item/Meal/AMJC_BarleyFlourGruel</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases>

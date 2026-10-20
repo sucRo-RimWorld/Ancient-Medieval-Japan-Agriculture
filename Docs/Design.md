@@ -978,6 +978,8 @@ Grainsの現行製粉対象は**雑穀粉・蕎麦粉・大麦粉・小麦粉の
 
 **2026-10-20 通常生産から玄米専用2料理を除外:** 有効な料理は共通3＋粉指定4＋白米専用2の計9品、単品/4食Bill18本とする。旧 `AMJC_CookRiceMeal`・`AMJC_CookRiceMealBulk`・`AMJC_CookRicePorridge`・`AMJC_CookRicePorridgeBulk` はセーブ参照用に保持し、recipeUsers登録を解除。玄米は共通の飯・粥を利用し、旧仕様の11品/22Billという記載は9品/18Billへ訂正する。白飯・白粥の専用画像・バフは維持する。
 
+**2026-10-20 指定粉食4品の専用画像を実装（通常ズーム実描画確認待ち）:** 餺飥 `AMJC_Houtou`、そばがき `AMJC_Sobagaki`、雑穀団子 `AMJC_MilletDumplings`、麦粉粥 `AMJC_BarleyFlourGruel` は、2026-10-19に作成・暫定採用された個別の木椀料理画像を使用する。各1254×1254 RGBA元PNGを無改変で `Art/Sources/Things/Item/Meal/<DefName>/<DefName>.png` に保存し、キャンバス全体を等倍比で256×256に縮小した透過PNGを `Textures/Things/Item/Meal/<DefName>/<DefName>_a,b,c.png` に同一内容で配置する。各 `Graphic_StackCount` の `texPath` は `Things/Item/Meal/<DefName>` の**フォルダ**に向ける。従来の穀粒画像流用は解消し、料理内容・工数・材料・Mood・腐敗・DefName・レシピは変更しない。米粉団子は通常調理停止の旧Defであり、今回の専用画像化対象外。画像のPNG構造・登録ハッシュは確認するが、この差分のゲーム内ロード／通常ズーム審美確認は別途必要。採用原画の再生成は行わない。
+
 **2026-10-19 共通料理の画像（実ゲーム確認待ち）:** 作者は飯 `AMJC_MixedGrainMeal`、粥 `AMJC_MixedGrainPorridge`、粉食 `AMJC_MixedFlourFood` の生成画像3点を、通常ズームでの実ゲーム確認用として暫定採用。原画は `Art/Sources/Things/Item/Meal/<DefName>/<DefName>.png` に無加工で保存し、対応する256×256透過PNGは `Textures/Things/Item/Meal/<DefName>/<DefName>_a,b,c.png` に同一内容で書き出す。各ThingDefの`graphicData/texPath`のみ固有パスへ切替え、`Graphic_StackCount`、DefName、Recipe、素材条件、栄養、心情、保存期間は維持。実ロード時のBadTex・通常ズームの見た目・3品の識別性は未確認。確認前に公開・正式画像完成と主張しない。
 
 
