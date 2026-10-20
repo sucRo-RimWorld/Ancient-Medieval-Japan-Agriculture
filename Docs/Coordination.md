@@ -1,5 +1,10 @@
 # AMJ Grains Coordination
 
+## GRAINS-KOGASHI-CONFECTIONERY-GATE-20261021 — intermediate deferred until useful common ingredient
+
+**Owner decisions confirmed 2026-10-21:** Tea's existing rice/optional-barley → kogashi-yu stays one direct Cooking Bill; do not add standalone `こがし`, roasted-grain intermediates, or separate roast/grind Bills for the low-effect drink. Grains alone owns future edible kogashi and confectionery. At a future sweets design, evaluate a shared kogashi ingredient **only if multiple meaningful uses justify increased labor, Bills, storage, and compatibility costs**; a lone sweet does not force a split. If later warranted, roasting+grinding remain one Grains processing step, Tea retains drink ownership and standalone rice fallback, optional Grains-enabled path avoids duplicate drink Bills, and migration is separately audited. Confirmed specification: [Grains Design](Docs/Design.md), [Tea Design](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Culture-Tea/blob/main/Docs/Design.md). **No initial nine-food scope/production XML, existing recipes, or native test state changed.**
+
+
 ## GRAINS-GRAINPROCESSING-WORKROLES-20261020 — independent processing work and optional WorkRoles grouping
 
 **Owner:** Grains WorkType / WorkGiver and WorkRoles optional template. **State:** SOURCE IMPLEMENTED on PR branch; native acceptance OPEN. AMJ processing Spot/Table and Base manual millstone use new `AMJC_GrainProcessing`; unchanged recipe Cooking skill/GeneralLaborSpeed, Work and Bills. WorkRoles `WS_Farmer`/`WS_Grower` role templates conditionally append the new work type; official Outdoors group retained. Vanilla stove fallback and MO-owned millstone remain Cooking. WorkRoles is not required. Runtime check: loaded work type, existing-save role coverage, multiple-pawn grain chain and stove/MO cooking routing. No automatic game launches. Canonical: `Docs/Design.md`, new WorkType XML and optional patch.
