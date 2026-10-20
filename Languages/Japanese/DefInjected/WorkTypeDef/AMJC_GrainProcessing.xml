@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AMJC_GrainProcessing.labelShort>穀物加工</AMJC_GrainProcessing.labelShort>
+  <AMJC_GrainProcessing.pawnLabel>穀物加工担当</AMJC_GrainProcessing.pawnLabel>
+  <AMJC_GrainProcessing.gerundLabel>穀物加工</AMJC_GrainProcessing.gerundLabel>
+  <AMJC_GrainProcessing.description>穀束の脱穀・殻取り・籾摺り、およびAMJ手動石臼での製粉を行う。料理とは別に担当者と優先順位を設定できる。</AMJC_GrainProcessing.description>
+  <AMJC_GrainProcessing.verb>加工する</AMJC_GrainProcessing.verb>
+</LanguageData>

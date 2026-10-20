@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- WorkRoles automatically discovers new work types. Its seeded Outdoors
+       Farmer/Grower roles additionally pick up this work after field jobs.
+       Existing-save template migration is owned by WorkRoles itself. -->
+  <Operation Class="PatchOperationFindMod">
+    <mods><li>WorkRoles</li></mods>
+    <match Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/WorkRoles.RoleDef[defName="WS_Farmer"]/entries[not(li="WorkType:AMJC_GrainProcessing")]</xpath>
+          <match Class="PatchOperationAdd">
+            <xpath>/Defs/WorkRoles.RoleDef[defName="WS_Farmer"]/entries</xpath>
+            <value><li>WorkType:AMJC_GrainProcessing</li></value>
+          </match>
+        </li>
+        <li Class="PatchOperationConditional">
+          <xpath>/Defs/WorkRoles.RoleDef[defName="WS_Grower"]/entries[not(li="WorkType:AMJC_GrainProcessing")]</xpath>
+          <match Class="PatchOperationAdd">
+            <xpath>/Defs/WorkRoles.RoleDef[defName="WS_Grower"]/entries</xpath>
+            <value><li>WorkType:AMJC_GrainProcessing</li></value>
+          </match>
+        </li>
+      </operations>
+    </match>
+  </Operation>
+</Patch>
