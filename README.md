@@ -17,7 +17,7 @@ The balancing model, including the inherited Vanilla/MO growth periods and provi
 
 ## V1 food options
 
-The same harvested grains can be cooked as grain meals or porridge, or milled into flour. Common dishes can combine leftover cereals; flour-specific dishes provide a small mood and preservation advantage. Brown and white rice also have separate meal and porridge recipes.
+The same harvested grains can be cooked as grain meals or porridge, or milled into flour. Common dishes can combine leftover cereals; flour-specific dishes provide a small mood and preservation advantage. Brown rice is cooked with the common grain meal or porridge Bills; polished white rice also has two special dishes.
 
 | Dish | Accepted ingredients | Cooking work (1 serving) | Room-temperature spoilage | Mood on eating |
 |---|---|---:|---:|---|
@@ -25,20 +25,20 @@ The same harvested grains can be cooked as grain meals or porridge, or milled in
 | Common grain porridge | The same edible grains (mixing allowed) | 200 | 1.5 days | No extra bonus |
 | Common flour food | Four grain flours (mixing allowed) | 300 | 2 days | No extra bonus |
 | Four flour-specific dishes | One designated flour per dish | 300 | 2.5 days | +2 for 0.5 days |
-| Rice meal / white rice meal | Brown rice / white rice, respectively | 220 | 3.5 days | None / +3 for 0.5 days |
-| Rice porridge / white rice porridge | Brown rice / white rice, respectively | 180 | 1.75 days | None / +1 for 0.5 days |
+| White rice meal | Polished white rice only | 220 | 3.5 days | +3 for 0.5 days |
+| White rice porridge | Polished white rice only | 180 | 1.75 days | +1 for 0.5 days |
 
-There are **11 normally producible dishes with 22 cooking Bills** (one- and four-serving recipes). Every dish uses 0.5 ingredient nutrition for a serving worth 0.9 nutrition; four-serving Bills use four times the ingredients and cooking work. The four flour-specific dishes are *hakutaku (houtou), sobagaki, millet dumplings and barley-flour gruel*. The active flours are wheat, buckwheat, millet and barley; Medieval Overhaul supplies its own wheat flour when installed. Grains does not automatically prioritize ingredients by remaining shelf life, so Bill ingredient filters remain available for leftovers.
+There are **9 normally producible dishes with 18 cooking Bills** (one- and four-serving recipes). Every dish uses 0.5 ingredient nutrition for a serving worth 0.9 nutrition; four-serving Bills use four times the ingredients and cooking work. The four flour-specific dishes are *hakutaku (houtou), sobagaki, millet dumplings and barley-flour gruel*. The active flours are wheat, buckwheat, millet and barley; Medieval Overhaul supplies its own wheat flour when installed. Grains does not automatically prioritize ingredients by remaining shelf life, so Bill ingredient filters remain available for leftovers.
 
-Paddy rice has separate processing Bills: 10 portions of paddy produce 10 brown rice (Work 80) or 8 white rice (Work 240). The common grain dishes remain available alongside rice-only meals and porridges.
+Paddy rice has separate processing Bills: 10 portions of paddy produce 10 brown rice (Work 80) or 8 white rice (Work 240). Brown rice goes into the common grain meal/porridge recipes, while polished white rice unlocks the dedicated white meal and porridge. The former brown-rice-only dish Defs and cooking recipe IDs are retained for existing saved references, but their Bills are no longer offered at cook stations.
 
 ### Q.米粉は？
 
-米粉は古代・中世日本にも存在した。ただし、**玄米粉が中世庶民の日常的な食材として使われていたとする十分な根拠は確認できない**。米粉を独立した製粉品・備蓄品として増やしても、現状のGrainsの遊びに必要な選択が増えるとはいえない。そのため、通常の米粉製粉と米粉団子の調理を除外した。玄米・白米、およびそれぞれの飯・粥は残している。旧米粉・米粉団子の定義は互換性のため保持し、史料に基づく儀礼食・菓子を扱う場合に米粉の採用を再検討する。
+米粉は古代・中世日本にも存在した。ただし、**玄米粉が中世庶民の日常的な食材として使われていたとする十分な根拠は確認できない**。米粉を独立した製粉品・備蓄品として増やしても、現状のGrainsの遊びに必要な選択が増えるとはいえない。そのため、通常の米粉製粉と米粉団子の調理を除外した。玄米・白米は残し、玄米は共通の飯・粥で利用できる。白飯・白粥は白米専用料理として残す。旧米粉・米粉団子の定義は互換性のため保持し、史料に基づく儀礼食・菓子を扱う場合に米粉の採用を再検討する。
 
 ### Q. What about rice flour?
 
-Rice flour did exist in ancient and medieval Japan. However, there is insufficient evidence to treat flour made from brown rice as an everyday ingredient of medieval commoners. A separate rice-flour production and stockpiling loop also lacks a clear gameplay purpose in Grains. Rice flour milling and rice-flour dumpling cooking are therefore unavailable in normal production; brown and white rice, and their respective meals and porridges, remain available. Legacy definitions are retained for compatibility. Rice flour may be reconsidered for historically supported ceremonial foods or confections.
+Rice flour did exist in ancient and medieval Japan. However, there is insufficient evidence to treat flour made from brown rice as an everyday ingredient of medieval commoners. A separate rice-flour production and stockpiling loop also lacks a clear gameplay purpose in Grains. Rice flour milling and rice-flour dumpling cooking are therefore unavailable in normal production; brown and white rice remain available, with brown rice used in common meals/porridge and dedicated white rice meal/porridge retained. Legacy definitions are retained for compatibility. Rice flour may be reconsidered for historically supported ceremonial foods or confections.
 
 These values reflect the current source definitions. Current-revision loaded-game verification of cooking Bills and ingredient selection is still outstanding; this development build is not a publicly verified release.
 
@@ -64,7 +64,7 @@ The mandatory MO dependency has been removed. Previous fresh-start Vanilla / MO 
 
 ## First release scope / 初回公開範囲
 
-The first release is the existing **RimWorld 1.6** Vanilla-capable grain loop: seven grains (including Vanilla rice), harvesting/threshing/hulling, four active flours, brown/white rice processing, and the **11 existing dishes / 22 single- and four-serving cooking Bills** listed above. Current processing spots, tables, the Vanilla-only manual millstone and the approved temporary cooking-bench paths are included; MO, CCTO and APS integrations remain optional. This describes **included content, not completion of final gameplay/release verification**.
+The first release is the existing **RimWorld 1.6** Vanilla-capable grain loop: seven grains (including Vanilla rice), harvesting/threshing/hulling, four active flours, brown/white rice processing, and the **9 existing dishes / 18 single- and four-serving cooking Bills** listed above. Current processing spots, tables, the Vanilla-only manual millstone and the approved temporary cooking-bench paths are included; MO, CCTO and APS integrations remain optional. This describes **included content, not completion of final gameplay/release verification**.
 
 **Not in the first release:** sobakiri (future late-Sengoku research unlock), hoshii/dried cooked rice, new grain dishes or new production steps, paddy-water farming, rice flour/dumpling production, newly redesigned production facilities, extra quantity-based artwork and RimWorld 1.7 support. Future grain-based dishes remain within Grains, but their gameplay specifications and publication dates are not yet fixed. No new crop-yield UI or soil map is required for the first release.
 

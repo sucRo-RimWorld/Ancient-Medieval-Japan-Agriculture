@@ -12,10 +12,10 @@
 This is a focused agriculture module, not an all-in-one AMJ Core. Rice paddies, fermentation and the broader Japanese settlement systems belong to other independent AMJ projects.
 
 [h2]Food options and balance[/h2]
-Three common grain/flour dishes can use leftover ingredients. Four flour-specific dishes provide a +2 mood bonus, while the separate brown/white rice meals and porridges include +3 for white rice meals and +1 for white rice porridge (each lasting 0.5 days). There are 11 normally producible dishes, each with one- and four-serving cooking Bills.
+Three common grain/flour dishes can use leftover ingredients, including brown rice in common meals and porridge. Four flour-specific dishes provide a +2 mood bonus. The two dedicated white-rice dishes grant +3 for white rice meal and +1 for white rice porridge (each lasting 0.5 days). There are 9 normally producible dishes and 18 one- and four-serving cooking Bills.
 
 [h2]Q. What about rice flour?[/h2]
-Rice flour existed in ancient and medieval Japan, but there is insufficient evidence that brown-rice flour was an everyday ingredient of medieval commoners. Separate rice-flour milling and stockpiling also add little gameplay value here. Rice-flour milling and dumpling cooking are excluded from normal production; brown and white rice meals and porridges remain. Historically supported ceremonial foods or confections may justify reconsidering rice flour later.
+Rice flour existed in ancient and medieval Japan, but there is insufficient evidence that brown-rice flour was an everyday ingredient of medieval commoners. Separate rice-flour milling and stockpiling also add little gameplay value here. Rice-flour milling and dumpling cooking are excluded from normal production; brown rice remains available in common meals/porridge and the two dedicated white-rice dishes remain. Historically supported ceremonial foods or confections may justify reconsidering rice flour later.
 
 [h2]Requirements and compatibility[/h2]
 [b]RimWorld 1.6[/b]. [b]No additional Mod is required.[/b] Medieval Overhaul (MO) is optional: with MO, Grains reuses its wheat, flour, millstone and straw integration; without MO, Grains provides its own wheat and milling path. Grains' own crop and processing rules take priority in both configurations. [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul (CCTO)[/url] is also optional for crop-specific cold behavior.
@@ -51,10 +51,10 @@ Documentation: [url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Gra
 AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う独立した構成要素です。水田稲作・発酵・集落生活のほかの仕組みは別のAMJ Modで扱います。
 
 [h2]料理とバランス[/h2]
-余った穀粒や4種の穀粉を使う共通の飯・粥・粉食に加え、材料指定の粉食4品、玄米・白米それぞれの飯・粥4品がある（合計11品、1食・4食の調理が可能）。指定粉食は食後心情+2、白飯は+3、白粥は+1（それぞれ0.5日）。
+余った穀粒や4種の穀粉を使う共通の飯・粥・粉食に加え、材料指定の粉食4品、白米専用の白飯・白粥2品がある（合計9品・単品/4食の調理Bill18本）。玄米は共通の飯・粥に利用する。指定粉食は食後心情+2、白飯は+3、白粥は+1（それぞれ0.5日）。
 
 [h2]Q.米粉は？[/h2]
-米粉自体は古代・中世日本にも存在した。しかし、玄米粉が中世庶民の日常食材だったとする十分な根拠は確認できない。独立した製粉・備蓄工程を増やすゲーム上の必要性も低いため、通常の米粉製粉と米粉団子の調理は対象外とした。玄米・白米の飯・粥は残る。将来、史料に基づく儀礼食・菓子を実装する場合に再検討する。
+米粉自体は古代・中世日本にも存在した。しかし、玄米粉が中世庶民の日常食材だったとする十分な根拠は確認できない。独立した製粉・備蓄工程を増やすゲーム上の必要性も低いため、通常の米粉製粉と米粉団子の調理は対象外とした。玄米は共通の飯・粥で使用でき、白米専用の白飯・白粥は残る。将来、史料に基づく儀礼食・菓子を実装する場合に再検討する。
 
 [h2]必須Mod・互換性[/h2]
 [b]RimWorld 1.6対応。追加の必須Modはありません。[/b] Medieval Overhaul（MO）は任意です。MO併用時はMOの小麦・小麦粉・石臼・藁を連携利用し、MOなしではGrains側の小麦・製粉を利用します。いずれもGrains所有の作物・加工設定を優先します。[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul（CCTO）[/url]も任意です。

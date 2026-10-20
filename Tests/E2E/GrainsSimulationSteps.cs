@@ -162,9 +162,7 @@ namespace AncientMedievalJapanCore.E2E
                 await scope.IngestFood("AMJC_MixedFlourFood", false);
                 await scope.IngestFood("AMJC_Houtou", true);
                 await scope.IngestFood("AMJC_Sobagaki", true);
-                // Rice food ThoughtDefs were added after the original food-ingestion fixture.
-                await scope.IngestFood("AMJC_RiceMeal", false);
-                await scope.IngestFood("AMJC_RicePorridge", false);
+                // Retired brown-rice-specific foods remain only for saved references.
                 await scope.IngestFood("AMJC_WhiteRiceMeal", true, "AMJC_AteWhiteRiceMeal", 3f);
                 await scope.IngestFood("AMJC_WhiteRicePorridge", true, "AMJC_AteWhiteRicePorridge", 1f);
             }
