@@ -1,5 +1,11 @@
 # Grains dependency-migration test profiles
 
+### 2026-10-20 作者判断 — MO/SYR既知音声エラー2件はGrains初回公開の阻害要因としない
+
+**判定対象:** 実MO/CCTO原本の外部MO/SYR音声素材から生じる、既知の同一FMOD `Error: Cannot create FMOD::Sound instance for clip "" (FMOD error: Unsupported file or audio format. )` **2件のみ**。作者はGrainsが変更していない音声に手を入れず、初回公開に関して**無視**することを指示した。これらを理由とするMO側の追加改修・再テストは行わない。Grains由来のXML XPath失敗6件は別件であり、[PR #203](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/pull/203)により修正済み。加工・料理Bill・実喫食シナリオ、Grains固有のロード/テクスチャ/定義エラー、異なる・増加したERRORは引き続き受け入れ条件に含む。
+
+**既存証拠の表記を変更しない:** MO+CCTO [#39404691834](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39404691834) は Grains `e3ec85d7c6e4ff6b3880f8a7d28a3b1297a1346f`（9料理/18 Bill）の実ジョブ **10/10 PASS、exit0、GrainsのXPath ERROR0**。元のUnityログにはFMOD **2 ERROR**が存在し、既存の厳密なProjectランナー上の **matrix_pass=false / FAIL は正しい過去結果**である。**Grains初回公開の担当範囲の機能判定は合格（既知外部音声2件を除外）**とするが、ログを消去したこともProjectランナー全体がPASSしたことも意味しない。Vanilla/CCTOと後続白粥実Billの元ログERROR0 20/20 PASSはそれぞれ [#39403725666](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403725666)、[#39403704297](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403704297)のSHA別証拠として保持する。外部音声免除はRimWorld1.7・長期バランス・外観・Steam完成の証明にはならない。
+
 ### 2026-10-20 9料理版のnative実行とMO互換修正の証拠
 
 - **Source `e3ec85d7c6e4ff6b3880f8a7d28a3b1297a1346f`:** [Project #39403725666](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403725666)、実Linux RimWorld 1.6、Vanilla 10/10・Vanilla+CCTO 10/10、両者exit0、元UnityログERROR0。現行9料理/18調理Bill、七穀の27条件成熟可能性（収量首位の強制なし）、稲の収穫→玄米/白米精白、白飯実調理、食後Thoughtを含む。
