@@ -23,7 +23,7 @@ Rice flour existed in ancient and medieval Japan, but there is insufficient evid
 [b]Strongly recommended (not required):[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215]Adaptive Primitive Storage[/url]. Its granary provides bulk storage for Grains' sheaves, kernels and flours. The original granary and baskets still use Hay. When MO is also installed, optional Straw-built versions appear separately in the construction menu. Choose either Hay or MO Straw; both are not required.
 
 [h2]Development status[/h2]
-[b]Development build, not ready for public release.[/b] The hard MO requirement has been removed. A previous-source 1.7 four-profile native check passed; the current 1.6 subscriber build, translated UI, equipment variants, balance and final graphics are still unverified.
+[b]First release is in preparation.[/b] Grain processing and cooking have been tested in RimWorld 1.6 with Vanilla, CCTO and MO configurations. Ordinary-play crop balance and workload, normal-zoom artwork, and the actual Workshop subscriber package still require final review.
 
 [h2]Planned improvements[/h2]
 [list]
@@ -62,7 +62,7 @@ AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う�
 [b]併用を強く推奨（必須ではない）：[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215]Adaptive Primitive Storage[/url]。既存の穀倉でGrainsの穀物束・穀粒・穀粉を大量収納できる。元の穀倉・編み籠は干し草のまま。MO併用時は藁を使う別の建築項目も追加し、干し草版・藁版から選択できる。両方の素材を要求しない。
 
 [h2]開発状況[/h2]
-[b]開発ビルドであり、公開準備は完了していません。[/b] MO必須指定は解除しました。旧ソースのRimWorld 1.7四構成実機検証には合格記録がありますが、現行1.6の配布版・日英UI・設備別の実動作・バランス・専用画像は未確認です。
+[b]初回公開準備中です。[/b] RimWorld 1.6でバニラ・CCTO・MO併用時の穀物加工と料理の動作を確認済み。通常プレイでの作業負担・作物バランス、通常ズームの画像、実際のWorkshop配布物は最終確認中です。
 
 [h2]今後の予定[/h2]
 [list]
