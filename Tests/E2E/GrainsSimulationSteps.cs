@@ -118,6 +118,9 @@ namespace AncientMedievalJapanCore.E2E
                 await scope.Bill("AMJC_HullMilletBulk", scope.Stove, "AMJC_MilletInHull", 10);
                 // Run after the real game has completed WorkRoles world seeding.
                 await RuntimeThread.Run(delegate { GrainsProfileSteps.AssertWorkRolesLive(ctx); });
+                if (LoadedModManager.RunningModsListForReading.Any(
+                    m => m.PackageIdPlayerFacing == "mnmr.workroles"))
+                    await scope.AutonomousParallelGrainWork();
                 if (!scope.MO)
                 {
                     await RuntimeThread.Run(delegate { scope.StageIngredient("AMJC_Buckwheat", 10); });
@@ -411,6 +414,119 @@ namespace AncientMedievalJapanCore.E2E
                             "Cannot place carried job product: " + label);
                     }
                 });
+            }
+
+            // Optional original WorkRoles profile only. Unlike Bill(), neither
+            // pawn is assigned a forced job. Observe the real pawn think-tree
+            // selecting separate grain Bills on separate benches concurrently.
+            public async Task AutonomousParallelGrainWork()
+            {
+                Pawn helper = null;
+                Bill_Production first = null, second = null;
+                bool parallel = false;
+                try
+                {
+                    await RuntimeThread.Run(delegate
+                    {
+                        WorkTypeDef grainWork = DefDatabase<WorkTypeDef>.GetNamed("AMJC_GrainProcessing");
+                        ctx.Require(!worker.WorkTypeIsDisabled(grainWork), "Main pawn cannot process grain.");
+                        // The previous alternate jobs consumed both ten-unit stacks.
+                        ctx.Require(Count("AMJC_RawMillet") == 0, "Parallel fixture requires no stale raw millet.");
+                        ThingDef raw = DefDatabase<ThingDef>.GetNamed("AMJC_RawMillet");
+                        foreach (IntVec3 cell in new[] {
+                            center + new IntVec3(-2, 0, -2),
+                            center + new IntVec3(2, 0, -2) })
+                        {
+                            Thing input = ThingMaker.MakeThing(raw);
+                            input.stackCount = 10;
+                            created.Add(input);
+                            GenSpawn.Spawn(input, cell, map);
+                        }
+                        RecipeDef recipe = DefDatabase<RecipeDef>.GetNamed("AMJC_ThreshMilletBulk");
+                        first = (Bill_Production)recipe.MakeNewBill();
+                        second = (Bill_Production)recipe.MakeNewBill();
+                        foreach (Bill_Production bill in new[] { first, second })
+                        {
+                            bill.repeatMode = BillRepeatModeDefOf.RepeatCount;
+                            bill.repeatCount = 1;
+                            bill.ingredientSearchRadius = 10f;
+                            bill.SetStoreMode(BillStoreModeDefOf.DropOnFloor);
+                        }
+                        Processing.BillStack.AddBill(first);
+                        Spot.BillStack.AddBill(second);
+                        for (int attempt = 0; attempt < 30; attempt++)
+                        {
+                            Pawn candidate = PawnGenerator.GeneratePawn(PawnKindDefOf.Colonist, Faction.OfPlayer);
+                            if (!candidate.Downed && candidate.skills != null
+                                && !candidate.WorkTypeIsDisabled(grainWork)
+                                && !candidate.WorkTypeIsDisabled(WorkTypeDefOf.Growing))
+                            { helper = candidate; break; }
+                            candidate.Destroy(DestroyMode.Vanish);
+                        }
+                        ctx.Require(helper != null, "Cannot create second independent grain worker.");
+                        created.Add(helper);
+                        GenSpawn.Spawn(helper, center + new IntVec3(0, 0, 1), map);
+                        helper.workSettings.EnableAndInitializeIfNotAlreadyInitialized();
+                        worker.workSettings.EnableAndInitializeIfNotAlreadyInitialized();
+                        System.Reflection.Assembly wr = AppDomain.CurrentDomain.GetAssemblies()
+                            .First(a => a.GetName().Name == "WorkRoles");
+                        Type storeClass = wr.GetType("WorkRoles.RoleStore", true);
+                        object store = storeClass.GetProperty("Current").GetValue(null, null);
+                        object grower = storeClass.GetMethod("RoleByTemplate", new[] { typeof(string) })
+                            .Invoke(store, new object[] { "WS_Grower" });
+                        ctx.Require(grower != null, "WorkRoles Grower role missing.");
+                        int roleId = (int)grower.GetType().GetField("id").GetValue(grower);
+                        var assign = wr.GetType("WorkRoles.RoleCommands", true)
+                            .GetMethod("AssignRole", new[] { typeof(Pawn), typeof(int), typeof(int) });
+                        ctx.Require(assign != null, "WorkRoles role assignment API missing.");
+                        foreach (Pawn pawn in new[] { worker, helper })
+                        {
+                            if (pawn.needs.food != null) pawn.needs.food.CurLevelPercentage = 1f;
+                            if (pawn.needs.rest != null) pawn.needs.rest.CurLevelPercentage = 1f;
+                            pawn.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                            assign.Invoke(null, new object[] { pawn, roleId, 0 });
+                        }
+                    });
+                    for (int batch = 0; batch < 180 && !parallel; batch++)
+                    {
+                        await RuntimeThread.Run(delegate
+                        {
+                            ctx.Require(deadline.Elapsed.TotalSeconds < 240,
+                                "Autonomous WorkRoles processing exceeded fixture deadline.");
+                            for (int tick = 0; tick < 64 && !parallel; tick++)
+                            {
+                                Find.TickManager.DoSingleTick();
+                                Job aJob = worker.CurJob, bJob = helper.CurJob;
+                                parallel = aJob != null && bJob != null
+                                    && aJob.def == JobDefOf.DoBill && bJob.def == JobDefOf.DoBill
+                                    && aJob.bill != bJob.bill
+                                    && (aJob.bill == first || aJob.bill == second)
+                                    && (bJob.bill == first || bJob.bill == second)
+                                    && !aJob.playerForced && !bJob.playerForced;
+                            }
+                        });
+                        await Task.Delay(1);
+                    }
+                    await RuntimeThread.Run(delegate
+                    {
+                        ctx.Assert(parallel,
+                            "Two Grower-role pawns must independently select concurrent grain Bills.");
+                    });
+                }
+                finally
+                {
+                    await RuntimeThread.Run(delegate
+                    {
+                        if (worker != null && worker.CurJob != null)
+                            worker.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                        if (helper != null && helper.Spawned && helper.CurJob != null)
+                            helper.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                        if (first != null && Processing.BillStack.Bills.Contains(first))
+                            Processing.BillStack.Delete(first);
+                        if (second != null && Spot.BillStack.Bills.Contains(second))
+                            Spot.BillStack.Delete(second);
+                    });
+                }
             }
 
             public void AssertUplandSowability()
