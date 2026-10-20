@@ -148,8 +148,28 @@ class MixedCookingRegression(unittest.TestCase):
         for name, common in (('RiceMeal', 'MixedGrainMeal'),
                              ('RicePorridge', 'MixedGrainPorridge')):
             item = root.find('ThingDef[defName="AMJC_'+name+'"]')
-            expected = 'Things/Item/Meal/AMJC_'+common+'/AMJC_'+common
+            expected = 'Things/Item/Meal/AMJC_'+common
             self.assertEqual(item.findtext('graphicData/texPath'), expected)
+
+    def test_retired_rice_dishes_are_not_cookable(self):
+        recipes = ET.parse(ROOT/'Defs/RecipeDefs/Recipes_RiceMeals.xml').getroot()
+        things = ET.parse(ROOT/'Defs/ThingDefs_Items/Items_RiceMeals.xml').getroot()
+        for family in ('RiceMeal', 'RicePorridge'):
+            self.assertIsNotNone(things.find('ThingDef[defName="AMJC_'+family+'"]'))
+            for suffix, yield_count in (('', '1'), ('Bulk', '4')):
+                rec = recipes.find('RecipeDef[defName="AMJC_Cook'+family+suffix+'"]')
+                self.assertIsNotNone(rec)
+                self.assertEqual(rec.findall('recipeUsers/li'), [])
+                self.assertEqual(rec.findtext('products/AMJC_'+family), yield_count)
+                self.assertEqual(rec.findtext('ingredients/li/filter/thingDefs/li'), 'RawRice')
+        for family in ('WhiteRiceMeal', 'WhiteRicePorridge'):
+            self.assertIsNotNone(things.find('ThingDef[defName="AMJC_'+family+'"]'))
+            for suffix in ('', 'Bulk'):
+                rec = recipes.find('RecipeDef[defName="AMJC_Cook'+family+suffix+'"]')
+                self.assertEqual({v.text for v in rec.findall('recipeUsers/li')},
+                                 {'Campfire', 'ElectricStove', 'FueledStove'})
+                self.assertEqual(rec.findtext('ingredients/li/filter/thingDefs/li'),
+                                 'AMJC_WhiteRice')
 
     def test_mixing_disabled_must_be_rejected(self):
         node = deepcopy(ET.parse(ROOT/'Defs/RecipeDefs/Recipes_GrainsFood.xml')

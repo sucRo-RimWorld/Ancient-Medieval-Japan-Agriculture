@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
+  <!-- Legacy food retained for old saves, not separately produced. -->
   <ThingDef ParentName="MealCookedIngredientless">
     <defName>AMJC_RiceMeal</defName><label>rice meal</label><description>Cooked rice made only from dehulled, less-polished rice, without other grains.</description>
     <!-- Provisional common-meal graphic until the dedicated dish is approved. -->
@@ -28,6 +29,7 @@
     </comps>
   </ThingDef>
 
+  <!-- Legacy food retained for old saves, not separately produced. -->
   <ThingDef ParentName="MealCookedIngredientless">
     <defName>AMJC_RicePorridge</defName><label>rice porridge</label><description>Porridge made solely from dehulled, less-polished rice.</description>
     <!-- Provisional common-meal graphic until the dedicated dish is approved. -->
