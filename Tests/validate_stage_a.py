@@ -54,22 +54,18 @@ def validate_png(path):
 for texture in sorted((ROOT / "Textures").rglob("*.png")):
     validate_png(texture)
 
-# Actual native RimWorld 1.6 Collection.Init logged "No textures found" for
-# these three PNG-only stacks. Keep the already accepted PNGs byte-for-byte
-# and require complete, nonempty DDS companions for all three quantities.
+# Graphic_StackCount invokes Graphic_Collection.GetAllInFolder(texPath).
+# texPath is a *directory*, unlike Graphic_Single's file stem. The previously
+# used .../AMJC_Food/AMJC_Food value duplicated a non-existing subfolder.
+# Validate the actual nested game lookup rather than accepting orphaned PNGs.
 for meal in ("AMJC_MixedGrainMeal", "AMJC_MixedGrainPorridge",
              "AMJC_MixedFlourFood"):
-    directory = ROOT / "Textures/Things/Item/Meal" / meal
-    pngs = [(directory / f"{meal}_{variant}.png").read_bytes()
-            for variant in "abc"]
-    dds = [(directory / f"{meal}_{variant}.dds").read_bytes()
-           for variant in "abc"]
-    assert pngs[0] == pngs[1] == pngs[2], f"{meal}: provisional art variants drift"
-    assert dds[0] == dds[1] == dds[2], f"{meal}: DDS variants drift"
-    for payload in dds:
-        assert len(payload) > 128 and payload[:4] == b"DDS ", (
-            f"{meal}: invalid or missing DDS payload")
-        assert payload[84:88] in (b"DXT5", b"DX10"), f"{meal}: unsupported DDS FOURCC"
+    expected_path = f"Things/Item/Meal/{meal}"
+    textures = stack_textures(ROOT, expected_path)
+    assert len(textures) == 3, f"{meal}: required three accepted stack slots"
+    assert textures[0].read_bytes() == textures[1].read_bytes() == textures[2].read_bytes(), (
+        f"{meal}: accepted identical-stack artwork changed"
+    )
 
 def load(rel):
     if rel.startswith("Defs/"):
