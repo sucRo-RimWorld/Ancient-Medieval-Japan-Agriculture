@@ -856,7 +856,7 @@ GrainsではVanillaの `Plant_Rice` を削除・複製せず、**V1では畑地�
 - **2026-10-19新方針:** 米粉は中世の庶民の日常穀粉として必須とする根拠がないため、Grainsの通常製粉から除外。米粉アイテム・団子・レシピの古いDefName/原画は既存セーブへの配慮として残すが、加工／調理Billを設備へ登録せず、共通粉食の原料にも使わない。
 - **旧・米粉の品種統合（2026-10-13、2026-10-19廃止）:** かつてはうるち／もち米粉をひとつの `AMJC_RiceFlour` として製粉する想定だった。現在はどちらの米も製粉の新規生産に使わない。将来の菓子・儀礼食は当該料理に必要な史料とゲーム上の用途が確定した場合のみ別途検討する。
 
-**2026-10-13 作者確定の共通稲方針:** うるち米・もち米を分けないのと同様に、陸稲・水稲も独立したPlantDefに分けない。畑・水田の違いは同一 `Plant_Rice` に対する水管理・栽培環境・生育速度・収量で表現する。現実の品種や乾湿適性が同じという主張ではない。水田対応はRice Cultivationの責務とし、Grains併用時は畑・水田とも `AMJC_RiceSheaf → AMJC_RiceInHull → RawRice` を共用する。Vanillaの肥沃度は主に生育速度へ作用するため、株当たり収量や生育期間の水分履歴を反映するなら別途ロジックが必要。数値・干ばつ判定・田植えJob等はVEと非VEの先行Mod比較と実機検証を経てRice Cultivation側で確定する。Rice Cultivation単独時はVanilla `Plant_Rice` / `RawRice` を使い、Grains固有の中間物に無条件依存しない食料経路を持つ。Waterworksは任意の水利基盤のままとする。
+**2026-10-13 作者確定の共通稲方針:** うるち米・もち米を分けないのと同様に、陸稲・水稲も独立したPlantDefに分けない。畑・水田の違いは同一 `Plant_Rice` に対する水管理・栽培環境・生育速度・収量で表現する。現実の品種や乾湿適性が同じという主張ではない。水田対応はRice Cultivationの責務とし、Grains併用時は畑・水田とも `AMJC_RiceSheaf → AMJC_RiceInHull → RawRice` を共用する。Vanillaの肥沃度は主に生育速度へ作用するため、株当たり収量や生育期間の水分履歴を反映するなら別途ロジックが必要。数値・干ばつ判定・田植えJob等はVEと非VEの先行Mod比較と実機検証を経てRice Cultivation側で確定する。Rice Cultivationを**Grainsなしで導入した構成**ではVanilla `Plant_Rice` / `RawRice` を使い、Grains固有の中間物に無条件依存しない食料経路を持つ。**2026-10-21 作者方針:** Rice CultivationはWaterworksを必須依存とする（従来の「Waterworks任意」は撤回）。一方、GrainsそのものはWaterworksを必須とせず、陸稲栽培はGrains単独で成立する。水田の範囲指定造成・外周自動畦・区画独立管理はRice Cultivationの所有であり、Grainsは水田造成や取水処理を追加しない。正式な移行前の企画正本は[Project水田設計草案](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/RicePaddyDesign-2026-10-21.md)。
 
 ### 4.3 低肥沃度環境との接続
 
