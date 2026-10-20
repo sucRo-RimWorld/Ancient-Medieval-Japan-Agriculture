@@ -54,6 +54,23 @@ def validate_png(path):
 for texture in sorted((ROOT / "Textures").rglob("*.png")):
     validate_png(texture)
 
+# Actual native RimWorld 1.6 Collection.Init logged "No textures found" for
+# these three PNG-only stacks. Keep the already accepted PNGs byte-for-byte
+# and require complete, nonempty DDS companions for all three quantities.
+for meal in ("AMJC_MixedGrainMeal", "AMJC_MixedGrainPorridge",
+             "AMJC_MixedFlourFood"):
+    directory = ROOT / "Textures/Things/Item/Meal" / meal
+    pngs = [(directory / f"{meal}_{variant}.png").read_bytes()
+            for variant in "abc"]
+    dds = [(directory / f"{meal}_{variant}.dds").read_bytes()
+           for variant in "abc"]
+    assert pngs[0] == pngs[1] == pngs[2], f"{meal}: provisional art variants drift"
+    assert dds[0] == dds[1] == dds[2], f"{meal}: DDS variants drift"
+    for payload in dds:
+        assert len(payload) > 128 and payload[:4] == b"DDS ", (
+            f"{meal}: invalid or missing DDS payload")
+        assert payload[84:88] in (b"DXT5", b"DX10"), f"{meal}: unsupported DDS FOURCC"
+
 def load(rel):
     if rel.startswith("Defs/"):
         return MO_XML
