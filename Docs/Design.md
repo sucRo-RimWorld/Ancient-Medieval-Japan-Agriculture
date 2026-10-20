@@ -958,6 +958,9 @@ Grainsの現行製粉対象は**雑穀粉・蕎麦粉・大麦粉・小麦粉の
 **2026-10-19 共通料理の画像（実ゲーム確認待ち）:** 作者は飯 `AMJC_MixedGrainMeal`、粥 `AMJC_MixedGrainPorridge`、粉食 `AMJC_MixedFlourFood` の生成画像3点を、通常ズームでの実ゲーム確認用として暫定採用。原画は `Art/Sources/Things/Item/Meal/<DefName>/<DefName>.png` に無加工で保存し、対応する256×256透過PNGは `Textures/Things/Item/Meal/<DefName>/<DefName>_a,b,c.png` に同一内容で書き出す。各ThingDefの`graphicData/texPath`のみ固有パスへ切替え、`Graphic_StackCount`、DefName、Recipe、素材条件、栄養、心情、保存期間は維持。実ロード時のBadTex・通常ズームの見た目・3品の識別性は未確認。確認前に公開・正式画像完成と主張しない。
 
 
+**2026-10-20 共通料理StackCountのDDS補完（実ゲーム検証待ち）:** RimWorld 1.6 実ゲーム [Project #39303924920](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39303924920) のUnity生ログで `Graphic_Collection.Init` が上記3種類の `texPath` について `No textures found` を7回出していた。Grains内の正常な穀物StackCount群にはDDSがあり、上記3種類のみPNGしかなかったため、3品の各 `_a/_b/_c` について**採用PNG・原画を無変更のまま対応DDSを追加**する。DDSは同一受入画像から作った各品同一3枚、256×256、透過保持。今ある `Graphic_StackCount`、`texPath`、7つのThingDef、Recipe／心情／保存期間は変えない。画像読み込みエラーが解消したと主張できるのは対象ソースの実ゲーム生ログ確認後のみ。
+
+
 **2026-10-13 五粉の食用途の履歴（2026-10-19修正）：** 麦粉粥は現行生産を維持。米粉団子は当時採用したが、米粉の必須性が不十分なため現在は製粉・調理の新規Billを停止し、既存DefName・画像だけを互換用に保管する。史料に基づく菓子・儀礼食の追加は独立の判断とし、既存の米粉団子を説明文だけで復活させない。
 
 最初の公開Alphaでは専用料理を最小限にする。
