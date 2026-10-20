@@ -1,6 +1,6 @@
 # Ancient & Medieval Japan - Grains（中世日本 - 穀類）
 
-**RimWorld 1.6 — Development build**
+**RimWorld 1.6 — 0.1.0 first-release candidate (not yet published)**
 
 A standalone grain-growing and food-processing Mod inspired by agriculture in pre-Edo Japan. Formerly AMJ Core; the historical `sucro.ancientmedievaljapan.core` packageId and existing AMJC DefNames remain unchanged to retain stable identifiers for cross-Mod compatibility.
 
@@ -56,11 +56,11 @@ The `loadAfter` entry for MO is an **optional ordering hint, not a hard dependen
 
 New Village and its starting definitions are provided exclusively by the separate AMJ Scenarios Mod. Grains does not include a scenario or legacy scenario compatibility copy.
 
-## Development status
+## Initial release status
 
 The author confirmed on 2026-10-10 that Grains has not been installed or used. **There are no existing Grains saves to migrate.** Historical save migration, enabling/disabling mid-save and removing MO from old saves are **out of scope**, not release blockers.
 
-The mandatory MO dependency has been removed. The RimWorld 1.6 nine-dish Grains source passed 10/10 native gameplay scenarios in Vanilla and 10/10 with CCTO, with no Unity errors ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403725666)). MO+CCTO passed its 10 gameplay scenarios on that nine-dish source ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39404691834)); the original strict test run is marked failed solely because of two pre-existing external MO/SYR FMOD audio errors, which the author excludes from Grains release judgment. A later native Vanilla/CCTO check also passed both white-rice porridge single/bulk cooking jobs ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403704297)); the added test was not independently rerun with MO. Ordinary-play usability, visual appearance at normal zoom, crop balance, the exact installed payload and the author's publication decision remain open. This development build has not been publicly released.
+The mandatory MO dependency has been removed. The RimWorld 1.6 nine-dish Grains source passed 10/10 native gameplay scenarios in Vanilla and 10/10 with CCTO, with no Unity errors ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403725666)). MO+CCTO passed its 10 gameplay scenarios on that nine-dish source ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39404691834)); the original strict test run is marked failed solely because of two pre-existing external MO/SYR FMOD audio errors, which the author excludes from Grains release judgment. A later native Vanilla/CCTO check also passed both white-rice porridge single/bulk cooking jobs ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403704297)); the added test was not independently rerun with MO. Ordinary-play usability, visual appearance at normal zoom, crop balance, the exact installed payload and the author's publication decision remain open. This initial-release candidate has not been publicly released.
 
 ## First release scope / 初回公開範囲
 
