@@ -37,6 +37,8 @@
 /Art/** export-ignore
 /Docs export-ignore
 /Docs/** export-ignore
+/Publishing export-ignore
+/Publishing/** export-ignore
 /Source export-ignore
 /Source/** export-ignore
 /Sources export-ignore
