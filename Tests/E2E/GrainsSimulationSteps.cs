@@ -162,6 +162,11 @@ namespace AncientMedievalJapanCore.E2E
                 await scope.IngestFood("AMJC_MixedFlourFood", false);
                 await scope.IngestFood("AMJC_Houtou", true);
                 await scope.IngestFood("AMJC_Sobagaki", true);
+                // Rice food ThoughtDefs were added after the original food-ingestion fixture.
+                await scope.IngestFood("AMJC_RiceMeal", false);
+                await scope.IngestFood("AMJC_RicePorridge", false);
+                await scope.IngestFood("AMJC_WhiteRiceMeal", true, "AMJC_AteWhiteRiceMeal", 3f);
+                await scope.IngestFood("AMJC_WhiteRicePorridge", true, "AMJC_AteWhiteRicePorridge", 1f);
             }
             catch (Exception error) { failure = ExceptionDispatchInfo.Capture(error); }
             try { if (scope != null) await RuntimeThread.Run(scope.Dispose); }
@@ -219,6 +224,17 @@ namespace AncientMedievalJapanCore.E2E
                 await scope.Bill("AMJC_HullRiceBulk", scope.Stove, "AMJC_RiceInHull", 10);
                 foreach (string grain in new[] { "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley", "AMJC_Wheat", "RawRice" })
                     await scope.SimpleMeal(grain);
+                // The brown-rice path above is harvested-source. Test the alternative
+                // white-rice path with additional real rice harvests, not manufactured
+                // paddy or a direct white-rice stack. Two x10 polish Bills yield 16
+                // white rice, enough for one actual 0.5-nutrition white meal.
+                await scope.Harvest("Plant_Rice", true);
+                await scope.Harvest("Plant_Rice", true);
+                await scope.Bill("AMJC_ThreshRiceBulk", scope.Stove, "AMJC_RiceSheaf", 10);
+                await scope.Bill("AMJC_ThreshRiceBulk", scope.Stove, "AMJC_RiceSheaf", 10);
+                await scope.Bill("AMJC_PolishWhiteRiceBulk", scope.Processing, "AMJC_RiceInHull", 10);
+                await scope.Bill("AMJC_PolishWhiteRiceBulk", scope.Processing, "AMJC_RiceInHull", 10);
+                await scope.Bill("AMJC_CookWhiteRiceMeal", scope.Campfire, "AMJC_WhiteRice", 10);
                 // Extra real harvests prevent consumption of prior simple-meal inputs.
                 await scope.Harvest("AMJC_Plant_Barley", true);
                 await scope.Bill("AMJC_ThreshBarleyBulk", scope.Processing, "AMJC_RawBarley", 10);
@@ -803,16 +819,18 @@ namespace AncientMedievalJapanCore.E2E
             }
 
             // Actual Ingest JobDriver only: never insert test memories directly.
-            public async Task IngestFood(string name, bool specialty)
+            public async Task IngestFood(string name, bool specialty,
+                string thoughtName = "AMJC_AteFlourFood", float moodBonus = 2f)
             {
                 Job job = null; Thing item = null; ThoughtDef thought = null; int before = 0;
                 await RuntimeThread.Run(delegate
                 {
-                    thought = DefDatabase<ThoughtDef>.GetNamed("AMJC_AteFlourFood");
+                    thought = DefDatabase<ThoughtDef>.GetNamed(thoughtName);
                     ctx.Require(thought.stages.Count == 1
-                        && Math.Abs(thought.stages[0].baseMoodEffect - 2f) < 0.001f
+                        && Math.Abs(thought.stages[0].baseMoodEffect - moodBonus) < 0.001f
                         && Math.Abs(thought.durationDays - 0.5f) < 0.001f
-                        && thought.stackLimit == 1, "Flour thought must be +2, half-day, nonstacking.");
+                        && thought.stackLimit == 1,
+                        thoughtName + " must award its specified half-day nonstacking Mood.");
                     ThingDef def = DefDatabase<ThingDef>.GetNamed(name);
                     ctx.Require(def.ingestible != null && worker.needs.mood != null,
                         "Food/pawn must support ingestion/mood.");
