@@ -8,6 +8,16 @@
 
 **Limits:** One test run of the current exact PR source; not an exhaustive per-Recipe live DoBill of all 18 recipe variants, nor a normal long campaign or hand-evaluated food image. MO and MO+CCTO profiles **NOT RUN** on this source; RimWorld 1.7 remains held pending ordinary player-loop judgment; Steam not touched. Production food/graphic/source assets unchanged by PR #205. This exact result supersedes the earlier source-only OPEN note for Vanilla/CCTO, not for excluded provider/version/visual gates.
 
+### 2026-10-20 初回公開9料理・実機検証状況（現在の主要証拠）
+
+- **実装済み初回公開:** Grains main `e3ec85d7c6e4ff6b3880f8a7d28a3b1297a1346f` で、7穀・4種の製粉・玄米/白米の籾からの加工・**9料理/18調理Bill**。旧玄米専用2品/4Billはセーブ用Defを保持し `recipeUsers` を外す。新しいそば切り/糒は公開後の予定であり、このテスト対象でない。現行の作物・料理の数値はこの監査で変更していない。
+- **最新9料理構成の実機 Vanilla + Vanilla/CCTO:** [Project Actions #39403725666](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403725666) でGrains `e3ec85d7c6e4ff6b3880f8a7d28a3b1297a1346f` をSHA固定し、実 RimWorld 1.6 Linuxの `grains-v1-16` を実行。**10/10 + 10/10、終了成功、報告済みUnity ERROR 0**。実収穫穀物→脱穀/殻取り→粉食・白米加工→白飯の実Billと、共通料理の実ジョブ、白飯/白粥の実喫食Thought、ロード後の白米料理Billおよび旧玄米専用Bill不提供の前提を含む。全18Billを一つずつ実DoBillした証拠ではなく、長期の農業バランス/1.7/最終画像審美性も対象外。
+- **同日より前の11料理ソースでの実機:** [Project Actions #39400238206](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39400238206) はGrains `a5a20afbd6665992802b8bf251e564dc81786537` のVanilla/CCTOで20/20、ERROR 0。**現行9料理の証拠として上書き流用せず**、同じ調理経路の履歴として扱う。
+- **MO系の履歴と未完:** [Project Actions #39400920420](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39400920420) はGrains `a5a20af` のMOで実ジョブ10/10だが、元のUnityログにGrains独自MOカテゴリXMLの対象不一致ERROR6件と外部FMOD2件あり**FAIL**。Grains [PR #203](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/pull/203) `1c95f3819883129945faf65c2dd52fb442e38884` が対象なし6操作を条件付きに修正。[Project Actions #39402780009](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39402780009) の修正後MO+CCTOは**10/10実ジョブPASS・GrainsパッチERROR0・FMOD音声エラー2件により厳密ERROR0 FAIL**。これは**9料理へ切り替える前のソース**である。
+- **現行9料理のMO+CCTO実行停止:** [Project Actions #39404491728](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39404491728) は `grains-v1-mo-ccto-16` を要求したが、`amj-native-slot3` の `parallel_test_slots.py resolve` で **「Secondary slot gameplay snapshot is stale; re-provision offline」**となり**RimWorld未起動／シナリオ0件**。これはゲーム/GrainsのFAILではなくテストホスト隔離のブロック。既存 `parallel_test_slots.py` の `refresh --slot 3` は安全上ランナー停止下での実行が必要で、現行Issue操作は `prepare` のみ。運用担当はProject `main:Docs/Coordination.md` で引き継ぎ、ランナー停止・ゲーム1.6のみの安全な再同期後に、現行ソースへピン留めしたMO実ジョブ1回で検証する。安全検査を無効化して実行しない。
+
+**受け入れ前提:** 27条件の生育試験は「七穀全てが独立した収穫数首位」ではなく、各穀物の少なくとも1条件での成熟を確認する。食事の原料制限・栄養・作業量・保存・Moodはロード済みDefと実DoBill/実喫食に分けて判定する。**本結果だけで食料バランスの体験面が最終承認された、MOでERROR0、Workshop公開可能とはみなさない。**
+
 ### 2026-10-20 玄米専用飯・粥の通常生産廃止（現行ソース契約、実機未実行）
 
 **対象:** 料理9品/調理Bill18本。玄米（Vanilla `RawRice`）は共通飯・共通粥に使用できる。専用料理は白飯・白粥の2品/単品・4食Bill4本のみ。旧 `AMJC_RiceMeal`・`AMJC_RicePorridge` のThingDefと、対応する4本のRecipeDefのDefName・出力・入力・日本語定義は既存セーブ参照用に保持し、**recipeUsersのみ解除して通常の調理メニューから外す**。以前の玄米専用Billの少し短い調理Workは廃止対象で、共通飯Work240/粥Work200へ戻る。白米側のWork220/180、Mood+3/+1、稲束→籾→玄米10/白米8の加工値は維持する。
