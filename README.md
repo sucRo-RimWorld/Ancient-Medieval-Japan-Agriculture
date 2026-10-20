@@ -62,6 +62,12 @@ The author confirmed on 2026-10-10 that Grains has not been installed or used. *
 
 The mandatory MO dependency has been removed. Previous fresh-start Vanilla / MO × CCTO tests passed on their tested revisions; current-revision game loading and native Bills, final graphics, UI/language and gameplay balance remain to be verified. This development build has not been publicly released.
 
+## First release scope / 初回公開範囲
+
+The first release is the existing **RimWorld 1.6** Vanilla-capable grain loop: seven grains (including Vanilla rice), harvesting/threshing/hulling, four active flours, brown/white rice processing, and the **11 existing dishes / 22 single- and four-serving cooking Bills** listed above. Current processing spots, tables, the Vanilla-only manual millstone and the approved temporary cooking-bench paths are included; MO, CCTO and APS integrations remain optional. This describes **included content, not completion of final gameplay/release verification**.
+
+**Not in the first release:** sobakiri (future late-Sengoku research unlock), hoshii/dried cooked rice, new grain dishes or new production steps, paddy-water farming, rice flour/dumpling production, newly redesigned production facilities, extra quantity-based artwork and RimWorld 1.7 support. Future grain-based dishes remain within Grains, but their gameplay specifications and publication dates are not yet fixed. No new crop-yield UI or soil map is required for the first release.
+
 ## Planned improvements
 
 - **Revise existing graphics:** Improve outer outlines, silhouettes and readability at normal game zoom across crop, sheaf, grain and flour art, with a consistent visual style alongside Medieval Overhaul. The already accepted 14 crop states and five sheaf graphics remain unchanged for now; their aesthetic revisions are deferred.
