@@ -1,14 +1,18 @@
-# White-rice dish image candidates
+# White-rice illustration candidates — original wooden bowls preserved
 
-**Author approval pending.** This branch does not modify production Textures or authoritative high-resolution Art/Sources.
+**Candidate only, author visual acceptance pending; no production `Textures` changes.**
 
-- Original meal bowl: `Textures/Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal_a.png` (blob `dcd01588db4585504551d1ec88358cca5d33ee45`).
-- Original porridge bowl: `Textures/Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge_a.png` (blob `3c76850ed8e2728c744852de023ca8e8e8704602`).
+Two fixed baseline bowls, which remain unchanged in their existing production paths:
 
-## 2026-10-20 meal rework
+- White rice meal: source `Textures/Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal_a.png`, blob `dcd01588db4585504551d1ec88358cca5d33ee45`.
+- White rice porridge: source `Textures/Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge_a.png`, blob `3c76850ed8e2728c744852de023ca8e8e8704602`.
 
-The previously color-neutralized meal still displayed barley-shaped grains, making it invalid as white rice. The new `WhiteRiceMeal_256px_preview.png` is a **new short-grain cooked-rice content layer**, not the old barley pixels recolored. The newly created layer was composed only over the interior food area, on top of the previous unmodified wooden bowl pixels. Preflight 256×256 RGBA candidate inspection: **0 alpha changes; 0 changes to pixels classified as wooden bowl; no pixels outside the defined food area changed.** Newly produced pixels use the source-isolated short-grain rice layer. Visual acceptance remains open, especially for the lower food/bowl boundary at game scale.
+## Latest rework, 2026-10-20
 
-The porridge candidate `WhiteRicePorridge_256px_preview.png` has **not** been shape-replaced by this revision; it remains under separate visual review. Do not represent either image as accepted.
+White rice meal `Art/Candidates/WhiteRice/WhiteRiceMeal_256px_preview.png` has been **reconstructed as individually shaded, plump short-grain cooked rice** inside the existing wooden bowl; **not a recoloring of barley kernels**. It uses an explicit row-wise food-region mask. The exterior bowl, transparent canvas, and visible front rim derive directly from the existing game image, without generating a new bowl. The old full-resolution source is not overwritten.
 
-The high-resolution original masters remain untouched. Do not merge the draft PR to main or wire production Def textures until author acceptance and high-resolution Art/Sources retention. No RimWorld native run or Steam upload.
+Source-vs-candidate mechanical check for this new 256×256 RGBA file: 162 independently rendered rice kernels; 16671 food-mask pixels updated; **0 pixels changed outside the compositing mask**, **0 alpha-channel changes**; PNG round-trip decode equals generated RGBA byte-for-byte. Exposed existing brown back-rim pixels are intentionally retained, not categorized as white rice.
+
+White porridge `Art/Candidates/WhiteRice/WhiteRicePorridge_256px_preview.png` stays as a **separate unchanged candidate** derived from the original porridge bowl. Its bowl also remains unreplaced.
+
+**Not final art:** Both are 256px review derivatives, not accepted high-resolution masters. A positive visual judgment and a proper full-resolution source/master path under `Art/Sources` are still required before production promotion, texture wiring, or actual-game visual claims. No Steam upload or RimWorld run.
