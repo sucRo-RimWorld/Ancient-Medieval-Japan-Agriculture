@@ -326,7 +326,7 @@ namespace AncientMedievalJapanCore.E2E
                 // Shared fallback foods must accept mixed cereal stacks but
                 // must never silently cross grain and flour input families.
                 string[] rawGrains = { "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley",
-                    "AMJC_Wheat", "RawRice" };
+                    "AMJC_Wheat", "RawRice", "AMJC_WhiteRice" };
                 string[] mixedPowders = { "AMJC_MilletFlour", "AMJC_BuckwheatFlour",
                     "AMJC_BarleyFlour",
                     mo ? "DankPyon_Flour" : "AMJC_WheatFlour" };
