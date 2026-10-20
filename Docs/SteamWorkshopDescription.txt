@@ -1,4 +1,4 @@
-[b]An in-development Mod for dry-field grains, harvest processing and milling inspired by the everyday food supply of pre-Edo Japan.[/b]
+[b]Dry-field grains, post-harvest processing, milling and grain-based foods inspired by everyday life in pre-Edo Japan.[/b]
 
 [h2]Features[/h2]
 [list]
@@ -22,13 +22,13 @@ Rice flour existed in ancient and medieval Japan, but there is insufficient evid
 
 [b]Strongly recommended (not required):[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215]Adaptive Primitive Storage[/url]. Its granary provides bulk storage for Grains' sheaves, kernels and flours. The original granary and baskets still use Hay. When MO is also installed, optional Straw-built versions appear separately in the construction menu. Choose either Hay or MO Straw; both are not required.
 
-[h2]Development status[/h2]
-[b]First release is in preparation.[/b] Grain processing and cooking have been tested in RimWorld 1.6 with Vanilla, CCTO and MO configurations. Ordinary-play crop balance and workload, normal-zoom artwork, and the actual Workshop subscriber package still require final review.
+[h2]Version 0.1.0[/h2]
+The initial version focuses on seven grains, the established processing loop and nine cooked foods. Additional grain dishes and optional graphical refinements are planned for later updates. RimWorld 1.7 is not listed as supported.
 
 [h2]Planned improvements[/h2]
 [list]
 [*]Refine the outlines and appearance of crop, sheaf, kernel and flour graphics for better readability and a consistent style at normal game zoom. Cosmetic revisions to the accepted crop and sheaf graphics remain deferred.
-[*]Finish incomplete grain and rice graphics, complete provisional food artwork where necessary, and review the existing processing spot, processing table and manual millstone artwork at normal game zoom.
+[*]Consider cosmetic refinements to grain and rice item images and to the processing spot, table and manual millstone. All nine currently produced dishes already have their dedicated sprites.
 [*]Add distinct small, medium and large stack-size images for grain sheaves and flours. Sheaf quantity variants remain deferred.
 [/list]
 
@@ -37,7 +37,7 @@ Documentation: [url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Gra
 
 [h2]日本語 / Japanese[/h2]
 
-[b]江戸以前の日本の食生活を参考に、畑作穀物の栽培・収穫後加工・製粉を扱う開発中のModです。[/b]
+[b]江戸以前の日本の食生活を参考に、畑作穀物の栽培・収穫後加工・製粉と穀類料理を扱うModです。[/b]
 
 [h2]主な特徴[/h2]
 [list]
@@ -61,13 +61,13 @@ AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う�
 
 [b]併用を強く推奨（必須ではない）：[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215]Adaptive Primitive Storage[/url]。既存の穀倉でGrainsの穀物束・穀粒・穀粉を大量収納できる。元の穀倉・編み籠は干し草のまま。MO併用時は藁を使う別の建築項目も追加し、干し草版・藁版から選択できる。両方の素材を要求しない。
 
-[h2]開発状況[/h2]
-[b]初回公開準備中です。[/b] RimWorld 1.6でバニラ・CCTO・MO併用時の穀物加工と料理の動作を確認済み。通常プレイでの作業負担・作物バランス、通常ズームの画像、実際のWorkshop配布物は最終確認中です。
+[h2]バージョン0.1.0[/h2]
+初回版では7穀の栽培・加工ループと9種類の料理を提供する。穀類料理の追加と画像の任意改善は今後のアップデートで扱う。RimWorld 1.7には対応を表記しない。
 
 [h2]今後の予定[/h2]
 [list]
 [*]作物・穀物束・穀粒・穀粉の既存画像の輪郭線や見た目を調整し、通常ズームでの視認性と画風を統一する。採用済み作物・穀物束の美観修正は延期中。
-[*]未完成の穀粒・米関連画像と一部料理の仮画像を整備し、実装済みの加工場所・加工台・石臼の画像を通常ズームで最終確認する。
+[*]穀粒・米のアイコンと加工場所・加工台・石臼の見た目は、初回版の実装を維持しつつ必要に応じて改善する。現行9料理はすべて専用画像を実装済み。
 [*]穀物束・穀粉に少量・中量・大量を区別できる画像を追加する。穀物束の数量別画像は延期中。
 [/list]
 
