@@ -1117,8 +1117,18 @@ namespace AncientMedievalJapanCore.E2E
                             ctx.Require(cell.InBounds(map), "Equipment placement outside test map.");
                             ctx.Require(!cell.GetThingList(map).Any(t => t is Building || t is Pawn),
                                 "Equipment screenshot cell obstructed: " + cell);
-                            Thing building = ThingMaker.MakeThing(def,
-                                def.MadeFromStuff ? GenStuff.DefaultStuffFor(def) : null);
+                            // Four distinct real Vanilla stone materials verify Stuff selection
+                            // without changing the other two accepted equipment sprites.
+                            ThingDef stone = ids[row] == "AMJC_ManualMillstone"
+                                ? DefDatabase<ThingDef>.GetNamed(new[] {
+                                    "BlocksGranite", "BlocksMarble", "BlocksSandstone", "BlocksSlate"
+                                }[column]) : null;
+                            ThingDef selectedStuff = stone ?? (def.MadeFromStuff
+                                ? GenStuff.DefaultStuffFor(def) : null);
+                            Thing building = ThingMaker.MakeThing(def, selectedStuff);
+                            if (stone != null)
+                                ctx.Assert(building.Stuff == stone,
+                                    "Manual millstone lost selected stone Stuff: " + stone.defName);
                             building.SetFaction(Faction.OfPlayer);
                             placed.Add(building);
                             GenSpawn.Spawn(building, cell, map, directions[column]);
@@ -1126,7 +1136,8 @@ namespace AncientMedievalJapanCore.E2E
                                 && building.Rotation == directions[column],
                                 ids[row] + " failed real map spawn/rotation " + directions[column]);
                             inventory.AppendLine(ids[row] + " " + directionNames[column]
-                                + " cell=" + cell + " spawned=" + building.Spawned);
+                                + " cell=" + cell + " spawned=" + building.Spawned
+                                + " stuff=" + (building.Stuff == null ? "none" : building.Stuff.defName));
                         }
                     }
                     // Stage one reference item from the original Vanilla equipment

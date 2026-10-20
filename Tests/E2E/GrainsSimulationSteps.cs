@@ -663,7 +663,14 @@ namespace AncientMedievalJapanCore.E2E
 
             private Job NativeSowOffer(IntVec3 cell)
             {
-                WorkGiver_GrowerSow giver = new WorkGiver_GrowerSow();
+                // Use the game-registered worker: a bare new WorkGiver_GrowerSow()
+                // has no WorkGiverDef assigned and can throw in JobOnCell.
+                WorkGiverDef sowDef = DefDatabase<WorkGiverDef>.AllDefsListForReading
+                    .FirstOrDefault(d => d.giverClass != null
+                        && typeof(WorkGiver_GrowerSow).IsAssignableFrom(d.giverClass));
+                ctx.Require(sowDef != null, "Real Sow WorkGiverDef missing.");
+                WorkGiver_GrowerSow giver = sowDef.Worker as WorkGiver_GrowerSow;
+                ctx.Require(giver != null, "Real Sow WorkGiver worker missing.");
                 // Consume scanner enumeration to reset its static cached
                 // wantedPlantDef before changing the zone's selected crop.
                 foreach (IntVec3 ignored in giver.PotentialWorkCellsGlobal(worker)) { }

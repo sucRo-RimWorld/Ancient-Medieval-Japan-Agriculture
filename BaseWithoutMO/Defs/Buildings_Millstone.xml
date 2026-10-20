@@ -6,15 +6,18 @@
     <description>Stone mill (ishi-usu). A stone tool for grinding grain into flour. In AMJGrains it mills four types of grain: wheat, buckwheat, millet and barley.</description>
     <thingClass>Building_WorkTable</thingClass>
     <graphicData>
-      <!-- One accepted 1x1 stone-mill PNG duplicated identically for all four cardinal directions. -->
+      <!-- Stone surfaces use the red masks for the selected Stony stuff color; wood and outlines stay unchanged. Identical cardinal textures/masks. -->
       <texPath>Things/Building/Production/AMJC_ManualMillstone/ManualMillstone</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>(1,1)</drawSize>
       <drawRotated>false</drawRotated>
     </graphicData>
+    <stuffCategories>
+      <li>Stony</li>
+    </stuffCategories>
+    <costStuffCount>30</costStuffCount>
     <costList>
-      <BlocksGranite>30</BlocksGranite>
       <WoodLog>20</WoodLog>
     </costList>
     <altitudeLayer>Building</altitudeLayer>
