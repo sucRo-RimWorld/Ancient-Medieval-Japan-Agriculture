@@ -424,6 +424,9 @@ namespace AncientMedievalJapanCore.E2E
                 Pawn helper = null;
                 Bill_Production first = null, second = null;
                 bool parallel = false;
+                bool growingFirst = false;
+                Plant competingCrop = null;
+                Zone_Growing competingZone = null;
                 try
                 {
                     await RuntimeThread.Run(delegate
@@ -479,6 +482,81 @@ namespace AncientMedievalJapanCore.E2E
                         var assign = wr.GetType("WorkRoles.RoleCommands", true)
                             .GetMethod("AssignRole", new[] { typeof(Pawn), typeof(int), typeof(int) });
                         ctx.Require(assign != null, "WorkRoles role assignment API missing.");
+
+                        // Reproduce WorkRoles' pre-upgrade saved RoleStore state:
+                        // the new WorkType is unknown, but the original grower
+                        // role entries and custom order remain. Exercise the
+                        // real on-load migration algorithm without user saves.
+                        var known = (System.Collections.Generic.List<string>)
+                            storeClass.GetField("knownWorkTypes").GetValue(store);
+                        ctx.Require(known.Contains(grainWork.defName),
+                            "Native WorkRoles store must already know grain processing.");
+                        Type roleType = grower.GetType();
+                        Type commandClass = wr.GetType("WorkRoles.RoleCommands", true);
+                        var remove = commandClass.GetMethod("RemoveEntry",
+                            new[] { typeof(int), typeof(int) });
+                        var roleByTemplate = storeClass.GetMethod("RoleByTemplate",
+                            new[] { typeof(string) });
+                        ctx.Require(remove != null && roleByTemplate != null,
+                            "WorkRoles role edit/migration APIs must be available.");
+                        foreach (string template in new[] { "WS_Farmer", "WS_Grower" })
+                        {
+                            object role = roleByTemplate.Invoke(store, new object[] { template });
+                            ctx.Require(role != null, "Saved role template missing: " + template);
+                            var entries = (System.Collections.IList)
+                                roleType.GetField("entries").GetValue(role);
+                            int grainIndex = -1;
+                            for (int e = 0; e < entries.Count; e++)
+                            {
+                                string code = (string)entries[e].GetType()
+                                    .GetMethod("Encode").Invoke(entries[e], null);
+                                if (code == "WorkType:AMJC_GrainProcessing") grainIndex = e;
+                            }
+                            ctx.Require(grainIndex >= 0, "Existing role grain entry missing.");
+                            int id = (int)roleType.GetField("id").GetValue(role);
+                            remove.Invoke(null, new object[] { id, grainIndex });
+                        }
+                        known.Remove(grainWork.defName);
+                        var seeding = wr.GetType("WorkRoles.Seeding", true);
+                        var restore = seeding.GetMethod("EnsureWorkTypeCoverage");
+                        ctx.Require(restore != null, "WorkRoles work type migration API missing.");
+                        restore.Invoke(null, null);
+                        ctx.Require(known.Contains(grainWork.defName),
+                            "Migration must mark the new grain work type as known.");
+                        foreach (string template in new[] { "WS_Farmer", "WS_Grower" })
+                        {
+                            object role = roleByTemplate.Invoke(store, new object[] { template });
+                            var entries = ((System.Collections.IEnumerable)
+                                roleType.GetField("entries").GetValue(role)).Cast<object>()
+                                .Select(e => (string)e.GetType().GetMethod("Encode").Invoke(e, null))
+                                .ToList();
+                            ctx.Assert(entries.Contains("WorkType:AMJC_GrainProcessing")
+                                && entries.IndexOf("WorkType:Growing")
+                                   < entries.IndexOf("WorkType:AMJC_GrainProcessing"),
+                                "Migrated " + template + " must preserve Growing-before-grain priority.");
+                            if (template == "WS_Farmer")
+                                ctx.Assert(entries.IndexOf("WorkType:PlantCutting")
+                                           < entries.IndexOf("WorkType:AMJC_GrainProcessing"),
+                                    "Migrated Farmer must preserve existing PlantCutting first.");
+                        }
+                        // A harvestable crop in an ordinary growing zone
+                        // competes with both independent grain processing Bills.
+                        // WorkRoles must select Growing before GrainProcessing.
+                        IntVec3 cropCell = center + new IntVec3(1, 0, 5);
+                        ctx.Require(!cropCell.Roofed(map)
+                            && !cropCell.GetThingList(map).Any(thing => thing is Plant || thing is Building),
+                            "Fixture needs an unobstructed outdoor growing cell.");
+                        competingZone = new Zone_Growing(map.zoneManager);
+                        map.zoneManager.RegisterZone(competingZone);
+                        competingZone.AddCell(cropCell);
+                        ThingDef cropDef = DefDatabase<ThingDef>.GetNamed("Plant_Rice");
+                        competingZone.SetPlantDefToGrow(cropDef);
+                        competingCrop = (Plant)ThingMaker.MakeThing(cropDef);
+                        competingCrop.Growth = 1f;
+                        created.Add(competingCrop);
+                        GenSpawn.Spawn(competingCrop, cropCell, map);
+                        ctx.Require(competingCrop.HarvestableNow && competingZone.ContainsCell(cropCell),
+                            "Growing-zone competition must contain a harvestable crop.");
                         foreach (Pawn pawn in new[] { worker, helper })
                         {
                             if (pawn.needs.food != null) pawn.needs.food.CurLevelPercentage = 1f;
@@ -486,6 +564,40 @@ namespace AncientMedievalJapanCore.E2E
                             pawn.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
                             assign.Invoke(null, new object[] { pawn, roleId, 0 });
                         }
+                    });
+
+                    // Let real AI choose an available Growing task while threshing
+                    // Bills are also offered. Cancel harvest only after recording
+                    // the choice; remove the competition to check concurrent work.
+                    for (int batch = 0; batch < 100 && !growingFirst; batch++)
+                    {
+                        await RuntimeThread.Run(delegate
+                        {
+                            ctx.Require(deadline.Elapsed.TotalSeconds < 240,
+                                "Growing priority fixture exceeded deadline.");
+                            for (int tick = 0; tick < 64 && !growingFirst; tick++)
+                            {
+                                Find.TickManager.DoSingleTick();
+                                Job current = worker.CurJob;
+                                growingFirst = current != null && current.workGiverDef != null
+                                    && current.workGiverDef.workType == WorkTypeDefOf.Growing
+                                    && current.targetA.Thing == competingCrop
+                                    && !current.playerForced;
+                            }
+                        });
+                        await Task.Delay(1);
+                    }
+                    await RuntimeThread.Run(delegate
+                    {
+                        ctx.Assert(growingFirst,
+                            "Grower pawn must autonomously prefer real Growing harvest over available grain Bills.");
+                        if (worker.CurJob != null)
+                            worker.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                        if (helper.CurJob != null)
+                            helper.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                        if (competingCrop != null && !competingCrop.Destroyed)
+                            competingCrop.Destroy(DestroyMode.Vanish);
+                        if (competingZone != null) { competingZone.Delete(false); competingZone = null; }
                     });
                     for (int batch = 0; batch < 180 && !parallel; batch++)
                     {
@@ -517,6 +629,9 @@ namespace AncientMedievalJapanCore.E2E
                 {
                     await RuntimeThread.Run(delegate
                     {
+                        if (competingZone != null) competingZone.Delete(false);
+                        if (competingCrop != null && !competingCrop.Destroyed)
+                            competingCrop.Destroy(DestroyMode.Vanish);
                         if (worker != null && worker.CurJob != null)
                             worker.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
                         if (helper != null && helper.Spawned && helper.CurJob != null)
