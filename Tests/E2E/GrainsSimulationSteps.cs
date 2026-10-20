@@ -116,6 +116,8 @@ namespace AncientMedievalJapanCore.E2E
                 await scope.Bill("AMJC_HullMilletBulk", scope.Spot, "AMJC_MilletInHull", 10);
                 await scope.Bill("AMJC_ThreshMilletBulk", scope.Spot, "AMJC_RawMillet", 10);
                 await scope.Bill("AMJC_HullMilletBulk", scope.Stove, "AMJC_MilletInHull", 10);
+                // Run after the real game has completed WorkRoles world seeding.
+                await RuntimeThread.Run(delegate { GrainsProfileSteps.AssertWorkRolesLive(ctx); });
                 if (!scope.MO)
                 {
                     await RuntimeThread.Run(delegate { scope.StageIngredient("AMJC_Buckwheat", 10); });
