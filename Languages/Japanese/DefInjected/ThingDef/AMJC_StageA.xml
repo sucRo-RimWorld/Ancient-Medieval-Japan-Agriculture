@@ -2,7 +2,7 @@
 <LanguageData>
 
   <AMJC_Plant_FoxtailMillet_Awa.label>アワ</AMJC_Plant_FoxtailMillet_Awa.label>
-  <AMJC_Plant_FoxtailMillet_Awa.description>粟（あわ）。弥生時代の遺跡でも栽培が確認される畑作の雑穀で、米だけに頼らない食料の一つだった。AMJGrainsではキビより生育に時間がかかるが、一度の収穫量が多い。収穫後は脱穀と殻取りを行う。</AMJC_Plant_FoxtailMillet_Awa.description>
+  <AMJC_Plant_FoxtailMillet_Awa.description>粟（あわ）。弥生時代の遺跡でも栽培が確認される畑作の雑穀で、米だけに頼らない食料の一つだった。AMJGrainsではキビより生育に時間がかかるが、一度の収穫量が多く、少ない収穫回数でまとまった穀物を確保しやすい。収穫後は脱穀と殻取りを行う。</AMJC_Plant_FoxtailMillet_Awa.description>
 
   <AMJC_Plant_BarnyardMillet_Hie.label>ヒエ</AMJC_Plant_BarnyardMillet_Hie.label>
   <AMJC_Plant_BarnyardMillet_Hie.description>稗（ひえ）。古くから栽培され、地域によっては米よりも日常的に食べられた雑穀。山間部で稗をふだんの主食として利用した記録も残る。AMJGrainsではアワやキビより低温で生育できるが、霜への強さまで保証するものではない。収穫後は脱穀と殻取りを行う。</AMJC_Plant_BarnyardMillet_Hie.description>
@@ -12,7 +12,7 @@
 
 
   <AMJC_Plant_Buckwheat_Soba.label>ソバ</AMJC_Plant_Buckwheat_Soba.label>
-  <AMJC_Plant_Buckwheat_Soba.description>蕎麦（そば）。古代には凶作に備える作物として栽培を勧められ、山間部や痩せた土地でも育てられてきた。AMJGrainsでは短期栽培に向くが霜には弱く、収穫後に脱穀・殻取りを行う。古い蕎麦の食べ方と、江戸期に広まる麺状の蕎麦切りは区別する。</AMJC_Plant_Buckwheat_Soba.description>
+  <AMJC_Plant_Buckwheat_Soba.description>蕎麦（そば）。古代には凶作に備える作物として栽培を勧められ、山間部や痩せた土地でも育てられてきた。AMJGrainsでは短期栽培に向く。キビより一度の収穫量は少ないが、より低温・低肥沃度でも生育できる。ただし霜には弱い。収穫後に脱穀・殻取りを行う。古い蕎麦の食べ方と、江戸期に広まる麺状の蕎麦切りは区別する。</AMJC_Plant_Buckwheat_Soba.description>
 
   <AMJC_RawBuckwheat.label>ソバ束</AMJC_RawBuckwheat.label>
   <AMJC_RawBuckwheat.description>茎と実を付けたまま収穫したソバ束。未脱穀なので食べられず、脱穀で殻付きソバを得る。殻取りと製粉はその後の工程になる。</AMJC_RawBuckwheat.description>
