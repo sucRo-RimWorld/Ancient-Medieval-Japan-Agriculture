@@ -1,5 +1,14 @@
 # Grains dependency-migration test profiles
 
+### 2026-10-20 9料理版のnative実行とMO互換修正の証拠
+
+- **Source `e3ec85d7c6e4ff6b3880f8a7d28a3b1297a1346f`:** [Project #39403725666](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403725666)、実Linux RimWorld 1.6、Vanilla 10/10・Vanilla+CCTO 10/10、両者exit0、元UnityログERROR0。現行9料理/18調理Bill、七穀の27条件成熟可能性（収量首位の強制なし）、稲の収穫→玄米/白米精白、白飯実調理、食後Thoughtを含む。
+- **同じSourceのMO+CCTO:** [Project #39404691834](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39404691834)、実MO/VEF/SYR/CCTO、10/10 Pickle、exit0、Grains XPathロードERROR0。ただし外部MO/SYR音声FMOD ERROR2のため**厳密な総合判定FAIL**。最初の [#39404491728](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39404491728) はslot3のsnapshot staleでゲーム起動前FAILであり、Mod動作判定に含めない。
+- **不具合の発見と修正:** [旧MO #39400920420](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39400920420) の元UnityログはGrains `ZZ_GrainCategories_MO.xml` のXPath不一致ERROR6＋既知外部FMOD2＝計8 ERROR。旧集計器は色付きログ6件を見落としていた。Grains [PR #203](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/pull/203) main `1c95f3819883129945faf65c2dd52fb442e38884` が該当6操作を条件付きに修正し、Project [PR #838](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/pull/838) がログ集計を修正。[修正直後MO+CCTO #39402780009](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39402780009) も10/10、元ログFMOD2件のみ。
+- **後続の白粥調理Bill:** Grains [PR #205](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/pull/205) main `06d55102253e397ba2b376a78d44bf4b7f03c991` は白粥1/4食の実DoBillを既存試験に追加。 [Project #39403704297](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403704297) が当該PR headのVanilla/CCTO各10/10、元ログERROR0を確認。白粥の粉原料はテスト配置白米で、収穫からの接続は白飯の実Billで検証。これは先行 `e3ec85d` MO+CCTO実行と異なるSHAであり、最新試験追加後のMO+CCTOネイティブPASSを意味しない。
+
+元のMO音声エラー2件、通常プレイの操作感・画風、Workshop配布確認は別ゲート。作物バランスの最新数値変更や追加UIをこれらの実行結果から承認しない。
+
 ### 2026-10-20 current 9-food / 18-Bill runtime acceptance (Vanilla/CCTO 1.6)
 
 **Source/host:** [Grains PR #205](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/pull/205) head `46de2d731db4b4661a13af14b56c96765c7fb11e`, original Linux RimWorld **1.6.4871 rev600** on isolated Project private [Actions #39403704297](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403704297), artifact ID `12255373418`. C# production and test assemblies built with zero compiler errors/warnings; native `pr-watch-result.json` `PASS`, `matrix_pass=true`. Vanilla **10/10** and Vanilla+CCTO **10/10** distinct Pickle scenarios, no failed, skipped or flaky cases, both exit0/no timeout, structured runtime error0 **and independently inspected raw original `unity-player.log` zero `[ERROR]`, zero `Collection cannot init` and zero Exception**.
