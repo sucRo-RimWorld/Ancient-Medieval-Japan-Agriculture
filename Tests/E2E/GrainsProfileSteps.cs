@@ -63,7 +63,25 @@ namespace AncientMedievalJapanCore.E2E
                     "AMJG processing table must remain research-free in Base and MO profiles.");
                 ctx.Assert(table.costList.Count == 1 && table.costList[0].thingDef.defName == "Steel" && table.costList[0].count == 30,
                     "AMJG processing table must use 30 Steel in Base and MO profiles.");
-                // Threshing/hulling beta stove fallback applies with or without MO.
+                // Loaded native WorkType routing, complementary to the existing
+                // real pawn DoBill checks in GrainsSimulationSteps.
+                WorkTypeDef grainWork = DefDatabase<WorkTypeDef>.GetNamed("AMJC_GrainProcessing");
+                WorkGiverDef grainGiver = DefDatabase<WorkGiverDef>.GetNamed("AMJC_DoGrainProcessing");
+                ctx.Assert(grainGiver.workType == grainWork
+                    && grainGiver.giverClass == typeof(WorkGiver_DoBill),
+                    "Dedicated grain processing must route to its independent WorkType.");
+                ctx.Assert(grainWork.workGiversByPriority.Contains(grainGiver),
+                    "Independent grain work must contain the processing WorkGiver.");
+                ctx.Assert((grainWork.workTags & WorkTags.ManualDumb) != 0,
+                    "Grain processing must remain general manual labor.");
+                if (!Active("dankpyon.medieval.overhaul"))
+                {
+                    WorkGiverDef millingGiver = DefDatabase<WorkGiverDef>.GetNamed("AMJC_DoGrainsMilling");
+                    ctx.Assert(millingGiver.workType == grainWork
+                        && grainWork.workGiversByPriority.Contains(millingGiver),
+                        "Base manual milling must belong to independent grain work.");
+                }
+                // // Threshing/hulling beta stove fallback applies with or without MO.
                 ThingDef processingFuelStove = DefDatabase<ThingDef>.GetNamed("FueledStove");
                 ThingDef processingElectricStove = DefDatabase<ThingDef>.GetNamed("ElectricStove");
                 ThingDef processingSpot = DefDatabase<ThingDef>.GetNamed("AMJC_GrainProcessingSpot");
