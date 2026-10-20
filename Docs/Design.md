@@ -765,7 +765,7 @@ Grainsの存在意義は日本の穀物Defの増加だけではなく、**古代
 | 蕎麦 | 冷涼適性と固有の粒食・粉食 | 生育4日・収量8・肥沃度下限40%の現行値を維持。40%下限はThin Soil 50%だけでは独自の利点にならず、専用痩せ地は新設しない |
 | 稲（Vanilla `Plant_Rice`、V1は畑地栽培） | 水田を使わない米作 | VanillaのRiceを別作物として増やさず同一Plantを畑作基準に調整する。最終的な成長・収量役割は既存6作物との七穀回帰で確定する |
 
-**2026-10-20 作者採用 — 茶・こがし湯との境界（未実装）:** 古代〜中世のこがしは米・大麦等を炒って粉にする食品であり、江戸期の煮出す麦湯／近現代の麦茶とは区別する。穀粉そのものを**食べる食品版のこがし**は穀物料理としてGrainsが将来所有する（初回公開の9料理には追加しない）。一方、米・大麦の炒り粉を湯に溶く**こがし湯という飲料**は2026-10-20に作者が設立した独立[AMJ Tea](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Tea)が完成品・飲用Recipe・娯楽処理を所有する。TeaはVanilla `RawRice` を標準原料とし、Grains併用時のみ既存食用大麦 `AMJC_Barley` を条件付きで原料に加える。未焙煎の `AMJC_BarleyFlour` をこがしとして無条件に使用しない。完成品・Billを二重に所有しない。小麦・アワ・ヒエ・キビ・ソバは個別史料が確認されるまで『全穀物こがし』の対象にしない。**この設計はGrainsの製品XML・既存数値・初回公開内容を変更しない。** 飲料仕様の正式正本は[Tea Docs/Design.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Tea/blob/main/Docs/Design.md)。
+**2026-10-20 作者採用 — 茶・こがし湯との境界（Tea初期XML作成済み／実ゲーム未検証）:** 古代〜中世のこがしは米・大麦等を炒って粉にする食品であり、江戸期の煮出す麦湯／近現代の麦茶とは区別する。穀粉そのものを**食べる食品版のこがし**は穀物料理としてGrainsが将来所有する（初回公開の9料理には追加しない）。一方、米・大麦の炒り粉を湯に溶く**こがし湯という飲料**は2026-10-20に作者が設立したCulture系列の独立子Mod[AMJ Culture Tea](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Culture-Tea)が完成品・飲用Recipe・娯楽処理を所有する。TeaはVanilla `RawRice` を標準原料とし、Grains併用時のみ既存食用大麦 `AMJC_Barley` を条件付きで原料に加える。未焙煎の `AMJC_BarleyFlour` をこがしとして無条件に使用しない。完成品・Billを二重に所有しない。小麦・アワ・ヒエ・キビ・ソバは個別史料が確認されるまで『全穀物こがし』の対象にしない。**この設計はGrainsの製品XML・既存数値・初回公開内容を変更しない。** 飲料仕様の正式正本は[Tea Docs/Design.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Culture-Tea/blob/main/Docs/Design.md)。
 
 ### 4.2 作物の差別化軸
 
