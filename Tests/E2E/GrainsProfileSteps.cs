@@ -374,6 +374,72 @@ namespace AncientMedievalJapanCore.E2E
                         && Math.Abs(commonRottable[0].daysToRotStart - commonRotDays[index]) < 0.001f,
                         "Shared food rotting interval or inherited comps drifted.");
                 }
+                // Exact rice-Bill contracts belong to the same loaded-Def
+                // scenario; actual harvested white-rice polishing and a cooked
+                // white-rice meal run in ProductionJobs.
+                RecipeDef brown = DefDatabase<RecipeDef>.GetNamed("AMJC_HullRiceBulk");
+                RecipeDef white = DefDatabase<RecipeDef>.GetNamed("AMJC_PolishWhiteRiceBulk");
+                ThingDef paddy = DefDatabase<ThingDef>.GetNamed("AMJC_RiceInHull");
+                ThingDef rawRice = DefDatabase<ThingDef>.GetNamed("RawRice");
+                ThingDef whiteRice = DefDatabase<ThingDef>.GetNamed("AMJC_WhiteRice");
+                ctx.Assert(brown.ingredients.Count == 1 && white.ingredients.Count == 1
+                    && brown.ingredients[0].filter.Allows(paddy) && white.ingredients[0].filter.Allows(paddy)
+                    && brown.ingredients[0].GetBaseCount() == 10f
+                    && white.ingredients[0].GetBaseCount() == 10f
+                    && brown.products.Count == 1 && white.products.Count == 1
+                    && brown.products[0].thingDef == rawRice && brown.products[0].count == 10
+                    && white.products[0].thingDef == whiteRice && white.products[0].count == 8
+                    && Math.Abs(brown.workAmount - 80f) < 0.001f
+                    && Math.Abs(white.workAmount - 240f) < 0.001f,
+                    "Loaded rice polishing must retain 10-to-10 brown and 10-to-8 white branches.");
+                string[] riceFoods = { "RiceMeal", "WhiteRiceMeal", "RicePorridge", "WhiteRicePorridge" };
+                float[] riceWork = { 220f, 220f, 180f, 180f };
+                float[] riceRot = { 3.5f, 3.5f, 1.75f, 1.75f };
+                string[] riceThoughts = { null, "AMJC_AteWhiteRiceMeal", null, "AMJC_AteWhiteRicePorridge" };
+                float[] riceMood = { 0f, 3f, 0f, 1f };
+                for (int riceIndex = 0; riceIndex < riceFoods.Length; riceIndex++)
+                {
+                    ThingDef ingredient = riceIndex % 2 == 0 ? rawRice : whiteRice;
+                    ThingDef rejected = riceIndex % 2 == 0 ? whiteRice : rawRice;
+                    ThingDef food = DefDatabase<ThingDef>.GetNamed("AMJC_" + riceFoods[riceIndex]);
+                    for (int servingIndex = 0; servingIndex < 2; servingIndex++)
+                    {
+                        int servings = servingIndex == 0 ? 1 : 4;
+                        RecipeDef recipe = DefDatabase<RecipeDef>.GetNamed(
+                            "AMJC_Cook" + riceFoods[riceIndex] + (servings == 4 ? "Bulk" : ""));
+                        ctx.Assert(!recipe.allowMixingIngredients && recipe.ingredients.Count == 1
+                            && recipe.ingredients[0].filter.Allows(ingredient)
+                            && recipe.fixedIngredientFilter.Allows(ingredient)
+                            && !recipe.ingredients[0].filter.Allows(rejected)
+                            && !recipe.fixedIngredientFilter.Allows(rejected),
+                            recipe.defName + " must use only the correct rice polishing grade.");
+                        ctx.Assert(Math.Abs(recipe.ingredients[0].GetBaseCount() - 0.5f * servings) < 0.001f
+                            && Math.Abs(recipe.workAmount - riceWork[riceIndex] * servings) < 0.001f
+                            && recipe.products.Count == 1 && recipe.products[0].thingDef == food
+                            && recipe.products[0].count == servings
+                            && recipe.recipeUsers.Any(u => u.defName == "Campfire")
+                            && recipe.recipeUsers.Any(u => u.defName == "ElectricStove")
+                            && recipe.recipeUsers.Any(u => u.defName == "FueledStove"),
+                            recipe.defName + " work, Nutrition, output or station differs.");
+                    }
+                    ctx.Assert(Math.Abs(food.GetStatValueAbstract(StatDefOf.Nutrition) - 0.9f) < 0.001f
+                        && (riceThoughts[riceIndex] == null ? food.ingestible.tasteThought == null
+                            : food.ingestible.tasteThought != null
+                                && food.ingestible.tasteThought.defName == riceThoughts[riceIndex]),
+                        food.defName + " nutrition or expected white-rice taste thought differs.");
+                    if (riceThoughts[riceIndex] != null)
+                    {
+                        ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamed(riceThoughts[riceIndex]);
+                        ctx.Assert(thought.stages.Count == 1
+                            && Math.Abs(thought.stages[0].baseMoodEffect - riceMood[riceIndex]) < 0.001f
+                            && Math.Abs(thought.durationDays - 0.5f) < 0.001f
+                            && thought.stackLimit == 1, thought.defName + " Mood contract differs.");
+                    }
+                    var riceRottable = food.comps.OfType<CompProperties_Rottable>().ToList();
+                    ctx.Assert(riceRottable.Count == 1
+                        && Math.Abs(riceRottable[0].daysToRotStart - riceRot[riceIndex]) < 0.001f,
+                        food.defName + " rotting interval differs.");
+                }
                 ctx.Assert(DefDatabase<ThoughtDef>.GetNamed("AMJC_AteFlourFood").stages[0].baseMoodEffect == 2f,
                     "The extra flour processing reward must remain +2 mood.");
             });
