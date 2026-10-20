@@ -4,7 +4,7 @@
   <AMJC_RawWheat.label>小麦束</AMJC_RawWheat.label>
   <AMJC_WheatFlour.label>小麦粉</AMJC_WheatFlour.label>
   <AMJC_ManualMillstone.label>石臼</AMJC_ManualMillstone.label>
-  <AMJC_Plant_Wheat.description>小麦（こむぎ）。日本へは弥生期に伝わり、奈良時代にも栽培が確認される穀物。小麦の穀粒は食事の材料に使え、石臼で挽けば小麦粉として粉食にも利用できる。AMJGrainsでは刈り取った小麦束を脱穀して使う。</AMJC_Plant_Wheat.description>
+  <AMJC_Plant_Wheat.description>小麦（こむぎ）。日本へは弥生期に伝わり、奈良時代にも栽培が確認される穀物。小麦の穀粒は食事の材料に使え、石臼で挽けば小麦粉として粉食にも利用できる。AMJGrainsでは肥沃度70%以上の土壌が必要で、肥沃な土地ほど生育が速い。刈り取った小麦束は脱穀して使う。</AMJC_Plant_Wheat.description>
   <AMJC_RawWheat.description>穂と茎を付けたまま収穫した小麦。未脱穀のままでは食べられず、脱穀によって小麦穀粒になる。</AMJC_RawWheat.description>
   <AMJC_WheatFlour.description>小麦粉（こむぎこ）。小麦穀粒を石臼で挽いた粉。AMJGrainsでは餺飥を作るために使う。</AMJC_WheatFlour.description>
   <AMJC_ManualMillstone.description>石臼（いしうす）。穀粒を挽いて粉にする石製の道具。AMJGrainsでは小麦・蕎麦・雑穀・大麦の四種類の穀粉を製粉できる。</AMJC_ManualMillstone.description>
