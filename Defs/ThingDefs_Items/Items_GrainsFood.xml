@@ -152,7 +152,7 @@
     <description>A cooked grain meal made from edible rice, barley, millet and other kernels. It accepts one grain or a mixture, reflecting the use of grains alongside rice in Japanese staple foods. It keeps longer than porridge but takes somewhat more work to cook.</description>
     <!-- Author-approved provisional art for loaded-game visual review. -->
     <graphicData>
-      <texPath>Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal</texPath>
+      <texPath>Things/Item/Meal/AMJC_MixedGrainMeal</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases><Nutrition>0.9</Nutrition><MarketValue>10</MarketValue></statBases>
@@ -173,7 +173,7 @@
     <description>Porridge made by simmering edible rice, barley, millet or other kernels with extra water. It accepts one grain or a mixture. Cooking requires less work than cooked grains, but the porridge spoils sooner at room temperature.</description>
     <!-- Author-approved provisional art for loaded-game visual review. -->
     <graphicData>
-      <texPath>Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge</texPath>
+      <texPath>Things/Item/Meal/AMJC_MixedGrainPorridge</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases><Nutrition>0.9</Nutrition><MarketValue>10</MarketValue></statBases>
@@ -194,7 +194,7 @@
     <description>A simple cooked flour dish made from millet, buckwheat, barley or wheat flour. One flour or several may be used together. It represents flour-based foods other than noodles and spoils a little sooner at room temperature than hakutaku or sobagaki.</description>
     <!-- Author-approved provisional art for loaded-game visual review. -->
     <graphicData>
-      <texPath>Things/Item/Meal/AMJC_MixedFlourFood/AMJC_MixedFlourFood</texPath>
+      <texPath>Things/Item/Meal/AMJC_MixedFlourFood</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <statBases><Nutrition>0.9</Nutrition><MarketValue>10</MarketValue></statBases>

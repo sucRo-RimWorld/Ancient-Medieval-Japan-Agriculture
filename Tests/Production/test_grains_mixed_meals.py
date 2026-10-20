@@ -16,11 +16,11 @@ GRAINS = {'AMJC_Millet','AMJC_Buckwheat','AMJC_Barley','AMJC_Wheat','RawRice','A
 OWN_FLOURS = {'AMJC_MilletFlour','AMJC_BuckwheatFlour','AMJC_BarleyFlour'}
 MENU = {
     'MixedGrainMeal': (GRAINS, 240, 3.0,
-                       'Things/Item/Meal/AMJC_MixedGrainMeal/AMJC_MixedGrainMeal'),
+                       'Things/Item/Meal/AMJC_MixedGrainMeal'),
     'MixedGrainPorridge': (GRAINS, 200, 1.5,
-                           'Things/Item/Meal/AMJC_MixedGrainPorridge/AMJC_MixedGrainPorridge'),
+                           'Things/Item/Meal/AMJC_MixedGrainPorridge'),
     'MixedFlourFood': (None, 300, 2.0,
-                       'Things/Item/Meal/AMJC_MixedFlourFood/AMJC_MixedFlourFood')
+                       'Things/Item/Meal/AMJC_MixedFlourFood')
 }
 SPECIFIC = ('Houtou','Sobagaki','MilletDumplings',
             'BarleyFlourGruel','RiceFlourDumplings')
@@ -134,7 +134,7 @@ class MixedCookingRegression(unittest.TestCase):
         for name in ('WhiteRiceMeal', 'WhiteRicePorridge'):
             item = root.find('ThingDef[defName="AMJC_'+name+'"]')
             self.assertIsNotNone(item)
-            expected = 'Things/Item/Meal/AMJC_'+name+'/AMJC_'+name
+            expected = 'Things/Item/Meal/AMJC_'+name
             self.assertEqual(item.findtext('graphicData/texPath'), expected)
             self.assertEqual(item.findtext('graphicData/graphicClass'),
                              'Graphic_StackCount')

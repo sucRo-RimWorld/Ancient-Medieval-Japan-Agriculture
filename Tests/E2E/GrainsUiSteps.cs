@@ -1223,7 +1223,9 @@ namespace AncientMedievalJapanCore.E2E
                     ctx.Require(!string.IsNullOrWhiteSpace(def.description),
                         def.defName + " common food description is empty.");
                 }
-                foreach (string name in RenderedGrains.Concat(SpecialtyFoods))
+                foreach (string name in RenderedGrains.Concat(SpecialtyFoods).Concat(FoodDefs)
+                    .Concat(new[] { "AMJC_RiceMeal", "AMJC_WhiteRiceMeal",
+                                    "AMJC_RicePorridge", "AMJC_WhiteRicePorridge" }))
                     CheckMaterial(ctx, DefDatabase<ThingDef>.GetNamed(name));
                 CheckProcessingEquipmentMaterials(ctx);
                 foreach (string name in new[] {

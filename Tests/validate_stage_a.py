@@ -54,6 +54,19 @@ def validate_png(path):
 for texture in sorted((ROOT / "Textures").rglob("*.png")):
     validate_png(texture)
 
+# Graphic_StackCount invokes Graphic_Collection.GetAllInFolder(texPath).
+# texPath is a *directory*, unlike Graphic_Single's file stem. The previously
+# used .../AMJC_Food/AMJC_Food value duplicated a non-existing subfolder.
+# Validate the actual nested game lookup rather than accepting orphaned PNGs.
+for meal in ("AMJC_MixedGrainMeal", "AMJC_MixedGrainPorridge",
+             "AMJC_MixedFlourFood"):
+    expected_path = f"Things/Item/Meal/{meal}"
+    textures = stack_textures(ROOT, expected_path)
+    assert len(textures) == 3, f"{meal}: required three accepted stack slots"
+    assert textures[0].read_bytes() == textures[1].read_bytes() == textures[2].read_bytes(), (
+        f"{meal}: accepted identical-stack artwork changed"
+    )
+
 def load(rel):
     if rel.startswith("Defs/"):
         return MO_XML
