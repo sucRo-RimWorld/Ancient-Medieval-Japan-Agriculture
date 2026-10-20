@@ -127,6 +127,30 @@ class MixedCookingRegression(unittest.TestCase):
             self.assertEqual(food.findtext('ingestible/tasteThought'),
                              'AMJC_AteFlourFood')
 
+
+    def test_white_rice_accepted_dish_texture_paths(self):
+        # Author-provisionally accepted visuals; gameplay render still separate.
+        root = ET.parse(ROOT/'Defs/ThingDefs_Items/Items_RiceMeals.xml').getroot()
+        for name in ('WhiteRiceMeal', 'WhiteRicePorridge'):
+            item = root.find('ThingDef[defName="AMJC_'+name+'"]')
+            self.assertIsNotNone(item)
+            expected = 'Things/Item/Meal/AMJC_'+name+'/AMJC_'+name
+            self.assertEqual(item.findtext('graphicData/texPath'), expected)
+            self.assertEqual(item.findtext('graphicData/graphicClass'),
+                             'Graphic_StackCount')
+            files = stack_textures(ROOT, expected)
+            self.assertEqual(len(files), 3)
+            self.assertEqual(len({p.read_bytes() for p in files}), 1)
+            master = ROOT/'Art/Sources'/('Things/Item/Meal/AMJC_'+name)/(
+                'AMJC_'+name+'.png')
+            self.assertTrue(master.is_file())
+        # Brown-rice dishes are NOT authorized by this art acceptance.
+        for name, common in (('RiceMeal', 'MixedGrainMeal'),
+                             ('RicePorridge', 'MixedGrainPorridge')):
+            item = root.find('ThingDef[defName="AMJC_'+name+'"]')
+            expected = 'Things/Item/Meal/AMJC_'+common+'/AMJC_'+common
+            self.assertEqual(item.findtext('graphicData/texPath'), expected)
+
     def test_mixing_disabled_must_be_rejected(self):
         node = deepcopy(ET.parse(ROOT/'Defs/RecipeDefs/Recipes_GrainsFood.xml')
                         .getroot().find('RecipeDef[defName="AMJC_CookMixedGrainMeal"]'))
