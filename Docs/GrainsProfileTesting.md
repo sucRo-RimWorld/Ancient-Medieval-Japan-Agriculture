@@ -1,5 +1,11 @@
 # Grains dependency-migration test profiles
 
+### 2026-10-20 七穀の27条件テスト前提修正（コードのみ／実機未実行）
+
+作者は**七穀それぞれに別の収穫個数1位条件を要求しない**方針を確定した。従来の `GrainsSimulationSteps.Environment` は肥沃度50/100/140% × 気温10/20/30℃ × 有効生育5/10/20単位（27条件）で、**全七穀に1位セルが存在すること**と**1穀が2/3以上のセルで1位にならないこと**を要求していた。これは生産労働・製粉・食事価値を無視した生収穫数だけで歴史作物の採否を強制し、現行仕様と矛盾するため、両順位条件を削除。現在の同一27条件では、RimWorldの実ロード済み `PlantUtility.GrowthRateFactorFor_Fertility/Temperature` を用い、**各七穀が少なくとも1条件で成熟可能**であることを確認する。環境マトリクス自体、作物供給元、独立して検証される収穫/加工/料理/Thoughtテストの条件・Scenario数は変更しない。
+
+収穫数の優劣、加工Work、保存、食事価値、播種収穫回数を合わせたバランス比較は `Docs/Balance/Crops/FertilityGrowthModelReview.md` を参照する**分析**であり、27セルの生収穫順位をそのまま公開可否の自動PASS条件としない。実プレイで破綻が分かった場合は、関連穀物と加工先を合わせて数値調整する。**本修正に実ゲームのPASS結果はまだない。** 歴史的な10/10・40/40は各当時のソースと旧順位前提に限る。
+
 ### 2026-10-20 actual RimWorld 1.6 common-food StackCount folder-fix native PASS
 
 - **Exact tested Grains source:** [PR #198](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/pull/198) at `da4e2392e635ee29a91fb4e695c922f5d7e5cdc3`; actual host [Project Actions #39391591589](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39391591589), artifact `12249263789`, original Linux RimWorld 1.6.4871 rev600.
