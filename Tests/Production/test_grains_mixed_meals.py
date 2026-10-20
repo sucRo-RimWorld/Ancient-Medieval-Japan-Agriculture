@@ -151,6 +151,29 @@ class MixedCookingRegression(unittest.TestCase):
             expected = 'Things/Item/Meal/AMJC_'+common
             self.assertEqual(item.findtext('graphicData/texPath'), expected)
 
+    def test_specific_flour_food_accepted_art_paths(self):
+        # Four active recipes must use accepted dedicated food imagery, not grain icons.
+        root = ET.parse(ROOT/'Defs/ThingDefs_Items/Items_GrainsFood.xml').getroot()
+        for name in ('Houtou', 'Sobagaki', 'MilletDumplings',
+                     'BarleyFlourGruel'):
+            item = root.find('ThingDef[defName="AMJC_'+name+'"]')
+            self.assertIsNotNone(item)
+            expected = 'Things/Item/Meal/AMJC_'+name
+            self.assertEqual(item.findtext('graphicData/texPath'), expected)
+            self.assertEqual(item.findtext('graphicData/graphicClass'),
+                             'Graphic_StackCount')
+            files = stack_textures(ROOT, expected)
+            self.assertEqual(len(files), 3)
+            self.assertEqual(len({p.read_bytes() for p in files}), 1)
+            master = ROOT/'Art/Sources'/('Things/Item/Meal/AMJC_'+name)/(
+                'AMJC_'+name+'.png')
+            self.assertTrue(master.is_file())
+        # Retired rice flour dumplings must keep their saved Def identity.
+        old = root.find('ThingDef[defName="AMJC_RiceFlourDumplings"]')
+        self.assertIsNotNone(old)
+        self.assertEqual(old.findtext('graphicData/texPath'),
+                         'Things/Item/Resource/AMJC_Rice/Rice')
+
     def test_retired_rice_dishes_are_not_cookable(self):
         recipes = ET.parse(ROOT/'Defs/RecipeDefs/Recipes_RiceMeals.xml').getroot()
         things = ET.parse(ROOT/'Defs/ThingDefs_Items/Items_RiceMeals.xml').getroot()
