@@ -9,7 +9,7 @@
   <ThingDef ParentName="PlantBase">
     <defName>AMJC_Plant_FoxtailMillet_Awa</defName>
     <label>foxtail millet plant</label>
-    <description>Foxtail millet (awa). A dry-field millet found at archaeological sites from the Yayoi period, and one of the grain foods eaten alongside rice. In AMJGrains it takes longer to grow than kibi but yields more grain per harvest. Harvested grain must be threshed and dehulled.</description>
+    <description>Foxtail millet (awa). A dry-field millet found at archaeological sites from the Yayoi period, and one of the grain foods eaten alongside rice. In AMJGrains it takes longer to grow than kibi but yields more grain per harvest, making it easier to collect a larger stock with fewer harvests. Harvested grain must be threshed and dehulled.</description>
     <descriptionHyperlinks>
       <ThingDef>AMJC_RawMillet</ThingDef>
     </descriptionHyperlinks>
@@ -133,7 +133,7 @@
   <ThingDef ParentName="PlantBase">
     <defName>AMJC_Plant_Buckwheat_Soba</defName>
     <label>buckwheat plant</label>
-    <description>Buckwheat (soba). In ancient Japan it was recommended as a crop to guard against poor harvests, and it has been grown in mountain regions and on less fertile land. In AMJGrains it grows quickly but is vulnerable to frost, and requires threshing and dehulling. Older ways of eating buckwheat are distinct from cut soba noodles, which became widespread in the Edo period.</description>
+    <description>Buckwheat (soba). In ancient Japan it was recommended as a crop to guard against poor harvests, and it has been grown in mountain regions and on less fertile land. In AMJGrains it matures quickly. Each harvest yields less than kibi, but it can grow at lower temperatures and on less fertile soil. It remains vulnerable to frost and requires threshing and dehulling. Older ways of eating buckwheat are distinct from cut soba noodles, which became widespread in the Edo period.</description>
     <descriptionHyperlinks>
       <ThingDef>AMJC_RawBuckwheat</ThingDef>
     </descriptionHyperlinks>
