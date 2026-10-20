@@ -120,7 +120,10 @@ namespace AncientMedievalJapanCore.E2E
                 await RuntimeThread.Run(delegate { GrainsProfileSteps.AssertWorkRolesLive(ctx); });
                 if (LoadedModManager.RunningModsListForReading.Any(
                     m => m.PackageIdPlayerFacing == "mnmr.workroles"))
-                    await scope.AutonomousParallelGrainWork();
+                {
+                    if (scope.MO) await scope.AutonomousMoGrainAndStoneMill();
+                    else await scope.AutonomousParallelGrainWork();
+                }
                 if (!scope.MO)
                 {
                     await RuntimeThread.Run(delegate { scope.StageIngredient("AMJC_Buckwheat", 10); });
@@ -414,6 +417,149 @@ namespace AncientMedievalJapanCore.E2E
                             "Cannot place carried job product: " + label);
                     }
                 });
+            }
+
+            // MO-specific: Grower handles AMJ threshing while Cook handles
+            // MO-owned stone milling. Both must be selected by ordinary AI.
+            public async Task AutonomousMoGrainAndStoneMill()
+            {
+                ctx.Require(MO, "Requires actual MO.");
+                Pawn cook = null;
+                Bill_Production threshBill = null, millBill = null;
+                WorkTypeDef grainType = null, cookType = null;
+                int grainsBefore = 0, flourBefore = 0;
+                bool simultaneous = false, finished = false;
+                try
+                {
+                    await RuntimeThread.Run(delegate
+                    {
+                        grainType = DefDatabase<WorkTypeDef>.GetNamed("AMJC_GrainProcessing");
+                        cookType = DefDatabase<WorkTypeDef>.GetNamed("Cooking");
+                        ctx.Require(!worker.WorkTypeIsDisabled(grainType),
+                            "Main pawn cannot do AMJ grain work.");
+                        for (int i = 0; i < 30; i++)
+                        {
+                            Pawn candidate = PawnGenerator.GeneratePawn(PawnKindDefOf.Colonist, Faction.OfPlayer);
+                            if (!candidate.Downed && !candidate.WorkTypeIsDisabled(cookType))
+                            { cook = candidate; break; }
+                            candidate.Destroy(DestroyMode.Vanish);
+                        }
+                        ctx.Require(cook != null, "Cannot create MO Cook pawn.");
+                        created.Add(cook);
+                        GenSpawn.Spawn(cook, center + new IntVec3(0, 0, 1), map);
+                        cook.workSettings.EnableAndInitializeIfNotAlreadyInitialized();
+                        worker.workSettings.EnableAndInitializeIfNotAlreadyInitialized();
+                        cook.skills.GetSkill(SkillDefOf.Cooking).Level = 20;
+                        System.Reflection.Assembly wr = AppDomain.CurrentDomain.GetAssemblies()
+                            .First(a => a.GetName().Name == "WorkRoles");
+                        Type storeClass = wr.GetType("WorkRoles.RoleStore", true);
+                        object store = storeClass.GetProperty("Current").GetValue(null, null);
+                        var lookup = storeClass.GetMethod("RoleByTemplate", new[] { typeof(string) });
+                        var assign = wr.GetType("WorkRoles.RoleCommands", true).GetMethod(
+                            "AssignRole", new[] { typeof(Pawn), typeof(int), typeof(int) });
+                        ctx.Require(lookup != null && assign != null,
+                            "WorkRoles role API missing.");
+                        object grower = lookup.Invoke(store, new object[] { "WS_Grower" });
+                        object chef = lookup.Invoke(store, new object[] { "WS_Cook" });
+                        ctx.Require(grower != null && chef != null,
+                            "Actual WorkRoles Grower/Cook templates required.");
+                        int gid = (int)grower.GetType().GetField("id").GetValue(grower);
+                        int cid = (int)chef.GetType().GetField("id").GetValue(chef);
+                        ctx.Require(Mill.def.defName == "DankPyon_Millstone",
+                            "MO millstone must be the actual installed worktable.");
+                        RecipeDef thresh = DefDatabase<RecipeDef>.GetNamed("AMJC_ThreshMilletBulk");
+                        RecipeDef milling = DefDatabase<RecipeDef>.GetNamed("AMJC_MillBuckwheat");
+                        ctx.Require(Processing.def.AllRecipes.Contains(thresh)
+                            && Mill.def.AllRecipes.Contains(milling),
+                            "Both independent job providers must offer recipes.");
+                        foreach (var entry in new[] {
+                            Tuple.Create("AMJC_RawMillet", center + new IntVec3(-2, 0, -2)),
+                            Tuple.Create("AMJC_Buckwheat", center + new IntVec3(2, 0, -2)) })
+                        {
+                            Thing stack = ThingMaker.MakeThing(DefDatabase<ThingDef>.GetNamed(entry.Item1));
+                            stack.stackCount = 10;
+                            created.Add(stack);
+                            GenSpawn.Spawn(stack, entry.Item2, map);
+                        }
+                        grainsBefore = Count(thresh.products[0].thingDef.defName);
+                        flourBefore = Count(milling.products[0].thingDef.defName);
+                        threshBill = (Bill_Production)thresh.MakeNewBill();
+                        millBill = (Bill_Production)milling.MakeNewBill();
+                        foreach (Bill_Production b in new[] { threshBill, millBill })
+                        {
+                            b.repeatMode = BillRepeatModeDefOf.RepeatCount;
+                            b.repeatCount = 1;
+                            b.ingredientSearchRadius = 10f;
+                            b.SetStoreMode(BillStoreModeDefOf.DropOnFloor);
+                        }
+                        Processing.BillStack.AddBill(threshBill);
+                        Mill.BillStack.AddBill(millBill);
+                        foreach (Pawn p in new[] { worker, cook })
+                        {
+                            if (p.needs.food != null) p.needs.food.CurLevelPercentage = 1f;
+                            if (p.needs.rest != null) p.needs.rest.CurLevelPercentage = 1f;
+                            if (p.CurJob != null)
+                                p.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                        }
+                        assign.Invoke(null, new object[] { worker, gid, 0 });
+                        assign.Invoke(null, new object[] { cook, cid, 0 });
+                    });
+                    for (int batch = 0; batch < 300 && !finished; batch++)
+                    {
+                        await RuntimeThread.Run(delegate
+                        {
+                            ctx.Require(deadline.Elapsed.TotalSeconds < 240,
+                                "MO WorkRoles work choice exceeded scenario deadline.");
+                            for (int tick = 0; tick < 64 && !finished; tick++)
+                            {
+                                Find.TickManager.DoSingleTick();
+                                Job a = worker.CurJob, b = cook.CurJob;
+                                if (a != null && b != null && a.bill == threshBill
+                                    && b.bill == millBill && a.def == JobDefOf.DoBill
+                                    && b.def == JobDefOf.DoBill && !a.playerForced
+                                    && !b.playerForced && a.workGiverDef != null
+                                    && b.workGiverDef != null
+                                    && a.workGiverDef.workType == grainType
+                                    && b.workGiverDef.workType == cookType)
+                                    simultaneous = true;
+                                finished = threshBill.repeatCount == 0 && millBill.repeatCount == 0;
+                            }
+                        });
+                        await Task.Delay(1);
+                    }
+                    await RuntimeThread.Run(delegate
+                    {
+                        ctx.Assert(simultaneous,
+                            "Grower must independently choose Grains bench, Cook must choose MO stone.");
+                        ctx.Assert(finished, "Both autonomously selected Bills must complete.");
+                        ThingDef grainOut = DefDatabase<RecipeDef>.GetNamed("AMJC_ThreshMilletBulk")
+                            .products[0].thingDef;
+                        ThingDef flourOut = DefDatabase<RecipeDef>.GetNamed("AMJC_MillBuckwheat")
+                            .products[0].thingDef;
+                        Func<Pawn, ThingDef, int> carry = (p, def) =>
+                            p.carryTracker.CarriedThing != null
+                            && p.carryTracker.CarriedThing.def == def
+                            ? p.carryTracker.CarriedThing.stackCount : 0;
+                        ctx.Assert(Count(grainOut.defName) + carry(worker, grainOut) > grainsBefore,
+                            "Autonomous Grains thresh must create output.");
+                        ctx.Assert(Count(flourOut.defName) + carry(cook, flourOut) > flourBefore,
+                            "Autonomous MO stone must create flour.");
+                    });
+                }
+                finally
+                {
+                    await RuntimeThread.Run(delegate
+                    {
+                        if (worker.CurJob != null)
+                            worker.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                        if (cook != null && cook.Spawned && cook.CurJob != null)
+                            cook.jobs.EndCurrentJob(JobCondition.InterruptForced, false);
+                        if (threshBill != null && Processing.BillStack.Bills.Contains(threshBill))
+                            Processing.BillStack.Delete(threshBill);
+                        if (millBill != null && Mill.BillStack.Bills.Contains(millBill))
+                            Mill.BillStack.Delete(millBill);
+                    });
+                }
             }
 
             // Optional original WorkRoles profile only. Unlike Bill(), neither
