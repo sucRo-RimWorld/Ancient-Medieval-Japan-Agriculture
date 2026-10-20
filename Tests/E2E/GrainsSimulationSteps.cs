@@ -79,6 +79,15 @@ namespace AncientMedievalJapanCore.E2E
                 foreach (bool bulk in new[] { false, true })
                 foreach (bool mix in new[] { false, true })
                     await scope.CommonFoodBill(family, bulk, mix);
+                // White-rice porridge has only loaded-Recipe and spawned-food Ingest
+                // evidence so far. Complete both real single and 4-serving DoBills
+                // with a staged test-only stack, without misrepresenting it as a
+                // harvested-source loop (covered separately for white-rice meal).
+                await RuntimeThread.Run(delegate { scope.StageIngredient("AMJC_WhiteRice", 50); });
+                await scope.Bill("AMJC_CookWhiteRicePorridge", scope.Campfire,
+                    "AMJC_WhiteRice", 10);
+                await scope.Bill("AMJC_CookWhiteRicePorridgeBulk", scope.Campfire,
+                    "AMJC_WhiteRice", 40);
             }
             catch (Exception error) { failure = ExceptionDispatchInfo.Capture(error); }
             try { if (scope != null) await RuntimeThread.Run(scope.Dispose); }
