@@ -17,6 +17,46 @@ namespace AncientMedievalJapanCore.E2E
                 mod => string.Equals(mod.PackageIdPlayerFacing, id, StringComparison.OrdinalIgnoreCase));
         }
 
+        internal static void AssertWorkRolesLive(PickleContext ctx)
+        {
+                // Exact original WorkRoles provider only: assert loaded RoleDef
+                // patches and live world roles, not just static XML contracts.
+                if (Active("mnmr.workroles"))
+                {
+                    System.Reflection.Assembly wr = AppDomain.CurrentDomain.GetAssemblies()
+                        .FirstOrDefault(a => a.GetName().Name == "WorkRoles");
+                    ctx.Require(wr != null, "Actual WorkRoles assembly must load.");
+                    Type roleDef = wr.GetType("WorkRoles.RoleDef", true);
+                    var defLookup = typeof(DefDatabase<>).MakeGenericType(roleDef)
+                        .GetMethod("GetNamedSilentFail", new[] { typeof(string) });
+                    ctx.Require(defLookup != null, "WorkRoles role DefDatabase lookup missing.");
+                    Type storeType = wr.GetType("WorkRoles.RoleStore", true);
+                    object store = storeType.GetProperty("Current").GetValue(null, null);
+                    ctx.Require(store != null && (bool)storeType.GetField("seeded").GetValue(store),
+                        "Actual WorkRoles world store must be seeded.");
+                    var roles = ((System.Collections.IEnumerable)
+                        storeType.GetField("roles").GetValue(store)).Cast<object>().ToList();
+                    foreach (string name in new[] { "WS_Farmer", "WS_Grower" })
+                    {
+                        object def = defLookup.Invoke(null, new object[] { name });
+                        ctx.Require(def != null, "WorkRoles RoleDef missing: " + name);
+                        var templateEntries = ((System.Collections.IEnumerable)
+                            roleDef.GetField("entries").GetValue(def)).Cast<string>();
+                        ctx.Assert(templateEntries.Contains("WorkType:AMJC_GrainProcessing"),
+                            name + " loaded template must contain grain work.");
+                        object seeded = roles.FirstOrDefault(role =>
+                            (string)role.GetType().GetField("templateDefName").GetValue(role) == name);
+                        ctx.Require(seeded != null, "WorkRoles live role missing: " + name);
+                        var assignments = ((System.Collections.IEnumerable)
+                            seeded.GetType().GetField("entries").GetValue(seeded)).Cast<object>();
+                        ctx.Assert(assignments.Any(entry =>
+                            (string)entry.GetType().GetMethod("Encode").Invoke(entry, null)
+                            == "WorkType:AMJC_GrainProcessing"),
+                            name + " live role must actually include grain work.");
+                    }
+                }
+        }
+
         private static void AssertProviders(PickleContext ctx, bool mo, bool ccto)
         {
             ctx.Assert(Active("dankpyon.medieval.overhaul") == mo, "Real MO presence must match the requested profile.");
@@ -81,7 +121,7 @@ namespace AncientMedievalJapanCore.E2E
                         && grainWork.workGiversByPriority.Contains(millingGiver),
                         "Base manual milling must belong to independent grain work.");
                 }
-                // // Threshing/hulling beta stove fallback applies with or without MO.
+                // Threshing/hulling beta stove fallback applies with or without MO.
                 ThingDef processingFuelStove = DefDatabase<ThingDef>.GetNamed("FueledStove");
                 ThingDef processingElectricStove = DefDatabase<ThingDef>.GetNamed("ElectricStove");
                 ThingDef processingSpot = DefDatabase<ThingDef>.GetNamed("AMJC_GrainProcessingSpot");
