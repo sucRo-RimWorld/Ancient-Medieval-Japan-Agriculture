@@ -9,7 +9,7 @@
       </li>
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="Plant_Rice"]/description</xpath>
-        <value><description>Rice (ine). Paddy-field rice cultivation spread across the Japanese archipelago during the Yayoi period. Paddy rice (suito) is grown in flooded fields, whereas upland rice (okabo, rikuto) grows in dry fields. They belong to the same rice species, though varieties adapted to different growing conditions differ.\n\nAMJGrains represents upland and paddy rice as a single rice crop. It requires warm temperatures and sufficiently fertile soil. After harvest, threshing and hulling yield rice.</description></value>
+        <value><description>Rice (ine). Paddy-field rice cultivation spread across the Japanese archipelago during the Yayoi period. Paddy rice (suito) is grown in flooded fields, whereas upland rice (okabo, rikuto) grows in dry fields. They belong to the same rice species, though varieties adapted to different growing conditions differ.\n\nAMJGrains represents upland and paddy rice as a single rice crop. It requires warm temperatures, at least 70% soil fertility and a Plants skill of 4 to sow. Harvested rice is threshed and processed from paddy into either brown or white rice. White rice takes more work and yields less, but white rice meal and porridge have their own mood effects.</description></value>
       </li>
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="Plant_Rice"]/plant/growDays</xpath>
