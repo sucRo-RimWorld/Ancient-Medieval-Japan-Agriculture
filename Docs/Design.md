@@ -950,7 +950,7 @@ Grainsの現行製粉対象は**雑穀粉・蕎麦粉・大麦粉・小麦粉の
 
 - 玄米はVanilla `RawRice`を再利用（旧DefName/旧Bill/加工1:1を保護）。籾10→玄米10はworkAmount 80、籾10→白米8はworkAmount 240の二択Bill。白米単品の端数レシピは設けず、10個単位の加工で数量減を表現する。白米栄養は1個0.05とし、8個分の栄養に減る。白米を作ると米が増える経路を作らない。
 - 共通の飯・粥・粉食を削除しない。米飯・白飯・米粥・白粥を材料限定の指定料理として追加し、単品と4食Billを備える。玄米側の米飯/米粥は共通飯・粥より調理workを軽くする（220<240、180<200）。白飯は食後Mood +3/0.5日、白粥は+1/0.5日を仮採用し、実プレイで再評価する。白飯と白粥以外はこの指定料理によるMoodバフを持たない。
-- 白米は余りを共通飯・粥にも利用できる。米粉の通常製粉は2026-10-19に停止したため、玄米も白米も米粉へ変換しない。専用の白米/米飯/白飯/粥画像は未承認であり、既存米・共通料理の画像を暫定利用する。
+- 白米は余りを共通飯・粥にも利用できる。米粉の通常製粉は2026-10-19に停止したため、玄米も白米も米粉へ変換しない。玄米の米飯・米粥の専用画像は未承認であり、共通料理の画像を暫定利用する。一方、白飯・白粥の専用画像は2026-10-20にイラスト調候補を作者が暫定採用し、元の共通料理を上書きせず専用 `Art/Sources/Things/Item/Meal/AMJC_WhiteRiceMeal` および `AMJC_WhiteRicePorridge` に原画を保存し、各専用 `Textures/Things/Item/Meal` に256px `_a/_b/_c` を同一画像で配置して参照する。料理のゲーム内表示は未検証。
 - 裕福な出自を理由に全員が玄米・雑穀食を嫌うとは決めない。食事への明確な期待が書かれた一部背景への条件付き心情は、Culture Characters側で背景と特性の整合を先に検討し、Grains本体は背景名へ直接依存しない。
 - **既存Mod比較（VE/非VEの実装入口）:** VEのVanilla Cooking ExpandedとVanilla Plants Expanded More Plantsは粉・作物・料理の追加に先行例があるが、本件の玄米/白米を同一籾から異なる歩留まり・労力で選択するBillを既存のGrains/Vanilla互換へ提供しない。非VEのMedieval Overhaulには独自の穀物処理・料理があるが、GrainsのVanilla `RawRice` を維持したこの二択経路を代替しない。調査範囲は既存の本Repo VE/MO調査と公開説明の確認に限り、他の全Modとの競合不存在を断定しない。独立の新たな精米Frameworkは導入せず、既存AMJ加工台のBillとして最小差分にとどめる。
 
@@ -958,7 +958,7 @@ Grainsの現行製粉対象は**雑穀粉・蕎麦粉・大麦粉・小麦粉の
 **2026-10-19 共通料理の画像（実ゲーム確認待ち）:** 作者は飯 `AMJC_MixedGrainMeal`、粥 `AMJC_MixedGrainPorridge`、粉食 `AMJC_MixedFlourFood` の生成画像3点を、通常ズームでの実ゲーム確認用として暫定採用。原画は `Art/Sources/Things/Item/Meal/<DefName>/<DefName>.png` に無加工で保存し、対応する256×256透過PNGは `Textures/Things/Item/Meal/<DefName>/<DefName>_a,b,c.png` に同一内容で書き出す。各ThingDefの`graphicData/texPath`のみ固有パスへ切替え、`Graphic_StackCount`、DefName、Recipe、素材条件、栄養、心情、保存期間は維持。実ロード時のBadTex・通常ズームの見た目・3品の識別性は未確認。確認前に公開・正式画像完成と主張しない。
 
 
-**2026-10-20 共通料理StackCountの画像フォルダ修正（実ゲーム検証待ち）:** RimWorld 1.6 Unity生ログの `Graphic_Collection.Init: No textures found at path …` は、`Graphic_StackCount` が `texPath` を**画像を格納するフォルダ**として扱うことに対して、3品の指定値が `Things/Item/Meal/<DefName>/<DefName>` と1階層深かったことが原因。PNGの実配置は `Textures/Things/Item/Meal/<DefName>/<DefName>_a,b,c.png` であり、正しい `texPath` は `Things/Item/Meal/<DefName>`。飯・粥・粉食3品とそれを参照する玄米／白米の飯粥4品の合計7 ThingDefについて、`texPath`のみ実フォルダへ修正する。全採用原画／PNG、`Graphic_StackCount`、Bill、心情、保存期間は不変。欠けていたDDSを追加する初回試案は実ゲーム [Project #39390490591](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39390490591) で `No textures found`・BadTexが再現したため不採用とし、生成したDDSは最終PRから除外する。修正が実ゲームで有効かは対象ソースの生ログ・描画素材検証完了まで未確定。
+**2026-10-20 共通料理・白米飯粥StackCount参照先修正（実ゲーム再検証待ち）:** 実ゲーム [Project #39303924920](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39303924920) の Unity `Graphic_Collection.Init: No textures found` は `Graphic_StackCount` の `texPath` が画像のある**フォルダ**を指す必要があるのに、既存XMLがさらに同名サブフォルダを追加していたことが原因。正しくは `Things/Item/Meal/<DefName>` であり、実ファイルは `Textures/Things/Item/Meal/<DefName>/<DefName>_a,b,c.png`。共通3品・玄米飯/粥の参照先と、並行してmainに追加された専用白米飯・白米粥の参照先を合わせる。原画とPNGおよび `Graphic_StackCount`・レシピ・Thought・保存期間は不変。DDS追加試案は [#39390490591](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39390490591) で同じ生ログERRORとBadTex再発を確認して破棄した。
 
 **2026-10-13 五粉の食用途の履歴（2026-10-19修正）：** 麦粉粥は現行生産を維持。米粉団子は当時採用したが、米粉の必須性が不十分なため現在は製粉・調理の新規Billを停止し、既存DefName・画像だけを互換用に保管する。史料に基づく菓子・儀礼食の追加は独立の判断とし、既存の米粉団子を説明文だけで復活させない。
 
