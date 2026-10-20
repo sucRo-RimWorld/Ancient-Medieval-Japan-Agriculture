@@ -40,7 +40,7 @@ Paddy rice has separate processing Bills: 10 portions of paddy produce 10 brown 
 
 Rice flour did exist in ancient and medieval Japan. However, there is insufficient evidence to treat flour made from brown rice as an everyday ingredient of medieval commoners. A separate rice-flour production and stockpiling loop also lacks a clear gameplay purpose in Grains. Rice flour milling and rice-flour dumpling cooking are therefore unavailable in normal production; brown and white rice remain available, with brown rice used in common meals/porridge and dedicated white rice meal/porridge retained. Legacy definitions are retained for compatibility. Rice flour may be reconsidered for historically supported ceremonial foods or confections.
 
-These values reflect the current source definitions. Current-revision loaded-game verification of cooking Bills and ingredient selection is still outstanding; this development build is not a publicly verified release.
+These values reflect the current source definitions. The current nine-dish food loop and selected cooking Bills have been checked in native RimWorld 1.6 Vanilla/CCTO gameplay; MO+CCTO gameplay also completed its ten scenarios on the nine-dish source. The unchanged external MO/SYR FMOD audio errors remain in the original logs and are not Grains release blockers. These checks do not establish ordinary-play balance, final zoom-level appearance or the actual Workshop subscriber build.
 
 ## Dependencies and compatibility
 
@@ -60,7 +60,7 @@ New Village and its starting definitions are provided exclusively by the separat
 
 The author confirmed on 2026-10-10 that Grains has not been installed or used. **There are no existing Grains saves to migrate.** Historical save migration, enabling/disabling mid-save and removing MO from old saves are **out of scope**, not release blockers.
 
-The mandatory MO dependency has been removed. Previous fresh-start Vanilla / MO × CCTO tests passed on their tested revisions; current-revision game loading and native Bills, final graphics, UI/language and gameplay balance remain to be verified. This development build has not been publicly released.
+The mandatory MO dependency has been removed. The RimWorld 1.6 nine-dish Grains source passed 10/10 native gameplay scenarios in Vanilla and 10/10 with CCTO, with no Unity errors ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403725666)). MO+CCTO passed its 10 gameplay scenarios on that nine-dish source ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39404691834)); the original strict test run is marked failed solely because of two pre-existing external MO/SYR FMOD audio errors, which the author excludes from Grains release judgment. A later native Vanilla/CCTO check also passed both white-rice porridge single/bulk cooking jobs ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403704297)); the added test was not independently rerun with MO. Ordinary-play usability, visual appearance at normal zoom, crop balance, the exact installed payload and the author's publication decision remain open. This development build has not been publicly released.
 
 ## First release scope / 初回公開範囲
 
