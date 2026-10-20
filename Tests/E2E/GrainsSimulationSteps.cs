@@ -855,7 +855,13 @@ namespace AncientMedievalJapanCore.E2E
                     worker.jobs.StartJob(job, JobCondition.InterruptForced);
                     ctx.Require(worker.CurJob == job, "Ingest job did not start for " + name);
                 });
-                await Complete(job, () => item.Destroyed, "Ingest/" + name);
+                // An item can disappear before the native Ingest driver has
+                // recorded its tasteThought. Do not interrupt its job merely
+                // because consumption started; require the real pawn memory
+                // for specialty meals before ending the disposable test job.
+                await Complete(job, () => item.Destroyed && (!specialty ||
+                    worker.needs.mood.thoughts.memories.Memories.Any(m => m.def == thought)),
+                    "Ingest/" + name);
                 await RuntimeThread.Run(delegate
                 {
                     int after = worker.needs.mood.thoughts.memories.Memories.Count(m => m.def == thought);
