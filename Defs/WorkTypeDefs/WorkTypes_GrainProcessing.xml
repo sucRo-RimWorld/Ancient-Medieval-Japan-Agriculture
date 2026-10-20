@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- Manual grain labor independent of meal preparation. -->
+  <WorkTypeDef>
+    <defName>AMJC_GrainProcessing</defName>
+    <labelShort>Grain processing</labelShort>
+    <pawnLabel>grain processor</pawnLabel>
+    <gerundLabel>processing grain</gerundLabel>
+    <description>Thresh and dehusk harvested grains on AMJ processing benches, or mill grains on the AMJ manual millstone. This work can be assigned separately from meal preparation.</description>
+    <verb>Process</verb>
+    <naturalPriority>450</naturalPriority>
+    <requireCapableColonist>true</requireCapableColonist>
+    <relevantSkills>
+      <li>Cooking</li>
+    </relevantSkills>
+    <workTags>
+      <li>ManualDumb</li>
+    </workTags>
+  </WorkTypeDef>
+</Defs>

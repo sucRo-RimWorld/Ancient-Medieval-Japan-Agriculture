@@ -105,14 +105,17 @@ def validate(root=ROOT):
             stone = defs['AMJC_ManualMillstone']
             assert stone.find('researchPrerequisites') is None
             assert stone.findtext('costList/BlocksGranite') == '30' and stone.findtext('costList/WoodLog') == '20'
+        grainWorkType = defs['AMJC_GrainProcessing']
+        assert grainWorkType.tag == 'WorkTypeDef'
+        assert [x.text for x in grainWorkType.findall('workTags/li')] == ['ManualDumb']
         work = defs['AMJC_DoGrainProcessing']
         assert work.tag == 'WorkGiverDef' and work.findtext('giverClass') == 'WorkGiver_DoBill'
-        assert work.findtext('workType') == 'Cooking'
+        assert work.findtext('workType') == 'AMJC_GrainProcessing'
         assert [n.text for n in work.findall('fixedBillGiverDefs/li')] == ['AMJC_GrainProcessingSpot','AMJC_GrainProcessingTable']
         if profile == 'vanilla':
             work = defs['AMJC_DoGrainsMilling']
             assert work.tag == 'WorkGiverDef' and work.findtext('giverClass') == 'WorkGiver_DoBill'
-            assert work.findtext('workType') == 'Cooking'
+            assert work.findtext('workType') == 'AMJC_GrainProcessing'
             assert [n.text for n in work.findall('fixedBillGiverDefs/li')] == ['AMJC_ManualMillstone']
         # All single/bulk grain-processing Bills inherit this Base-and-MO stove fallback.
         processing_users = ['AMJC_GrainProcessingSpot', 'AMJC_GrainProcessingTable',
