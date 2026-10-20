@@ -24,4 +24,4 @@ Place one Steam `[hr][/hr]` after the complete English description and before th
 - 英語欄に日英併記を一度だけ掲載する。旧仕様の比較PNGは原本を保存し、現行本文には掲載しない。画像・キャプションの内容や元ファイルは変更しない。
 - `About/About.xml` と `About/Manifest.xml` のバージョンは `0.1.0-dev` のまま。作者管理の `About/Changelog.txt`・既存 `PublishedFileId.txt` を勝手に置換しない。
 - 実際に作者が非公開アップロードを行う前に、Workshop用のローカルインストール場所・加入者向けフィルタ・About/Manifest/Changelog・MO条件付き`loadFolders.xml`・承認済み画像・Workshop IDを確認する。正規の `Tests/Release/validate_workshop_payload.py` と `Tests/Release/validate_add_changenote.py` を使用する。
-- **HOLD:** 配布対象の現行1.6一括実機・日英UI・見た目・プレイバランス、実際のWorkshopアップロードと再ダウンロードの確認は未実施。本書やCI成功をSteam反映済み・公開可能と解釈しない。非公開状態で作者本人が通常プレイした後、公開可否を判断する。
+- **2026-10-20 現状:** 現行9料理/18 BillのRimWorld 1.6 Vanilla・CCTO実ジョブ各10/10、元Unity ERROR0。MO+CCTOは同じ9料理の実ジョブ10/10合格・Grains固有XML ERROR0だが、既知の外部MO/SYR音声FMOD2件で元のProject厳密ERROR0はFAIL。作者の決定により**Grainsが変更していない既知音声2件は初回公開の阻害要因としない**。その後追加した白粥単品・4食実BillはVanilla/CCTOで合格、MOでの追加分再実行は未実施。証拠・対象SHAは `Docs/GrainsProfileTesting.md` を参照。**引き続きHOLD:** 通常プレイの操作感・穀物バランス判断・通常ズーム画像、現行配布候補のローカル導入・Workshop実アップロードと再ダウンロード、公開承認。過去の93ファイルのフィルタ監査は当時の記録であり現行ファイル数ではない。作者の公開指示なしに版数やWorkshop IDを確定せず、Steam公開もしない。
