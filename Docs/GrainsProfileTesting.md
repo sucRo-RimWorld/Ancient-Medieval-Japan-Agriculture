@@ -1,6 +1,16 @@
 # Grains dependency-migration test profiles
 
 
+### 2026-10-21 Actual original WorkRoles 1.6 saved-game reload migration — PASS
+
+**Acceptance scope:** A genuinely saved `.rws` from a **first process without Grains, but with original WorkRoles loaded**; custom live stock `WS_Farmer` has `PlantCutting` removed, an independent custom player role contains only `Growing`, and a real colonist is assigned that custom role. After enabling Grains in a separate game process, the *same* saved game is loaded through RimWorld Scribe, not merely a rewritten memory object. Assert (a) `AMJC_GrainProcessing` newly known to WorkRoles, (b) present in Farmer/Grower seeded templates, with `Growing` before it, (c) player-removed Farmer `PlantCutting` stays removed, (d) custom role's entry list stays unchanged, (e) custom role still assigned to the original pawn. No player's saved data or ModsConfig was used.
+
+**Exact real native evidence:** [Project #39543914641](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39543914641), artifact `12321260449`, Grains source `49ee07c4defdeb035e2c926e6572cc201e3f88a3` ([Grains PR #231](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains/pull/231)), source-built original WorkRoles `e5d29302c3922a60a324f57a3c2ecd5cc02d87ed`, Linux RimWorld 1.6.4871. `pre-grains`: `.rws` exists (559251 bytes, SHA256 `f0ac829c6feca60e6af4952cd1da5a37ac4d76c2417d9ad1986685b088eb87f4`), `AMJ_WR_SAVE_CREATED prepared=True saved=True`, game exit0, Unity error_count0, no timeout. `post-grains`: actual loaded game `AMJ_WR_RELOAD_RESULT passed=True actualScribeGameReload=true customRolePreserved=true`, game exit0, original Unity error_count0, no timeout. `workroles-save-reload-result.json`: `native_save_reload_pass=true`. The two launches were 69.2s and 38.5s. This is a real serialized-save acceptance, not just `Seeding.EnsureWorkTypeCoverage` reflection.
+
+**Limitations:** The original WorkRoles 1.6 assembly was source-built from its pinned upstream repository, not byte-equal to Workshop; the test uses one generated user-custom role/assigned pawn and one edited Farmer member, not all possible historical save schemas or arbitrary third-party role tweaks; no MO or 1.7 on this save-reload acceptance. The production Grains XML/recipes/work numbers were not changed.
+
+
+
 ### 2026-10-21 MO × original WorkRoles split-job functional acceptance (strict FMOD FAIL retained)
 
 **Reason:** An earlier real MO+WorkRoles 1.6 run [#39485736301](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39485736301) used the already-Vanilla-passed Grower rice harvest priority test unchanged. It ran the real MO profile, **9/10 Pickle PASS**, and failed only that harvest-priority assertion; original external FMOD errors2, exit1 and strict matrix FAIL were recorded (artifact `12297490959`). This did not prove a MO-mill WorkRoles defect. The WorkRoles regression test now uses a separate opt-in MO method, without changing production recipes or the strict error classifier.
