@@ -1,6 +1,6 @@
 > 2026-10-10: The author explicitly instructed replacement of old Grains artwork with the Astra-generated revision. The current crop/sheaf source and legacy texture files have been overwritten accordingly; historical recovery hashes below describe the superseded files, not the current files. Current exact source/target hashes and provenance are in [AstraReplacement-20261010.json](AstraReplacement-20261010.json). Generated originals retain their original resolution; immature outline-normalized high-resolution working sources are stored separately. Kernel/masu art is outside this replacement. Local installation only; GitHub publication and runtime rendering are not claimed.
 
-> Historical Workshop common sources moved to Project on 2026-10-08. Entries below are **source recovery history only**, not current preview rules or a layout to reuse; original bytes remain archived at the linked Project paths.
+> Approved AMJ-series Workshop cover sources moved to Project on 2026-10-08. The original raster, approved reference and mask are preserved there and remain the **active fixed-left cover sources** for AMJ-branded Mods. These entries document their provenance; the obsolete pre-2026-10-04 dark-map/old-heading cover design is not a current rule. Independent CCTO/QoL previews retain their own formats.
 
 # AMJ Authoritative Art Sources
 
@@ -108,8 +108,8 @@ Additional accepted sources should be added to the corresponding mirrored path a
 - Archived file: [Workshop/AMJ_WorkshopCover_Core_Approved_Reference.jpg](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Art/Sources/Workshop/AMJ_WorkshopCover_Core_Approved_Reference.jpg).
 - Original: `AMJ_WorkshopCover_Core_Approved_Reference.jpg`, Library identity `libfile_f0ec7d3c94f88191ab304f0fbdb13946`; registered at `/AMJ/References/AMJ_WorkshopCover_Core_Approved_Reference.jpg`.
 - Original dimensions: 960×540 RGB JPEG; 92,308 bytes. Preserved without resizing or re-encoding.
-- SHA-256: `ef662e1eb2e399c594adfb6a4d594f1e2727559a73e380f312638b1bc8585658`, matching the recorded 2026-10-07 source-recovery SHA-256 values (retired cover rules).
-- Provenance: the author-approved visual reference historically registered by the retired Workshop cover composition workflow. Visually inspected and fully decoded; exact registered source bytes were copied.
+- SHA-256: `ef662e1eb2e399c594adfb6a4d594f1e2727559a73e380f312638b1bc8585658`, matching the preserved 2026-10-07 source-recovery SHA-256 values (active AMJ-series cover sources).
+- Provenance: the author-approved visual reference retained by the restored AMJ-series Workshop cover composition workflow. Visually inspected and fully decoded; exact registered source bytes were copied.
 - This file is the accepted visual reference, distinct from the SVG schematic, fixed common base and variable mask. The common base and variable mask are now archived separately. This archive action does not create or replace `About/preview.png` or publish a Workshop cover.
 
 ### Workshop cover common raster — 2026-10-07 JST
@@ -117,8 +117,8 @@ Additional accepted sources should be added to the corresponding mirrored path a
 - Archived file: [Workshop/AMJ_WorkshopCover_CommonBase.png](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Art/Sources/Workshop/AMJ_WorkshopCover_CommonBase.png).
 - Original: `AMJ_WorkshopCover_CommonBase.png`, Library identity `libfile_1730eee945f8819198690f7cb988c96c`; registered at `/AMJ/References/AMJ_WorkshopCover_CommonBase.png`.
 - Original dimensions: 960×540 RGB PNG; 149,866 bytes. Preserved without resizing, color conversion, or re-encoding.
-- SHA-256: `a738d175bf1997e95f02456843686f8d2d59571d47849e55d04a957707514362`, matching the recorded 2026-10-07 source-recovery SHA-256 values (retired cover rules).
-- Provenance: the historical fixed raster for the retired cover compositor. Visually inspected the parchment field, title and common ornaments; original bytes are preserved.
+- SHA-256: `a738d175bf1997e95f02456843686f8d2d59571d47849e55d04a957707514362`, matching the preserved 2026-10-07 source-recovery SHA-256 values (active AMJ-series cover sources).
+- Provenance: the approved fixed common-left raster for the restored AMJ-series cover compositor. Visually inspected the parchment field, title and common ornaments; original bytes are preserved.
 - Source PNG validation checked chunk boundaries/CRCs, the complete IDAT/zlib stream, RGB scanlines/filters, IEND and full image decoding. The production-only PNG gate permits indexed/RGBA encoding; this immutable RGB source is validated separately without changing its encoding.
 - The variable mask is now archived separately. This action does not create a cover, replace `About/preview.png`, or publish to Workshop.
 
@@ -127,7 +127,7 @@ Additional accepted sources should be added to the corresponding mirrored path a
 - Archived file: [Workshop/AMJ_WorkshopCover_VariableMask.png](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Art/Sources/Workshop/AMJ_WorkshopCover_VariableMask.png).
 - Original: `AMJ_WorkshopCover_VariableMask.png`, Library identity `libfile_f831c30d1cac819192ed282dbf430698`; registered at `/AMJ/References/AMJ_WorkshopCover_VariableMask.png`.
 - Original dimensions: 960×540, 8-bit grayscale (L) PNG; 1,216 bytes. Preserved without resizing, color conversion, or re-encoding.
-- SHA-256: `e2bbf3547587eebafabc404f0adf3fdad7ffc29df84b0018b871af31c8689622`, matching the 2026-10-07 archived source SHA-256 record (retired cover template).
+- SHA-256: `e2bbf3547587eebafabc404f0adf3fdad7ffc29df84b0018b871af31c8689622`, matching the 2026-10-07 archived source SHA-256 record (active AMJ-series cover template).
 - Provenance: the registered deterministic compositor mask, with 0 meaning protected and 255 meaning editable. All pixels match the registered right-side region `x >= 330` and addon-label rectangle `[66,378,310,426]` (inclusive pixel bounds), with no other editable pixels.
 - Source PNG validation checked chunk boundaries/CRCs, the complete IDAT/zlib stream, grayscale scanlines/filters, IEND and full decoding. The production-only PNG gate permits indexed/RGBA encoding; this immutable grayscale source is validated separately without conversion.
 - All four registered Workshop source roles (SVG, approved reference, common base and variable mask) are now archived. This action does not create or replace a cover or publish to Workshop.
