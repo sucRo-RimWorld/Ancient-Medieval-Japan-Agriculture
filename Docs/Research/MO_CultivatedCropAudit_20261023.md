@@ -2,7 +2,7 @@
 
 **Owner:** Agriculture (repository renamed from Grains; existing in-game name/packageId retained). **Evidence:** user-supplied actual MO Steam package ID `3219596926`, 1.6 source, `Defs/ThingDefs_Plants/Plants_Cultivated_Farm.xml` and 1.6 recipe/item/storage XML (not MO wiki/other versions). Exactly **17 named cultivated non-alchemy crop ThingDefs** have a `plant/harvestedThingDef`; four additional MO alchemy garden crops are excluded from this decision entirely. Search covers 1.6 MO `Defs/` and `Patches/` actual XML; external optional Mods' final loaded state, legacy saves, and 1.7 not certified.
 
-**Interpret status precisely:** `EXCLUDE` = the present PR implements a **bounded** exclusion of normal sow/cooking/ordinary trade/known MO container entries while keeping all Defs; `EXCLUDED` = prior source excludes the same bounded routes. `KEEP` = do not remove current source; other quantitative/cooking choices not automatically approved. `HOLD` = no edit now. The end-state ideal of a fully MO-free Agriculture is not a prerequisite: existing useful processes stay. Species names are not enough to approve unnamed cultivars or modern cuisine.
+**Interpret status precisely:** `REINTERPRET (partial)` = the approved MO fibre carrier is being adapted through Agriculture plus required-for-integration Japanization, with no claim of completed texture/biological accuracy. `EXCLUDE` = the present PR implements a **bounded** exclusion of normal sow/cooking/ordinary trade/known MO container entries while keeping all Defs; `EXCLUDED` = prior source excludes the same bounded routes. `KEEP` = do not remove current source; other quantitative/cooking choices not automatically approved. `HOLD` = no edit now. The end-state ideal of a fully MO-free Agriculture is not a prerequisite: existing useful processes stay. Species names are not enough to approve unnamed cultivars or modern cuisine.
 
 | MO cultivated plant | Harvested Def | Status | Source-based rationale and connected flows |
 |---|---|---|---|
@@ -12,7 +12,7 @@
 | `DankPyon_Plant_Garlic` | `DankPyon_RawGarlic` | **KEEP** | Japanese records from ancient texts, historically attested; culinary/medicinal context still to rebalance |
 | `DankPyon_Plant_Mushrooms` | `RawFungus` | **HOLD** | Specific cultivation technique and fungus type undefined; fungal food exists but generic simple field cultivation not automatically validated |
 | `DankPyon_Plant_Wheat` | `DankPyon_RawWheat` | **KEEP** | Historical grain and current Grains/MO flour/stone milling reuse; no change |
-| `DankPyon_Plant_Flax` | `DankPyon_RawFlax` | **HOLD** | Modern Japan flax-fiber crop dated Meiji; upstream linen spinning and loom/stored fiber must be rerouted with Clothing/textiles before farm is disabled |
+| `DankPyon_Plant_Flax` | `DankPyon_RawFlax` | **REINTERPRET (partial)** | Retain Def carrier for approved karamushi/ramie textile route: Agriculture sets PlantPurpose.Misc and raw-fibre category Textiles; Japanization maps crop/raw/linen labels and textile research, preserving MO clothChain ON/OFF. Plant appearance and lifecycle need separate visual/numerical acceptance; not removal or fully validated Japanese textile production. |
 | `DankPyon_Plant_Sugarcane` | `DankPyon_Sugarcane` | **HOLD** | Ryukyu/island sugar/cultivation and sugar grinding must be separated by geographic/era and owner supply routes |
 | `DankPyon_Plant_Carrots` | `DankPyon_RawCarrots` | **HOLD** | Eastern carrot entered Japan around 16th/17th century; MO visual variety and early/late-era gating unreviewed |
 | `DankPyon_Plant_Herb` | `DankPyon_RawHerb` | **HOLD** | Generic culinary herb species unspecified; do not confuse with 4 separately frozen MO medicinal herbs |
@@ -46,7 +46,7 @@
 
 ## Next work requiring a separate impact audit
 
-1. Flax and linen/fiber chain: MO `DankPyon_RawFlax` feeds `DankPyon_SpinFlax` and two `DankPyon_MakeLinen` Bills, plus flax storage containers. Do not delete before alternative hemp/ramie input and MO/Culture textile responsibility are approved. A Japanese fiber is not mechanically equivalent to European linen by label change.
+1. Fibre production: the previously approved MO `DankPyon_Plant_Flax`→苧麻/カラムシ and `DankPyon_Linen`→麻布 reinterpretation now has bounded source patches in Agriculture/Japanization. Retain plant and cloth Def identity; retexture/plant regrowth and actual MO `clothChain` ON/OFF gameplay remain unresolved, and no additional independent textile Mod is forced.
 2. Lentils and their four food Bills: imported grain-crop status not resolved, plus existing Agriculture-owned MO lentil growDays/sowMinSkill2; don't remove from sow menu prematurely.
 3. Sugarcane, apple/wine, grape/wine, pumpkin, carrot cultivar, generic herb, fungus cultivation: separate historical era and ordinary-food or industrial supply contracts from raw crop availability; keep as provisionally loaded while review proceeds. Vanilla corn/potatoes/hops and other Vanilla crops need a **separate** period-fit audit with their own Def/research/food paths; do not misrepresent a MO-only count as global completion.
 4. The 1.6 original game final patched Defs, farm menu, kitchen Bills, generated merchant stock, MO hideout loot, and old save are unverified. Run smallest consolidated manual test only after the bounded source implementation ends, not on every PR.

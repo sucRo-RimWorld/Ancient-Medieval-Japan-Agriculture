@@ -23,6 +23,8 @@
 
 **2026-10-23 MO栽培作物17種の接続監査・第3段階の実装（1.6.2.2）:** 実MO栽培Def17種を`Docs/Research/MO_CultivatedCropAudit_20261023.md`に全件記録。史実上AMJ範囲外のタマネギ（明治本格栽培）、食用結球キャベツ（幕末・明治以降）、レモン（明治初期導入）を`Patches/MO_CropExclusion_OnionCabbageLemon.xml`で**播種3、原料通常交易3、料理RecipeDefの新規Bill9、料理完成品通常交易4、MO拠点戦利品4レコード**の単位で除外する。MO既存の料理Def・加工設備を消さず、共通素材（ニンニク、肉、塩、穀物等）はそのまま再利用。トマトオムレツの完成品一般交易だけが先行パッチに残っていたため、**`Patches/MO_CropExclusion_Tomato.xml`で完成品`DankPyon_MealTomatoOmelette`の`tradeability=None`を追加し同じ所有ループを閉じる**。MO任意`MayRequire`のまま、新規依存・packageId・DefName・数量バランス・MO薬草4種には触れない。MO 1.6元データに対する静的対象XPath23ノードと既存トマト完成品のDef存在照合済みだが、**実ゲーム1.6／1.7最終Def・栽培UI・料理・交易・戦利品・既存セーブは未検証**。亜麻（工業繊維チェーン）、レンズ豆（料理/既存AMJ技能）、現代リンゴ品種、糖料作物などは他機能と一体で監査するため今回は保留。
 
+**2026-10-23 MO繊維作物の限定的転用（責務境界）：** 旧MO亜麻 `DankPyon_Plant_Flax`・原料`DankPyon_RawFlax` は史実の亜麻として維持せず、既存Japanizationの正式な採用済み紡績設計（`Docs/Research/MedievalOverhaulJapanizationClothingTextileMapping.md`）に従い**苧麻／青苧のDefキャリアとして再利用**する。Agricultureは`Patches/MO_FibreCropPurpose.xml`で植物の栽培区分`purpose=Food`を`Misc`に、収穫原料の`thingCategories=Foods`を`Textiles`へ変える。栽培数値・収量・収穫Def・MO設定は変更しない。Japanizationは同一植物と布・加工Defの名称、研究、製造工程を一体で日本化する。**Agriculture単独／MO併用時は紡績材料の日本語化や研究再構成が完成するわけではなく、AMJ統合プロファイルで両方が揃うことが前提。** カラムシの多年草としての再生・栽培効率と亜麻原画像の葉形状は未対応のため完成した植物再現・リテクスチャ採用とは報告しない。実ゲーム確認は未実施。MO薬草4種には触れない。
+
 **既存の実装状態（上記で明記したMO作物の限定除外を除く）:** 上記は製品範囲の新しい承認方針であって、残る作物・料理の選別、豆類等の追加、Agricultureへの改名、数値バランス変更は**未実装**。下記の旧Grains専用・旧Stage B〜D別所有の記述は実装履歴／V1状態の説明であり、将来所有判断としては本節を優先する。
 
 **基本方針（既存V1の実装経路）:** GrainsはAMJ全体の必須Coreではなく、現行V1の穀類栽培・加工・料理を自己完結して提供する。Vanilla + Grainsを基本経路とし、Medieval Overhaul（MO）は任意の公式互換先。MOありではMO固有の小麦・石臼等を条件付きで再利用し、Grains所有の設定を優先する。旧セーブからのMO削除・移行は、導入実績と対象セーブがないため今回の対象外。
@@ -455,9 +457,9 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 | CCTO | なくてもGrains作物は成立 | CCTO存在時だけ既存互換Patch | **任意互換** |
 | 共通の稲 / `RawRice` | Vanilla `Plant_Rice` / `RawRice` を再利用し、V1では畑地向けに調整 | 共通Plantを保持し、将来の水田環境で生育・収量を補正 | **Grains**。陸稲・水稲・うるち・もち米の別Plant/食材/米粉ThingDefは増やさない |
 | 水田・水管理 | 所有しない | 所有しない | **Rice Cultivation**。同じ `Plant_Rice` の水田対応を所有し、Waterworksは任意の供給基盤 |
-| 豆類 | 所有しない | 所有しない | **Grains外。将来所有先を用途と合わせて決定** |
-| 繊維・紡績・製紙 | 所有しない | Grains-MO互換にも置かない | **Grains外。将来のMaterials/Textiles等で決定** |
-| 根菜・一般野菜 | 所有しない | 所有しない | **Grains外。将来所有先を決定** |
+| 豆類 | Agriculture更新段階で栽培・収穫を所有する（V1未実装） | MOの品種・料理は歴史監査後に個別選別 | **Agriculture（2026-10-23決定）** |
+| 繊維作物の栽培・収穫原料／紡績・織布・製紙 | 旧V1では対象外。Agricultureで繊維植物の栽培・農産原料を所有し、加工産業は他Owner | 現在のMO `DankPyon_Plant_Flax`と`DankPyon_RawFlax`を`Patches/MO_FibreCropPurpose.xml`で繊維作物/原料へ分類（MO任意） | **栽培・一次農産原料＝Agriculture／既存MO紡績・麻布・研究・画像＝MO Japanization、独立産業の新規実装＝別途決定** |
+| 根菜・一般野菜 | V1対象外、Agriculture将来更新の栽培・収穫・食材化 | 不適切なMO作物の通常取得・料理を歴史選別で除外 | **Agriculture（2026-10-23決定）** |
 
 **脱穀「Xまで実行」の修正仕様（2026-10-15）:** MO併用時の脱穀10レシピは主製品（穀粒・籾）と副産物 `DankPyon_Straw` を出力する。`workerCounterClass` はGrains専用 `AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain` とし、先頭の主製品だけをカウントする。ゾーン・品質・在庫条件はRimWorld標準 `CountProducts` を継承する。従来の藁、材料、歩留まり、作業量、DefName、`targetCountAdjustment` を変更しない。Vanillaは標準カウンターのままとする。MO向け配布前に `Assemblies/AMJGrains.dll` を公式ゲーム参照に対してビルドし、ロード・Billの実行・配布物への同梱を確認する。C#ソースのみの変更を実機PASSやリリース完成とはみなさない。
 
@@ -1184,9 +1186,9 @@ MO 1.6の `DankPyon_Cereal` は製粉Recipe、Ale wort Recipe、風車・水車�
 - 雑穀・ソバ・大麦は従来どおり専用粉経路を持ち、MOの汎用製粉・醸造に自動追加しない。
 - Strawの発生点はカテゴリではなく脱穀Recipeで制御する。第三者の旧カテゴリ依存は実機未検証とする。
 
-#### MO紙・紡績等はGrains外
+#### MO紙・紡績等の産業設備はAgriculture外（繊維の栽培・原料はAgriculture）
 
-旧Core案にあった麻・カラムシ、MO Paper、Spinning Wheel、Paper Press等の統合は、Grains再編後はGrainsの責務ではない。設計知見は将来の繊維/Materials系機能の参考として保持してよいが、Grains BaseにもGrains-MO互換にも実装しない。
+**2026-10-23改訂:** 作物としてのカラムシ等の栽培・収穫原料はAgricultureが所有する。現行MO `DankPyon_Plant_Flax`の栽培用途と`DankPyon_RawFlax`の原料カテゴリはAgricultureの任意MO互換Patchが所有する。ただし、MO Paper、Spinning Wheel、Paper Press、麻布製造Recipe、紡績・織機本体の産業工程はAgricultureには実装しない。旧Core案の全面的な材料・紡績産業取り込みは撤回済み。MO日本化の麻布・研究・設備の転用正本はMO Japanization側。
 
 ## 7. Food Drying 連携
 
@@ -1339,11 +1341,11 @@ Grainsの主要実装は、次の順で管理する。
 | **Grains V1** | 暫定加工設備で基本ループを成立 | 脱穀・殻取りはVanilla/MO両方で調理台対応。非MOの5製粉Recipeは調理台にも対応し、MO製粉はMO石臼を維持 | XML・静的テスト・実機検証項目を実装。実ゲームの新経路とV1リリース検証は未完了 |
 | **V1後の設備整備** | 専用作業台への振り分け | 加工場所・加工台・石臼の用途・完成画像とRecipe割当を整理して暫定調理台経路を再評価 | 将来の更新項目。時期・構成未確定 |
 
-旧Stage B（豆類）、Stage C（繊維）、Stage D（根菜）はGrainsロードマップから削除する。将来必要なら、それぞれの主要用途と自然な所有Modを決めて別途設計する。
+**2026-10-23改訂:** 旧Stage B/C/Dを別Modへ移す以前の方針は撤回し、豆類・繊維作物・根菜の栽培と収穫原料はAgricultureの将来バージョン範囲へ復帰した。独立した紡績・製紙・醸造等の産業ループは別Ownerで保持する。
 
 ### Grains外へ移した旧Core候補
 
-旧Core由来でGrainsの所有外となった未所属候補はProjectの [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) に移管した。Grainsには「所有しない」という境界だけを適用する。
+旧Core由来でGrainsの所有外となった未所属候補はProjectの [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) に移管した。この旧候補移管は歴史的記録であり、2026-10-23以降は作物の栽培・収穫原料についてAgricultureが所有する。
 ### 旧Core候補の履歴（Grains外）
 
 履歴と再検討条件はProjectの [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) を正本とする。
