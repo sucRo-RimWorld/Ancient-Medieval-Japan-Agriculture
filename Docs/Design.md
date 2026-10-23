@@ -23,6 +23,8 @@
 
 **2026-10-23 MO栽培作物17種の接続監査・第3段階の実装（1.6.2.2）:** 実MO栽培Def17種を`Docs/Research/MO_CultivatedCropAudit_20261023.md`に全件記録。史実上AMJ範囲外のタマネギ（明治本格栽培）、食用結球キャベツ（幕末・明治以降）、レモン（明治初期導入）を`Patches/MO_CropExclusion_OnionCabbageLemon.xml`で**播種3、原料通常交易3、料理RecipeDefの新規Bill9、料理完成品通常交易4、MO拠点戦利品4レコード**の単位で除外する。MO既存の料理Def・加工設備を消さず、共通素材（ニンニク、肉、塩、穀物等）はそのまま再利用。トマトオムレツの完成品一般交易だけが先行パッチに残っていたため、**`Patches/MO_CropExclusion_Tomato.xml`で完成品`DankPyon_MealTomatoOmelette`の`tradeability=None`を追加し同じ所有ループを閉じる**。MO任意`MayRequire`のまま、新規依存・packageId・DefName・数量バランス・MO薬草4種には触れない。MO 1.6元データに対する静的対象XPath23ノードと既存トマト完成品のDef存在照合済みだが、**実ゲーム1.6／1.7最終Def・栽培UI・料理・交易・戦利品・既存セーブは未検証**。亜麻（工業繊維チェーン）、レンズ豆（料理/既存AMJ技能）、現代リンゴ品種、糖料作物などは他機能と一体で監査するため今回は保留。
 
+**2026-10-23 MO繊維作物の限定的転用（責務境界）：** 旧MO亜麻 `DankPyon_Plant_Flax`・原料`DankPyon_RawFlax` は史実の亜麻として維持せず、既存Japanizationの正式な採用済み紡績設計（`Docs/Research/MedievalOverhaulJapanizationClothingTextileMapping.md`）に従い**苧麻／青苧のDefキャリアとして再利用**する。Agricultureは`Patches/MO_FibreCropPurpose.xml`で植物の栽培区分`purpose=Food`を`Misc`に、収穫原料の`thingCategories=Foods`を`Textiles`へ変える。栽培数値・収量・収穫Def・MO設定は変更しない。Japanizationは同一植物と布・加工Defの名称、研究、製造工程を一体で日本化する。**Agriculture単独／MO併用時は紡績材料の日本語化や研究再構成が完成するわけではなく、AMJ統合プロファイルで両方が揃うことが前提。** カラムシの多年草としての再生・栽培効率と亜麻原画像の葉形状は未対応のため完成した植物再現・リテクスチャ採用とは報告しない。実ゲーム確認は未実施。MO薬草4種には触れない。
+
 **既存の実装状態（上記で明記したMO作物の限定除外を除く）:** 上記は製品範囲の新しい承認方針であって、残る作物・料理の選別、豆類等の追加、Agricultureへの改名、数値バランス変更は**未実装**。下記の旧Grains専用・旧Stage B〜D別所有の記述は実装履歴／V1状態の説明であり、将来所有判断としては本節を優先する。
 
 **基本方針（既存V1の実装経路）:** GrainsはAMJ全体の必須Coreではなく、現行V1の穀類栽培・加工・料理を自己完結して提供する。Vanilla + Grainsを基本経路とし、Medieval Overhaul（MO）は任意の公式互換先。MOありではMO固有の小麦・石臼等を条件付きで再利用し、Grains所有の設定を優先する。旧セーブからのMO削除・移行は、導入実績と対象セーブがないため今回の対象外。
