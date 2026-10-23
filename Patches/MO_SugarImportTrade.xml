@@ -16,6 +16,8 @@
         <thingDefs>
           <li>DankPyon_Sugar</li>
         </thingDefs>
+        <!-- Provisional balance only: must be author-accepted before merge. -->
+        <countRange>3~6</countRange>
       </li>
     </value>
   </Operation>
