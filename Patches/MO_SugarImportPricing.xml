@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
   <!--
-    PROPOSAL ONLY / NOT APPROVED FOR MAIN.
-    Original MO Sugar MarketValue=2.2; draft import-luxury candidate=5.0,
-    compared against salt=1.0 and spices=2.5. No historical currency
-    conversion is asserted. Final coefficient needs author/gameplay acceptance.
+    Author-approved sugar import price: 5.0 (original MO value: 2.2),
+    compared with MO salt=1.0 and spices=2.5. This is a gameplay price,
+    not a historical currency conversion; native economy still unverified.
     Agriculture retains MO optionality and original Sugar Def identity.
   -->
   <Operation Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
