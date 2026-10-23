@@ -4,7 +4,7 @@
     Finished sugar is imported to AMJ mainland; local sugarcane cultivation
     and production remain excluded by MO_CropExclusion_Sugarcane.xml.
     Reuse the existing MO noble house art patron's MultiDef stock mechanism,
-    already used for Chocolate, without inventing stock quantities or prices.
+    already used for Chocolate, with author-approved sugar stock 3~6.
     Do not edit Chocolate's original generator or any other trader.
     This is an optional-MO trade entry; actual generated trader stock and
     balance still require native acceptance in the final MO/Japanization setup.
@@ -16,6 +16,8 @@
         <thingDefs>
           <li>DankPyon_Sugar</li>
         </thingDefs>
+        <!-- Author-approved import stock per merchant: 3 to 6 units. -->
+        <countRange>3~6</countRange>
       </li>
     </value>
   </Operation>
