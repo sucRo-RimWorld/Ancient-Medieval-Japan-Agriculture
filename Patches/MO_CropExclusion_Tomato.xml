@@ -46,6 +46,14 @@
           <recipeUsers />
         </value>
       </li>
+      <!-- Prior source removed the Tomato Omelette Bills but still allowed
+           its finished meal ThingDef in general trader stock. -->
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealTomatoOmelette"]</xpath>
+        <value>
+          <tradeability>None</tradeability>
+        </value>
+      </li>
     </operations>
   </Operation>
 </Patch>
