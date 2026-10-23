@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    PROPOSAL ONLY / NOT APPROVED FOR MAIN.
+    Original MO Sugar MarketValue=2.2; draft import-luxury candidate=5.0,
+    compared against salt=1.0 and spices=2.5. No historical currency
+    conversion is asserted. Final coefficient needs author/gameplay acceptance.
+    Agriculture retains MO optionality and original Sugar Def identity.
+  -->
+  <Operation Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Sugar"]/statBases/MarketValue</xpath>
+    <value>
+      <MarketValue>5.0</MarketValue>
+    </value>
+  </Operation>
+</Patch>
