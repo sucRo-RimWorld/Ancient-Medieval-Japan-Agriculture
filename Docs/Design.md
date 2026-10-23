@@ -457,9 +457,9 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 | CCTO | なくてもGrains作物は成立 | CCTO存在時だけ既存互換Patch | **任意互換** |
 | 共通の稲 / `RawRice` | Vanilla `Plant_Rice` / `RawRice` を再利用し、V1では畑地向けに調整 | 共通Plantを保持し、将来の水田環境で生育・収量を補正 | **Grains**。陸稲・水稲・うるち・もち米の別Plant/食材/米粉ThingDefは増やさない |
 | 水田・水管理 | 所有しない | 所有しない | **Rice Cultivation**。同じ `Plant_Rice` の水田対応を所有し、Waterworksは任意の供給基盤 |
-| 豆類 | 所有しない | 所有しない | **Grains外。将来所有先を用途と合わせて決定** |
-| 繊維・紡績・製紙 | 所有しない | Grains-MO互換にも置かない | **Grains外。将来のMaterials/Textiles等で決定** |
-| 根菜・一般野菜 | 所有しない | 所有しない | **Grains外。将来所有先を決定** |
+| 豆類 | Agriculture更新段階で栽培・収穫を所有する（V1未実装） | MOの品種・料理は歴史監査後に個別選別 | **Agriculture（2026-10-23決定）** |
+| 繊維作物の栽培・収穫原料／紡績・織布・製紙 | 旧V1では対象外。Agricultureで繊維植物の栽培・農産原料を所有し、加工産業は他Owner | 現在のMO `DankPyon_Plant_Flax`と`DankPyon_RawFlax`を`Patches/MO_FibreCropPurpose.xml`で繊維作物/原料へ分類（MO任意） | **栽培・一次農産原料＝Agriculture／既存MO紡績・麻布・研究・画像＝MO Japanization、独立産業の新規実装＝別途決定** |
+| 根菜・一般野菜 | V1対象外、Agriculture将来更新の栽培・収穫・食材化 | 不適切なMO作物の通常取得・料理を歴史選別で除外 | **Agriculture（2026-10-23決定）** |
 
 **脱穀「Xまで実行」の修正仕様（2026-10-15）:** MO併用時の脱穀10レシピは主製品（穀粒・籾）と副産物 `DankPyon_Straw` を出力する。`workerCounterClass` はGrains専用 `AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain` とし、先頭の主製品だけをカウントする。ゾーン・品質・在庫条件はRimWorld標準 `CountProducts` を継承する。従来の藁、材料、歩留まり、作業量、DefName、`targetCountAdjustment` を変更しない。Vanillaは標準カウンターのままとする。MO向け配布前に `Assemblies/AMJGrains.dll` を公式ゲーム参照に対してビルドし、ロード・Billの実行・配布物への同梱を確認する。C#ソースのみの変更を実機PASSやリリース完成とはみなさない。
 
@@ -1186,9 +1186,9 @@ MO 1.6の `DankPyon_Cereal` は製粉Recipe、Ale wort Recipe、風車・水車�
 - 雑穀・ソバ・大麦は従来どおり専用粉経路を持ち、MOの汎用製粉・醸造に自動追加しない。
 - Strawの発生点はカテゴリではなく脱穀Recipeで制御する。第三者の旧カテゴリ依存は実機未検証とする。
 
-#### MO紙・紡績等はGrains外
+#### MO紙・紡績等の産業設備はAgriculture外（繊維の栽培・原料はAgriculture）
 
-旧Core案にあった麻・カラムシ、MO Paper、Spinning Wheel、Paper Press等の統合は、Grains再編後はGrainsの責務ではない。設計知見は将来の繊維/Materials系機能の参考として保持してよいが、Grains BaseにもGrains-MO互換にも実装しない。
+**2026-10-23改訂:** 作物としてのカラムシ等の栽培・収穫原料はAgricultureが所有する。現行MO `DankPyon_Plant_Flax`の栽培用途と`DankPyon_RawFlax`の原料カテゴリはAgricultureの任意MO互換Patchが所有する。ただし、MO Paper、Spinning Wheel、Paper Press、麻布製造Recipe、紡績・織機本体の産業工程はAgricultureには実装しない。旧Core案の全面的な材料・紡績産業取り込みは撤回済み。MO日本化の麻布・研究・設備の転用正本はMO Japanization側。
 
 ## 7. Food Drying 連携
 
@@ -1341,11 +1341,11 @@ Grainsの主要実装は、次の順で管理する。
 | **Grains V1** | 暫定加工設備で基本ループを成立 | 脱穀・殻取りはVanilla/MO両方で調理台対応。非MOの5製粉Recipeは調理台にも対応し、MO製粉はMO石臼を維持 | XML・静的テスト・実機検証項目を実装。実ゲームの新経路とV1リリース検証は未完了 |
 | **V1後の設備整備** | 専用作業台への振り分け | 加工場所・加工台・石臼の用途・完成画像とRecipe割当を整理して暫定調理台経路を再評価 | 将来の更新項目。時期・構成未確定 |
 
-旧Stage B（豆類）、Stage C（繊維）、Stage D（根菜）はGrainsロードマップから削除する。将来必要なら、それぞれの主要用途と自然な所有Modを決めて別途設計する。
+**2026-10-23改訂:** 旧Stage B/C/Dを別Modへ移す以前の方針は撤回し、豆類・繊維作物・根菜の栽培と収穫原料はAgricultureの将来バージョン範囲へ復帰した。独立した紡績・製紙・醸造等の産業ループは別Ownerで保持する。
 
 ### Grains外へ移した旧Core候補
 
-旧Core由来でGrainsの所有外となった未所属候補はProjectの [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) に移管した。Grainsには「所有しない」という境界だけを適用する。
+旧Core由来でGrainsの所有外となった未所属候補はProjectの [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) に移管した。この旧候補移管は歴史的記録であり、2026-10-23以降は作物の栽培・収穫原料についてAgricultureが所有する。
 ### 旧Core候補の履歴（Grains外）
 
 履歴と再検討条件はProjectの [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) を正本とする。
