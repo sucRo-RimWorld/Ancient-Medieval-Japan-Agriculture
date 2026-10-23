@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    2026-10-23 first Agriculture historical exclusion: MO cultivated tomatoes.
+    Japanese culinary tomatoes are post-medieval (MAFF: introduced mid-1600s,
+    adopted as food much later). Grains remains MO-optional; all operations
+    must be skipped cleanly when DankPyon.Medieval.Overhaul is absent.
+
+    Never remove upstream Defs here: preserve old-save and other-Mod references.
+    Suppress the sow source, tomato-only support post, general trader supply,
+    and both tomato-specific MO cooking recipes as one coherent food loop.
+    This does not purport to delete previously saved tomato items or to filter
+    third-party direct-spawn content.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <!-- Empty sowTags => PlantProperties.Sowable = false in RimWorld 1.6. -->
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Tomatoes"]/plant/sowTags</xpath>
+        <value>
+          <sowTags />
+        </value>
+      </li>
+      <!-- MO post only grows tomatoes; do not show a useless new build. -->
+      <li Class="PatchOperationRemove" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Post"]/designationCategory</xpath>
+      </li>
+      <!-- Vanilla trader stock generators respect ThingDef.tradeability. -->
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_RawTomatoes"]</xpath>
+        <value>
+          <tradeability>None</tradeability>
+        </value>
+      </li>
+      <!-- Keep the RecipeDefs for save/reference compatibility, but provide
+           no new bill on any stove or MO hearth. -->
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealTomatoOmelette"]/recipeUsers</xpath>
+        <value>
+          <recipeUsers />
+        </value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealTomatoOmeletteBulk"]/recipeUsers</xpath>
+        <value>
+          <recipeUsers />
+        </value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
