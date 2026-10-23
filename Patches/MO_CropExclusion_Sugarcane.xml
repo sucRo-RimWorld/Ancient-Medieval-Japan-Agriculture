@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    AMJ Agriculture: sugarcane and sugar manufacturing are not part of
+    ordinary mainland ancient/medieval Japanese production. Ryukyu sugar
+    is treated as an imported finished good, not local cultivation.
+    Keep every upstream DefName, especially DankPyon_Sugar, for existing
+    meals, trade compatibility and save references. MO remains optional.
+    Trader inventory/rarity and actual merchant availability need separate
+    balance/loaded-game verification; this patch does not generate stock.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Sugarcane"]/plant/sowTags</xpath>
+        <value><sowTags /></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Sugarcane"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CraftSugar_Manual"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CraftSugar"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CraftSugarBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
