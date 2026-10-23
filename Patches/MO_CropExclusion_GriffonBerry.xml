@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    MO 1.6.2.2 Griffon Berry is a fictional crop outside ancient/medieval Japan.
+    Agriculture owns its connected cultivation -> food -> must -> wine chain.
+    Keep every upstream ThingDef/RecipeDef/ProcessDef for old-save/Mod references.
+    Every step is conditional on MO, which remains optional for Agriculture.
+    Processor Framework's barrel registration is optional and may not exist.
+    Existing saved items/Bills, explicit custom spawns and MO Griffon animals
+    are not deleted by this crop-chain patch.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <!-- Disable new sowing but preserve the old plant Def and existing trees. -->
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Tree_GriffonBerry"]/plant/sowTags</xpath>
+        <value><sowTags /></value>
+      </li>
+
+      <!-- Exclude all four products from ordinary trader generators.
+           Their upstream ThingDefs have no local tradeability tags. -->
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_GriffonBerry"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealGriffonBerryPie"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MustWine_Griffon"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Wine_Griffon"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+
+      <!-- Four specific bills consume the imaginary berry; keep RecipeDefs. -->
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealGriffonBerryPie"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealGriffonBerryPieBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealGriffonBerryPieBulkier"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_MakeMustGriffon"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+
+      <!-- The optional Processor Framework's BarrelProcessor processes list
+           receives this item through MO's Add_Style.xml; remove only it.
+           Condition avoids XML errors if the provider is absent. -->
+      <li Class="PatchOperationConditional" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="BarrelProcessor"]/comps/li/processes/li[text()="DankPyon_MustIntoGriffonBerry"]</xpath>
+        <match Class="PatchOperationRemove">
+          <xpath>/Defs/ThingDef[defName="BarrelProcessor"]/comps/li/processes/li[text()="DankPyon_MustIntoGriffonBerry"]</xpath>
+        </match>
+      </li>
+
+      <!-- Five direct treasure/randomItems entries in MO hideout containers:
+           no change to other berry/fruit, mulberry wine or vanilla loot. -->
+      <li Class="PatchOperationConditional" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef/modExtensions/li[@Class="MedievalOverhaul.BuildingLootableExtension"]/randomItems/li[text()="DankPyon_GriffonBerry" or text()="DankPyon_MustWine_Griffon" or text()="DankPyon_Wine_Griffon"]</xpath>
+        <match Class="PatchOperationRemove">
+          <xpath>/Defs/ThingDef/modExtensions/li[@Class="MedievalOverhaul.BuildingLootableExtension"]/randomItems/li[text()="DankPyon_GriffonBerry" or text()="DankPyon_MustWine_Griffon" or text()="DankPyon_Wine_Griffon"]</xpath>
+        </match>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
