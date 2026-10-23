@@ -54,6 +54,48 @@ In the user-provided original MO 1.6.2.2 XML, `DankPyon_Plant_Sugarcane` produce
 
 **Compatibility:** optional MO only; Vanilla-only Agriculture untouched; existing MO crop growth-time adjustment for sugarcane remains historical/inert while sowing is disabled; no new dependency, item DefName, recipe material requirement or numerical balance change. Excluded MO herb/medicine routes are untouched.
 
+## Follow-up source audit: imported sugar stock zero, price, and next crops — 2026-10-23
+
+### Critical import supply defect (production `main` before acceptance)
+
+Original MO 1.6.2.2 `TraderKinds_Caravan_Medieval.xml` gives `DankPyon_Caravan_Medieval_ArtPatron` a `StockGenerator_MultiDef` for Chocolate with **no countRange or totalPriceRange**. Agriculture PR #240 used the same shape for a new Sugar generator. Source inspection of `StockGenerator_MultiDef.GenerateThings`, `StockGenerator.RandomCountOf`, and `StockGeneratorUtility.TryMakeForStockSingle` shows the inherited defaults `countRange=IntRange.Zero` and `totalPriceRange=FloatRange.Zero` return **0 units**, and a 0-count Thing is never created. The current main Sugar import implementation is therefore **source-confirmed ineffective**, not merely "native runtime unverified". This also diagnoses an existing upstream Chocolate generator problem, but AMJ must not silently modify the unrelated Chocolate supply.
+
+Source for the cross-check (third-party decompilation; native 1.6 target still requires final behavior verification):
+- https://github.com/Dyyrlysh/RimworldDecompile/blob/79ca2aa15c9e116bd43d448692b62636467f6c46/RimWorld/StockGenerator.cs
+- https://github.com/Dyyrlysh/RimworldDecompile/blob/79ca2aa15c9e116bd43d448692b62636467f6c46/RimWorld/StockGenerator_MultiDef.cs
+- https://github.com/Dyyrlysh/RimworldDecompile/blob/79ca2aa15c9e116bd43d448692b62636467f6c46/RimWorld/StockGeneratorUtility.cs
+
+### Historical scope and economic comparisons
+
+Historical evidence supports mainland Japan's **imported luxury** sugar, initially a medicinal/gift item and increasingly a confection ingredient in medieval and late-Sengoku Japan. The Sugar `ThingDef` remains an imported food ingredient, but it must not be assumed common on day 1 or available at every trader. Sources:
+- https://www.alic.go.jp/joho-s/joho07_000217.html — Zheng trade, medieval imported sweets and late-Sengoku Portuguese arrivals.
+- https://www.alic.go.jp/koho/kikaku03_000078.html — import history and early-Edo Ryukyu local sugar processing, which is outside AMJ's mainland cultivation.
+- https://www.seitokogyokai.com/knowledge/propagation/ — early elite/medicinal use and later commercial sweets.
+
+Actual MO 1.6.2.2 unchanged per-unit `MarketValue`: Salt **1.0**; Flour **1.5**; Sugar **2.2**; Spices **2.5** (all `Items_Resource_Ingredients.xml`). Sugar's sale value is currently below MO spices, which conflicts with its newly exclusive imported-luxury role unless other supply constraints create scarcity. These are *in-game currency values, not historical monetary conversions*. The currently active sugar-consuming original MO meal families are Apple Pie ×3 and Sweet Pancakes ×2; Lemon Cake ×3 and Griffon Berry Pie ×3 were already disconnected by Agriculture. Sugar's `Nutrition=0.02`, and nutrition-based recipe ingredient counts are 0.04 for one Apple Pie / 0.05 for one Sweet Pancake, theoretically corresponding to ~2 / ~3 sugar units; 5x recipes require 0.20 / 0.25 nutrition (about 10 / 13 sugar). The Apple Pie/Sweet Pancake cultural suitability is **separately HOLD** rather than approval of their new local source or imported ingredients.
+
+### Independent bounded balance review — candidates, not accepted production values
+
+| Scenario | Intended player outcome | Stock `3~6`, Sugar MarketValue `5.0` *candidate* | Limitation / decision |
+|---|---|---|---|
+| Typical one ArtPatron arrival | A small luxury purchase can support a single pastry; regular food production does not depend on sugar | 3–6 sugar at base total value 15–30; one pie (~2) or pancake (~3) feasible | Actual merchant arrival, sale price and stock override NOT native-verified |
+| Edge: no MO NobleHouse trader appears | Imported sweets unavailable without forcing a new faction or trader | No change to merchant scheduling or faction generation | Does a colony need an alternative cross-faction import channel? **HOLD** |
+| Multi-cycle three eligible merchant visits | Limited episodic confectionery, not bulk cheap sugar from farming | 9–18 total sugar units before purchases/consumption, depending on encounters | Merchant frequency is unknown; world-scale economy uncalibrated |
+| Price differentiation | Sugar should be conspicuously pricier than MO domestic salt and local spice carrier | 5.0 vs salt1.0 and spices2.5; one pie's sugar costs ~10, pancake ~15 | Historical monetary conversion impossible; value is illustrative only and author acceptance is REQUIRED |
+| Five-dish bulk Bill | Bulk imported sweets should require intentionally accumulated imports | Five Apple Pies need ~10 sugar, more than a single 3–6-unit stock | Actual RecipeDef ingredient accounting/runtime verification OPEN |
+
+**Classification: UNREVIEWED / NOT APPROVED FOR MERGE as a new numeric balance.** The `countRange=3~6` and `MarketValue=5.0` numbers are preliminary trial settings, not validated realism or author-approved values. They repair 0 supply mathematically if accepted, but model choice and wider game economy still need review. An author-directed continuation of balance work is not by itself approval of these values. Do not label a successful XML parser test as gameplay-balance PASS.
+
+### Other MO crop interactions reviewed from the user-provided 1.6.2.2 XML
+
+- **Mushrooms — cultivation HOLD, connected recipe audit complete:** `DankPyon_Plant_Mushrooms` is a dark-required `CavePlantBase` with `diesToLight=true`, Ground/Hydroponics sowTags, BasicAgriculture research, growDays3, harvestYield6, sowMinSkill3. It harvests *Vanilla-referenced* `RawFungus`; `DankPyon_CookMealMushroomSoup` and its Bulk version directly require `RawFungus`. No explicit wild-spawn source for the *MO mushroom plant* is present in the inspected 1.6 MO XML. **Do not just empty sowTags:** otherwise the two soup Bills may be inaccessible in a non-Ideology profile unless another `RawFungus` acquisition source is established. Dark-cave planting is not automatically a historically documented medieval mushroom-farming technique. Verify the actual loaded non-Ideology `RawFungus` supply/harvest before any exclusion, rehoming or recipe edit. Historical source for later Japanese shiitake cultivation: https://kotobank.jp/word/%E3%81%97%E3%81%84%E3%81%9F%E3%81%91-3153759.
+- **Grapes — retain crop for now; wine pathway HOLD:** `DankPyon_Plant_Grape` requires `DankPyon_VinePost` sowTag, AdvancedAgriculture, growDays19.5, sowMinSkill5, and harvestYield12. `DankPyon_MakeMustWine` turns 25 fruit into 5 `DankPyon_MustWine` at Brewery; associated barrel ProcessDefs turn must into wine. The fruit/food cultivation decision must be separate from European winemaking.
+- **Mulberry — KEEP for silkworm function; wine pathway HOLD:** `DankPyon_Tree_Mulberry` has `MedievalOverhaul.Plant_SecondaryDrop`, producing `DankPyon_Silkworm` alongside fruit. Original `sowResearchPrerequisites` is `Cocoa` (historically unrelated). `DankPyon_MakeMustMulberry` uses 25 berries to yield 5 `DankPyon_MustWine_Mulberry`; disabling this western-style wine loop would not justify disabling mulberry/silkworm cultivation. Research ownership and silk-source consequences need MO Japanization design review before edits.
+- **Lentils — HOLD:** `DankPyon_CookMealWinterLentilSoup` ×2 still active; `BoiledBeansAndOnion` ×2 already disabled with onions. Existing Agriculture lentil growDays8/sowMinSkill2 remain approved historical implementation values, not permission to prune without reconciling food Bills and crop-balance statements.
+
+All four MO medicinal herb/medicine production chains remain outside this review; no native runtime tests or source changes to other crops were performed.
+
+
 ## Next work requiring a separate impact audit
 
 1. Fibre production: the previously approved MO `DankPyon_Plant_Flax`→苧麻/カラムシ and `DankPyon_Linen`→麻布 reinterpretation now has bounded source patches in Agriculture/Japanization. Retain plant and cloth Def identity; retexture/plant regrowth and actual MO `clothChain` ON/OFF gameplay remain unresolved, and no additional independent textile Mod is forced.
