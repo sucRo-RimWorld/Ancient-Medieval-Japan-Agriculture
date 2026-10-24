@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Ancient/medieval mainland Japan: the original MO modern-style apple pie
+    and industrial Western cider chain are not routine domestic products.
+    Keep the original MO apple tree and fruit as a provisional carrier;
+    their sweet red Western cultivar art, 33-day/20-yield crop values,
+    and unrelated Cocoa sow research still require a separate waringo audit.
+    Keep all ThingDef/RecipeDef/ProcessDef identities for references/saves.
+    Other pies, alcohol, the Presser's cheese uses and all fruit crops stay.
+    All operations remain MO-conditional; no change without MO present.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <!-- Three dedicated baking bills carry explicit recipeUsers in MO. -->
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealApplePie"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealApplePieBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealApplePieBulkier"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <!-- The two alcohol recipes inherit Brewery from abstract
+           DankPyon_Make_WortBase: no child recipeUsers exists in the source.
+           Adding an explicit empty Inherit=False list is essential; using
+           PatchOperationReplace on these missing child nodes cannot work. -->
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_Make_MincedApple"]</xpath>
+        <value><recipeUsers Inherit="False" /></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_Make_JuiceAppleUnfermented"]</xpath>
+        <value><recipeUsers Inherit="False" /></value>
+      </li>
+
+      <!-- Existing Apple Pie and four cider-chain materials have no
+           local tradeability overrides. Prevent routine generated trade,
+           while preserving exact DefNames and already-saved instances. -->
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealApplePie"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MincedApple"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_JuiceApple"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_JuiceAppleUnfermented"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Cider"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+
+      <!-- A cheese Presser remains usable; only apple pressing is hidden.
+           Preserve the original ProcessDef for saved/other-Mod references. -->
+      <li Class="PatchOperationConditional" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Presser"]/comps/li/processes/li[text()="DankPyon_PressAppleProcess"]</xpath>
+        <match Class="PatchOperationRemove">
+          <xpath>/Defs/ThingDef[defName="DankPyon_Presser"]/comps/li/processes/li[text()="DankPyon_PressAppleProcess"]</xpath>
+        </match>
+      </li>
+      <!-- A Mead hideout shelf directly generates Cider as site loot.
+           Remove only Cider, not existing Ale or the shelf itself. -->
+      <li Class="PatchOperationConditional" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef/modExtensions/li[@Class="MedievalOverhaul.BuildingLootableExtension"]/randomItems/li[text()="DankPyon_Cider"]</xpath>
+        <match Class="PatchOperationRemove">
+          <xpath>/Defs/ThingDef/modExtensions/li[@Class="MedievalOverhaul.BuildingLootableExtension"]/randomItems/li[text()="DankPyon_Cider"]</xpath>
+        </match>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
