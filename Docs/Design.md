@@ -49,6 +49,8 @@
 
 **責務訂正:** Project `Docs/RetextureImplementationGuidelines.md`とMO Japanization `AGENTS.md`によれば、**MO所有の`DankPyon_`果樹・果実のリテクスチャと英日提示・研究グラフはMO Japanizationが実装所有**する。Agricultureは作物採否・播種・収穫・原料・通常料理・栄養/腐敗/交易の仕様と必要な画像要件を管理し、MO向け画像をAgricultureから二重に上書きしない。和リンゴの成熟樹・収穫アイコンの小型化および日本語の既存西洋リンゴ説明文の修正はJapanization側で原画像比較・作者の視覚採否を経て実施する。未熟樹の転用可能性は既存画像監査で評価し、見た目だけ先に完成宣言しない。桑の`Cocoa`とリンゴの`Cocoa`研究条件は、桑の蚕供給を守りながらJapanizationが同時に再配線する。計算条件と原資料、独立比較は`Docs/Research/MO_AppleWaringoAudit_20261024.md §3a`に記録。**今回の監査では生産XML・PNG・研究Def・日本語訳は変更しない。**
 
+**2026-10-24 後続反映 — 和リンゴの英日文言と果樹研究表示はJapanization実装済み、画像スキップ:** [MO Japanization PR #25](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Medieval-Overhaul-Japanization/pull/25)、main `764528f42b56c87b12ec2a707f9f84bf5adfef6f` が既存`DankPyon_Tree_Apple`／`DankPyon_RawApples`の英日名称・説明と`Cocoa`研究の説明・日本語名称（果樹栽培）を更新した。MO本体は既に`Cocoa.label=Fruit tree sowing`へ改称済みのため、以前の「`Cocoa` DefNameによる前提そのものが不適切」という判断は取り消す。Apple/Mulberryの`Cocoa`研究参照は維持し、画像は作者指定によりスキップしてMO原本のまま。和リンゴ用の絵が完成したという主張をしない。農業数値・物理的な収穫処理・和リンゴの旧セーブおよび実機表示は未変更／未検証。文字情報の正本はJapanization `Docs/Design.md`と当該XML／日本語DefInjected。
+
 **既存の実装状態（上記で明記したMO作物の限定除外を除く）:** 上記は製品範囲の新しい承認方針であって、残る作物・料理の選別、豆類等の追加、Agricultureへの改名、数値バランス変更は**未実装**。下記の旧Grains専用・旧Stage B〜D別所有の記述は実装履歴／V1状態の説明であり、将来所有判断としては本節を優先する。
 
 **基本方針（既存V1の実装経路）:** GrainsはAMJ全体の必須Coreではなく、現行V1の穀類栽培・加工・料理を自己完結して提供する。Vanilla + Grainsを基本経路とし、Medieval Overhaul（MO）は任意の公式互換先。MOありではMO固有の小麦・石臼等を条件付きで再利用し、Grains所有の設定を優先する。旧セーブからのMO削除・移行は、導入実績と対象セーブがないため今回の対象外。
