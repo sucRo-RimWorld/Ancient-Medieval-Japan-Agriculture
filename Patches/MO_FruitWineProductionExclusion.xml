@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Original MO grape and mulberry plants and edible fruits remain in AMJ.
+    Mulberry's silk-worm secondary drop is indispensable to sericulture.
+    Local European-style grape and mulberry winemaking is out of period.
+    Imported finished grape wine is NOT suppressed (late Sengoku imports
+    historically attested); general wine traders and Wine ThingDef remain.
+    No new production process, fruit balance or research is introduced.
+    Keep all original MO DefNames for saves and third-party references.
+    Remove only ordinary local fruit-must production, the relevant
+    Processor Framework barrel registrations if they exist, and obsolete
+    MO wine intermediate loot. Mulberry wine lacks an accepted historical
+    import path and is excluded from ordinary trade and site loot.
+    Neither generic Brewery/BarrelProcessor nor other alcohol is disabled.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_MakeMustWine"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_MakeMustMulberry"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <!-- Historical unsuited/unusable local wine intermediates. -->
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MustWine"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MustWine_Mulberry"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Wine_Mulberry"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <!-- MO integrates PF BarrelProcessor through its optional Add_Style.xml.
+           Preserve ProcessDefs for legacy references; disconnect the process
+           only when the actual barrel-process list contains that exact entry. -->
+      <li Class="PatchOperationConditional" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="BarrelProcessor"]/comps/li/processes/li[text()="DankPyon_MustIntoWine"]</xpath>
+        <match Class="PatchOperationRemove">
+          <xpath>/Defs/ThingDef[defName="BarrelProcessor"]/comps/li/processes/li[text()="DankPyon_MustIntoWine"]</xpath>
+        </match>
+      </li>
+      <li Class="PatchOperationConditional" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="BarrelProcessor"]/comps/li/processes/li[text()="DankPyon_MustIntoMulberryWine"]</xpath>
+        <match Class="PatchOperationRemove">
+          <xpath>/Defs/ThingDef[defName="BarrelProcessor"]/comps/li/processes/li[text()="DankPyon_MustIntoMulberryWine"]</xpath>
+        </match>
+      </li>
+      <!-- 8 grape-must + 1 mulberry-must + 2 mulberry-wine MO loot entries.
+           Retain raw grapes, raw mulberries and finished imported grape wine.
+           Do not alter other barrels, drinks or the Griffon prior exclusion. -->
+      <li Class="PatchOperationConditional" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef/modExtensions/li[@Class="MedievalOverhaul.BuildingLootableExtension"]/randomItems/li[text()="DankPyon_MustWine" or text()="DankPyon_MustWine_Mulberry" or text()="DankPyon_Wine_Mulberry"]</xpath>
+        <match Class="PatchOperationRemove">
+          <xpath>/Defs/ThingDef/modExtensions/li[@Class="MedievalOverhaul.BuildingLootableExtension"]/randomItems/li[text()="DankPyon_MustWine" or text()="DankPyon_MustWine_Mulberry" or text()="DankPyon_Wine_Mulberry"]</xpath>
+        </match>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
