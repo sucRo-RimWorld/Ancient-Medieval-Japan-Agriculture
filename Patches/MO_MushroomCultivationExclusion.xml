@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Mushroom eating and wild foraging fit ancient/medieval Japan; ordinary
+    artificial fungal cultivation is documented from early Edo onward.
+    MO's cave mushroom sowing (Ground/Hydroponics) is not period-appropriate.
+    Leave its original plant Def and naturally occurring cave fungus alone.
+    RawFungus is a shared Core resource, also supplied by wild cave fungus;
+    preserve both MO mushroom soup Bills and existing items, allowing
+    naturally gathered fungus to be cooked. Never turn off RawFungus trade
+    or other Mods' plant sowing through this narrowly MO-conditional patch.
+  -->
+  <Operation Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Mushrooms"]/plant/sowTags</xpath>
+    <value><sowTags /></value>
+  </Operation>
+</Patch>
