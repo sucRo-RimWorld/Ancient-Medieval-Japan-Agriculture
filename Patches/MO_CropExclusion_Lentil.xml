@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Ancient/medieval Japan: original MO lentil (Lens culinaris) is not
+    supported as an ordinary cultivated mainland food crop.
+    Preserve the original plant/raw/meal/recipe Defs for save references.
+    Exclude sowing, routine trader stock, the two remaining dedicated
+    winter lentil soup Bills, and original MO hideout supply.
+    Two onion-lentil dish Bills were already disabled in
+    MO_CropExclusion_OnionCabbageLemon.xml; do not patch them twice.
+    This is MO-conditional and does not touch domestic soy/azuki/other
+    legitimate Japanese legumes, medical crops or general soup effects.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Lentils"]/plant/sowTags</xpath>
+        <value><sowTags /></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_RawLentils"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealWinterLentilSoup"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealWinterLentilSoupBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealWinterLentilSoup"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationRemove" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef/modExtensions/li[@Class="MedievalOverhaul.BuildingLootableExtension"]/randomItems/li[text()="DankPyon_RawLentils"]</xpath>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
