@@ -1,5 +1,7 @@
 # Grains MO依存監査（2026-10-07初回、2026-10-10必須解除反映）
 
+**2026-10-26依存方針更新（現行）:** 以前の2026-10-10のMO必須解除は今回の作者判断で覆り、Agricultureは `DankPyon.Medieval.Overhaul` **必須**とする。理由はMOの小麦・粉・石臼・研究、作物・加工パッチを本来の中世生産基盤として利用し、MOなしの同等経路の維持に開発資源を使わないため。実装 `About/About.xml`／`About/Manifest.xml` に依存を宣言する。下記のMOなし経路・4プロファイル・旧テスト記録は**当時の実装／検証履歴**として保持するが、今後のVanilla単独リリース保証の承認条件ではない。削除／移植はDef・セーブ・外部参照を再監査するまで保留。最新の設計は `Docs/Design.md` 冒頭に従う。
+
 対象はGrains main `644c2c9c60e7fa695d4b50f4aee16eae58b9835c` のProduction XMLと画像参照。所有境界の正本は [`Design.md`](Design.md)、実機検証の正本は [`GrainsProfileTesting.md`](GrainsProfileTesting.md)。Scenariosの静的検証・CIに問題が検出されていないため、作者の指示により追加のセーブ実行アダプター作業を保留し、Grains監査へ戻った。
 
 ## 監査時点の結論（以下の実装追記で更新）

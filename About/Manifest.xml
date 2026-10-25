@@ -2,7 +2,9 @@
 <Manifest>
   <identifier>AncientMedievalJapanGrains</identifier>
   <version>0.1.0</version>
-  <dependencies />
+  <dependencies>
+    <li>MedievalOverhaul</li>
+  </dependencies>
   <incompatibleWith />
   <loadBefore />
   <loadAfter />
