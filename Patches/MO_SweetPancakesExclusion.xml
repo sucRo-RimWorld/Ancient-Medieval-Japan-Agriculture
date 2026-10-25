@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Disconnect original MO modern syrup-topped sweet pancakes x1/x5 and
+       their ordinary finished-food trade. All original DefNames remain for
+       saves/external references. No replacement recipe or sugar changes. -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealSweetPancakes"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealSweetPancakesBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealSweetPancakes"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
