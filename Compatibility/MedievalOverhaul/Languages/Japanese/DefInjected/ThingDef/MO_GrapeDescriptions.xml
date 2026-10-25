@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- The two upstream MO grape descriptions incorrectly promise local wine
+       production in AMJ. This is a text correction, not crop-era approval. -->
+  <DankPyon_Plant_Grape.description>支柱を利用して育てるブドウのつる。生長に時間がかかるが、実を繰り返し収穫できる。1491年の日本の記録には葡萄棚の記述があるものの、中世の栽培地域・品種・普及規模は確定していない。実は生食できる。</DankPyon_Plant_Grape.description>
+  <DankPyon_RawGrapes.description>収穫したブドウの実。生食できる。中世日本での栽培規模は不明であり、広く普及していたと確定したものではない。</DankPyon_RawGrapes.description>
+</LanguageData>
