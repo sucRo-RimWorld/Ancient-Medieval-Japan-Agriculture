@@ -113,6 +113,15 @@ assert len(manifest.findall("./dependencies/*")) == 0, "Manifest must not declar
 
 ccto_patch = load("Patches/Compatibility/CCTO_StageA.xml")
 wheat_patch = load("Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Wheat.xml")
+mulberry_patch = load("Compatibility/MedievalOverhaul/Patches/MO_MulberryHarvestBalance.xml")
+mulberry_ops = mulberry_patch.findall("Operation")
+assert len(mulberry_ops) == 1 and mulberry_ops[0].get("Class") == "PatchOperationConditional"
+assert mulberry_ops[0].findtext("xpath") == '/Defs/ThingDef[defName="DankPyon_Tree_Mulberry"]/plant/harvestMinGrowth'
+assert mulberry_ops[0].find("match").get("Class") == "PatchOperationReplace"
+assert mulberry_ops[0].findtext("match/value/harvestMinGrowth") == "0.55"
+assert mulberry_ops[0].find("nomatch").get("Class") == "PatchOperationAdd"
+assert mulberry_ops[0].findtext("nomatch/xpath") == '/Defs/ThingDef[defName="DankPyon_Tree_Mulberry"]/plant'
+assert mulberry_ops[0].findtext("nomatch/value/harvestMinGrowth") == "0.55"
 plants = load("Defs/ThingDefs_Plants/Plants_StageA.xml")
 items = load("Defs/ThingDefs_Items/Items_StageA_Grains.xml")
 buildings = load("Defs/ThingDefs_Buildings/Buildings_GrainProcessing.xml")
