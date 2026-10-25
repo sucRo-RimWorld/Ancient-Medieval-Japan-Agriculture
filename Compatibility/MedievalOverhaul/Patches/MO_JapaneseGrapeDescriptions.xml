@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Source-level text correction only. Original MO grape tooltips promise
+       wine production, although AMJ disables ordinary domestic wine-making.
+       Neither the grape crop nor a historical era lock has been approved.
+       MO-conditional through Agriculture loadFolders.xml. -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Grape"]/description</xpath>
+        <value><description>A trellised grapevine that takes time to establish and can yield fruit repeatedly. A grape trellis is mentioned in a Japanese text dated 1491, but the region, cultivar and scale of cultivation in medieval Japan remain uncertain. Grapes can be eaten fresh.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_RawGrapes"]/description</xpath>
+        <value><description>Harvested grapes that can be eaten fresh. Their medieval Japanese cultivation was likely limited and is not evidence of widespread orchards.</description></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
