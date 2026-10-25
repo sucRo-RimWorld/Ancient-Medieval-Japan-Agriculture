@@ -50,6 +50,10 @@
 
 **Cross-owner decision:** Do **not** apply “dislike non-white rice” universally to pawns with wealthy backgrounds. Evaluate limited learned refined-food expectations only for specifically fitting character backgrounds. Eligible backgrounds belong to Culture Characters; conditional meal-Thought gameplay belongs to Culture, not to Grains or the Characters build. This is a proposal, not an implemented mood penalty. Avoid treating character repository's unresolved paired 1.6 native cutover as proof the effect exists.
 
+## AGRI-MO-CAKE-PIE-20261025 — ordinary Western cakes/pies disconnected; raw produce preserved
+
+**Owner/source:** Agriculture `Patches/MO_WesternCarrotCakePumpkinPieExclusion.xml`, formal `Docs/Design.md` and `Docs/Research/MO_CultivatedCropAudit_20261023.md`. Latest author-approved scope: remove normal creation Bills for carrot cake x3/6/18 and pumpkin pie x3/6/18 (6 explicit recipeUsers) and finished-meal ordinary trader stock (2 ThingDefs, tradeability None). **Carrot/pumpkin sowing, original plants/harvest items and trade, pumpkin fritters/soup, existing Def identities, and four MO medicinal herbs stay unchanged.** Do not treat a crop HOLD as crop removal or restore the two Western food chains in Japanization/cuisine changes. Original MO 1.6.2.2 ZIP 8/8 exact XPath targets, static only. Original RimWorld 1.6/1.7 final loaded bills, third-party recipes/stock and old saves remain OPEN; no native run or Steam action.
+
 This file is the authoritative coordination surface for separate chats, agents, and workstreams working on **Ancient & Medieval Japan Grains**.
 
 Use it instead of asking the user to manually relay messages between workstreams.

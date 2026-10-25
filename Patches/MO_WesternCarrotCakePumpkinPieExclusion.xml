@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Ancient/medieval Japan: original MO Western carrot cake and pumpkin pie
+    are not ordinary domestic food. Retain the carrot/pumpkin cultivation,
+    raw produce, other pumpkin dishes, cooking facilities and research.
+    Preserve every upstream RecipeDef/ThingDef for saved references.
+    Only remove these six Bills and ordinary trade in their finished meals.
+    All changes are optional-MO only.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <!-- Explicit original recipeUsers; no inherited Bill lists here. -->
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealCarrotCake"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealCarrotCakeBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealCarrotCakeBulkier"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealPumpkinPie"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealPumpkinPieBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealPumpkinPieBulkier"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <!-- Suppress ordinary finished-food stock, not existing items. -->
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealCarrotCake"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealPumpkinPie"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
