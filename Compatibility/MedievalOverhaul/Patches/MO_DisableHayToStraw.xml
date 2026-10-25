@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
   <!--
-    Japanization requires MO and AMJ Grains. Grain threshing owns cereal straw.
+    Agriculture loads this patch only with optional MO. Grain threshing owns cereal straw.
     Do not dry harvested grass/hay into cereal stalks.
     Keep the upstream ProcessDef itself for compatibility and old references;
     only disconnect it from the two MO drying-rack process menus.
