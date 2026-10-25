@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    MO waringo (DankPyon_Tree_Apple) harvest interval:
+    author-approved threshold 0.55, previously inherited 0.40 in loaded 1.6.
+    Keep original 0.30 reset, growDays33, yield20 and all fruit Def links.
+    MO-only through loadFolders.xml; add to child if TreeBase supplies value,
+    replace if a later MO source explicitly adds the child field.
+  -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Tree_Apple"]/plant/harvestMinGrowth</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>/Defs/ThingDef[defName="DankPyon_Tree_Apple"]/plant/harvestMinGrowth</xpath>
+      <value><harvestMinGrowth>0.55</harvestMinGrowth></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="DankPyon_Tree_Apple"]/plant</xpath>
+      <value><harvestMinGrowth>0.55</harvestMinGrowth></value>
+    </nomatch>
+  </Operation>
+</Patch>
