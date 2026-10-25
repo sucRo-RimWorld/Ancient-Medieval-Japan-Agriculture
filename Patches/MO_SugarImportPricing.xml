@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
   <!--
-    Author-approved sugar import price: 5.0 (original MO value: 2.2),
+    Author-approved Sugar ThingDef market value: 5.0 (original MO value: 2.2).
+    As of 2026-10-26 Agriculture no longer creates custom ArtPatron Sugar stock;
+    the Def/value persists for compatibility and possible existing other trade routes.
+    Historic 3~6-item custom import offering is suspended by author approval,
     compared with MO salt=1.0 and spices=2.5. This is a gameplay price,
     not a historical currency conversion; native economy still unverified.
     Agriculture retains MO optionality and original Sugar Def identity.
