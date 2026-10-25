@@ -12,7 +12,7 @@
       </li>
       <li Class="PatchOperationReplace">
         <xpath>/Defs/ThingDef[defName="DankPyon_RawGrapes"]/description</xpath>
-        <value><description>Harvested grapes that can be eaten fresh. Their medieval Japanese cultivation was likely limited and is not evidence of widespread orchards.</description></value>
+        <value><description>Harvested grapes that can be eaten fresh. How widely grapes were cultivated in medieval Japan is not established by the surviving evidence.</description></value>
       </li>
     </operations>
   </Operation>
