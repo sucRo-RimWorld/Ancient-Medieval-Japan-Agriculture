@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    MO mulberry (DankPyon_Tree_Mulberry) harvest interval:
+    author-approved 2026-10-25 threshold 0.55, previously inherited 0.40
+    from Core TreeBase in MO 1.6. Keep reset 0.30, growDays19.5,
+    harvestYield6, secondary silkworm 3/100%, and all research/item links.
+    Loaded only with optional Medieval Overhaul by loadFolders.xml.
+    Add explicit child when inherited; replace if upstream makes it explicit.
+  -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="DankPyon_Tree_Mulberry"]/plant/harvestMinGrowth</xpath>
+    <match Class="PatchOperationReplace">
+      <xpath>/Defs/ThingDef[defName="DankPyon_Tree_Mulberry"]/plant/harvestMinGrowth</xpath>
+      <value><harvestMinGrowth>0.55</harvestMinGrowth></value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>/Defs/ThingDef[defName="DankPyon_Tree_Mulberry"]/plant</xpath>
+      <value><harvestMinGrowth>0.55</harvestMinGrowth></value>
+    </nomatch>
+  </Operation>
+</Patch>

@@ -118,6 +118,23 @@ All four MO medicinal herb/medicine production chains remain outside this review
 
 ## Grapes, mulberry, and MO fruit-wine supply — 2026-10-24
 
+### 2026-10-25 桑の収穫間隔と養蚕供給の数値監査
+
+**作者承認の変更範囲:** MO 1.6.2.2 `DankPyon_Tree_Mulberry`のみ、`harvestMinGrowth`を継承0.40から**明示0.55**へ変更する。`harvestAfterGrowth=0.30`、`growDays=19.5`、`harvestYield=6`、肥沃度感応度0.7、Silkworm副産物3個（確率1.0）、桑実・養蚕施設・絹生産・Cocoa研究・保存・画像・酒造除外・全DefNameはそのまま。ブドウは手を付けない。原資料はユーザー提供MO `3219596926.zip` の`1.6/Defs/ThingDefs_Plants/Plants_Cultivated_Farm.xml`、RimWorld Core `TreeBase`（`plant/harvestMinGrowth=0.40`）、`1.6/Defs/ThingDefs_Buildings/Production/Buildings_Processors.xml`の`DankPyon_SilkBed`と`1.6/Defs/ProcessorDef/ProcessDef_Silk.xml`。独立実ゲームロードは未実施。
+
+**独立の上限シナリオ:** 肥沃度ごと成長係数 `0.3 + 0.7 × fertility`、最適成長温度、1日13時間、気象・病気・休眠・収穫動作・担当者不在による遅延なし、播種Growth=0、収穫後Growth=0.30、閾値到達直後に採集すると仮定。実ゲームの1年間の収量、収穫可能な季節、Silkwormドロップの実効頻度を断定しない。
+
+| 肥沃度 | 30暦日・旧0.40→新0.55 | 60暦日・旧0.40→新0.55 | 新0.55初収穫 | 新0.55再収穫間隔 |
+|---|---:|---:|---:|---:|
+| 70% | 3→1回 | 10→4回 | 25.1日 | 11.4日 |
+| 100% | 5→2回 | **13→5回** | **19.8日** | **9.0日** |
+| 140% | 7→3回 | 18→7回 | 15.5日 | 7.0日 |
+
+**供給・設備の下限確認:** MO副産物定義は収穫で`DankPyon_Silkworm`を3個・chance1.0で得る設定だが、当該C#クラスの最終ロード挙動は未検証。最大機会を全回収できる仮定では100%肥沃度60暦日あたり桑1本につき蚕39→15個、単価5なら基礎名目取引額195→75（別途果実・実収率・取引条件は未算入）。MO SilkBedは`capacity=25`、PF ProcessDefは`processDays=6`、`efficiency=5`、`capacityFactor=1.0`。使用Processor Frameworkの公開ソース`ViralReaction/ProcessorFramework` `Source/ProcessorFramework/WorkGiver_FillProcessor.cs` の投入条件は空き容量1以上、`CompProcessor.cs`の`AddIngredient`で正の個数を加える。**満杯25は必要ではなく最大25**。1回の桑収穫で蚕3個が実際に手に入った場合、適温で1サイクル6日・絹15個を生産可能。100%肥沃度の理想再収穫9日間隔は加工6日より長い。低温時速度低下・破損温度・10日腐敗・操作負荷・実収穫時期は未検証。
+
+**受入判断:** 本変更は反復収穫過多の是正を対象とする。30暦日でも100%肥沃度で2回採集可能、1本では絹供給は少なくなるが蚕床が25個の最低投入必須という矛盾はない。肥沃な地域で生糸も果実も生産機会が制限され、あくまで採算・設備/材料コスト（鉄10、木材60、研究）や生態的妥当性の完成判定ではない。**単項目修正は作者承認、数値シミュレーションは静的上限のみ、経済バランスと実機ネイティブ検証はOPEN**。MO本体のTreeBaseをグローバルに変えず、桑のThingDefだけを条件付きPatchする。季節・再植付け・他Modによる上書きと古いセーブの実挙動を一括ネイティブテスト時に確認。
+
+
 **Historical split, adopted for bounded MO-source exclusion:** Domestic grape cultivation and edible fruit can be supported from the Kamakura period onward, though the 1186 Koshu discovery date is a traditional story, **not a proven first date**. Japan's first reliable domestic Western-style grape-wine production is Meiji; in late Muromachi/Sengoku foreign wine was imported and drunk by selected elites, and is not therefore categorically excluded as an item. Mulberry trees and silkworm/silk production are ancient Japanese agriculture, already documented by the 3rd century. Ordinary local Western-style mulberry-wine production and circulation are not independently established for medieval Japan. Neither agricultural plant needs to disappear just because MO wires its berries to European barrels.
 
 Historical evidence:
