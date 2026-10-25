@@ -5,8 +5,8 @@
 - Adds seven ancient/medieval Japanese staple grains, including a shared dry-field rice plant, with distinct growth and soil characteristics.
 - Adds threshing and hulling, four active grain flours and a brown-rice/white-rice processing choice (paddy 10 -> brown 10 or polished white 8).
 - Adds nine grain-based dishes with eighteen single/four-serving cooking Bills. Four specialty flour foods and the two white-rice dishes have distinct eating-mood rewards.
-- Provides grain-processing equipment and a manual millstone when Medieval Overhaul is absent, while conditionally reusing MO wheat, flour, milling and straw when it is present.
-- Integrates the former Crop Growth Balance timings for six Vanilla and seven optional MO crops. Medieval Overhaul and Crop Cold Tolerance Overhaul remain optional. No separate Crop Growth Balance Mod is needed.
+- Requires Medieval Overhaul as the food-production foundation, reusing existing MO wheat, flour, millstone and straw; historical Vanilla-only fallback source stays archived/dormant.
+- Integrates the former Crop Growth Balance timings for six Vanilla and seven MO crops. Medieval Overhaul is required; Crop Cold Tolerance Overhaul remains optional. No separate Crop Growth Balance Mod is needed.
 - 日本の七穀（畑地の稲を含む）、脱穀・殻取り・4種の穀粉、籾から玄米／白米への加工を追加。
 - 共通3料理・指定粉食4料理・白米2料理の合計9料理、単品と4食分の計18調理Billを実装。指定粉食・白米料理には食後の心情効果を設定。
-- MOなしでも製粉まで成立し、MO併用時は小麦・粉・石臼・藁を条件付きで連携利用。旧Crop Growth Balanceの生育日数調整を統合し、MO・CCTOは任意。
+- MOを必須とし、小麦・粉・石臼・藁などの既存工程を再利用する。旧Vanilla単独経路のソース・テスト履歴は保全。旧Crop Growth Balanceの生育日数調整を統合し、CCTOは任意。
