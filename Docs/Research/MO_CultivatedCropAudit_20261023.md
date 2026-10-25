@@ -223,6 +223,12 @@ Historical evidence:
 
 **Acceptance boundary:** This is an applied source patch and targeted static test, **NOT a RimWorld 1.6/1.7 loaded-game PASS**. Other Mods may re-register recipes or directly spawn meals, and old saved objects/jobs are not removed. The carrot and Japanese-pumpkin cultivar/era/plant-graphic/yield decisions remain HOLD; no new Japanese pumpkin recipe is approved merely by excluding the old Western dishes. Native acceptance belongs in the later consolidated crop-chain gameplay test, without repeated standalone launches.
 
+## 2026-10-25 cross-crop numeric audit conclusion (latest limited decision)
+
+The earlier HOLD status for carrot/pumpkin **botanical target** is resolved in the bounded historical-design sense only: a late-16th/17th-century **Eastern carrot group** and 16th-century **Japanese pumpkin `Cucurbita moschata`** are the possible target types; neither existing MO illustration nor Japanese translation is certified as depicting those exact forms. The plant DefNames remain, and the user explicitly skipped image work. Neither crop's original research stage is an actual century/year lock.
+
+Agriculture's current effective carrot growDays **6** (former CGB overlay; original MO 3.25), pumpkin growDays **8**, yields **6/20**, sow skills **4/8**, and original raw/economy settings are **retained unchanged**, not promoted to final historic numerical acceptance. Independent but simplified bounded comparison, raw nutrition, grower labor proxy, soil limits, historical sources, unanswered pumpkin15-day vs carrot20-day rot discrepancy, and acceptance criteria are owned by `Docs/Balance/Crops/MO_CarrotPumpkinBalance_20261025.md`. An accepted Western-dish removal must **not** be mistaken for a decision to prohibit both historical target vegetables. No XML/graphic/name/research changes or native test were made in this numeric review. Previous detailed source history below remains evidence, not a superseding crop exclusion.
+
 ## Next work requiring a separate impact audit
 
 1. Fibre production: the previously approved MO `DankPyon_Plant_Flax`→苧麻/カラムシ and `DankPyon_Linen`→麻布 reinterpretation now has bounded source patches in Agriculture/Japanization. Retain plant and cloth Def identity; retexture/plant regrowth and actual MO `clothChain` ON/OFF gameplay remain unresolved, and no additional independent textile Mod is forced.
