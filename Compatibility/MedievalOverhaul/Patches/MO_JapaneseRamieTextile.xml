@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Reinterpret existing MO textile Defs as Japanese ramie/cloth carriers. -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Flax"]/label</xpath>
+        <value><label>ramie</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_RawFlax"]/label</xpath>
+        <value><label>raw ramie fibre</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Linen"]/label</xpath>
+        <value><label>ramie cloth</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Flax"]/plant/sowResearchPrerequisites</xpath>
+        <value>
+          <sowResearchPrerequisites>
+            <li>DankPyon_TextileSpinning</li>
+          </sowResearchPrerequisites>
+        </value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_MakeLinen"]/label</xpath>
+        <value><label>make ramie cloth</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_MakeLinenBulk"]/label</xpath>
+        <value><label>make ramie cloth x50</label></value>
+      </li>
+
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Flax"]/description</xpath>
+        <value><description>A fibre crop for cloth making. Harvest stems for textile processing.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_RawFlax"]/description</xpath>
+        <value><description>Harvested plant fibre, used to produce cloth when the textile production chain is enabled.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Linen"]/description</xpath>
+        <value><description>Cloth made from plant fibre, used for clothing and furnishings.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_MakeLinen"]/description</xpath>
+        <value><description>Process ramie fibre into cloth.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_MakeLinen"]/jobString</xpath>
+        <value><jobString>Making ramie cloth.</jobString></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_MakeLinenBulk"]/description</xpath>
+        <value><description>Process ramie fibre into 50 cloth.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_MakeLinenBulk"]/jobString</xpath>
+        <value><jobString>Making ramie cloth.</jobString></value>
+      </li>
+      <!-- The Industrial automatic spinner is not part of this profile.
+           Only its new construction menu entry is removed; no Def deletion. -->
+      <li Class="PatchOperationConditional">
+        <xpath>/Defs/ThingDef[defName="DankPyon_ClothSpinner"]/designationCategory</xpath>
+        <match Class="PatchOperationRemove">
+          <xpath>/Defs/ThingDef[defName="DankPyon_ClothSpinner"]/designationCategory</xpath>
+        </match>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

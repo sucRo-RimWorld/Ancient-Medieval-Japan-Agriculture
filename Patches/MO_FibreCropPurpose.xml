@@ -2,10 +2,10 @@
 <Patch>
   <!--
     AMJ 2026-10-23 fibre-crop ownership: MO Flax is a Japanese textile carrier
-    for the integrated AMJ + MO Japanization profile, not an edible crop.
+    for optional MO + Agriculture, not an edible crop.
     Keep its upstream plant/harvested ThingDefs and numeric balance as-is;
-    only repair functional classification. Japanization separately owns the
-    approved ramie/cloth labels, textile research and manufacturing systems.
+    this root patch repairs classification. Agriculture's MO-conditional
+    textile patch owns accepted ramie/cloth labels, research and recipes.
     Do not alter the author's optional MO clothChain setting.
   -->
   <Operation Class="PatchOperationSequence">

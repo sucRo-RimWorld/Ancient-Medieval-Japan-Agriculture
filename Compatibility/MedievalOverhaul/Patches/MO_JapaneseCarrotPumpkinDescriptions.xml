@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- MO cultivar text only. Original DefNames, labels, images, research
+       and crop/food balance remain intact. Agriculture owns mechanics. -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Carrots"]/description</xpath>
+        <value><description>An Eastern-type carrot crop, introduced to Japan from China around the late sixteenth to early seventeenth century. Its long roots can be eaten raw or used in cooking.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_RawCarrots"]/description</xpath>
+        <value><description>Harvested Eastern-type carrots. Their roots can be eaten raw or cooked.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Plant_Pumpkins"]/description</xpath>
+        <value><description>A climbing vine that bears Japanese pumpkins, a type introduced to Japan in the sixteenth century. Their flesh is comparatively moist and less sweet than that of later Western pumpkins, and is suitable for cooking.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_RawPumpkins"]/description</xpath>
+        <value><description>Harvested Japanese pumpkins, with relatively moist flesh suited to cooking.</description></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

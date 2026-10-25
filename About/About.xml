@@ -10,6 +10,8 @@
 
   <loadAfter>
     <li>DankPyon.Medieval.Overhaul</li>
+    <!-- Optional upstream MO Japanese translation: retained Agriculture crop translations take priority. -->
+    <li>Lucifel.MedievalOH.JPT</li>
     <li>sucro.cropcoldtoleranceoverhaul</li>
     <li>Adaptive.PrimitiveStorage</li>
   </loadAfter>
