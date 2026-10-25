@@ -53,6 +53,8 @@
 
 **2026-10-24 後続反映 — 和リンゴの英日文言と果樹研究表示はJapanization実装済み、画像スキップ:** [MO Japanization PR #25](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Medieval-Overhaul-Japanization/pull/25)、main `764528f42b56c87b12ec2a707f9f84bf5adfef6f` が既存`DankPyon_Tree_Apple`／`DankPyon_RawApples`の英日名称・説明と`Cocoa`研究の説明・日本語名称（果樹栽培）を更新した。MO本体は既に`Cocoa.label=Fruit tree sowing`へ改称済みのため、以前の「`Cocoa` DefNameによる前提そのものが不適切」という判断は取り消す。Apple/Mulberryの`Cocoa`研究参照は維持し、画像は作者指定によりスキップしてMO原本のまま。和リンゴ用の絵が完成したという主張をしない。農業数値・物理的な収穫処理・和リンゴの旧セーブおよび実機表示は未変更／未検証。文字情報の正本はJapanization `Docs/Design.md`と当該XML／日本語DefInjected。
 
+**2026-10-25 MOキャロットケーキとカボチャパイの通常製造・交易停止（作者承認、MO任意）:** 作物そのものの採否と西洋料理の採否を分け、`Patches/MO_WesternCarrotCakePumpkinPieExclusion.xml`で、MO元`DankPyon_CookMealCarrotCake`／`Bulk`／`Bulkier`および`DankPyon_CookMealPumpkinPie`／`Bulk`／`Bulkier`の計6本の明示`recipeUsers`を空にし、StoneOven／StoneOvenLargeでの**新規製造Bill**を停止する。完成した`DankPyon_MealCarrotCake`と`DankPyon_MealPumpkinPie`は`tradeability=None`にして**通常交易**も停止。元MO 1.6.2.2には当該料理完成品の拠点戦利品直指定が見つからず、収穫原料／料理完成品／レシピのDefNameを削除しない。ニンジン・カボチャの播種、栽培・収穫値、原料の通常交易、野菜棚の原料、汎用料理設備、カボチャフリッター2本・ミルクスープ2本、他の料理・研究は変更しない。ニンジンの日本伝来年代と現物品種、日本カボチャの画像・栽培値、残るスープ・フリッターの時代適合性は引き続き保留。**MO原本に対する8操作8ターゲット静的照合のみ実施、実ゲーム1.6/1.7・旧セーブ・追加ModのBill復活等は未検証**。数量・価格・画像・名称・新しい料理は変更しない。詳細と静的境界は`Docs/Research/MO_CultivatedCropAudit_20261023.md`を正本とする。
+
 **既存の実装状態（上記で明記したMO作物の限定除外を除く）:** 上記は製品範囲の新しい承認方針であって、残る作物・料理の選別、豆類等の追加、Agricultureへの改名、数値バランス変更は**未実装**。下記の旧Grains専用・旧Stage B〜D別所有の記述は実装履歴／V1状態の説明であり、将来所有判断としては本節を優先する。
 
 **基本方針（既存V1の実装経路）:** GrainsはAMJ全体の必須Coreではなく、現行V1の穀類栽培・加工・料理を自己完結して提供する。Vanilla + Grainsを基本経路とし、Medieval Overhaul（MO）は任意の公式互換先。MOありではMO固有の小麦・石臼等を条件付きで再利用し、Grains所有の設定を優先する。旧セーブからのMO削除・移行は、導入実績と対象セーブがないため今回の対象外。
