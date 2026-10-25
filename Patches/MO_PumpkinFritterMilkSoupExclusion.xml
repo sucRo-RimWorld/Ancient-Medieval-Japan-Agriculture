@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Ancient/medieval Japan: MO pumpkin fritters and creamy milk pumpkin soup
+    are not routine domestic food. Keep the original pumpkin crop/raw item,
+    other food, kitchen buildings and research intact.
+    Preserve source RecipeDef/ThingDef names for saved-game references.
+    All operations require MO; no change in standalone Agriculture.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <!-- Four recipes define their own recipeUsers in MO 1.6. -->
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealPumpkinFritters"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealPumpkinFrittersBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealPumpkinSoup"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealPumpkinSoupBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <!-- Remove ordinary merchant stock of only the two finished meals. -->
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealPumpkinFritters"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealPumpkinSoup"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
