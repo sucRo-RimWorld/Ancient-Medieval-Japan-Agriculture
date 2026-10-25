@@ -2,18 +2,30 @@
 
 **RimWorld 1.6 — 0.1.0 first-release candidate (not yet published)**
 
-A standalone grain-growing and food-processing Mod inspired by agriculture in pre-Edo Japan. Formerly AMJ Core; the historical `sucro.ancientmedievaljapan.core` packageId and existing AMJC DefNames remain unchanged to retain stable identifiers for cross-Mod compatibility.
+The current published-name candidate is a standalone grain-growing and food-processing Mod inspired by pre-Edo Japan; development scope is expanding into **Agriculture**, which also owns historical selection of MO/Vanilla cultivable crops and their related food and processing chains. The display name is still Grains until the separately reviewed product renaming. Formerly AMJ Core; the historical `sucro.ancientmedievaljapan.core` packageId and existing AMJC DefNames remain unchanged to retain cross-Mod identifiers.
 
 ## Features
 
 - Awa, Hie and Kibi, with different growing seasons, soil fertility requirements and temperature preferences.
 - Soba, barley, wheat and upland rice (using Vanilla `Plant_Rice`).
-- Integrated crop growth balancing for six Vanilla crops and seven optional MO crops (formerly the separate Crop Growth Balance Mod). MO lentils require Plants skill 2; all seven inherited crop growth periods retain their previous CGB values.
+- Integrated source adjustments formerly owned by Crop Growth Balance: six Vanilla crop growth settings and seven optional MO plant definitions. Some historically unsuitable MO crops (including lentils) are now **excluded from ordinary sowing** despite their compatibility-preserved growth Def fields. This does **not** make them available crops.
 - Harvested sheaves, threshing and hulling, grain milling, and basic flour foods.
 - Vanilla-only wheat, wheat flour and manual millstone when Medieval Overhaul is absent.
 - MO wheat/RawWheat/flour/millstone reuse and thresh-time Straw integration when MO is present, without duplicate default wheat or milling routes. AMJG-owned balance and processing settings take priority.
 
 The balancing model, including the inherited Vanilla/MO growth periods and provisional MO lentil skill 2, is specified in [Design](Docs/Design.md) and [cultivation balance](Docs/Balance/Crops/Millet_Cultivation_Balance.md).
+
+## Agriculture transition — optional MO crop and food selection (not part of a released V1)
+
+Agriculture's development source now owns crop-to-food historical filtering when Medieval Overhaul is installed. This is **not** a claim that the present Grains 0.1.0 release candidate has already become the renamed Agriculture release, or that the entire new crop integration has passed native gameplay checks.
+
+- **Excluded from ordinary sowing:** MO onion, headed cabbage, tomato, lemon, lentil, sugarcane and griffonberry. Farm mushroom sowing is also disabled while natural `RawFungus` gathering and the ordinary mushroom-soup ingredients remain available. The original DefNames remain for compatibility.
+- **Retained with independent processing uses:** wheat (grain/flour/foods), ramie reusing MO flax identifiers (textile processing), and mulberry (silkworm/silk as the primary historical rationale). Historical and supply-balance audits remain open where noted in [the crop-use audit](Docs/Research/MO_CropActiveUseAudit_20261026.md).
+- **Still sowable, but crop utility is not yet accepted:** grapes, Eastern-type carrots, Japanese-type pumpkins and waringo. The original MO Western-style fruit wine, pies, pancake and several other inappropriate food recipes have been disconnected. The resulting fruit/vegetable items can still serve as generic food ingredients, but **dedicated active MO recipes are absent**. Retaining a Def for saved games is not a decision to keep farming it permanently.
+- **Other open crop paths:** garlic remains usable as food and in a MO soup; culinary herbs can be processed into spices. The historical fit and player benefit of those remaining dedicated processing paths have not yet been approved.
+- **Imported sugar:** original domestic sugarcane processing is disabled, and its 11 original MO sweet-dish Bills are currently disconnected. The previously approved trader offering (3–6 sugar, market value 5) remains in source, even though it has no proven productive vanilla/MO food use under the current exclusions. **No speculative confection is authorized** to manufacture demand.
+
+A future decision on sowing, produce supply, or imported sugar needs both a historically supported purpose and a meaningful gameplay role; neither a workbench recipe nor a crop will be invented simply to preserve an otherwise orphaned supply line. The specific technical state, uncertainties and revision boundaries are in [the crop-use audit](Docs/Research/MO_CropActiveUseAudit_20261026.md).
 
 ## V1 food options
 

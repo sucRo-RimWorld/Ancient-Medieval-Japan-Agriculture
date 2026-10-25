@@ -18,7 +18,7 @@
 
   <description>Ancient &amp; Medieval Japan - Grains, initial release 0.1.0.
 
-Adds dry-field grains, harvesting and processing, flour milling, and basic grain foods inspired by pre-Edo Japan. Also integrates the former Crop Growth Balance's six Vanilla and seven optional MO crop growth periods. MO lentils require Plants skill 2; a separate Crop Growth Balance Mod is no longer needed. Mixed grain meals, grain porridge and mixed flour foods can combine leftover cereals; four ingredient-specific flour dishes give a small mood and storage advantage. Brown rice is used in common grain meals and porridge, while two dedicated dishes use polished white rice. When used with Medieval Overhaul, AMJG's owned crop and processing settings take precedence, while shared MO wheat, flour, milling, and straw assets are reused where appropriate.
+Adds dry-field grains, harvesting and processing, flour milling, and basic grain foods inspired by pre-Edo Japan. Also integrates the former Crop Growth Balance's six Vanilla crop growth settings and seven MO-conditional source adjustments. Some MO crops, including lentils, are no longer available for normal sowing under Agriculture's historical crop-selection patches, although their Def identifiers remain for compatibility. A separate Crop Growth Balance Mod is no longer needed. Mixed grain meals, grain porridge and mixed flour foods can combine leftover cereals; four ingredient-specific flour dishes give a small mood and storage advantage. Brown rice is used in common grain meals and porridge, while two dedicated dishes use polished white rice. When used with Medieval Overhaul, AMJG's owned crop and processing settings take precedence, while shared MO wheat, flour, milling, and straw assets are reused where appropriate.
 
 Medieval Overhaul is optional: when loaded, AMJG uses conditional compatibility Defs and patches. Crop Cold Tolerance Overhaul is also optional. Adaptive Primitive Storage is strongly recommended, not required, for granary bulk storage; the original granary and baskets keep Hay construction costs, while optional MO Straw-built variants can be selected separately when MO is present. New Village is provided exclusively by the separate AMJ Scenarios mod; Grains contains no starting scenario.
 
@@ -26,7 +26,7 @@ Release status: RimWorld 1.6 grain processing and cooking passed native gameplay
 
 Ancient &amp; Medieval Japan - Grains 初回公開版0.1.0。
 
-江戸以前の日本を参考に、畑作穀類、収穫と加工、製粉、基本的な穀物料理を追加する。旧Crop Growth Balanceのバニラ6種・任意のMO7種の生育日数調整も統合した。MOのレンズ豆は播種スキル2。Crop Growth Balanceの別途導入は不要。余った穀類を混ぜて使える飯・粥・粉食があり、4種類の材料指定粉食は心情・保存性で有利になる。玄米は共通の飯・粥に使用し、白米専用の白飯・白粥を用意する。Medieval Overhaulとの併用時はAMJ Grainsが所有する作物・加工の設定を優先し、MOの既存の小麦・粉・製粉設備・藁の素材は適切な場合に再利用する。
+江戸以前の日本を参考に、畑作穀類、収穫と加工、製粉、基本的な穀物料理を追加する。旧Crop Growth Balanceのバニラ6種・MO併用時の7定義の生育日数調整も統合した。ただし、MOレンズ豆など時代適合性から通常栽培を除外した作物もあり、旧定義の識別子は互換性のため維持する。Crop Growth Balanceの別途導入は不要。余った穀類を混ぜて使える飯・粥・粉食があり、4種類の材料指定粉食は心情・保存性で有利になる。玄米は共通の飯・粥に使用し、白米専用の白飯・白粥を用意する。Medieval Overhaulとの併用時はAMJ Grainsが所有する作物・加工の設定を優先し、MOの既存の小麦・粉・製粉設備・藁の素材は適切な場合に再利用する。
 
 Medieval Overhaulは任意。導入時は条件付きの互換Defおよびパッチを使用する。Crop Cold Tolerance Overhaulも任意。Adaptive Primitive Storageは穀倉で穀物を大量収納できるため併用を強く推奨するが、必須ではない。元の穀倉と編み籠は干し草を使用し、MO併用時は藁で建築する別の選択肢も追加する。新しい村シナリオは別ModのAMJ Scenariosだけが提供する。Grainsには開始シナリオを含めない。
 

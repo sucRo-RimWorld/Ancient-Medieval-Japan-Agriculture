@@ -7,7 +7,8 @@
     already used for Chocolate, with author-approved sugar stock 3~6.
     Do not edit Chocolate's original generator or any other trader.
     This is an optional-MO trade entry; actual generated trader stock and
-    balance still require native acceptance in the final MO/Japanization setup.
+    balance still require native acceptance in the final MO+Agriculture setup
+    without the retired separate Japanization Mod.
   -->
   <Operation Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
     <xpath>/Defs/TraderKindDef[defName="DankPyon_Caravan_Medieval_ArtPatron"]/stockGenerators</xpath>
