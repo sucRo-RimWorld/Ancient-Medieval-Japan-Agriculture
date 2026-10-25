@@ -2,7 +2,7 @@
 
 **RimWorld 1.6 — 0.1.0 first-release candidate (not yet published)**
 
-The current published-name candidate is a standalone grain-growing and food-processing Mod inspired by pre-Edo Japan; development scope is expanding into **Agriculture**, which also owns historical selection of MO/Vanilla cultivable crops and their related food and processing chains. The display name is still Grains until the separately reviewed product renaming. Formerly AMJ Core; the historical `sucro.ancientmedievaljapan.core` packageId and existing AMJC DefNames remain unchanged to retain cross-Mod identifiers.
+The current unpublished candidate is a Medieval Overhaul-dependent grain-growing and food-processing Mod inspired by pre-Edo Japan; development scope is expanding into **Agriculture**, which also owns historical selection of MO/Vanilla cultivable crops and their related food and processing chains. The display name is still Grains until the separately reviewed product renaming. Formerly AMJ Core; the historical `sucro.ancientmedievaljapan.core` packageId and existing AMJC DefNames remain unchanged to retain cross-Mod identifiers.
 
 ## Features
 
@@ -10,12 +10,12 @@ The current published-name candidate is a standalone grain-growing and food-proc
 - Soba, barley, wheat and upland rice (using Vanilla `Plant_Rice`).
 - Integrated source adjustments formerly owned by Crop Growth Balance: six Vanilla crop growth settings and seven optional MO plant definitions. Some historically unsuitable MO crops (including lentils) are now **excluded from ordinary sowing** despite their compatibility-preserved growth Def fields. This does **not** make them available crops.
 - Harvested sheaves, threshing and hulling, grain milling, and basic flour foods.
-- Vanilla-only wheat, wheat flour and manual millstone when Medieval Overhaul is absent.
+- Previously implemented Vanilla-only wheat, flour and manual millstone remain in the source as historical fallback; they are not part of the supported MO-required release profile.
 - MO wheat/RawWheat/flour/millstone reuse and thresh-time Straw integration when MO is present, without duplicate default wheat or milling routes. AMJG-owned balance and processing settings take priority.
 
 The balancing model, including the inherited Vanilla/MO growth periods and provisional MO lentil skill 2, is specified in [Design](Docs/Design.md) and [cultivation balance](Docs/Balance/Crops/Millet_Cultivation_Balance.md).
 
-## Agriculture transition — optional MO crop and food selection (not part of a released V1)
+## Agriculture transition — MO-backed crop and food selection (not part of a released V1)
 
 Agriculture's development source now owns crop-to-food historical filtering when Medieval Overhaul is installed. This is **not** a claim that the present Grains 0.1.0 release candidate has already become the renamed Agriculture release, or that the entire new crop integration has passed native gameplay checks.
 
@@ -56,15 +56,18 @@ These values reflect the current source definitions. The current nine-dish food 
 
 ## Dependencies and compatibility
 
-**Required:** RimWorld 1.6. **No mandatory additional Mods or DLC.**
+**2026-10-26 MO foundation decision:** This was an author-approved design/dependency change, not a native gameplay acceptance or public release. MO itself requires its upstream Vanilla Expanded Framework (VEF) and Processor Framework, but no VPE/More Plants content integration is being developed. MO's mulberry/fruit/silkworm/SilkBed/silk and flax/spinning-wheel/linen systems already exist; Agriculture does **not** add another silk system. Current food-crop-specific MO mulberry and fibre compatibility patches are retained, not a new AMJ-owned silk chain.
+
+
+**Required:** RimWorld 1.6 and Medieval Overhaul (including MO's own upstream dependencies).
 
 **Strongly recommended (optional):** [Adaptive Primitive Storage](https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215). Its existing granary can store Grains' grain sheaves, kernels and flours, including MO wheat. The original granary and woven baskets retain their Hay construction requirements. With both MO and APS active, Grains additionally offers straw-built variants in the construction menu: select either the Hay original or a variant using the same amount of MO Straw. No building requires both.
 
-**Other optional integrations:** Medieval Overhaul (MO) and [Crop Cold Tolerance Overhaul](https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548) (CCTO).
+**Other optional integrations:** [Crop Cold Tolerance Overhaul](https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548) (CCTO).
 
 **The former Crop Growth Balance Mod has been merged into Grains and is no longer needed or released separately.** Do not enable an old standalone CGB copy alongside the integrated Grains build.
 
-The `loadAfter` entry for MO is an **optional ordering hint, not a hard dependency**. MO-specific definitions and patches load only when MO is active through `loadFolders.xml`; `BaseWithoutMO` supplies the fallback path otherwise. CCTO adds explicit cold-death support when installed.
+The `About/About.xml` required dependency is `DankPyon.Medieval.Overhaul` (load after MO). Existing MO-specific definitions and patches still use their prior conditions; `BaseWithoutMO` is retained as dormant legacy source and does not imply ongoing Vanilla-only release support. CCTO adds its separate cold-death support when installed.
 
 New Village and its starting definitions are provided exclusively by the separate AMJ Scenarios Mod. Grains does not include a scenario or legacy scenario compatibility copy.
 
@@ -72,11 +75,11 @@ New Village and its starting definitions are provided exclusively by the separat
 
 The author confirmed on 2026-10-10 that Grains has not been installed or used. **There are no existing Grains saves to migrate.** Historical save migration, enabling/disabling mid-save and removing MO from old saves are **out of scope**, not release blockers.
 
-The mandatory MO dependency has been removed. The RimWorld 1.6 nine-dish Grains source passed 10/10 native gameplay scenarios in Vanilla and 10/10 with CCTO, with no Unity errors ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403725666)). MO+CCTO passed its 10 gameplay scenarios on that nine-dish source ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39404691834)); the original strict test run is marked failed solely because of two pre-existing external MO/SYR FMOD audio errors, which the author excludes from Grains release judgment. A later native Vanilla/CCTO check also passed both white-rice porridge single/bulk cooking jobs ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403704297)); the added test was not independently rerun with MO. Ordinary-play usability, visual appearance at normal zoom, crop balance, the exact installed payload and the author's publication decision remain open. This initial-release candidate has not been publicly released.
+An earlier 2026-10-10 decision had removed the MO dependency, but the 2026-10-26 author decision **restores MO as a required foundation**. The RimWorld 1.6 nine-dish Grains source previously passed 10/10 native gameplay scenarios in Vanilla and 10/10 with CCTO, with no Unity errors ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403725666)). MO+CCTO passed its 10 gameplay scenarios on that nine-dish source ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39404691834)); the original strict test run is marked failed solely because of two pre-existing external MO/SYR FMOD audio errors, which the author excludes from Grains release judgment. A later native Vanilla/CCTO check also passed both white-rice porridge single/bulk cooking jobs ([results](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/actions/runs/39403704297)); the added test was not independently rerun with MO. Ordinary-play usability, visual appearance at normal zoom, crop balance, the exact installed payload and the author's publication decision remain open. This initial-release candidate has not been publicly released.
 
 ## First release scope / 初回公開範囲
 
-The first release is the existing **RimWorld 1.6** Vanilla-capable grain loop: seven grains (including Vanilla rice), harvesting/threshing/hulling, four active flours, brown/white rice processing, and the **9 existing dishes / 18 single- and four-serving cooking Bills** listed above. Current processing spots, tables, the Vanilla-only manual millstone and the approved temporary cooking-bench paths are included; MO, CCTO and APS integrations remain optional. This describes **included content, not completion of final gameplay/release verification**.
+The first release is the existing **RimWorld 1.6 + MO** grain loop: seven grains (including Vanilla rice), harvesting/threshing/hulling, four active flours, brown/white rice processing, and the **9 existing dishes / 18 single- and four-serving cooking Bills** listed above. Current processing spots, tables and the approved temporary cooking-bench paths are included; MO wheat/flour/millstone is the required baseline. The old non-MO manual millstone and fallback path remain source-preserved rather than promised release functionality; CCTO and APS integrations remain optional. This describes **included content, not completion of final gameplay/release verification**.
 
 **Not in the first release:** sobakiri (future late-Sengoku research unlock), hoshii/dried cooked rice, new grain dishes or new production steps, paddy-water farming, rice flour/dumpling production, newly redesigned production facilities, extra quantity-based artwork and RimWorld 1.7 support. Future grain-based dishes remain within Grains, but their gameplay specifications and publication dates are not yet fixed. No new crop-yield UI or soil map is required for the first release.
 
