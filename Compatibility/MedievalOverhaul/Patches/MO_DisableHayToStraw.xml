@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Japanization requires MO and AMJ Grains. Grain threshing owns cereal straw.
+    Do not dry harvested grass/hay into cereal stalks.
+    Keep the upstream ProcessDef itself for compatibility and old references;
+    only disconnect it from the two MO drying-rack process menus.
+    Other rack functions, the Hay ThingDef, and Straw users remain untouched.
+  -->
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="DankPyon_DryingRack_Small"]/comps/li[@Class="ProcessorFramework.CompProperties_Processor"]/processes/li[text()="DankPyon_StrawProcess"]</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ThingDef[defName="DankPyon_DryingRack_Small"]/comps/li[@Class="ProcessorFramework.CompProperties_Processor"]/processes/li[text()="DankPyon_StrawProcess"]</xpath>
+    </match>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/ThingDef[defName="DankPyon_DryingRack_Big"]/comps/li[@Class="ProcessorFramework.CompProperties_Processor"]/processes/li[text()="DankPyon_StrawProcess"]</xpath>
+    <match Class="PatchOperationRemove">
+      <xpath>/Defs/ThingDef[defName="DankPyon_DryingRack_Big"]/comps/li[@Class="ProcessorFramework.CompProperties_Processor"]/processes/li[text()="DankPyon_StrawProcess"]</xpath>
+    </match>
+  </Operation>
+</Patch>
