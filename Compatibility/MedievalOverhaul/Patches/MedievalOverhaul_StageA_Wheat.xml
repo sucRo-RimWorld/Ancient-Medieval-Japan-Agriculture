@@ -71,4 +71,12 @@
     <xpath>/Defs/RecipeDef[defName="DankPyon_CraftFlourBulk"]/products/Hay</xpath>
   </Operation>
 
+  <!-- MO 1.6 bulk wheat: retain 10 grain -> 10 flour, CookSpeed, x1 recipes,
+       original workbenches, and MO straw-removal patch. Author-approved
+       2026-10-25: 800 -> 600 bulk only, other AMJ milling remains 300. -->
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/RecipeDef[defName="DankPyon_CraftFlourBulk"]/workAmount</xpath>
+    <value><workAmount>600</workAmount></value>
+  </Operation>
+
 </Patch>
