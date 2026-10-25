@@ -264,6 +264,14 @@ flour_rot_op = top_wheat_patch(
 )
 assert num(flour_rot_op, "value/daysToRotStart") == 60
 
+# Guard the author-approved MO 10-wheat bulk recipe independently of
+# the upstream MO provider contract (which must still report raw Work800).
+bulk_flour_op = top_wheat_patch(
+    "PatchOperationReplace",
+    '/Defs/RecipeDef[defName="DankPyon_CraftFlourBulk"]/workAmount',
+)
+assert num(bulk_flour_op, "value/workAmount") == 600
+
 for recipe_name in ("DankPyon_CraftFlour_Manual", "DankPyon_CraftFlour", "DankPyon_CraftFlourBulk"):
     top_wheat_patch(
         "PatchOperationRemove",
