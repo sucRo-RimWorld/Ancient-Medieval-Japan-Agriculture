@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "feature": "Medieval imported-sugar manju versus Western sweet pancakes",
+  "owner": "sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture",
+  "scope": "one optional-MO Japanese steamed wheat-and-sugar confection with inherited existing kitchen mechanics; Western pancake recipe disablement",
+  "status": "ready",
+  "search": {
+    "date": "2026-10-25",
+    "queries": [
+      "RimWorld 1.6 MO sweet pancakes sugar XML",
+      "RimWorld Japanese Cuisine manju wagashi workshop",
+      "RimWorld Vanilla Cooking Expanded bakery sweets",
+      "Muromachi sugar manju historical records"
+    ],
+    "ecosystems": [
+      "vanilla_mo",
+      "amj",
+      "ve",
+      "non_ve"
+    ],
+    "limitations": "Actual original MO 1.6 user ZIP and current AMJ XML inspected; Erin Japanese Cuisine full 1.6 Def package and VE current actual XML not obtained, so exact no-duplicate guarantee is not claimed; game-tested third-party coexistence remains open."
+  },
+  "evidence": [
+    {
+      "id": "source-note",
+      "path": "Docs/Research/MO_SugarManjuPriorArt_20261025.txt",
+      "sha256": "f1eddbf57002d5645f96582d058858ec492b5c3af39df89733c961fc97ed1e84"
+    }
+  ],
+  "candidates": [
+    {
+      "name": "Original MO sweet pancakes",
+      "ecosystem": "vanilla_mo",
+      "version": "MO 1.6.2.2",
+      "evidence": [
+        "source-note"
+      ],
+      "comparison": {
+        "function": "Sugar dessert supply but Western pancakes",
+        "historical_fit": "Syrup-topped stacked modern pancakes inappropriate",
+        "dependencies": "Already optional MO; reuse sugar and flour definitions",
+        "retention": "Two unsuitable recipes to deactivate without deleting their Defs",
+        "progression_balance": "Cooking Work450 and sugar Nutrition0.02 are hard evidence, not target",
+        "reuse": "Patch 2 recipe users and item ordinary trade only",
+        "maintenance_license": "MO assets retained, no redistribution or new dependency"
+      },
+      "outcome": "patch_retexture"
+    },
+    {
+      "name": "AMJ flour dishes and kitchens",
+      "ecosystem": "amj",
+      "version": "Agriculture main 2026-10-25",
+      "evidence": [
+        "source-note"
+      ],
+      "comparison": {
+        "function": "Existing flour-to-meal, custom Def and thought mechanics",
+        "historical_fit": "Plain medieval flour and dumplings nearby, but no sugar manju",
+        "dependencies": "Already in owner's runtime, no new dependency",
+        "retention": "Reuse existing food/recipe components without replacing accepted foods",
+        "progression_balance": "Work300, Nutrition0.9, flour10 are comparison inputs",
+        "reuse": "Reuse meal parent, CookSpeed, cooking benches and provisional graphic",
+        "maintenance_license": "AMJ code/graphic owned; keep accepted source bytes unchanged"
+      },
+      "outcome": "use_as_is"
+    },
+    {
+      "name": "VCE + Bakery confection system",
+      "ecosystem": "ve",
+      "version": "Workshop 1.6 public scope 2026-10-25",
+      "evidence": [
+        "source-note"
+      ],
+      "comparison": {
+        "function": "Generic confections and mood",
+        "historical_fit": "Cookies/cupcakes/donuts not Muromachi sugar manju",
+        "dependencies": "VCE requires VEF; Bakery requires VCE",
+        "retention": "Would bring non-Japanese modern sweets and special bakery oven",
+        "progression_balance": "Complex dessert-memory mechanics beyond small sugar use",
+        "reuse": "Only conceptual reference to dessert nonstaple identity",
+        "maintenance_license": "External images and content not copied; VE content not official dependency"
+      },
+      "outcome": "prior_art_only"
+    },
+    {
+      "name": "Erin Japanese Cuisine",
+      "ecosystem": "non_ve",
+      "version": "Workshop 1.6 public scope 2026-10-25",
+      "evidence": [
+        "source-note"
+      ],
+      "comparison": {
+        "function": "Broad Japanese meals; exact sugar manju implementation unverified",
+        "historical_fit": "Broad modern cuisine not wholly a fit for pre-Edo AMJ",
+        "dependencies": "Adding an entire food Mod for one importer-sugar use is disproportionate",
+        "retention": "Would bring additional meals/research and possible conflicts",
+        "progression_balance": "Its entire modern diet and balance would become part of supported chain",
+        "reuse": "Workshop feature comparison only, actual Def XML unavailable",
+        "maintenance_license": "No copy or claimed incompatibility; inspect before future official integration"
+      },
+      "outcome": "prior_art_only"
+    }
+  ],
+  "decision": {
+    "kind": "independent",
+    "rationale": "Tiny MO-conditional imported sugar use closes an AMJ-owner-created ingredient gap without new hard dependency or modern bulk-cooking systems; original MO Western dessert stays inert.",
+    "specification": "Docs/Design.md",
+    "independent_gap": "No existing owner recipe combines imported MO sugar and historical Muromachi manju; full-scale VE and non-VE cuisine Mods are not acceptable prerequisites for one confection."
+  },
+  "unresolved": []
+}

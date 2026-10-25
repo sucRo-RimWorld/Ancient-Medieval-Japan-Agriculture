@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AMJC_CookSugarManju.label>砂糖饅頭を作る</AMJC_CookSugarManju.label>
+  <AMJC_CookSugarManju.description>輸入砂糖1個と小麦粉10個から砂糖饅頭を1食作る。</AMJC_CookSugarManju.description>
+  <AMJC_CookSugarManju.jobString>砂糖饅頭を作っている。</AMJC_CookSugarManju.jobString>
+  <AMJC_CookSugarManjuBulk.label>砂糖饅頭を4食まとめて作る</AMJC_CookSugarManjuBulk.label>
+  <AMJC_CookSugarManjuBulk.description>輸入砂糖4個と小麦粉40個から砂糖饅頭を4食作る。</AMJC_CookSugarManjuBulk.description>
+  <AMJC_CookSugarManjuBulk.jobString>砂糖饅頭をまとめて作っている。</AMJC_CookSugarManjuBulk.jobString>
+</LanguageData>

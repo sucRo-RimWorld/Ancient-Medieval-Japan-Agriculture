@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Local production of modern syrup-covered pancakes is inactive in AMJ,
+       while original DefNames remain for old saves and third-party references.
+       The replacement sugar-manju dish is independently defined in optional MO
+       Defs; generic cooking, all other foods, and imported sugar remain. -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealSweetPancakes"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/RecipeDef[defName="DankPyon_CookMealSweetPancakesBulk"]/recipeUsers</xpath>
+        <value><recipeUsers /></value>
+      </li>
+      <li Class="PatchOperationAdd" MayRequire="DankPyon.Medieval.Overhaul">
+        <xpath>/Defs/ThingDef[defName="DankPyon_MealSweetPancakes"]</xpath>
+        <value><tradeability>None</tradeability></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>

@@ -1,0 +1,17 @@
+AMJ Agriculture MO imported sugar confection prior-art audit
+Date: 2026-10-25
+Owner: sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture
+Scope: one medieval sugar manju food item, cooking bills, and removing two MO sweet-pancake bills.
+
+Observed MO 1.6.2.2, user-supplied 3219596926.zip:
+1.6/Defs/RecipeDefs/Recipes_Meals.xml: DankPyon_CookMealSweetPancakes and DankPyon_CookMealSweetPancakesBulk are direct cooking users; one meal requires egg, milk, sugar and flour; Work450; IntermediateCooking.
+1.6/Defs/ThingDefs_Items/Items_Food.xml: DankPyon_MealSweetPancakes is a syrup-covered Western stack of pancakes with special mood/hediff.
+1.6/Defs/ThingDefs_Items/Items_Resource_Ingredients.xml: DankPyon_Sugar has Nutrition0.02 and imported AMJ price5.0; DankPyon_Flour Nutrition0.05 and original price1.5. Existing AMJ sugar policy: trade stock3-6, mainland growing/grinding disabled.
+Original MO 1.6 source has no documented Japanese manju recipe in these audited files.
+AMJ 1.6 owner sources: Defs/RecipeDefs/Recipes_GrainsFood.xml and Defs/ThingDefs_Items/Items_GrainsFood.xml already offer custom CookSpeed recipes, MealFineBase food and wheat flour with MO compatibility. This implementation reuses their XML patterns, current Cooking stove users, and existing accepted dumpling textures temporarily. No new graphics adopted.
+Historical sources: https://www.alic.go.jp/joho-s/joho07_000217.html (Muromachi shatou manju documentation, imported Chinese sugar), https://www.alic.go.jp/joho-s/joho07_000274.html (sweet bean-paste as modern form rather than presumed medieval recipe), https://www.pearlace.co.jp/know-and-fun/tips/post-173.html (shinsatsu-orai and shichijuichiban shokunin utaawase). Their naming evidence does not establish an exact ingredient formula or visual appearance.
+VE comparisons: https://steamcommunity.com/workshop/filedetails/?id=2134308519 Vanilla Cooking Expanded adds generic dessert and is dependent on VEF, not a Muromachi manju chain; https://steamcommunity.com/workshop/filedetails/?id=3590516685 VCE Bakery adds cookies/cupcakes/donuts with a separate oven and dessert-memory logic, outside AMJ cultural/maintenance scope. Prior art only; not a VE content dependency.
+Non-VE comparison: https://steamcommunity.com/workshop/filedetails/?id=2542432157 Erin's Japanese Cuisine is a broad Japanese meal Mod (Workshop lists RimWorld 1.6), existing Project audit records its modern recipe scope. The current full Def/XML package was not acquired; no claim it lacks a manju Def. Requiring broad modern Japanese meal content to add one historical imported-sugar sweet would contradict owner scope and optional-MO cost.
+Vanilla: no imported MO sugar to consume; preserve existing fallback crops/recipes, no new Vanilla sugar or machine.
+Conclusion: independent minimal MO-conditional recipe+food reusing existing ingredient/bench/Thought XML framework; leave third-party cuisines installed or uninstalled at user's discretion. Source restrictions and licensing: do not copy images, Defs, or other Mod code; no third-party asset is distributed.
+Remaining gameplay-approval distinction: the feature-level implementation gate is ready, but new nutrition/work/price/mood coefficients are CANDIDATE ONLY, awaiting explicit user acceptance before main merge. Steam, native gameplay, art acceptance remain pending.

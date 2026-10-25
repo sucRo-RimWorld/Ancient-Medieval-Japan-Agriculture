@@ -113,6 +113,33 @@ assert len(manifest.findall("./dependencies/*")) == 0, "Manifest must not declar
 
 ccto_patch = load("Patches/Compatibility/CCTO_StageA.xml")
 wheat_patch = load("Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Wheat.xml")
+# MO-only sugar manju candidate and upstream Western-pancake deactivation.
+# This is a source contract, not approval of candidate balance values.
+manju_recipe_doc = load("Compatibility/MedievalOverhaul/Defs/Recipes_SugarManju.xml")
+manju_item_doc = load("Compatibility/MedievalOverhaul/Defs/Items_SugarManju.xml")
+manju_thought_doc = load("Compatibility/MedievalOverhaul/Defs/Thoughts_SugarManju.xml")
+manju_pancake_patch = load("Patches/MO_SweetPancakesExclusion.xml")
+assert [n.findtext("defName") for n in manju_recipe_doc.findall("RecipeDef") if n.find("defName") is not None] == ["AMJC_CookSugarManju", "AMJC_CookSugarManjuBulk"]
+assert manju_recipe_doc.find("RecipeDef[@Name='AMJC_SugarManjuBase']").get("Abstract") == "True"
+for name, sugar, flour, count, work in (("AMJC_CookSugarManju", "0.02", "0.5", "1", "450"), ("AMJC_CookSugarManjuBulk", "0.08", "2.0", "4", "1800")):
+    node = manju_recipe_doc.find(f"RecipeDef[defName='{name}']")
+    assert node.findtext("ingredients/li[1]/count") == sugar
+    assert node.findtext("ingredients/li[2]/count") == flour
+    assert node.findtext("products/AMJC_SugarManju") == count
+    assert node.findtext("workAmount") == work
+assert manju_recipe_doc.find("RecipeDef[@Name='AMJC_SugarManjuBase']").findtext("fixedIngredientFilter/thingDefs/li[1]") == "DankPyon_Sugar"
+assert manju_recipe_doc.find("RecipeDef[@Name='AMJC_SugarManjuBase']").findtext("fixedIngredientFilter/thingDefs/li[2]") == "DankPyon_Flour"
+assert manju_item_doc.findtext("ThingDef/defName") == "AMJC_SugarManju"
+assert manju_item_doc.findtext("ThingDef/graphicData/texPath") == "Things/Item/Meal/AMJC_MilletDumplings"
+assert manju_thought_doc.findtext("ThoughtDef/stages/li/baseMoodEffect") == "4"
+pancake_ops = manju_pancake_patch.findall("./Operation/operations/li")
+assert len(pancake_ops) == 3
+assert [op.findtext("xpath") for op in pancake_ops[:2]] == [
+    '/Defs/RecipeDef[defName="DankPyon_CookMealSweetPancakes"]/recipeUsers',
+    '/Defs/RecipeDef[defName="DankPyon_CookMealSweetPancakesBulk"]/recipeUsers'
+]
+assert all(op.find("value/recipeUsers") is not None for op in pancake_ops[:2])
+assert pancake_ops[2].findtext("value/tradeability") == "None"
 mulberry_patch = load("Compatibility/MedievalOverhaul/Patches/MO_MulberryHarvestBalance.xml")
 mulberry_ops = mulberry_patch.findall("Operation")
 assert len(mulberry_ops) == 1 and mulberry_ops[0].get("Class") == "PatchOperationConditional"

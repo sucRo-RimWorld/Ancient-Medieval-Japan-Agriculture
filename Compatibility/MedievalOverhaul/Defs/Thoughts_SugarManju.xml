@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThoughtDef>
+    <defName>AMJC_AteSugarManju</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.5</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages><li>
+      <label>ate sugar manju</label>
+      <description>I enjoyed a rare sweet bun made with imported sugar.</description>
+      <baseMoodEffect>4</baseMoodEffect>
+    </li></stages>
+  </ThoughtDef>
+</Defs>

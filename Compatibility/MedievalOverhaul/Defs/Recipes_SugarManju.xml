@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- Restricted to the optional MO profile; sugar is an imported MO Def,
+       wheat flour is MO's existing DankPyon_Flour, not a new AMJ variant.
+       IngredientValueGetter_Nutrition: MO sugar .02/unit, flour .05/unit. -->
+  <RecipeDef Name="AMJC_SugarManjuBase" Abstract="True">
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <ingredientValueGetterClass>IngredientValueGetter_Nutrition</ingredientValueGetterClass>
+    <allowMixingIngredients>false</allowMixingIngredients>
+    <fixedIngredientFilter>
+      <thingDefs><li>DankPyon_Sugar</li><li>DankPyon_Flour</li></thingDefs>
+      <specialFiltersToDisallow><li>AllowRotten</li></specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <researchPrerequisites><li>DankPyon_IntermediateCooking</li></researchPrerequisites>
+  </RecipeDef>
+  <RecipeDef ParentName="AMJC_SugarManjuBase">
+    <defName>AMJC_CookSugarManju</defName>
+    <label>prepare sugar manju</label>
+    <description>Prepare a sweetened steamed wheat bun with one measure of imported sugar and ten measures of flour.</description>
+    <jobString>Preparing sugar manju.</jobString>
+    <workAmount>450</workAmount>
+    <recipeUsers><li>Campfire</li><li>FueledStove</li><li>ElectricStove</li><li>DankPyon_RusticHearth</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>DankPyon_Sugar</li></thingDefs></filter><count>0.02</count></li>
+      <li><filter><thingDefs><li>DankPyon_Flour</li></thingDefs></filter><count>0.5</count></li>
+    </ingredients>
+    <products><AMJC_SugarManju>1</AMJC_SugarManju></products>
+    <skillRequirements><Cooking>5</Cooking></skillRequirements>
+  </RecipeDef>
+  <RecipeDef ParentName="AMJC_SugarManjuBase">
+    <defName>AMJC_CookSugarManjuBulk</defName>
+    <label>prepare four sugar manju</label>
+    <description>Prepare four sweetened steamed wheat buns from four imported sugar and forty flour.</description>
+    <jobString>Preparing four sugar manju.</jobString>
+    <workAmount>1800</workAmount>
+    <recipeUsers><li>Campfire</li><li>FueledStove</li><li>ElectricStove</li></recipeUsers>
+    <ingredients>
+      <li><filter><thingDefs><li>DankPyon_Sugar</li></thingDefs></filter><count>0.08</count></li>
+      <li><filter><thingDefs><li>DankPyon_Flour</li></thingDefs></filter><count>2.0</count></li>
+    </ingredients>
+    <products><AMJC_SugarManju>4</AMJC_SugarManju></products>
+    <skillRequirements><Cooking>8</Cooking></skillRequirements>
+  </RecipeDef>
+</Defs>
