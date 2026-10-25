@@ -1,6 +1,6 @@
 # MO Carrot and Pumpkin: cultivar and gameplay-balance decision — 2026-10-25
 
-**Owner:** Agriculture. **Status:** historic type and gameplay role selected for the AMJ pre-Edo crop roster; **existing numbers retained for source implementation**, with the bounded storage concern resolved by source comparison; Japanization's historical Japanese presentation and existing source crop values are now loaded-verified in RimWorld 1.6, while whole-farm seasonal/economic acceptance remains OPEN. The user's 2026-10-25 continuation is authorization to progress this design review; it is **not** permission to invent unreviewed coefficients. No new rimworld XML, images or research gate are introduced in this decision.
+**Owner:** Agriculture. **Status:** historic type and gameplay role selected for the AMJ pre-Edo crop roster; **existing numbers retained for source implementation**, with the bounded storage concern resolved by source comparison; the historical Japanese crop presentation is now Agriculture-owned via optional MO (Agriculture PR #258) and formerly verified loaded **with Japanization** in 1.6; a new **MO+Agriculture without Japanization** runtime, whole-farm seasonal/economic acceptance and original sprite adequacy remain OPEN. The user's 2026-10-25 continuation is authorization to progress this design review; it is **not** permission to invent unreviewed coefficients. No new rimworld XML, images or research gate are introduced in this decision.
 
 ## 1. Source and Japanese historic type
 
