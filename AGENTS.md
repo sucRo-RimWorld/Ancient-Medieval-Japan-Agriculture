@@ -1,4 +1,4 @@
-# AMJ Grains Agent Instructions
+# AMJ Agriculture Agent Instructions
 
 ## Start here
 
@@ -13,7 +13,7 @@ New features cannot enter implementation before the Project [existing-Mod audit 
 - `Docs/Design.md` owns grain/processing scope. `Docs/GrainsProfileTesting.md` owns the actual-provider runtime matrix; `Docs/GrainsDependencyAudit.md` owns dependency-removal conditions. Retain IDs and existing save/provider contracts.
 - `Docs/Balance/Crops/ColdTolerance.md` owns custom crop values. CCTO remains optional and retains its own Vanilla/MO support data.
 - Art: use the routing below, including the boxed-resource family procedure. Do not reactivate archived diagnostic template contracts as production policy.
-- Packaging: `Tests/validate_workshop_payload.py`; release metadata: `Tests/validate_add_changenote.py`. Their success proves the named static contracts, not real-game or Steam completion.
+- Packaging: `Tests/Release/validate_workshop_payload.py`; release metadata: `Tests/Release/validate_add_changenote.py`. Their success proves the named static contracts, not real-game or Steam completion.
 
 ## PNG asset integrity gate
 
