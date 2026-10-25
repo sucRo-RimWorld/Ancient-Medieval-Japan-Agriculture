@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!--
+    Reinterpret the retained MO apple tree and fruit as historical Japanese
+    apples (waringo) in text only. Existing original MO 1.6 images remain
+    unchanged by explicit author instruction to skip image work.
+    No DefName, harvest/nutrition, research prerequisite or fermentation
+    change. Agriculture owns the optional-MO agricultural mechanics.
+  -->
+  <Operation Class="PatchOperationSequence">
+    <operations>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Tree_Apple"]/label</xpath>
+        <value><label>Japanese apple tree</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_Tree_Apple"]/description</xpath>
+        <value><description>A cultivated tree bearing small Japanese apples, historically used as a seasonal fruit. Unlike modern Western orchard apples, these fruits are generally small and relatively tart.</description></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_RawApples"]/label</xpath>
+        <value><label>Japanese apples</label></value>
+      </li>
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="DankPyon_RawApples"]/description</xpath>
+        <value><description>Small, relatively tart Japanese apples (waringo), eaten as a seasonal fruit.</description></value>
+      </li>
+      <!-- The vanilla Cocoa research identity is already re-labelled
+           "Fruit tree sowing" by original MO. Do NOT reassign Cocoa, change
+           its TreeSowing prerequisite or alter the mulberry silkworm source.
+           Correct the original vanilla cocoa/chocolate research tooltip. -->
+      <li Class="PatchOperationReplace">
+        <xpath>/Defs/ResearchProjectDef[defName="Cocoa"]/description</xpath>
+        <value><description>Learn to cultivate fruit-bearing trees, including apple and mulberry trees. Their fruit can be gathered, and mulberry trees also support silkworms.</description></value>
+      </li>
+    </operations>
+  </Operation>
+</Patch>
