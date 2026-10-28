@@ -124,8 +124,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Validate existing Stage A source and required MO metadata
-        run: python Tests/validate_stage_a.py
+      - name: Validate version and publication metadata with existing release contract
+        run: python Tests/Release/validate_add_changenote.py
       - name: Verify bilingual Workshop copy against current release scope
         run: |
           python - <<'PY'
@@ -143,6 +143,17 @@ jobs:
           assert "[h2]日本語 / Japanese[/h2]" in en
           assert en.split("[h2]日本語 / Japanese[/h2]", 1)[1] == ja.split("[h2]日本語 / Japanese[/h2]", 1)[1]
           assert len(en.encode("utf-8")) <= 8000
+          # A root-level MO Patch is allowed under current MO-required metadata,
+          # but every executable operation must retain its specific MO guard.
+          for path in sorted((root / "Patches").glob("MO_*.xml")):
+              patch = ET.parse(path).getroot()
+              operations = patch.findall("./Operation")
+              assert operations, path
+              for op in operations:
+                  leaves = op.findall("./operations/li") if op.attrib.get("Class") == "PatchOperationSequence" else [op]
+                  assert leaves, path
+                  for leaf in leaves:
+                      assert leaf.get("MayRequire") == "DankPyon.Medieval.Overhaul", (path, leaf.attrib)
           assert "No additional Mod is required" not in en
           assert "追加の必須Modはありません" not in ja
           print("MO dependency and bilingual Workshop draft PASS")
