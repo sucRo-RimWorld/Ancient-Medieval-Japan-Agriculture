@@ -6,7 +6,7 @@
 [*]Soba (buckwheat), barley, wheat and the shared rice plant for ordinary fields (no paddy mechanics)
 [*]Threshing, hulling and four grain flours (wheat, buckwheat, millet and barley); existing Vanilla stoves also handle processing while dedicated equipment is being developed
 [*]Gameplay-oriented differences between grains rather than interchangeable crop statistics
-[*]Includes the former Crop Growth Balance's six Vanilla and seven optional MO crop growth periods; MO lentils require Plants skill 2. No separate Crop Growth Balance Mod needed.
+[*]Integrates the former Crop Growth Balance's growth settings for six Vanilla and seven MO crops (MO required). Some MO crops are excluded from normal cultivation by historical-selection patches; no separate Crop Growth Balance Mod is needed.
 [/list]
 
 This is a focused agriculture module, not an all-in-one AMJ Core. Rice paddies, fermentation and the broader Japanese settlement systems belong to other independent AMJ projects.
@@ -18,9 +18,9 @@ Three common grain/flour dishes can use leftover ingredients, including brown ri
 Rice flour existed in ancient and medieval Japan, but there is insufficient evidence that brown-rice flour was an everyday ingredient of medieval commoners. Separate rice-flour milling and stockpiling also add little gameplay value here. Rice-flour milling and dumpling cooking are excluded from normal production; brown rice remains available in common meals/porridge and the two dedicated white-rice dishes remain. Historically supported ceremonial foods or confections may justify reconsidering rice flour later.
 
 [h2]Requirements and compatibility[/h2]
-[b]RimWorld 1.6[/b]. [b]No additional Mod is required.[/b] Medieval Overhaul (MO) is optional: with MO, Grains reuses its wheat, flour, millstone and straw integration; without MO, Grains provides its own wheat and milling path. Grains' own crop and processing rules take priority in both configurations. [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul (CCTO)[/url] is also optional for crop-specific cold behavior.
+[b]RimWorld 1.6[/b]. [b]Medieval Overhaul (MO) is required.[/b] Grains/Agriculture reuses MO's wheat, flour, millstone and straw while applying its approved crop and processing rules. The former Vanilla-only production path is retained as legacy source, not a supported release configuration. [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul (CCTO)[/url] remains optional for crop-specific cold behavior.
 
-[b]Strongly recommended (not required):[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215]Adaptive Primitive Storage[/url]. Its granary provides bulk storage for Grains' sheaves, kernels and flours. The original granary and baskets still use Hay. When MO is also installed, optional Straw-built versions appear separately in the construction menu. Choose either Hay or MO Straw; both are not required.
+[b]Strongly recommended (not required):[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215]Adaptive Primitive Storage[/url]. Its granary provides bulk storage for Grains' sheaves, kernels and flours. The original granary and baskets still use Hay. With required MO installed, optional Straw-built versions appear separately in the construction menu. Choose either Hay or MO Straw; both are not required.
 
 [h2]Version 0.1.0[/h2]
 The initial version focuses on seven grains, the established processing loop and nine cooked foods. Additional grain dishes and optional graphical refinements are planned for later updates. RimWorld 1.7 is not listed as supported.
@@ -32,7 +32,7 @@ The initial version focuses on seven grains, the established processing loop and
 [*]Add distinct small, medium and large stack-size images for grain sheaves and flours. Sheaf quantity variants remain deferred.
 [/list]
 
-Documentation: [url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains]GitHub README[/url]
+Documentation: [url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture]GitHub README[/url]
 [hr][/hr]
 
 [h2]日本語 / Japanese[/h2]
@@ -45,7 +45,7 @@ Documentation: [url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Gra
 [*]ソバ・大麦・小麦と、共通の「稲」を畑地で栽培する（水田機能は含まない）
 [*]脱穀・殻取り・4種（小麦・蕎麦・雑穀・大麦）の穀粉への製粉ができる。暫定的に既存調理台も加工に利用する
 [*]単純な上位互換ではなく、土地や季節に応じて穀物を植え分ける農業
-[*]旧Crop Growth Balanceのバニラ6種・MO7種の生育日数調整も統合。MOレンズ豆の播種スキルは2。別のCrop Growth Balanceは不要
+[*]旧Crop Growth Balanceのバニラ6種・MO7種の生育日数調整を統合（MO必須）。時代適合性により通常栽培を除外したMO作物もある。別のCrop Growth Balanceは不要
 [/list]
 
 AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う独立した構成要素です。水田稲作・発酵・集落生活のほかの仕組みは別のAMJ Modで扱います。
@@ -57,9 +57,9 @@ AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う�
 米粉自体は古代・中世日本にも存在した。しかし、玄米粉が中世庶民の日常食材だったとする十分な根拠は確認できない。独立した製粉・備蓄工程を増やすゲーム上の必要性も低いため、通常の米粉製粉と米粉団子の調理は対象外とした。玄米は共通の飯・粥で使用でき、白米専用の白飯・白粥は残る。将来、史料に基づく儀礼食・菓子を実装する場合に再検討する。
 
 [h2]必須Mod・互換性[/h2]
-[b]RimWorld 1.6対応。追加の必須Modはありません。[/b] Medieval Overhaul（MO）は任意です。MO併用時はMOの小麦・小麦粉・石臼・藁を連携利用し、MOなしではGrains側の小麦・製粉を利用します。いずれもGrains所有の作物・加工設定を優先します。[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul（CCTO）[/url]も任意です。
+[b]RimWorld 1.6対応。Medieval Overhaul（MO）が必須です。[/b] Grains/AgricultureはMOの小麦・小麦粉・石臼・藁などを再利用し、承認済みの作物・加工設定を適用します。旧Vanilla単独経路のソースは保存しますが、現行の単独リリース対応ではありません。[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3812412548]Crop Cold Tolerance Overhaul（CCTO）[/url]は任意です。
 
-[b]併用を強く推奨（必須ではない）：[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215]Adaptive Primitive Storage[/url]。既存の穀倉でGrainsの穀物束・穀粒・穀粉を大量収納できる。元の穀倉・編み籠は干し草のまま。MO併用時は藁を使う別の建築項目も追加し、干し草版・藁版から選択できる。両方の素材を要求しない。
+[b]併用を強く推奨（必須ではない）：[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215]Adaptive Primitive Storage[/url]。既存の穀倉でGrainsの穀物束・穀粒・穀粉を大量収納できる。元の穀倉・編み籠は干し草のまま。必須MO導入時は藁を使う別の建築項目も追加し、干し草版・藁版から選択できる。両方の素材を要求しない。
 
 [h2]バージョン0.1.0[/h2]
 初回版では7穀の栽培・加工ループと9種類の料理を提供する。穀類料理の追加と画像の任意改善は今後のアップデートで扱う。RimWorld 1.7には対応を表記しない。
@@ -71,4 +71,4 @@ AMJ全体の共通基盤Modではなく、穀類とその基本加工を担う�
 [*]穀物束・穀粉に少量・中量・大量を区別できる画像を追加する。穀物束の数量別画像は延期中。
 [/list]
 
-詳細：[url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Grains]GitHub README[/url]
+詳細：[url=https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture]GitHub README[/url]
