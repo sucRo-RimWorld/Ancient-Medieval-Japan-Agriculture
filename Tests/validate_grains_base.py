@@ -56,10 +56,10 @@ AMJ_GRAPHICS = {
         "graphicData/texPath": ("Things/Item/Resource/AMJC_Wheat/Wheat", "Things/Item/Resource/AMJC_Millet/Millet"),
     },
     "AMJC_GrainProcessingSpot": {
-        "graphicData/texPath": ("Things/Building/Production/TableStonecutter", "Things/Building/Production/StonecuttingSpot"),
+        "graphicData/texPath": ("Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot", "Things/Building/Production/StonecuttingSpot"),
     },
     "AMJC_GrainProcessingTable": {
-        "graphicData/texPath": ("Things/Building/Production/TableStonecutter", "Things/Building/Production/Millstone"),
+        "graphicData/texPath": ("Things/Building/Production/AMJC_GrainProcessingTable/GrainProcessingTable", "Things/Building/Production/Millstone"),
     },
 }
 
