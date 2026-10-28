@@ -5,7 +5,7 @@
     ordinary mainland ancient/medieval Japanese production. Ryukyu sugar
     is treated as an imported finished good, not local cultivation.
     Keep every upstream DefName, especially DankPyon_Sugar, for existing
-    meals, trade compatibility and save references. MO remains optional.
+    meals, trade compatibility and save references. Agriculture now requires MO.
     Trader inventory/rarity and actual merchant availability need separate
     balance/loaded-game verification; this patch does not generate stock.
   -->

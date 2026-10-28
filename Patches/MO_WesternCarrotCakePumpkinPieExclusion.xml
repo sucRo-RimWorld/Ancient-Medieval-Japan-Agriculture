@@ -6,7 +6,7 @@
     raw produce, other pumpkin dishes, cooking facilities and research.
     Preserve every upstream RecipeDef/ThingDef for saved references.
     Only remove these six Bills and ordinary trade in their finished meals.
-    All changes are optional-MO only.
+    All changes retain MO MayRequire guards; Agriculture now requires MO.
   -->
   <Operation Class="PatchOperationSequence">
     <operations>

@@ -3,7 +3,7 @@
   <!-- 2026-10-23 MO 1.6.2.2 historically invalid food-crop chain.
        Exclude normal sow, raw/finished trader stock, linked cooking Bills and
        MO hideout container items. Keep all upstream DefNames for save/references.
-       MO remains optional: every operation is MayRequire-guarded. -->
+       Agriculture now requires MO; MayRequire guards remain for patch/source compatibility. -->
   <Operation Class="PatchOperationSequence">
     <operations>
       <li Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">

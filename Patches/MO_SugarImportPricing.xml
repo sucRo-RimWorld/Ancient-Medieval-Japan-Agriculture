@@ -8,7 +8,7 @@
     The retained market value 5.0 compares with MO salt=1.0 and spices=2.5;
     it is a gameplay price, not a historical currency conversion.
     Native economy and other-source availability are unverified.
-    Agriculture retains MO optionality and original Sugar Def identity.
+    Agriculture now requires MO and retains the original Sugar Def identity.
   -->
   <Operation Class="PatchOperationReplace" MayRequire="DankPyon.Medieval.Overhaul">
     <xpath>/Defs/ThingDef[defName="DankPyon_Sugar"]/statBases/MarketValue</xpath>

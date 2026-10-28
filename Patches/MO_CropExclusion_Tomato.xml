@@ -3,8 +3,8 @@
   <!--
     2026-10-23 first Agriculture historical exclusion: MO cultivated tomatoes.
     Japanese culinary tomatoes are post-medieval (MAFF: introduced mid-1600s,
-    adopted as food much later). Grains remains MO-optional; all operations
-    must be skipped cleanly when DankPyon.Medieval.Overhaul is absent.
+    adopted as food much later). Agriculture now requires MO; existing
+    MayRequire guards are retained for safe patch/source compatibility.
 
     Never remove upstream Defs here: preserve old-save and other-Mod references.
     Suppress the sow source, tomato-only support post, general trader supply,
