@@ -463,11 +463,11 @@ MO導入時は、既存の農業・研究・設備・素材を可能な限り再
 - SaltもAgriculture本体の主要ループではない。既存設計の「海水採取 → `DankPyon_Salt`」はMO併用時だけ成立する互換案として扱い、BaseにMO Saltへの直接出力を置かない。
 - 現行CoreはProcessor Frameworkのclass / ProcessDefを直接利用していない。MOがPFを依存に含めていることを理由に、将来AddonがPFを暗黙利用してはならない。Fermentation等がPFを主要ループに必要と判断した場合は、そのAddon自身が直接依存を宣言する。
 
-##### 識別子と新規導入の互換方針（2026-10-10確定）
+##### 識別子と2026-10-10当時のMO依存解除・新規導入監査（依存解除部分は履歴）
 
 Grainsは作者確認時点でまだどこにも導入されておらず、旧Core/Grainsセーブが存在しない。**旧セーブの移行、途中導入・削除、既存セーブからのMO取り外しは開発・公開の必須ゲートから除外する。** 過去の移行検査器・記録は歴史的診断用として保持し、現行の必須作業とは扱わない。
 
-`packageId=sucro.ancientmedievaljapan.core`、`AMJC_` prefix、既存DefNameはAMJモジュール間・外部Patchとの参照安定性のため保持する。MOなしではGrains独自の小麦・粉・石臼、MOありではMO提供の資産を条件付きで再利用し、重複Def/Recipeや意図しないMOによる上書きを許さない。新規開始のVanilla / MO × CCTO 4構成を検証する。
+`packageId=sucro.ancientmedievaljapan.core`、`AMJC_` prefix、既存DefNameはAMJモジュール間・外部Patchとの参照安定性のため保持する。当時はMOなしでGrains独自の小麦・粉・石臼、MOありでMO提供資産を条件付きで利用していた。重複Def/Recipeや意図しない上書きを防ぐ契約は維持する。**当時のVanilla / MO × CCTO四構成テストは履歴**で、現行のMO必須Agricultureには新たなVanilla単独公開ゲートを課さない。
 
 ##### MO必須解除の実装順序（移行履歴。現行結果は文書冒頭を優先）
 
@@ -523,7 +523,7 @@ Fermentation / Brewingは、GrainsやMOをハード依存にしない設計を�
 
 **脱穀「Xまで実行」の修正仕様（2026-10-15）:** MO併用時の脱穀10レシピは主製品（穀粒・籾）と副産物 `DankPyon_Straw` を出力する。`workerCounterClass` はGrains専用 `AncientMedievalJapan.Grains.RecipeWorkerCounter_PrimaryGrain` とし、先頭の主製品だけをカウントする。ゾーン・品質・在庫条件はRimWorld標準 `CountProducts` を継承する。従来の藁、材料、歩留まり、作業量、DefName、`targetCountAdjustment` を変更しない。Vanillaは標準カウンターのままとする。MO向け配布前に `Assemblies/AMJGrains.dll` を公式ゲーム参照に対してビルドし、ロード・Billの実行・配布物への同梱を確認する。C#ソースのみの変更を実機PASSやリリース完成とはみなさない。
 
-**β暫定脱穀・殻取り経路（2026-10-13 作者確定）:** AMJ専用加工設備の完成まで、**Vanilla・MO両構成**で、既存の簡易加工場 `AMJC_GrainProcessingSpot` と加工台 `AMJC_GrainProcessingTable` に加え、Vanilla燃料式調理台 `FueledStove` と電気式調理台 `ElectricStove` にも脱穀・殻取りRecipeを登録する。雑穀・蕎麦・大麦・米の脱穀・殻取り各単品/10個、および小麦脱穀の単品/10個、計18Recipeを対象とし、共通加工親RecipeとMO有無別の小麦親Recipeにだけ設備を追加する。既存の材料・加工量・作業量（脱穀1個15／10個120、殻取り1個10／10個80）・研究条件は変更しない。作業スキルは2026-10-17にCookingへ変更した。MO導入時のみ従来の脱穀Strawを維持し、VanillaにはStrawを追加しない。独立WorkGiverや新しい設備Defは作らない。AMJ設備完成時に調理台経路を撤去検討する。**製粉のMO石臼専用経路はこの変更に含めない。** 実ゲームで両構成の調理台Billを実行し、ERROR 0を確認するまでは動作確認済みとしない。
+**β暫定脱穀・殻取り経路（2026-10-13当時の両構成実装記録。現行の非MO公開保証ではない）:** AMJ専用加工設備の完成まで、**Vanilla・MO両構成**で、既存の簡易加工場 `AMJC_GrainProcessingSpot` と加工台 `AMJC_GrainProcessingTable` に加え、Vanilla燃料式調理台 `FueledStove` と電気式調理台 `ElectricStove` にも脱穀・殻取りRecipeを登録する。雑穀・蕎麦・大麦・米の脱穀・殻取り各単品/10個、および小麦脱穀の単品/10個、計18Recipeを対象とし、共通加工親RecipeとMO有無別の小麦親Recipeにだけ設備を追加する。既存の材料・加工量・作業量（脱穀1個15／10個120、殻取り1個10／10個80）・研究条件は変更しない。作業スキルは2026-10-17にCookingへ変更した。MO導入時のみ従来の脱穀Strawを維持し、VanillaにはStrawを追加しない。独立WorkGiverや新しい設備Defは作らない。AMJ設備完成時に調理台経路を撤去検討する。**製粉のMO石臼専用経路はこの変更に含めない。** 実ゲームで両構成の調理台Billを実行し、ERROR 0を確認するまでは動作確認済みとしない。
 
 **2026-10-20 後続決定 — 穀物加工の独立仕事／WorkRoles任意互換（2026-10-17方針のWorkType指定を更新）:** 調理担当が脱穀・殻取り・籾摺り・製粉に拘束される問題を避けるため、Grains独自の `WorkTypeDef AMJC_GrainProcessing`（穀物加工）を追加し、AMJ簡易加工場所・穀物加工台の `AMJC_DoGrainProcessing` と、Base手動石臼の `AMJC_DoGrainsMilling` をこの仕事に割り当てる。独立WorkTypeは料理と別に優先順位を設定でき、複数加工設備・複数Pawnで分担できる。一般的な手作業として `workTags=ManualDumb` とし、植物技能がないだけで加工不可にはしない。**Recipe自身の `workSkill=Cooking`（習得技能）、`workSpeedStat=GeneralLaborSpeed`、Work、材料・歩留まり、研究、設備、BillおよびDefNameはそのまま**。変更前の料理仕事への統一を記す次項は履歴として保持するが、担当WorkTypeについては本節を優先する。
 
@@ -1009,12 +1009,12 @@ Coreが保持するのは、生成された土地条件に対して各作物が�
 
 ### 5.1 基本方針
 
-- BaseはMO設備なしで穀束→可食穀粒→粉まで自己完結する。
-- 脱穀・殻取りは既存AMJC穀物加工設備を維持し、V1はVanilla・MO双方で燃料式／電気式調理台も利用する。
-- 製粉はGrains単体用の手動石臼Defを維持し、MO併用時はMO Millstoneを使用する。V1の非MO経路は、石臼に加えVanillaの燃料式・電気式調理台でも製粉できる。
+- **現行MO必須Agriculture**は、穀束→可食穀粒→粉→通常料理までの利用経路を成立させる。旧Base単独加工経路は保存済みソースであり、現行公開の自己完結条件にしない。
+- 脱穀・殻取りは既存AMJC穀物加工設備と、登録済みの燃料式／電気式調理台による暫定経路を維持する。旧Vanilla単独の同等動作は新規に保証しない。
+- **現行MO必須構成の製粉はMO Millstoneを利用する。** 旧Grains単体用の手動石臼Def・Vanilla調理台製粉は参照／履歴保護のため保持するが、非MOリリース対応を拡張する理由にはしない。
 - 粉食Recipeは研究不要とし、専用上位料理設備を要求しない。
-- Baseの主要経路にMO ResearchDef / ThingDef / StuffCategory / ThingCategoryを直接参照しない。
-- MO併用時だけ同等資産を条件付き互換から再利用する。
+- 旧Base経路のMO直接参照を除去した実装は保存する。現行のMO必須構成では、実際に再利用するMO Def/Recipe/設備との参照整合を確認する。
+- MO専用の既存条件付きフォルダは読み込み構造として維持し、**MO自体は必須依存**とする。
 - 同一プロファイルに同目的のAMJ石臼とMO石臼、AMJ小麦とMO小麦、AMJ小麦粉とMO小麦粉を標準経路として並存させない。
 
 ### 5.2 Grainsで追加する一次加工の考え方
@@ -1040,11 +1040,11 @@ Grainsの現行製粉対象は**雑穀粉・蕎麦粉・大麦粉・小麦粉の
 
 **Grains V1の暫定設備とV1後の専用化（2026-10-13）**
 
-- **V1脱穀・殻取り:** 雑穀・ソバ・大麦・米の単品／10個一括、および小麦の単品／10個一括は、既存AMJ加工設備に加えてVanillaの燃料式・電気式調理台で実施する。MOの有無を問わず適用する（PR #66でmainに反映済み）。
+- **V1脱穀・殻取りの実装記録:** 雑穀・ソバ・大麦・米の単品／10個一括、および小麦の単品／10個一括は、既存AMJ加工設備に加えてVanillaの燃料式・電気式調理台にも登録した（旧PR #66）。当時はMO有無の両構成を対象としたが、**現行公開構成はMO必須**。
 - **旧V1製粉の実装履歴（現行MO必須構成では旧Base手動石臼経路をサポート保証しない）:** MOなしは既存AMJ手動石臼Def・WorkGiverを保存し、全5種の製粉RecipeをVanillaの燃料式・電気式調理台にも登録する。MOありでは4種のAMJ製粉Recipeの設備一覧をMO石臼のみに条件付き置換し、MO所有の小麦製粉経路も従来どおり維持する。MO構成には調理台製粉を追加しない。
 - **V1後:** 本来想定していた加工場所・穀物加工台・石臼の画像と役割を順次整え、工程別の設備・速度の振り分けを再評価する。専用設備の種類・正式な割当・移行バージョンは実プレイと別途設計で決定する。V1のためだけに追加の専用作業台、独立WorkGiver、重複レシピを増やさない。
 - **移行の条件:** 後の設備変更時はRecipeDef.recipeUsersとWorkGiver_DoBillの割当、既存Bill／DefName／セーブ互換、MO条件付き分岐、Recipe入力・出力・副産物と実ジョブを一体で監査する。暫定設備の撤去を自動的・一括には行わない。
-- **現行V1製粉の固定数値・検証:** 各Recipeは入力10→粉10、workAmount 300、作業Skill Cooking、研究不要、栄養保存、副産物なし。実ゲームでは非MOで燃料式調理台から製粉Billを発行してWorkGiver_DoBill経由で完了させ、MOでは石臼以外の製粉設備を追加しない。四構成の実機検証が完了するまでは実動作確認済みと記載しない。
+- **既存製粉Recipeの固定数値・受入範囲:** 各Recipeは入力10→粉10、workAmount 300、作業Skill Cooking、研究不要、栄養保存、副産物なし。**現行MO必須構成**ではMO石臼のBill実行を確認し、未実行なら検証済みと記載しない。旧非MO燃料式調理台でのBill経路・旧四構成テストは履歴として残し、現在のリリース受入の必須条件にはしない。
 - **簡易穀物加工場所 / AMJC_GrainProcessingSpot:** 初期から使える低速の脱穀・殻取り設備。
 - **穀物加工台 / AMJC_GrainProcessingTable:** 同じ脱穀・殻取りRecipeを高速に処理する上位設備。BaseではMO研究・MO素材を要求しない。
 - **Grains石臼:** Baseで小麦・ソバ・雑穀・大麦・米の五種類を製粉するAMJ所有設備。最低限の製粉経路はMO研究なしで成立させる。step 3初期実装は `AMJC_ManualMillstone`、BlocksGranite 30 + WoodLog 20、WorkToBuild 500。設備・製粉Recipeに研究前提は置かないが、石材の入手はVanillaの採掘・加工・交易等に依存し、全マップで初日建設できることは保証しない。
