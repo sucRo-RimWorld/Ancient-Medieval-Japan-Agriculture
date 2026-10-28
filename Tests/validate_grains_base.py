@@ -143,8 +143,18 @@ def validate():
                 assert not re.search(r"DankPyon_|MedievalOverhaul\.", text), f"Base MO reference: {path} {node.tag}"
     assert not (ROOT / "Patches/MedievalOverhaul_StageA_Wheat.xml").exists()
     assert not (ROOT / "Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml").exists()
-    for path in (ROOT / "Patches").rglob("*.xml"):
-        assert "DankPyon_" not in path.read_text(encoding="utf-8"), f"MO patch escaped conditional load folder: {path}"
+    # Approved Agriculture crop-exclusion patches legitimately live under the
+    # root Patches directory. The owning package now requires MO, but retain
+    # their explicit MayRequire guards for safe Def/save compatibility.
+    for path in (ROOT / "Patches").glob("MO_*.xml"):
+        patch = ET.parse(path).getroot()
+        operations = patch.findall("./Operation")
+        assert operations, f"MO root patch has no operations: {path}"
+        for operation in operations:
+            leaves = operation.findall("./operations/li") if operation.attrib.get("Class") == "PatchOperationSequence" else [operation]
+            assert leaves, f"Empty MO patch sequence: {path}"
+            for leaf in leaves:
+                assert leaf.attrib.get("MayRequire") == "DankPyon.Medieval.Overhaul", (f"MO patch operation missing MayRequire guard: {path} {leaf.attrib}")
     conditional_label = ROOT / MO_FOLDER / "Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml"
     assert ET.parse(conditional_label).findtext("DankPyon_RawWheat.label") == "小麦束"
 

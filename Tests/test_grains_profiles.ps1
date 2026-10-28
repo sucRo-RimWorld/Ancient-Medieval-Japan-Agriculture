@@ -141,10 +141,14 @@ try {
     [xml]$productionLoader = Get-Content -LiteralPath (Join-Path $repo 'loadFolders.xml') -Raw
     Assert ($productionLoader.loadFolders.'v1.6'.li[1].IfModActive -eq 'DankPyon.Medieval.Overhaul') 'Fixture condition leaked into production.'
     [xml]$productionAbout = Get-Content -LiteralPath (Join-Path $repo 'About/About.xml') -Raw -Encoding UTF8
-    Assert ($productionAbout.SelectNodes('/ModMetaData/modDependencies/li').Count -eq 0) 'Production Grains still declares mandatory MO/other Mod.'
-    Assert ($productionAbout.SelectNodes('/ModMetaData/loadAfter/li').Count -eq 2) 'Optional load-order hints changed.'
-    Assert ($productionAbout.SelectNodes('/ModMetaData/loadAfter/li')[0].InnerText -eq 'DankPyon.Medieval.Overhaul') 'MO optional loadAfter guard missing.'
-    Assert ($productionAbout.SelectNodes('/ModMetaData/loadAfter/li')[1].InnerText -eq 'sucro.cropcoldtoleranceoverhaul') 'CCTO optional loadAfter guard missing.'
+    $productionDeps = @($productionAbout.SelectNodes('/ModMetaData/modDependencies/li/packageId') | ForEach-Object { $_.InnerText })
+    Assert ($productionDeps.Count -eq 1 -and $productionDeps[0] -eq 'DankPyon.Medieval.Overhaul') 'Current Agriculture must require MO and no other hard Mod dependency.'
+    $productionOrder = @($productionAbout.SelectNodes('/ModMetaData/loadAfter/li') | ForEach-Object { $_.InnerText })
+    Assert ($productionOrder.Count -eq 4) 'Agriculture approved four-entry load order changed.'
+    Assert ($productionOrder[0] -eq 'DankPyon.Medieval.Overhaul') 'Required MO load order missing.'
+    Assert ($productionOrder[1] -eq 'Lucifel.MedievalOH.JPT') 'Optional MO Japanese translation load order missing.'
+    Assert ($productionOrder[2] -eq 'sucro.cropcoldtoleranceoverhaul') 'CCTO optional load order missing.'
+    Assert ($productionOrder[3] -eq 'Adaptive.PrimitiveStorage') 'Adaptive Primitive Storage optional load order missing.'
     . (Join-Path $repo 'Scripts/AmjProfileXml.ps1')
     foreach ($xmlProfile in @('vanilla','mo')) {
         $projection = Get-AmjProfileXml $repo $xmlProfile
