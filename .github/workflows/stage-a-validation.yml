@@ -124,6 +124,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Validate complete existing Stage A static contract
+        run: python Tests/validate_stage_a.py
       - name: Validate version and publication metadata with existing release contract
         run: python Tests/Release/validate_add_changenote.py
       - name: Verify bilingual Workshop copy against current release scope
