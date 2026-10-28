@@ -103,13 +103,18 @@ def markdown_row(rel, section_heading, first_cell):
 about = load("About/About.xml")
 assert text(about, "packageId") == "sucro.ancientmedievaljapan.core"
 deps = [n.findtext("packageId") for n in about.findall("./modDependencies/li")]
-assert not deps, "Grains must have no hard Mod dependency, including MO"
+assert deps == ["DankPyon.Medieval.Overhaul"], "Agriculture must require Medieval Overhaul"
 optional_order = [n.text for n in about.findall("./loadAfter/li")]
-assert optional_order == ["DankPyon.Medieval.Overhaul", "sucro.cropcoldtoleranceoverhaul"], (
-    "Grains optional load order changed"
-)
+assert optional_order == [
+    "DankPyon.Medieval.Overhaul",
+    "Lucifel.MedievalOH.JPT",
+    "sucro.cropcoldtoleranceoverhaul",
+    "Adaptive.PrimitiveStorage",
+], "Agriculture load order changed"
 manifest = load("About/Manifest.xml")
-assert len(manifest.findall("./dependencies/*")) == 0, "Manifest must not declare hard dependencies"
+assert [n.text for n in manifest.findall("./dependencies/li")] == ["MedievalOverhaul"], (
+    "Manifest must declare Medieval Overhaul as required"
+)
 
 ccto_patch = load("Patches/Compatibility/CCTO_StageA.xml")
 wheat_patch = load("Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Wheat.xml")
