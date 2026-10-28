@@ -1,5 +1,10 @@
 # Grains dependency-migration test profiles
 
+## 2026-10-29 Dining production acceptance
+
+The new default runtime requires Harmony and Daily Menu in addition to MO. The ordinary loaded Agriculture DLL, actual grain cooking, three-role serving/eating, interrupted serving, partial meal serialization, assisted feeding and generic-simple-meal retirement have scoped native evidence in [Dining](Dining.md). The old provider matrices below remain historical; they do not configure Daily Menu and are not the current dining acceptance route. The retained legacy E2E cooking step now checks intentional simple-meal retirement when the dining Def is loaded. No broad legacy matrix was rerun for this change.
+
+
 **2026-10-26 acceptance scope updated:** Agriculture is now declared MO-required in production metadata; this document's Vanilla/MO four-profile runs are **retained historical evidence**, not a demand to maintain a current independently released non-MO route. The pending next integrated native acceptance targets actual MO 1.6 + Agriculture, source-only MO adaptation without legacy Japanization where relevant, primary grain processing/food Bills and existing Def/save consumers. Do not mislabel prior native PASS as covering the new dependency declaration or latest all-feature sources; no native run was launched by this documentation/metadata transition.
 
 

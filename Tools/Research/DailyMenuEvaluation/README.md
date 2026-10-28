@@ -1,5 +1,12 @@
 # Daily Menu feasibility evidence
 
+**Production update (2026-10-29):** The loadable implementation is now in
+Source/AMJAgriculture.Dining/ and Assemblies/AMJAgriculture.Dining.dll.
+RunProduction.py and ProductionProbe.cs exercise actual Agriculture and MO
+food through this production DLL. The proof below remains historical; see
+[Dining](../../../Docs/Dining.md) and its bounded production evidence.
+
+
 This folder holds AMJ-authored disposable native probes, not a released Mod.
 The decision and exact scope are in
 [`DailyMenuNativeAssessment-20261028.md`](../../../Docs/Research/DailyMenuNativeAssessment-20261028.md).
