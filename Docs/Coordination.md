@@ -219,15 +219,34 @@ Durable design source: `Docs/Design.md` section **Core + Environment 自動ゲ�
 
 **Next:** recover only genuine missing *historical* accepted masters when author-approved identity can be proven; never replace an original with a 256px derivative.
 
-### ARCH-MODULAR-001 — Grains modularity and optional MO dependency
+### ARCH-MODULAR-001 — AgricultureのMO必須依存・モジュール分離
 
-**Owner:** Grains agriculture/compatibility, Scenarios owner for starting scenarios. **Status:** IN PROGRESS for current-revision fresh-start real-game verification; mandatory MO dependency removal implemented. Old-save migration is out of scope.
+**Owner:** Agriculture（公開表示名Grains）。開始シナリオはScenariosが所有。
 
-Canonical design: `Docs/Design.md §2.8` (Base/MO ownership boundary), `Docs/GrainsDependencyAudit.md`, `Docs/GrainsProfileTesting.md`, `Docs/ScenarioExtraction.md` and production XML. Vanilla + Grains has independent wheat, grain processing and minimum flour-food paths; MO presence selects `Compatibility/MedievalOverhaul` and MO absence selects `BaseWithoutMO`. No duplicate default wheat/flour/millstone providers on MO profile. **2026-10-14 correction:** Pre-publication old-save compatibility is not applicable. Grains has no legacy New Village provider, scenario loader conditions, or scenario-only fixture; Scenarios exclusively owns the three starting Defs and new-start tests. Grains base/MO projections must contain zero such Defs; its runtime profile scope remains grain-only. Canonical contract: Docs/ScenarioExtraction.md and Docs/Design.md. No runtime/Steam completion is inferred.
+**Status:** IN PROGRESS — 2026-10-26のMO必須化は本番メタデータへ反映済み。現行MO必須構成の実ゲーム受入・公開は未完了。
 
-**2026-10-10 author decision:** The old mandatory MO declaration is obsolete. Remove MO from Grains `About/About.xml` hard dependencies and retain optional `loadAfter` ordering; align README, Workshop/2game/metadata and static/profile regressions. Preserve current production `packageId=sucro.ancientmedievaljapan.core`, AMJC DefNames, MO-only wheat/flour/millstone/Straw interoperability, and CCTO optionality. This is a metadata/compatibility-contract change, **not** a claim that MO can safely be removed from a running historic Core/Grains save.
+**現行方針**
+- AgricultureはMedieval Overhaul（`DankPyon.Medieval.Overhaul`）を必須依存とする。`About/About.xml`および`About/Manifest.xml`に反映済み。
+- MOの小麦・小麦粉・石臼などを利用する。Agricultureのために同等のVanilla単独生産経路を新たに整備・維持することは要求しない。
+- `BaseWithoutMO`などの旧フォールバック実装と既存DefNameは保存するが、Vanilla単独の公開サポートを意味しない。
+- CCTOは任意互換。AgricultureのMO必須化を他のAMJ Modへ適用しない。
+- 新しい村などの開始シナリオはScenariosが所有し、Agricultureへ戻さない。
 
-**Evidence boundaries / next work:** Four-profile 24/24 fresh native-job Pickle and ERROR 0 existed on earlier source; later climate/sow diagnostics and this dependency-metadata change have no new identical exact-head real-game matrix evidence. **2026-10-10 author clarification:** Grains has never been installed or used; no Grains saves need migration. Old-Core save load/re-save, mid-save add/remove and removing MO from hypothetical existing saves are removed from the release gate. The synthetic tools and historic notes remain archive-only, not active tasks. Graphics/normal UI, approved text, seasonal growth, fresh-start four-profile checks and publication decisions remain OPEN. No Steam upload or author-visible game test is claimed. Obsolete intermediate migration and PR step history is retained in Git history; formal current sources above supersede its prior MO-required instructions.
+**旧方針・検証履歴**
+- 2026-10-10のMO必須解除決定は、2026-10-26の作者決定によって失効した。
+- 当時のVanilla / Vanilla+CCTO / MO / MO+CCTOの4構成検証と24/24 PASSは、対象ソースに限る過去の実行証拠として保存する。現行MO必須版の合格証拠には転用しない。
+- 公開前の旧Grainsセーブ移行は現行の必須ゲートではない。既存Def・参照の保護は維持する。
+
+**残作業**
+- 現行MO必須版について、Agricultureの正式設計・テスト正本で定めた新規開始、主要農業・加工・料理経路、MO提供資産と既存Def参照の受入を確認する。
+- 既存の検証証拠にない実ゲームPASSやWorkshop公開完了を主張しない。
+
+**正式な参照先**
+- `Docs/Design.md` — 現行の設計・所有範囲
+- `Docs/GrainsProfileTesting.md` — 実ゲーム検証と過去の結果
+- `Docs/GrainsDependencyAudit.md` — 旧MO依存解除の監査履歴
+- `Docs/ScenarioExtraction.md` — Scenariosとの所有境界
+- `About/About.xml`・`About/Manifest.xml` — 実際の依存宣言
 
 ### ARCH-UPLAND-RICE-001 — One rice Plant, cultivation environments differ
 
