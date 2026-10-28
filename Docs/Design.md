@@ -1,9 +1,9 @@
 # Ancient & Medieval Japan - Grains（中世日本 - 穀類） — 設計書
 
-**文書状態:** Core→Grains再編実装中。MO必須依存解除（2026-10-10）。新規開始の実機・画像・UI・バランス検証を継続。旧セーブ移行は対象外  
+**文書状態:** GrainsからAgricultureへ開発範囲を移行中（公開表示名はGrainsのまま）。**2026-10-26以降、MOは必須依存**。2026-10-10の依存解除は履歴。最新のMO必須構成の実ゲーム受入・画像・UI・バランス検証は未完了。旧セーブ移行は別判断  
 **対象:** RimWorld 1.6  
 **公開表示名（名称方針）:** Ancient & Medieval Japan - Grains（中世日本 - 穀類）  
-**機能位置づけ:** 独立した穀類Mod。表示名はGrains、既存`packageId`・DefNameは互換維持。MO必須依存は解除、MO互換は条件付きで継続  
+**機能位置づけ:** 現行表示名はGrains、開発上の所有範囲はAgriculture（食用作物・基本食品加工）。既存`packageId`・DefNameを互換維持。**Medieval OverhaulはAgricultureの必須依存**（`About/About.xml`／`About/Manifest.xml`）。CCTOは任意、旧Vanilla単独経路は非サポートの保存ソース  
 **2026-10-26 作者決定 — MOを中世生産基盤としてAgricultureの必須依存に変更（現行正本）:** 本Modは中世日本の**食用作物・基礎食品加工**に特化し、既存MOの小麦・収穫束・粉・石臼・加工設備・関連研究と、MO農作物の史実選別を直接利用する。自分のMO併用プレイを優先し、MOを利用する同等の製造ラインをVanilla対応のためだけに二重保守しない。作者の「MOを基盤として利用可能なものはMO前提で作る」決定に従い、**Agricultureの正式実行依存を `DankPyon.Medieval.Overhaul` とする**。実装宣言は `About/About.xml` の `modDependencies`、旧ModManager用 `About/Manifest.xml` の `MedievalOverhaul` identifier、説明・README・Changelogを統一する。MO自身が要求するVE Framework／Processor FrameworkはMO側の推移依存であり、VPE作物Mod対応を意味しない。CCTOは引き続き任意、Environment/Waterworks/Culture Tea/CCTOそのものをMO必須に変更しない。**2026-10-25の「すべてMO任意・Vanilla単独の進行を恒久保証」方針は、このMO機能利用Ownerについて更新し、AgricultureのVanilla単独リリース保証を終了**する。旧BaseWithoutMO／Vanilla用小麦・粉・石臼等のファイル、旧テスト・過去のロード証拠は直ちに削除せず保管し、無条件MO参照を増やす口実にしない。現行のMO下でのDefとセーブ互換を保全し、農業構成・数値・料理・画像・既存の必須AMJ依存は変更しない。MO+Agricultureに最新ソース・依存宣言を適用した新規開始、主要Bill、MO日本化分散パッチ、旧参照の**最終実ゲーム受入は未実施**であり、新たなネイティブPASSや公開完了とは主張しない。
 
 **桑・養蚕と苧麻の境界（同日実装監査）:** 提供MO 1.6.2.2の `DankPyon_Tree_Mulberry` は `DankPyon_RawMulberry` と `DankPyon_Silkworm` を同じ収穫機構 `MedievalOverhaul.Plant_SecondaryDrop` で供給し、既存 `DankPyon_SilkBed` と `DankPyon_SilkwormIntoSilk` で絹を製造する。**AMJに桑・蚕・養蚕床・絹の重複Def/新Addonは作らない**。MOの果実・養蚕供給が連動しているため現行の桑収穫開始0.55・副産物・Cocoa研究・既存セーブ・桑実の西洋式酒造除外は維持し、食品関連の個別修正のみAgricultureで扱う。繊維についてもMOの `DankPyon_Plant_Flax` → `DankPyon_RawFlax` → `DankPyon_MakeLinen`／`DankPyon_MakeLinenBulk` → `DankPyon_Linen` はMO糸車の既存工程。既存 `MO_FibreCropPurpose.xml`・`MO_JapaneseRamieTextile.xml` を**移管先なしに削除／重複実装しない**。新たな繊維Addonを作るのはMOにない実用的独立機能が実際に必要になった場合のみ。MOの現行数値やPlantDefを安易に採用確定とはせず、既存で承認した限定修正だけ維持する。
@@ -12,13 +12,13 @@
 
 **2026-10-26 作者方針 — Agricultureは食用作物と基本食品加工に限定（旧Stage C一般繊維作物追加を撤回）:** 本Modを中規模の「中世日本の食用作物・基礎食料生産」Ownerとする。栽培作物の歴史的選別・播種・収穫・肥沃度／生育／収量の作物別値、可食化・脱穀／精米／製粉・日常の直接関連料理は一体で所有する。非食用専用作物（苧麻・藍など）、茶樹、薬用植物をAgricultureへ新規追加しない。茶樹から製茶・飲用までをCulture Teaが所有する。**食用作物の非食用用途**（醸造、繊維、染色、養蚕等）の追加加工／製造は用途別の任意Addon／専門Mod側で所有し、作物の収穫物・副産物との入出力だけ明示する。副産物が既存の一次加工で自然に出ること（MO併用時の脱穀藁）自体を排除する意味ではない。工程やPatch一つごとに機械的にAddonリポジトリを作らず、すでにMO等にある必要十分な設備・Recipeを再利用し、独立した製品価値がある単位で分ける。
 
-**既存の非食用MO機能は移管まで維持:** `Patches/MO_FibreCropPurpose.xml` と `Compatibility/MedievalOverhaul/Patches/MO_JapaneseRamieTextile.xml`（苧麻、青苧／麻布、MO既存糸車とその単品10→10・一括50→50レシピ）は旧2026-10-25 Japanization移管を反映する現行の一時所有であり、Agricultureの将来スコープに含めない。適切な繊維／衣料等のOwnerが成立するまでは未移動・未削除とし、移管時は研究、カテゴリ、XML、日英翻訳、DefName、加工設備の最終ロード・既存セーブをまとめて監査する。MO桑は同一Plantから桑実と蚕副産物を出すため、食品／養蚕の責務は分けても、現行桑の栽培・副産物・収穫閾値を自動変更しない。食用果実の存在だけで非食用工程をAgricultureへ吸収しない。この決定は**今後の責務区分**であり、既存XML・作物／料理・数値・MO任意依存・リリース状態を変更しない。2026-10-23の一般繊維作物をAgricultureへ追加する将来計画より優先する。
+**既存の非食用MO機能は移管まで維持（本段落の「MO任意依存」は同日後続のMO必須決定より前の履歴）:** `Patches/MO_FibreCropPurpose.xml` と `Compatibility/MedievalOverhaul/Patches/MO_JapaneseRamieTextile.xml`（苧麻、青苧／麻布、MO既存糸車とその単品10→10・一括50→50レシピ）は旧2026-10-25 Japanization移管を反映する現行の一時所有であり、Agricultureの将来スコープに含めない。適切な繊維／衣料等のOwnerが成立するまでは未移動・未削除とし、移管時は研究、カテゴリ、XML、日英翻訳、DefName、加工設備の最終ロード・既存セーブをまとめて監査する。MO桑は同一Plantから桑実と蚕副産物を出すため、食品／養蚕の責務は分けても、現行桑の栽培・副産物・収穫閾値を自動変更しない。食用果実の存在だけで非食用工程をAgricultureへ吸収しない。この決定は**今後の責務区分**であり、既存XML・作物／料理・数値・MO任意依存・リリース状態を変更しない。2026-10-23の一般繊維作物をAgricultureへ追加する将来計画より優先する。
 
-**2026-10-26 作者方針 — 自分のMO併用プレイを開発の第一目的にする:** Agricultureの当面の開発・バランス判断は、作者が実際に遊ぶMO＋関連AMJ構成において、日本の中世農耕として自然に機能し、栽培・収穫・加工・料理の選択と作業負担が実用的であることを優先する。Workshop・2game等への公開は、作者自身のプレイで使える成果のお裾分けであり、公開範囲拡大・一般利用者向けの網羅的互換・告知や体裁の整備を製品機能より先行させない。VPE／More Plantsとの専用互換は後回しとし、未使用の組み合わせを成立させるためだけの追加Patch・代替工程・テストは実装しない。ただし既存Mod比較の事前監査と、実際に利用する構成で発生する不具合への対応は別とする。これは**作業優先順位のみの決定**であり、2026-10-25のMO任意・Vanilla既存機能の最小動作保証、現行DefName・セーブ保護、数値、作物除外、Grains分離／Agriculture統合の所有範囲、公開要件を自動変更しない。責務・必須依存の再変更は実際のプレイ上の問題、最小変更案、移行コストを比較してから別途決める。Project正本 `Docs/Architecture.md`／`Docs/ImplementationPriorities.md`を参照。
+**2026-10-26 作者方針 — 自分のMO併用プレイを開発の第一目的にする（依存必須化以前の判断経緯。依存部分は上記後続決定を優先）:** Agricultureの当面の開発・バランス判断は、作者が実際に遊ぶMO＋関連AMJ構成において、日本の中世農耕として自然に機能し、栽培・収穫・加工・料理の選択と作業負担が実用的であることを優先する。Workshop・2game等への公開は、作者自身のプレイで使える成果のお裾分けであり、公開範囲拡大・一般利用者向けの網羅的互換・告知や体裁の整備を製品機能より先行させない。VPE／More Plantsとの専用互換は後回しとし、未使用の組み合わせを成立させるためだけの追加Patch・代替工程・テストは実装しない。ただし既存Mod比較の事前監査と、実際に利用する構成で発生する不具合への対応は別とする。これは**作業優先順位のみの決定**であり、2026-10-25のMO任意・Vanilla既存機能の最小動作保証、現行DefName・セーブ保護、数値、作物除外、Grains分離／Agriculture統合の所有範囲、公開要件を自動変更しない。責務・必須依存の再変更は実際のプレイ上の問題、最小変更案、移行コストを比較してから別途決める。Project正本 `Docs/Architecture.md`／`Docs/ImplementationPriorities.md`を参照。
 
 **2026-10-26 作物の残存価値の追加監査（用途を伴わない栽培維持を正当化しない）：** **史料上存在した**／既存セーブのため`ThingDef`を**削除せず残す**ことと、**プレイヤーがその作物を新たに栽培する実用価値がある**ことを必ず区別する。栽培する作物は収穫物の可食・製粉・調理・繊維・養蚕・薬・保存・交換等の**実際に成立する用途**を棚卸しし、通常使う代替作物に対する独自の便益（栽培期間・土壌・気候・加工労働・収量・嗜好性・保管・取引・副産物）とプレイヤーの意思決定が有意味か判断する。**「生食できる」「汎用簡易食事の材料にできる」「史実上存在する」だけでは独自作物としての維持は確定しない。** MOのパンケーキ／パイ／ワインなど歴史的不適切なレシピを復活させたり、消えた需要を埋めるために史料・製法の裏付けがない和菓子・新設備を追加しない。元の`RecipeDef`・`ThingDef`はセーブ互換で保持できても、通常の播種・交易・料理・加工が不要なら別途整理する。**直ちに作物を削除／播種停止すると決定したのではない。** 最初のMO17作物の実用用途と現在のレシピ断絶は`Docs/Research/MO_CropActiveUseAudit_20261026.md`を正本とする。ブドウ・ニンジン等の歴史的な時代適合性と農業として残す価値は独立判定し、栽培可否の変更と独自料理の採否はそれぞれ承認・ゲーム影響確認が必要。これまでの作物実装・数値・画像・輸入量はこの用途監査だけでは変更しない。
 
-**2026-10-25 作者確定 — 数値バランスの主基準はMO＋関連AMJ、MOは任意:** 本Modの作物・加工・食品経済に関する **主たる数値調整・比較・受入環境をMO併用のAMJ統合環境**とする。MO原本の `growDays`／`harvestYield`／工数・保存性・栄養値は比較用の実データであり、値をそのまま採用する義務はない。史実妥当性とAMJ全体での食料入手量／栽培回数／技能／肥沃度／脱穀・製粉・調理の総労働／保存・心情の帰結を一体で優先して決める。**Vanilla単独は既存の播種→収穫→加工→調理→喫食が成立し、参照欠落・進行不能にならない基本互換性だけを保証**する。Vanilla用の現行製粉・加工設備やRecipeは維持し、MO設備・副産物・研究・工程との差を埋めるためだけの個別の収量・工数・効率バランスや代替設備は開発しない。同じAMJ独自作物の主要な共通値は可能な範囲で共通利用するが、MO原本の作業台・小麦加工などとの生産性がVanilla経路で一致する必要はない。**MO必須化、Vanilla既存機能削除、実際に使えないBill・不足素材・プレイ不能を許す方針ではない。** CCTO V3未承認の35 HP trial、Environment側の土壌・天候、水田側の水管理効果の数値をこの方針だけで確定しない。検証は主環境の経済・栽培収支を中心に、Vanilla単独は変更に応じて最小限の動作・進行回帰を確認する。以前のVanilla／MO完全同等性を求める分析・テスト案は最新方針に劣後するが、既存の実行済み証拠・テストは無断削除しない。根拠：[Project Architecture](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Architecture.md#2026-10-25-author-approved-amj-numeric-balance-and-support-profiles)。本決定は**設計・検証の優先順位の変更**であり、今回作物・料理XML、栽培値、MO互換・依存メタデータは変更しない。
+**2026-10-25 当時の方針（依存部分は2026-10-26に失効）— 数値バランスの主基準はMO＋関連AMJ、当時MOは任意:** 本Modの作物・加工・食品経済に関する **主たる数値調整・比較・受入環境をMO併用のAMJ統合環境**とする。MO原本の `growDays`／`harvestYield`／工数・保存性・栄養値は比較用の実データであり、値をそのまま採用する義務はない。史実妥当性とAMJ全体での食料入手量／栽培回数／技能／肥沃度／脱穀・製粉・調理の総労働／保存・心情の帰結を一体で優先して決める。**Vanilla単独は既存の播種→収穫→加工→調理→喫食が成立し、参照欠落・進行不能にならない基本互換性だけを保証**する。Vanilla用の現行製粉・加工設備やRecipeは維持し、MO設備・副産物・研究・工程との差を埋めるためだけの個別の収量・工数・効率バランスや代替設備は開発しない。同じAMJ独自作物の主要な共通値は可能な範囲で共通利用するが、MO原本の作業台・小麦加工などとの生産性がVanilla経路で一致する必要はない。**MO必須化、Vanilla既存機能削除、実際に使えないBill・不足素材・プレイ不能を許す方針ではない。** CCTO V3未承認の35 HP trial、Environment側の土壌・天候、水田側の水管理効果の数値をこの方針だけで確定しない。検証は主環境の経済・栽培収支を中心に、Vanilla単独は変更に応じて最小限の動作・進行回帰を確認する。以前のVanilla／MO完全同等性を求める分析・テスト案は最新方針に劣後するが、既存の実行済み証拠・テストは無断削除しない。根拠：[Project Architecture](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Architecture.md#2026-10-25-author-approved-amj-numeric-balance-and-support-profiles)。本決定は**設計・検証の優先順位の変更**であり、今回作物・料理XML、栽培値、MO互換・依存メタデータは変更しない。
 
 **2026-10-25 作者承認 — MO桑の反復収穫閾値0.40→0.55（養蚕を維持）:** MO 1.6.2.2の`DankPyon_Tree_Mulberry`はTreeBaseの`harvestMinGrowth=0.40`を継承し、`harvestAfterGrowth=0.30`との差は0.10。短い再収穫間隔による桑実と蚕の過剰供給を緩和するため、作者は桑のみ**0.55**を承認。AgricultureのMO任意フォルダ`Compatibility/MedievalOverhaul/Patches/MO_MulberryHarvestBalance.xml`は子`plant/harvestMinGrowth`に明示値を追加（MO更新版で明示済みなら置換）し、MO原本の`growDays=19.5`、収穫後Growth0.30、基礎収穫6、`MedievalOverhaul.Plant_SecondaryDrop`、副産物の蚕3個・確率1.0、桑の果実・SilkBed・Cocoa研究・取引・既存国内ワイン除外、画像とDefNameは不変。独立した最大成長上限（最適気温／毎日13h成長・収穫と植付け遅延なし・60暦日）で通常肥沃度100%は13回→5回、70%で10→4回、140%で18→7回。30暦日／肥沃度100%では5→2回。SilkBedの`capacity=25`は最大収容量であり、Processor Framework 1.6系の`SpaceLeftFor`と`AddIngredient`は最低1個から受け入れる。SilkBedの蚕→絹は`processDays=6`, `efficiency=5`なので蚕3個から絹15個の加工が可能（必ず特定日数で収穫される／常時温度適合するという保証ではない）。他Modが後からPlantの`harvestMinGrowth`を上書きし得ること、MOのC#副産物生成と実ゲーム保存・播種・Pawn技能・気象・収穫タイミング、1.7、季節経済・果実消費は未検証。検証境界と参照XMLは[MO栽培作物監査](Research/MO_CultivatedCropAudit_20261023.md#2026-10-25-桑の収穫間隔と養蚕供給の数値監査)を参照。この承認はブドウの収穫閾値や養蚕工程の他係数を変更しない。
 
@@ -89,7 +89,7 @@
 
 **既存の実装状態（上記で明記したMO作物の限定除外を除く）:** 上記は製品範囲の新しい承認方針であって、残る作物・料理の選別、豆類等の追加、Agricultureへの改名、数値バランス変更は**未実装**。下記の旧Grains専用・旧Stage B〜D別所有の記述は実装履歴／V1状態の説明であり、将来所有判断としては本節を優先する。
 
-**基本方針（既存V1の実装経路）:** GrainsはAMJ全体の必須Coreではなく、現行V1の穀類栽培・加工・料理を自己完結して提供する。Vanilla + Grainsを基本経路とし、Medieval Overhaul（MO）は任意の公式互換先。MOありではMO固有の小麦・石臼等を条件付きで再利用し、Grains所有の設定を優先する。旧セーブからのMO削除・移行は、導入実績と対象セーブがないため今回の対象外。
+**基本方針（現行Agriculture依存と旧V1の区別）:** AgricultureはAMJ全体の必須Coreではないが、**Agriculture自体はMOを必須依存**とし、MOの小麦・粉・石臼等の既存資産を再利用する。Vanilla + Grainsの単独生産経路は2026-10-10時点の実装履歴で、現在のサポート対象ではない。旧セーブからのMO削除・移行は別途承認なしに扱わない。
 
 ---
 
@@ -103,7 +103,7 @@ Agricultureへの再編後は、**古代〜中世日本に適合する食用作�
 - 雑穀粉・蕎麦粉・大麦粉・小麦粉の4種を対象とする製粉経路。米粉は2026-10-19の判断で通常の生産対象から外し、既存アイテム・料理・BillのDefNameだけ互換維持する。
 - 穀類を主原料とする料理全般（飯・粥・粉食・麺類等）。初回公開では既存の基本料理を提供し、追加料理は公開後の更新で段階的に実装する
 - 作物ごとの肥沃度・温度・生育日数・収量・加工価値の差
-- MO導入時の小麦・小麦粉・石臼・Straw等の公式互換
+- **MO必須構成**での小麦・小麦粉・石臼・Straw等の公式再利用
 
 旧Grains限定方針から2026-10-23には豆類・繊維作物・根菜の統合を予定したが、**2026-10-26以降は食用の豆類・根菜とその基本食品加工だけをAgricultureの追加範囲**とし、非食用作物とその専門加工は用途別Addon／Ownerへ分離する。現行のMO繊維Patchだけは安全な引継ぎまで暫定維持する。水田・給排水、一般採集、共通温度機構、紡績・製紙の産業工程、独立の発酵・酒造・薬品・建築等は引き続き所有しない。畑地・水田で共通の稲Plantと加工経路はAgricultureが管理する。
 
@@ -111,7 +111,7 @@ Agricultureへの再編後は、**古代〜中世日本に適合する食用作�
 
 **2026-10-20 作者確定 — 穀類料理の所有範囲:** 現行V1では穀物を主要原料とする料理は、最低限の粉食に限定せずGrainsが担当する。Agriculture再編後は**追加する農作物とその通常料理にもこの一体所有を拡大**する。既存の飯・粥・粉食は維持し、そば切り等の歴史上の穀類料理もGrainsの将来拡張対象とする。そば切りは戦国後期相当の研究解禁を想定し、**初回公開には含めず、公開後のアップデートで追加**する。研究仕様・調理素材・技能・作業量・心情補正などの値は実装時に別途確定する。穀類料理の追加を口実に一般的な肉・魚・野菜料理、発酵・醸造等の所有範囲を変更しない。既存V1の公開範囲・料理の数値・XMLはこの決定で変更しない。
 
-**Grains V1の段階的実装方針（2026-10-13 作者確定）:** V1は専用作業台の完成より、Vanilla単独／MO併用で「栽培→収穫→脱穀→殻取り（小麦は不要）→製粉→料理」の基本ループを成立させ、通常プレイで検証可能にすることを優先する。
+**旧Grains V1の段階的実装方針（2026-10-13当時の履歴。Vanilla単独は2026-10-26以降サポート対象外）:** V1は専用作業台の完成より、Vanilla単独／MO併用で「栽培→収穫→脱穀→殻取り（小麦は不要）→製粉→料理」の基本ループを成立させ、通常プレイで検証可能にすることを優先する。
 
 既存設備・調理台を用いた暫定加工はV1で許容する。当初想定した工程別の専用作業台への再振り分け、その設備の完成画像や設備固有のバランス調整はV1以降に段階的に実施する。
 
@@ -126,12 +126,12 @@ V1の加工工程・品目・材料・歩留まり・研究条件・MO互換・�
 | 区分 | 初回公開に含む内容（現行実装） | 公開後の追加・別Modに分ける内容 |
 |---|---|---|
 | 栽培 | アワ・ヒエ・キビ・ソバ・大麦・小麦、Vanilla `Plant_Rice` を再利用した共通の稲（V1では畑地栽培）の**7穀**。現行の生育日数・収穫数・温度・肥沃度・播種技能を出発点とする | 水田栽培と水管理はRice Cultivation側。ソバのための専用痩せ地・痩せ地しかない高難易度マップや季節ごとの手動植え替え前提を追加しない |
-| 作物互換 | Vanilla既存6作物・任意MO既存7作物の統合済み生育期間調整（旧Crop Growth Balance相当） | 独立の旧CGBは併用せず、今後の全作物数値変更は別の比較判断で行う |
+| 作物互換 | Vanilla既存6作物・MO既存7作物の統合済み生育期間調整（旧Crop Growth Balance相当）。MOはAgricultureの必須依存だが、既存のMO用XMLは条件付きフォルダに保持 | 独立の旧CGBは併用せず、今後の全作物数値変更は別の比較判断で行う |
 | 一次加工 | 穀束の脱穀・殻取り、稲束→籾→玄米/白米の二者択一（籾10→玄米10/Work80、籾10→白米8/Work240）。MO時のみ対応するStraw副産物 | 新しい水田工程、任意の乾燥・高度加工工程 |
-| 製粉 | **雑穀粉・蕎麦粉・大麦粉・小麦粉の4種**。Baseでは独自小麦/粉、MO有効時はMO小麦/粉とその石臼を条件付き再利用 | 米粉・米粉団子は通常生産しない。旧Defは参照互換保護のため維持するのみ |
+| 製粉 | **雑穀粉・蕎麦粉・大麦粉・小麦粉の4種**。現行MO必須構成ではMO小麦/粉と石臼を再利用。旧Base独自小麦/粉の実装は保存されるが単独リリースは非サポート | 米粉・米粉団子は通常生産しない。旧Defは参照互換保護のため維持するのみ |
 | 完成料理 | **9品/単品と4食の18調理Bill**：共通「飯・粥・粉食」3品、穀粉指定「雑穀団子・そばがき・餺飥・麦粉粥」4品、白米専用「白飯・白粥」2品。玄米は共通飯・粥を利用し、旧米飯・米粥は通常生産から外す。共通料理は単一原料/混合原料の両方に対応し、将来も維持 | 糒（ほしいい）、研究解禁のそば切り、追加の麦飯・麺食・儀礼食その他の個別料理は**初回公開に入れない**。候補のゲーム値・採否・研究は追加版で確定する |
-| 加工設備 | 現行の簡易穀物加工場所・穀物加工台・非MO手動石臼、既存の燃料式/電気式調理台での暫定加工経路、MO時のMO石臼。現行の採用/暫定画像を保護し、参照切れ等の実害は公開前に修正する | 新たな専用設備や加工Recipeの追加、工程別の設備割当再編、外観の美観修正・数量別画像拡充は公開後に評価 |
-| 依存・互換 | Vanilla単独で食料ループを完結。MO・CCTO・Adaptive Primitive Storageは任意の連携先。追加DLCを必須にしない | 他Mod固有の機能を初回公開の必須依存へ昇格しない。シナリオはScenarios、人物の嗜好/心情判定は別所有 |
+| 加工設備 | 現行の簡易穀物加工場所・穀物加工台、既存の燃料式/電気式調理台での暫定加工経路、および必須MOの石臼。非MO手動石臼のソースは互換履歴として保管。現行の採用/暫定画像を保護し、参照切れ等の実害は公開前に修正する | 新たな専用設備や加工Recipeの追加、工程別の設備割当再編、外観の美観修正・数量別画像拡充は公開後に評価 |
+| 依存・互換 | **Medieval Overhaul必須**。CCTO・Adaptive Primitive Storageは任意。追加DLCは必須にしない。旧Vanilla単独経路は非サポートの履歴 | 未承認の新たな必須依存は追加しない。シナリオはScenarios、人物の嗜好/心情判定は別所有 |
 
 **公開判定は別:** 現行ソースのロード・食材加工/調理Bill・実際の喫食・画像参照・日英表示・ERRORの問題を、作者指定の通常プレイと必要最小限の最終検証で確認する。既存の1.6 Vanilla/CCTOに関する限定PASSはMO経路や最新Billの実動作の証明には転用しない。初回公開の対象を確定しても、実機未確認機能・画像を完成と記載しない。通常プレイの検証を待たずに新料理や新UIを公開条件へ追加しない。
 
@@ -360,18 +360,16 @@ AMJ各Modは、**AMJシリーズ内の別Modを理由なく必須依存にしな
 
 #### Medieval Overhaulとの関係
 
-作者の標準プレイ環境・主要比較対象としてMOを重視する方針は維持するが、**作者がMO前提で遊ぶことと、GrainsがMOを必須依存にすることは分ける。**
+**現行AgricultureはMO必須**（2026-10-26作者決定）。本番 `About/About.xml` は `DankPyon.Medieval.Overhaul`、旧 `About/Manifest.xml` は `MedievalOverhaul` を依存宣言する。MOの小麦・小麦粉・石臼・Straw等の実Defを再利用し、同等の資産を二重に表示しない。旧Vanilla + Grainsの単独加工経路と2026-10-10のMO依存解除は保存された実装・検証履歴であり、現在の単独リリース保証ではない。
 
-Grains移行後はVanilla + Grainsで、乾田穀物の栽培 → 一次加工 → 製粉 → 最低限の粉食まで成立させる。MO導入時は同じ概念のMO小麦・小麦粉・石臼・Straw等を条件付き互換から実Def供給元として再利用し、同等のAMJ資産を二重表示しない。
+既存Base XMLに無条件MO参照を追加する必要はなく、MO固有Patchと旧フォールバックの条件付きロード構造・保存ソースは、Def/セーブ互換の別監査なしに削除・移設しない。`loadAfter` は必須依存の宣言ではなく適用順序の指定である。最新MO必須構成の実機ロード・製粉・描画・旧参照の受入は未完了で、公開可否は別のリリースゲートで判断する。
 
-Base XMLにはMO DefNameへの無条件参照を残さない。MO固有PatchはMO存在時だけ適用する。**本番About.xmlのMO必須依存は解除済み**。任意の`loadAfter`は互換Patchの適用順を守るため残す。公開可否は新規導入での実機ロード・製粉・描画等で判断する。旧セーブ移行は対象外。
-
-`AMJ - Medieval Overhaul Japanization` はMO本体を古代～中世日本向けに再構成するPatch + Retextureレイヤーであり、責務上MO必須を維持する。World Tech Levelは中世限定世界を作るための強い推奨Modとし、Japanization自身では包括的なTech Level制限を再実装しない。
+旧 `AMJ - Medieval Overhaul Japanization` は新規日本化の中央Ownerではなく、移管前の保存済みDef/Compを保持する暫定的な旧提供元である。Agricultureが所有する作物・一次加工のMO上書きは本Mod側で管理し、残存の乾燥DLLやグリフォン等は正式な移管前に削除しない。World Tech LevelのMedieval設定はAMJ世界を中世寄りにする条件付き推奨であり、Agricultureの直接依存ではない。
 
 #### AMJ Mod間の依存方針
 
 現時点の方向性:
-- Grains / 現Core: Vanilla単体で乾田穀物・一次加工・製粉・最低限粉食を成立させる。MOは推奨・公式任意互換
+- Agriculture（現行公開表示名Grains）: **MO必須**で食用作物・基本食品加工を所有する。旧Vanilla単独Grains経路は保存された履歴であり、他AMJ ModにMO必須を波及させない
 - Fermentation: Grainsを必須依存にしない。単独の発酵ループを持たせ、Grains導入時に雑穀・共通米等を追加接続し、Rice Cultivation導入時には水田に固有の機能だけを条件付きで扱う
 - Brewing: Grains / Waterworks / Rice Cultivationのいずれも自動的な必須依存にせず、存在時だけ対応原料・工程を追加接続する
 - Ironmaking: Vanilla単体で鉄器加工・砂鉄供給・古代～中世製鉄を成立させる。MO / Environment / Waterworksは公式任意互換。詳細は [IronmakingDesign.md](IronmakingDesign.md)
@@ -382,7 +380,7 @@ Base XMLにはMO DefNameへの無条件参照を残さない。MO固有PatchはM
 GrainsはHot Springsを所有しない。専用リポジトリ作成前の詳細設計・互換方針はProjectの [HotSpringsCandidate.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/HotSpringsCandidate.md) を正本とする。Grains側には、Grainsを必須依存にしないという所有境界だけを残す。
 #### 大豆の所有と外部大豆Mod
 
-大豆はGrainsの所有外。未所属の大豆・加工候補と外部Mod比較はProjectの [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) と [ExistingModAudit.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/ExistingModAudit.md) を参照する。Grainsは将来Addon向けの大豆Defを先行所有しない。
+**2026-10-26以降の所有境界:** 可食大豆・食用豆類はAgricultureの将来候補であり、承認・実装前に新規大豆Defや加工設備を追加しない。非食用の独立産業や発酵・醸造は対応する用途別Ownerに属する。旧Grains段階の未所属候補は [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) と [ExistingModAudit.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/ExistingModAudit.md) に歴史資料として残す。
 #### Core実装識別子
 
 実装開始時点の識別子は以下で固定する。packageIdやDefName prefixは外部Patch・セーブ・互換Modから参照されるため、公開後は原則変更しない。
@@ -396,7 +394,7 @@ GrainsはHot Springsを所有しない。専用リポジトリ作成前の詳細
 
 #### MO併用プロファイルとしての統合
 
-MO導入時は、既存の農業・研究・設備・素材を可能な限り再利用し、日本側で必要な差分だけAMJが所有する。これは**MOをAMJ全体の必須プラットフォームとする意味ではなく、MO併用時の公式互換設計**である。
+MO導入時は、既存の農業・研究・設備・素材を可能な限り再利用し、日本側で必要な差分だけAMJが所有する。これは**MOをAMJ全体の必須プラットフォームとする意味ではない**。AgricultureはMOを必須とするが、Environment/CCTO/Waterworks/Culture Tea等は各所有Modの独立依存宣言に従う。
 
 再利用の優先順位:
 1. MOに同じ概念のDef・設備・素材・研究・カテゴリがある場合は、MO併用Patchからそれを利用する
@@ -898,7 +896,7 @@ AMJC固有作物の耐寒値と保存候補範囲の正本は [AMJC作物の耐�
 
 ### 4.2.1a Vanilla/MO既存作物の生育期間整合（2026-10-19 Grains再統合確定）
 
-**作者決定:** 未公開の独立Crop Growth Balance（CGB）をGrainsへ統合し、バニラ6作物とMO7作物の生育日数をGrainsが所有する。**CGBは単独公開せず、同時導入も不要**。GrainsのMod名とpackageId `sucro.ancientmedievaljapan.core`、七穀および食材のDef識別子は維持する。対象は穀物だけでなく、既存農作物のゲーム内生育期間調整に拡大する。
+**作者決定（2026-10-19当時の統合記録。表の「MO（任意）」は当時の依存状態）:** 未公開の独立Crop Growth Balance（CGB）をGrainsへ統合し、バニラ6作物とMO7作物の生育日数をGrainsが所有する。**CGBは単独公開せず、同時導入も不要**。GrainsのMod名とpackageId `sucro.ancientmedievaljapan.core`、七穀および食材のDef識別子は維持する。対象は穀物だけでなく、既存農作物のゲーム内生育期間調整に拡大する。
 
 | 供給元 | 作物Def | growDays |
 |---|---|---:|
@@ -1079,7 +1077,7 @@ Grainsの現行製粉対象は**雑穀粉・蕎麦粉・大麦粉・小麦粉の
 
 最初の公開Alphaでは専用料理を最小限にする。
 
-**基本食材としてのVanilla簡単な食事（2026-10-08検証契約）:** アワ・ヒエ・キビは共有`AMJC_Millet`、ソバは`AMJC_Buckwheat`、大麦は`AMJC_Barley`、小麦は`AMJC_Wheat`、陸稲はVanilla `RawRice` として、Vanillaの `CookMealSimple` を使えることを保証する。静的な食材フィルタ受入だけで完了とせず、収穫→各穀物の必要な脱穀/殻取り→各食材を単独指定した実`CookMealSimple` Billの完了→所定量の原料消費と`MealSimple`生成まで、Vanilla/MO × CCTO有無の四構成でPickle検証する。共有雑穀Defに合流した後のアワ/ヒエ/キビは同一の料理食材として数え、料理Defを作物数分重複作成しない。これは専用粉食3品とは別の基本食材互換テストである。**実装したPickleステップ自体の成功はまだ実ゲーム未検証であり、公開前の通過条件として残す。**
+**基本食材としてのVanilla簡単な食事（2026-10-08当時の4構成検証契約。現行のMO必須リリースゲートへ自動転用しない）:** アワ・ヒエ・キビは共有`AMJC_Millet`、ソバは`AMJC_Buckwheat`、大麦は`AMJC_Barley`、小麦は`AMJC_Wheat`、陸稲はVanilla `RawRice` として、Vanillaの `CookMealSimple` を使えることを保証する。静的な食材フィルタ受入だけで完了とせず、収穫→各穀物の必要な脱穀/殻取り→各食材を単独指定した実`CookMealSimple` Billの完了→所定量の原料消費と`MealSimple`生成まで、Vanilla/MO × CCTO有無の四構成でPickle検証する。共有雑穀Defに合流した後のアワ/ヒエ/キビは同一の料理食材として数え、料理Defを作物数分重複作成しない。これは専用粉食3品とは別の基本食材互換テストである。**実装したPickleステップ自体の成功はまだ実ゲーム未検証であり、公開前の通過条件として残す。**
 
 優先順位:
 
@@ -1158,7 +1156,7 @@ Grainsの現行製粉対象は**雑穀粉・蕎麦粉・大麦粉・小麦粉の
 
 ## 6. MO併用プロファイル設計
 
-この章は**MOを導入した場合の公式統合仕様**を定める。現行公開CoreではMOがまだ必須だが、依存監査・分離後はこの章を条件付きMO互換として維持する。
+この章はMOの既存資産を再利用するAgricultureの統合仕様を定める。**現行の未公開Agriculture/GrainsはMO必須**。後続の独立化は別途承認が必要で、旧2026-10-10のMO任意化案は現行依存方針ではない。
 
 ### 6.1 基本方針
 
@@ -1451,7 +1449,7 @@ Hilliness補正についてはバイオームとは独立したワールド側�
 ### 基準環境
 
 - RimWorld Vanilla
-- Medieval Overhaul（公式互換・主要比較対象）
+- Medieval Overhaul（**Agricultureの必須依存・主要比較対象**）
 
 ### 優先度A
 
