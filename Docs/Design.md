@@ -364,7 +364,7 @@ AMJ各Modは、**AMJシリーズ内の別Modを理由なく必須依存にしな
 
 既存Base XMLに無条件MO参照を追加する必要はなく、MO固有Patchと旧フォールバックの条件付きロード構造・保存ソースは、Def/セーブ互換の別監査なしに削除・移設しない。`loadAfter` は必須依存の宣言ではなく適用順序の指定である。最新MO必須構成の実機ロード・製粉・描画・旧参照の受入は未完了で、公開可否は別のリリースゲートで判断する。
 
-`AMJ - Medieval Overhaul Japanization` はMO本体を古代～中世日本向けに再構成するPatch + Retextureレイヤーであり、責務上MO必須を維持する。World Tech Levelは中世限定世界を作るための強い推奨Modとし、Japanization自身では包括的なTech Level制限を再実装しない。
+旧 `AMJ - Medieval Overhaul Japanization` は新規日本化の中央Ownerではなく、移管前の保存済みDef/Compを保持する暫定的な旧提供元である。Agricultureが所有する作物・一次加工のMO上書きは本Mod側で管理し、残存の乾燥DLLやグリフォン等は正式な移管前に削除しない。World Tech LevelのMedieval設定はAMJ世界を中世寄りにする条件付き推奨であり、Agricultureの直接依存ではない。
 
 #### AMJ Mod間の依存方針
 
@@ -380,7 +380,7 @@ AMJ各Modは、**AMJシリーズ内の別Modを理由なく必須依存にしな
 GrainsはHot Springsを所有しない。専用リポジトリ作成前の詳細設計・互換方針はProjectの [HotSpringsCandidate.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/HotSpringsCandidate.md) を正本とする。Grains側には、Grainsを必須依存にしないという所有境界だけを残す。
 #### 大豆の所有と外部大豆Mod
 
-大豆はGrainsの所有外。未所属の大豆・加工候補と外部Mod比較はProjectの [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) と [ExistingModAudit.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/ExistingModAudit.md) を参照する。Grainsは将来Addon向けの大豆Defを先行所有しない。
+**2026-10-26以降の所有境界:** 可食大豆・食用豆類はAgricultureの将来候補であり、承認・実装前に新規大豆Defや加工設備を追加しない。非食用の独立産業や発酵・醸造は対応する用途別Ownerに属する。旧Grains段階の未所属候補は [DeferredPlantsAndProcessing.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/DeferredPlantsAndProcessing.md) と [ExistingModAudit.md](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/ExistingModAudit.md) に歴史資料として残す。
 #### Core実装識別子
 
 実装開始時点の識別子は以下で固定する。packageIdやDefName prefixは外部Patch・セーブ・互換Modから参照されるため、公開後は原則変更しない。
