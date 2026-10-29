@@ -12,7 +12,4 @@
     <xpath>Defs/ThingDef[defName="DankPyon_MealGrilledSkewers" or defName="DankPyon_MealFriedEggs" or defName="DankPyon_MealVegetablePot"]</xpath>
     <value><modExtensions><li Class="AMJAgriculture.Dining.MealRoleExtension"><role>Side</role></li></modExtensions></value>
   </Operation>
-  <!-- Ordinary wood construction mass: 40/60 units at 0.4 mass per unit. -->
-  <Operation Class="PatchOperationAdd"><xpath>Defs/ThingDef[defName="DailyMenu_Buffet"]/statBases[not(Mass)]</xpath><value><Mass>16</Mass></value></Operation>
-  <Operation Class="PatchOperationAdd"><xpath>Defs/ThingDef[defName="DailyMenu_DrinkTable"]/statBases[not(Mass)]</xpath><value><Mass>24</Mass></value></Operation>
 </Patch>

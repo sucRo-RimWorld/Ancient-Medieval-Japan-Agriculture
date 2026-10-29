@@ -2,7 +2,7 @@
 
 ## Current crop and dish selection — OPEN (2026-10-29)
 
-[Design: current selection](Design.md#crop-selection-current) owns author-confirmed dining constraints and routes historical selection to Project. MO crops are also selected/excluded for period fit; old MO-overlap-first exclusions are historical. Crop adoption, concrete leafy crop and final values remain undecided. Daily Menu composition has implementation/virtual-environment evidence in PR #281; do not reopen its adopted foundation or confuse that evidence with main integration.
+[Design: current selection](Design.md#crop-selection-current) owns author-confirmed dining constraints and routes historical selection to Project. MO crops are also selected/excluded for period fit; old MO-overlap-first exclusions are historical. Crop adoption, concrete leafy crop and final values remain undecided. Dining runtime/source/Defs/translations and evidence moved to the independent AMJ Dining owner (2026-10-30). Agriculture requires Dining and retains food-role mappings and cooking policy. PR #281 evidence predates extraction; the separated MO-pair passed the bounded serving scenario (Dining Docs/ExtractionValidation.md); standalone and real old-save acceptance remain unverified. See Docs/Dining.md.
 
 ## AGRI-MO-REQUIRED-20261026 — unpublished Agriculture source now declares MO required
 

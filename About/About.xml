@@ -19,9 +19,9 @@
       <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
     </li>
     <li>
-      <packageId>daily.menu.manager</packageId>
-      <displayName>Daily Menu / 每日菜单</displayName>
-      <steamWorkshopUrl>steam://url/CommunityFilePage/3812908178</steamWorkshopUrl>
+      <packageId>sucro.ancientmedievaljapan.dining</packageId>
+      <displayName>Ancient &amp; Medieval Japan - Dining</displayName>
+      <downloadUrl>https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Dining</downloadUrl>
     </li>
   </modDependencies>
   <loadAfter>
@@ -31,7 +31,7 @@
     <li>sucro.cropcoldtoleranceoverhaul</li>
     <li>Adaptive.PrimitiveStorage</li>
     <li>brrainz.harmony</li>
-    <li>daily.menu.manager</li>
+    <li>sucro.ancientmedievaljapan.dining</li>
   </loadAfter>
   <description>Ancient &amp; Medieval Japan - Grains, initial release 0.1.0.
 
@@ -49,7 +49,7 @@ Medieval Overhaulは必須。旧Vanilla単独用フォールバックのソー�
 
 公開準備状況：過去のRimWorld 1.6実ゲーム検証はVanilla・CCTO・MO構成で実施。今回のMO必須依存に変更後の最終実機受入は未実施。Grainsが変更していないMO/SYR由来の既知音声エラーは公開判定から除外。Workshopへの初回非公開アップロード、配布版確認、一般公開の最終判断は未実施。
 
-Dining: Harmony and Daily Menu are required. Hungry pawns combine stored staple food with available soup and a side into one meal tray. Includes the Daily Menu Supply startup compatibility fix without replacing vendor files. Generic simple-meal cooking Bills are retired; saved Def references remain. See Docs/Dining.md for setup and evidence limits.
+Dining: AMJ Dining is required; it currently requires Harmony and Daily Menu. Hungry pawns combine stored staple food with available soup and a side into one meal tray. AMJ Dining owns meal assembly and Daily Menu compatibility. Generic simple-meal cooking Bills are retired; saved Def references remain. See Docs/Dining.md for setup and evidence limits.
 
-食膳：HarmonyとDaily Menuが必須。備蓄した主食に汁・副食を取り合わせて一膳にまとめる。Daily Menu配布ファイルを変更しない初期化互換処理を同梱。汎用の簡単な食事の新規調理Billは停止し、旧Defは維持する。仕様・使い方・検証範囲はDocs/Dining.mdを参照。</description>
+献立・配膳：AMJ Diningが必須。Diningは現在HarmonyとDaily Menuを使用する。備蓄した主食に汁・副食を取り合わせて一膳にまとめる。一膳化とDaily Menu互換処理はDiningが提供する。汎用の簡単な食事の新規調理Billは停止し、旧Defは維持する。仕様・使い方・検証範囲はDocs/Dining.mdを参照。</description>
 </ModMetaData>
