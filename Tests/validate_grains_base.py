@@ -294,9 +294,26 @@ def validate():
         "MO cereal redirect coverage"
     )
     bridge = ET.parse(ROOT / "Patches/GrainCategories_RawFoodFilters.xml")
-    assert len(bridge.findall("Operation[@Class='PatchOperationConditional']")) == 2
-    for op in bridge.findall("Operation"):
-        assert 'AMJC_Grains' in op.findtext("match/value/li"), "Raw-food category acceptance bridge"
+    bridge_ops = bridge.findall("Operation[@Class='PatchOperationConditional']")
+    assert len(bridge_ops) == 3, "Recipe whitelist plus storage category bridge"
+    edible = ["AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley",
+              "AMJC_Wheat", "RawRice", "AMJC_WhiteRice"]
+    for op, value_path in (
+        (bridge_ops[0], "match/value/li"),
+        (bridge_ops[1], "match/value/thingDefs/li"),
+    ):
+        assert [n.text for n in op.findall(value_path)] == edible, (
+            "Only edible grain kernels may enter raw-food cooking filters")
+        xpath = op.findtext("xpath")
+        assert 'categories/li="PlantFoodRaw"' in xpath and 'categories/li="FoodRaw"' in xpath
+        assert 'AMJC_Grains' not in ET.tostring(op, encoding="unicode"), (
+            "Do not include sheaves or in-hull grain in meal bills")
+    assert bridge_ops[0].findtext("xpath").endswith("/thingDefs")
+    assert bridge_ops[1].findtext("xpath").endswith("[not(thingDefs)]")
+    assert 'AMJC_Grains' in bridge_ops[2].findtext("match/value/li"), (
+        "Storage filters must still accept all grain processing states")
+    assert '/Defs/ThingDef/' in bridge_ops[2].findtext("xpath"), (
+        "The full grain category must be used for storage only")
     mo_wheat = next(n for n in mo.findall("ThingDef") if n.findtext("defName") == "AMJC_Wheat")
     # Historical MO projection is pre-ZZ patch; the final XML replaces it with AMJC_GrainKernels.
     assert [li.text for li in mo_wheat.findall("thingCategories/li")] == ["DankPyon_Cereal"]
