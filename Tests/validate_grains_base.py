@@ -297,13 +297,15 @@ def validate():
     bridge_ops = bridge.findall("Operation[@Class='PatchOperationConditional']")
     assert len(bridge_ops) == 3, "Recipe whitelist plus storage category bridge"
     edible = ["AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley",
-              "AMJC_Wheat", "RawRice", "AMJC_WhiteRice"]
+              "AMJC_Wheat", "RawRice", "AMJC_WhiteRice",
+              "AMJC_MilletFlour", "AMJC_BuckwheatFlour", "AMJC_BarleyFlour",
+              "AMJC_RiceFlour", "DankPyon_Flour"]
     for op, value_path in (
         (bridge_ops[0], "match/value/li"),
         (bridge_ops[1], "match/value/thingDefs/li"),
     ):
         assert [n.text for n in op.findall(value_path)] == edible, (
-            "Only edible grain kernels may enter raw-food cooking filters")
+            "Only processed grains and flour may enter raw-food cooking filters")
         xpath = op.findtext("xpath")
         assert 'categories/li="PlantFoodRaw"' in xpath and 'categories/li="FoodRaw"' in xpath
         assert 'AMJC_Grains' not in ET.tostring(op, encoding="unicode"), (
