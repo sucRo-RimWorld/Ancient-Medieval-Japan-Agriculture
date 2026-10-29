@@ -1,8 +1,8 @@
 # AMJ Grains Coordination
 
-## AGRI-DAILYMENU-CHEAT-ACCEPTANCE-20261029 — PR #281 follow-up
+## Current crop and dish selection — OPEN (2026-10-29)
 
-Author-approved acceptance-only exception for `Cheat_Menu.CompCheatStatOffsets`, which caused Daily Menu to reject even simple meals and clear buffet filters. Owned by `Source/AMJAgriculture.Dining/Dining.cs` and its production DLL; temporary Japanese-localization-mod patch removed. Other component checks remain active; no Cheat Menu dependency or split-state copying added. Current DLL SHA256 `7e22363f53fa8e596a794a153807e0937866ffd0bf8baefd0abeaefcd677525c`; installed-provider compile verified, Cheat Menu runtime refill/splitting untested. Prior Dining runtime evidence covers the pre-change DLL only. See `Docs/Dining.md`. No merge, game launch, or Steam publication requested.
+[Design: current selection](Design.md#crop-selection-current) owns author-confirmed dining constraints and routes historical selection to Project. MO crops are also selected/excluded for period fit; old MO-overlap-first exclusions are historical. Crop adoption, concrete leafy crop and final values remain undecided. Daily Menu composition has implementation/virtual-environment evidence in PR #281; do not reopen its adopted foundation or confuse that evidence with main integration.
 
 ## AGRI-MO-REQUIRED-20261026 — unpublished Agriculture source now declares MO required
 
