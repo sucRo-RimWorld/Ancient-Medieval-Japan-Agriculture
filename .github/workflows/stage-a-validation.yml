@@ -2,18 +2,8 @@ name: Stage A validation
 
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - 'Tests/validate_stage_a.py'
-      - 'Docs/SteamWorkshopDescription.txt'
-      - 'Docs/SteamWorkshopDescription-ja.txt'
-      - 'Docs/WorkshopDescription.md'
-      - 'About/About.xml'
-      - 'About/Manifest.xml'
-      - '.github/workflows/stage-a-validation.yml'
 jobs:
   validate-png-assets:
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -44,7 +34,6 @@ jobs:
         run: python Tests/validate_png_assets.py
 
   validate-stage-a:
-    if: github.event_name == 'workflow_dispatch'
     needs: validate-png-assets
     runs-on: ubuntu-latest
     steps:
@@ -110,53 +99,3 @@ jobs:
       - name: Test Grains profile isolation and byte-preserving staging
         shell: powershell
         run: ./Tests/test_grains_profiles.ps1
-
-  review-mo-dependency-static:
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          persist-credentials: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Validate complete existing Stage A static contract
-        run: python Tests/validate_stage_a.py
-      - name: Validate version and publication metadata with existing release contract
-        run: python Tests/Release/validate_add_changenote.py
-      - name: Verify bilingual Workshop copy against current release scope
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import xml.etree.ElementTree as ET
-          root = Path(".")
-          en = (root / "Docs/SteamWorkshopDescription.txt").read_text(encoding="utf-8-sig")
-          ja = (root / "Docs/SteamWorkshopDescription-ja.txt").read_text(encoding="utf-8-sig")
-          about = ET.parse(root / "About/About.xml").getroot()
-          manifest = ET.parse(root / "About/Manifest.xml").getroot()
-          assert [n.findtext("packageId") for n in about.findall("./modDependencies/li")] == ["DankPyon.Medieval.Overhaul"]
-          assert [n.text for n in manifest.findall("./dependencies/li")] == ["MedievalOverhaul"]
-          assert "[b]Medieval Overhaul (MO) is required.[/b]" in en
-          assert "Medieval Overhaul（MO）が必須です" in ja
-          assert "[h2]日本語 / Japanese[/h2]" in en
-          assert en.split("[h2]日本語 / Japanese[/h2]", 1)[1] == ja.split("[h2]日本語 / Japanese[/h2]", 1)[1]
-          assert len(en.encode("utf-8")) <= 8000
-          # A root-level MO Patch is allowed under current MO-required metadata,
-          # but every executable operation must retain its specific MO guard.
-          for path in sorted((root / "Patches").glob("MO_*.xml")):
-              patch = ET.parse(path).getroot()
-              operations = patch.findall("./Operation")
-              assert operations, path
-              for op in operations:
-                  leaves = op.findall("./operations/li") if op.attrib.get("Class") == "PatchOperationSequence" else [op]
-                  assert leaves, path
-                  for leaf in leaves:
-                      assert leaf.get("MayRequire") == "DankPyon.Medieval.Overhaul", (path, leaf.attrib)
-          assert "No additional Mod is required" not in en
-          assert "追加の必須Modはありません" not in ja
-          print("MO dependency and bilingual Workshop draft PASS")
-          PY

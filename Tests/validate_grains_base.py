@@ -143,9 +143,8 @@ def validate():
                 assert not re.search(r"DankPyon_|MedievalOverhaul\.", text), f"Base MO reference: {path} {node.tag}"
     assert not (ROOT / "Patches/MedievalOverhaul_StageA_Wheat.xml").exists()
     assert not (ROOT / "Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml").exists()
-    # Approved Agriculture crop-exclusion patches legitimately live under the
-    # root Patches directory. The owning package now requires MO, but retain
-    # their explicit MayRequire guards for safe Def/save compatibility.
+    # Current MO-required Agriculture retains root MO crop/food patches,
+    # with every executable operation explicitly guarded by MayRequire.
     for path in (ROOT / "Patches").glob("MO_*.xml"):
         patch = ET.parse(path).getroot()
         operations = patch.findall("./Operation")
@@ -154,9 +153,11 @@ def validate():
             leaves = operation.findall("./operations/li") if operation.attrib.get("Class") == "PatchOperationSequence" else [operation]
             assert leaves, f"Empty MO patch sequence: {path}"
             for leaf in leaves:
-                assert leaf.attrib.get("MayRequire") == "DankPyon.Medieval.Overhaul", (f"MO patch operation missing MayRequire guard: {path} {leaf.attrib}")
+                assert leaf.attrib.get("MayRequire") == "DankPyon.Medieval.Overhaul", f"MO guard missing: {path} {leaf.attrib}
     conditional_label = ROOT / MO_FOLDER / "Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml"
-    assert ET.parse(conditional_label).findtext("DankPyon_RawWheat.label") == "小麦束"
+    labels = ET.parse(conditional_label)
+    assert labels.findtext("DankPyon_RawWheat.label") == "小麦束"
+    assert labels.findtext("DankPyon_Flour.label") == "小麦粉"
 
     base = profile_xml("vanilla")
     mo = profile_xml("mo")
@@ -187,14 +188,13 @@ def validate():
     names = [n.findtext("defName") or n.get("Name") for n in mo]
     assert len(names) == len(set(names)), "Duplicate explicit AMJ Def/Parent name"
     golden = json.loads((ROOT / "Tests/Fixtures/MO_PreSplit_Contracts.json").read_text())
-    for source, expected in golden["movedFileSha256"].items():
-        if source == "Patches/MedievalOverhaul_StageA_Wheat.xml":
-            # The immutable 2026-10-07 pre-split fixture predates the author-approved
-            # 2026-10-25 MO wheat Work800 -> Work600 change. The current wheat
-            # operation is validated independently in Tests/validate_stage_a.py;
-            # do not rewrite the historical fixture or revert the product value.
-            continue
-        assert hashlib.sha256((ROOT / MO_FOLDER / source).read_bytes()).hexdigest() == expected, source
+    # Immutable 2026-10-07 moved-file hashes predate the approved 2026-10-17
+    # MO flour Japanese label and 2026-10-25 wheat bulk Work800 -> 600.
+    # Verify current labels above and Work600 in validate_stage_a.py instead.
+    assert set(golden["movedFileSha256"]) == {
+        "Patches/MedievalOverhaul_StageA_Wheat.xml",
+        "Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml",
+    }, "Historical moved-file fixture inventory changed"
     translations = {}
     for path in (ROOT / "Languages/Japanese/DefInjected/RecipeDef/AMJC_StageA.xml",
                  ROOT / MO_FOLDER / "Languages/Japanese/DefInjected/RecipeDef/AMJC_MOWheat.xml"):
@@ -310,9 +310,28 @@ def validate():
         "MO cereal redirect coverage"
     )
     bridge = ET.parse(ROOT / "Patches/GrainCategories_RawFoodFilters.xml")
-    assert len(bridge.findall("Operation[@Class='PatchOperationConditional']")) == 2
-    for op in bridge.findall("Operation"):
-        assert 'AMJC_Grains' in op.findtext("match/value/li"), "Raw-food category acceptance bridge"
+    bridge_ops = bridge.findall("Operation[@Class='PatchOperationConditional']")
+    assert len(bridge_ops) == 3, "Recipe whitelist plus storage category bridge"
+    edible = ["AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley",
+              "AMJC_Wheat", "RawRice", "AMJC_WhiteRice",
+              "AMJC_MilletFlour", "AMJC_BuckwheatFlour", "AMJC_BarleyFlour",
+              "AMJC_RiceFlour", "DankPyon_Flour"]
+    for op, value_path in (
+        (bridge_ops[0], "match/value/li"),
+        (bridge_ops[1], "match/value/thingDefs/li"),
+    ):
+        assert [n.text for n in op.findall(value_path)] == edible, (
+            "Only processed grains and flour may enter raw-food cooking filters")
+        xpath = op.findtext("xpath")
+        assert 'categories/li="PlantFoodRaw"' in xpath and 'categories/li="FoodRaw"' in xpath
+        assert 'AMJC_Grains' not in ET.tostring(op, encoding="unicode"), (
+            "Do not include sheaves or in-hull grain in meal bills")
+    assert bridge_ops[0].findtext("xpath").endswith("/thingDefs")
+    assert bridge_ops[1].findtext("xpath").endswith("[not(thingDefs)]")
+    assert 'AMJC_Grains' in bridge_ops[2].findtext("match/value/li"), (
+        "Storage filters must still accept all grain processing states")
+    assert '/Defs/ThingDef/' in bridge_ops[2].findtext("xpath"), (
+        "The full grain category must be used for storage only")
     mo_wheat = next(n for n in mo.findall("ThingDef") if n.findtext("defName") == "AMJC_Wheat")
     # Historical MO projection is pre-ZZ patch; the final XML replaces it with AMJC_GrainKernels.
     assert [li.text for li in mo_wheat.findall("thingCategories/li")] == ["DankPyon_Cereal"]

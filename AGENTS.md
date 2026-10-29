@@ -1,4 +1,4 @@
-# AMJ Grains Agent Instructions
+# AMJ Agriculture Agent Instructions
 
 ## Start here
 
@@ -8,12 +8,16 @@
 
 New features cannot enter implementation before the Project [existing-Mod audit gate](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/ExistingModAudit.md#implementation-entry-gate) covers VE and non-VE alternatives and records why independent implementation is needed. Existing approved behavior is not redesigned by this rule audit.
 
+## Dining ownership
+
+Meal assembly/serving runtime, tray/job Defs, translations and Daily Menu compatibility moved to the independent AMJ Dining repository. Agriculture requires Dining and owns only its food-role mappings and cooking policy. See `Docs/Dining.md`; do not reintroduce the legacy dining DLL here.
+
 ## Local task routes and stops
 
-- `Docs/Design.md` owns grain/processing scope. `Docs/GrainsProfileTesting.md` owns the actual-provider runtime matrix; `Docs/GrainsDependencyAudit.md` owns dependency-removal conditions. Retain IDs and existing save/provider contracts.
+- `Docs/Design.md` owns Agriculture's current MO-required grain/processing design. `Docs/GrainsProfileTesting.md` retains actual-provider runtime evidence, including historical Vanilla/MO matrices. `Docs/GrainsDependencyAudit.md` records the **superseded 2026-10-10 MO dependency-removal audit**, not a current requirement to remove MO. Retain IDs and existing save/provider contracts.
 - `Docs/Balance/Crops/ColdTolerance.md` owns custom crop values. CCTO remains optional and retains its own Vanilla/MO support data.
 - Art: use the routing below, including the boxed-resource family procedure. Do not reactivate archived diagnostic template contracts as production policy.
-- Packaging: `Tests/validate_workshop_payload.py`; release metadata: `Tests/validate_add_changenote.py`. Their success proves the named static contracts, not real-game or Steam completion.
+- Packaging: `Tests/Release/validate_workshop_payload.py`; release metadata: `Tests/Release/validate_add_changenote.py`. Their success proves the named static contracts, not real-game or Steam completion.
 
 ## PNG asset integrity gate
 
