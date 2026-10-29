@@ -9,7 +9,7 @@
 
 ### 採用済みの料理方針と未決事項
 
-- Daily Menuを基盤に、保存した各料理を喫食時に一膳へまとめる。[Agriculture PR #281](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture/pull/281)で実装。仮想環境の機能試験と通常プレイの実用性検証は区別する。
+- 一膳化・配膳の所有者は独立した[AMJ Dining](Dining.md)（2026-10-30移管）。AgricultureはDiningを必須とし、料理と役割指定を所有する。DiningはCulture本体を要求しない。移管段階ではDaily Menuを基盤に、保存した各料理を喫食時に一膳へまとめる。[Agriculture PR #281](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture/pull/281)で実装。仮想環境の機能試験と通常プレイの実用性検証は区別する。
 - 役割は主食・汁・副菜・添え物。漬菜・梅干しは低栄養の少量添え物で、複数あっても品数加算は最大1品分。Daily Menuの最低栄養量による判定は要調整。
 - 塩・味噌・酢・醤油等は使用した料理への心情上の有利を担い、調味料自体は品数に数えない。加算・重複の具体値は未決定。
 - 初期の基本料理は原則研究不要。豆腐・味噌等の加工技術は研究対象にできる。出汁は初期実装不要、将来追加時は研究解禁の候補。

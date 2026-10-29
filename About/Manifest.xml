@@ -5,7 +5,7 @@
   <dependencies>
     <li>MedievalOverhaul</li>
     <li>Harmony</li>
-    <li>daily.menu.manager</li>
+    <li>sucro.ancientmedievaljapan.dining</li>
   </dependencies>
   <incompatibleWith />
   <loadBefore />
