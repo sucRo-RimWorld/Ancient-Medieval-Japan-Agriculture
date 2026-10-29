@@ -626,7 +626,7 @@ GrainsはMOの `DankPyon_Cereal` と同じ **`Foods` 直下**に `AMJC_Grains（
 
 **MO粉カテゴリの整理:** `DankPyon_Flour` の独立した備蓄表示への所属を除き、`AMJC_GrainFlour` のみへ所属させる。MOが定義する `DankPyon_Flour` ThingCategoryDefそのものは、他Modの参照を直ちに未定義にしないため空の互換Defとして維持する。MOの既存料理Recipe・穀物棚がこの旧カテゴリを材料/収納許可に用いる箇所は、`DankPyon_Flour` ThingDefを直接許可するPatchに置換し、他のGrains穀粉をMO料理へ無条件追加しない。第三者の未把握の旧カテゴリ参照については動作保証しない。
 
-**生食材Recipeと収納フィルタの分離（2026-10-29不具合修正）:** `PlantFoodRaw` または `FoodRaw` を許可する料理Recipeの材料フィルタには、食用の `AMJC_Millet`・`AMJC_Buckwheat`・`AMJC_Barley`・`AMJC_Wheat`・`RawRice`・`AMJC_WhiteRice` の6件のみを個別追加する。`AMJC_Grains` を料理材料カテゴリに追加してはならない。穀物束（MO小麦束を含む）・殻付き穀物・籾は、保管対象であって食事材料ではない。既存の脱穀・殻取り・精米Recipeの入力は維持する。一方、`PlantFoodRaw` や `FoodRaw` を許可するThingDefの**収納フィルタ**には従来どおり `AMJC_Grains` を明示追加し、穀物束や加工中間物の収納を維持する。親カテゴリを元へ戻したり、`PlantFoodRaw` の直接所属を穀粒へ復活させたりせず、保管UIでの重複表示を防ぐ。個別AMJ料理の材料定義は変更しない。Vanilla/MOのロード後UI・Recipe・フィルタ挙動は別途実ゲーム確認する。
+**生食材Recipeと収納フィルタの分離（2026-10-29不具合修正）:** `PlantFoodRaw` または `FoodRaw` を許可する料理Recipeの材料フィルタには、可食穀粒 `AMJC_Millet`・`AMJC_Buckwheat`・`AMJC_Barley`・`AMJC_Wheat`・`RawRice`・`AMJC_WhiteRice` と、製粉済み `AMJC_MilletFlour`・`AMJC_BuckwheatFlour`・`AMJC_BarleyFlour`・`AMJC_RiceFlour`（旧セーブ互換用）・`DankPyon_Flour`（MO供給）の計11件を個別追加する。`AMJC_Grains` を料理材料カテゴリに追加してはならない。穀物束（MO小麦束を含む）・殻付き穀物・籾は、保管対象であって食事材料ではない。既存の脱穀・殻取り・精米Recipeの入力は維持する。一方、`PlantFoodRaw` や `FoodRaw` を許可するThingDefの**収納フィルタ**には従来どおり `AMJC_Grains` を明示追加し、穀物束や加工中間物の収納を維持する。親カテゴリを元へ戻したり、`PlantFoodRaw` の直接所属を穀粒へ復活させたりせず、保管UIでの重複表示を防ぐ。個別AMJ料理の材料定義は変更しない。Vanilla/MOのロード後UI・Recipe・フィルタ挙動は別途実ゲーム確認する。
 
 #### Adaptive Primitive Storage任意互換（2026-10-17）
 
