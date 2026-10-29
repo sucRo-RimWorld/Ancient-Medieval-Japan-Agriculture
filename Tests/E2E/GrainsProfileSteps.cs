@@ -198,6 +198,21 @@ namespace AncientMedievalJapanCore.E2E
                 RecipeDef meal = DefDatabase<RecipeDef>.GetNamed("CookMealSimple");
                 ctx.Assert(meal.fixedIngredientFilter != null && meal.fixedIngredientFilter.Allows(rawRice),
                     "RawRice must still be a simple-meal ingredient.");
+                // Check the loaded vanilla cooking bill, not only AMJ's custom food recipes.
+                // Sheaves and in-hull intermediates must never bypass grain processing.
+                string[] unprocessedGrains = {
+                    "AMJC_RawMillet", "AMJC_RawBuckwheat", "AMJC_RawBarley",
+                    "AMJC_RiceSheaf", "AMJC_MilletInHull", "AMJC_BuckwheatInHull",
+                    "AMJC_BarleyInHull", "AMJC_RiceInHull",
+                    Active("dankpyon.medieval.overhaul") ? "DankPyon_RawWheat" : "AMJC_RawWheat"
+                };
+                foreach (string name in unprocessedGrains)
+                {
+                    ThingDef intermediate = DefDatabase<ThingDef>.GetNamed(name);
+                    ctx.Assert(!meal.fixedIngredientFilter.Allows(intermediate)
+                        && meal.ingredients.All(ingredient => !ingredient.filter.Allows(intermediate)),
+                        "Vanilla simple meal must reject unprocessed grain: " + name);
+                }
                 var ext = rice.modExtensions == null
                     ? new System.Collections.Generic.List<DefModExtension>()
                     : rice.modExtensions.Where(e => e != null &&
