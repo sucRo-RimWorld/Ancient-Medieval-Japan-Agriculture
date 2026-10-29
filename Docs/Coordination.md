@@ -1,5 +1,9 @@
 # AMJ Grains Coordination
 
+## Current crop and dish selection — OPEN (2026-10-29)
+
+[Design: current selection](Design.md#crop-selection-current) owns author-confirmed dining constraints and routes historical selection to Project. MO crops are also selected/excluded for period fit; old MO-overlap-first exclusions are historical. Crop adoption, concrete leafy crop and final values remain undecided. Daily Menu composition has implementation/virtual-environment evidence in PR #281; do not reopen its adopted foundation or confuse that evidence with main integration.
+
 ## AGRI-MO-REQUIRED-20261026 — unpublished Agriculture source now declares MO required
 
 **Author decision:** MO is a practical foundation for the author's medieval Japan play. Agriculture's food crop/processing module **requires Medieval Overhaul** instead of maintaining a supported Vanilla-only production fallback. Exact live production metadata: `About/About.xml` `modDependencies` = `DankPyon.Medieval.Overhaul`, legacy Fluffy `Manifest.xml` = `MedievalOverhaul`, README/About bilingual text/Changelog aligned. Agriculture [PR #274](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture/pull/274), main **`629c45c3241dbc3ecf76e186c80de54c335b21cd`**. CCTO remains optional; standalone Environment, Tea and other independent AMJ Mods are not changed. Existing Vanilla fallback files and native historical tests remain archived/dormant, not authorization to retest/maintain equal Vanilla throughput. No change to AMJC/ThingDef/RecipeDef IDs, costs, crop values, graphics or saved data.
