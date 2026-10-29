@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Keep old meal/recipe DefNames for saves, but stop new generic simple-meal Bills. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/RecipeDef[defName="CookMealSimple" or defName="CookMealSimpleBulk"][not(recipeUsers)]</xpath>
+    <value><recipeUsers Inherit="False"/></value>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/ThingDef/recipes/li[.="CookMealSimple" or .="CookMealSimpleBulk"]</xpath>
+    <match Class="PatchOperationRemove"><xpath>Defs/ThingDef/recipes/li[.="CookMealSimple" or .="CookMealSimpleBulk"]</xpath></match>
+  </Operation>
+</Patch>

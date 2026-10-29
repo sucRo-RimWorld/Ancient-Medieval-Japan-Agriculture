@@ -237,8 +237,16 @@ namespace AncientMedievalJapanCore.E2E
                 // Native DoBill at cooking stove, in both Vanilla and MO.
                 await scope.Bill("AMJC_ThreshRiceBulk", scope.Stove, "AMJC_RiceSheaf", 10);
                 await scope.Bill("AMJC_HullRiceBulk", scope.Stove, "AMJC_RiceInHull", 10);
-                foreach (string grain in new[] { "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley", "AMJC_Wheat", "RawRice" })
-                    await scope.SimpleMeal(grain);
+                if (DefDatabase<ThingDef>.GetNamedSilentFail("AMJA_MealPlate") != null)
+                    await RuntimeThread.Run(delegate
+                    {
+                        ctx.Assert(!scope.Campfire.def.AllRecipes.Any(r => r.defName == "CookMealSimple" || r.defName == "CookMealSimpleBulk")
+                            && !scope.Stove.def.AllRecipes.Any(r => r.defName == "CookMealSimple" || r.defName == "CookMealSimpleBulk"),
+                            "Agriculture dining retires generic simple-meal Bills while retaining legacy Defs.");
+                    });
+                else // historical provider fixtures before dining integration
+                    foreach (string grain in new[] { "AMJC_Millet", "AMJC_Buckwheat", "AMJC_Barley", "AMJC_Wheat", "RawRice" })
+                        await scope.SimpleMeal(grain);
                 // The brown-rice path above is harvested-source. Test the alternative
                 // white-rice path with additional real rice harvests, not manufactured
                 // paddy or a direct white-rice stack. Two x10 polish Bills yield 16
