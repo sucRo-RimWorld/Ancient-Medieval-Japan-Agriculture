@@ -39,6 +39,12 @@ Daily Menu本体・補助DLLの交換や改変は不要。元のWorkshopファ�
 
 ## 検証と限界
 
+### Cheat Menu併用時の受け入れ判定（2026-10-29追補）
+
+Cheat Menuの`Cheat_Menu.CompCheatStatOffsets`が通常の簡単な食事にも付与され、Daily Menuが小分け非対応と判定して餐台のフィルタを全解除する問題に対応。作者指示により、Agricultureの連携DLL内でこのCompだけを`FoodState.Unsupported`の検査対象から除外する。検査用の一時的なThingDefコピーを用い、元のDef・食品Comp・保存値は変更せず、他の非対応判定は維持する。Cheat Menuへの新たな依存は追加しない。日本語化Modには実装しない。
+
+**受け入れ判定だけの暫定対応であり、小分け時の個体別能力値変更の引き継ぎは追加していない。** 再起動後に適用される。下記の既存実喫食検証はこの変更前のDLLに対する証拠であり、Cheat Menu併用時の補充・小分けはゲーム内未検証。変更後DLLは導入済みRimWorld・Harmony・Daily Menu参照でビルド確認。
+
 [実行結果](ValidationEvidence/Dining-20261029/result.json)と同フォルダーの完全ログを参照。隔離WSL2＋Xvfb、RimWorld 1.6.4871 rev600、実MO＋Daily Menu＋Agriculture。**製品DLLを通常ロード**し、Pickle等は試験の起動・確認だけに使用した。
 
 | 確認項目 | 前提・結果 |

@@ -1,5 +1,9 @@
 # AMJ Grains Coordination
 
+## AGRI-DAILYMENU-CHEAT-ACCEPTANCE-20261029 — PR #281 follow-up
+
+Author-approved acceptance-only exception for `Cheat_Menu.CompCheatStatOffsets`, which caused Daily Menu to reject even simple meals and clear buffet filters. Owned by `Source/AMJAgriculture.Dining/Dining.cs` and its production DLL; temporary Japanese-localization-mod patch removed. Other component checks remain active; no Cheat Menu dependency or split-state copying added. Current DLL SHA256 `7e22363f53fa8e596a794a153807e0937866ffd0bf8baefd0abeaefcd677525c`; installed-provider compile verified, Cheat Menu runtime refill/splitting untested. Prior Dining runtime evidence covers the pre-change DLL only. See `Docs/Dining.md`. No merge, game launch, or Steam publication requested.
+
 ## AGRI-MO-REQUIRED-20261026 — unpublished Agriculture source now declares MO required
 
 **Author decision:** MO is a practical foundation for the author's medieval Japan play. Agriculture's food crop/processing module **requires Medieval Overhaul** instead of maintaining a supported Vanilla-only production fallback. Exact live production metadata: `About/About.xml` `modDependencies` = `DankPyon.Medieval.Overhaul`, legacy Fluffy `Manifest.xml` = `MedievalOverhaul`, README/About bilingual text/Changelog aligned. Agriculture [PR #274](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture/pull/274), main **`629c45c3241dbc3ecf76e186c80de54c335b21cd`**. CCTO remains optional; standalone Environment, Tea and other independent AMJ Mods are not changed. Existing Vanilla fallback files and native historical tests remain archived/dormant, not authorization to retest/maintain equal Vanilla throughput. No change to AMJC/ThingDef/RecipeDef IDs, costs, crop values, graphics or saved data.

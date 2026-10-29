@@ -62,6 +62,30 @@ namespace AMJAgriculture.Dining
         }
     }
 
+    // Author-approved acceptance-only exception. Do not mutate the live Def or
+    // copy Cheat Menu's per-item stat offsets during portion splitting.
+    [HarmonyPatch(typeof(FoodState), "Unsupported")]
+    internal static class CheatMenuAcceptance
+    {
+        private static readonly MethodInfo Clone = typeof(object).GetMethod(
+            "MemberwiseClone", BindingFlags.Instance | BindingFlags.NonPublic);
+
+        private static void Prefix(ref ThingDef __0)
+        {
+            if (__0 == null || __0.comps == null || !__0.comps.Exists(IsCheatOffsets)) return;
+            ThingDef copy = (ThingDef)Clone.Invoke(__0, null);
+            copy.comps = new List<CompProperties>(__0.comps);
+            copy.comps.RemoveAll(IsCheatOffsets);
+            __0 = copy;
+        }
+
+        private static bool IsCheatOffsets(CompProperties props)
+        {
+            return props != null && props.compClass != null &&
+                props.compClass.FullName == "Cheat_Menu.CompCheatStatOffsets";
+        }
+    }
+
     public static class Meals
     {
         public static MealRole Role(ThingDef def)
