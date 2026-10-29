@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Manifest>
   <identifier>AncientMedievalJapanGrains</identifier>
   <version>0.1.0</version>
   <dependencies>
     <li>MedievalOverhaul</li>
+    <li>Harmony</li>
+    <li>daily.menu.manager</li>
   </dependencies>
   <incompatibleWith />
   <loadBefore />

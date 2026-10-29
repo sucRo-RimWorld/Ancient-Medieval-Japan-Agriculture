@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <name>Ancient &amp; Medieval Japan - Grains（中世日本 - 穀類）</name>
   <author>sucRo0629</author>
@@ -7,23 +7,32 @@
     <li>1.6</li>
   </supportedVersions>
   <modVersion>0.1.0</modVersion>
-
   <modDependencies>
     <li>
       <packageId>DankPyon.Medieval.Overhaul</packageId>
       <displayName>Medieval Overhaul</displayName>
       <steamWorkshopUrl>steam://url/CommunityFilePage/3219596926</steamWorkshopUrl>
     </li>
+    <li>
+      <packageId>brrainz.harmony</packageId>
+      <displayName>Harmony</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+    </li>
+    <li>
+      <packageId>daily.menu.manager</packageId>
+      <displayName>Daily Menu / 每日菜单</displayName>
+      <steamWorkshopUrl>steam://url/CommunityFilePage/3812908178</steamWorkshopUrl>
+    </li>
   </modDependencies>
-
   <loadAfter>
     <li>DankPyon.Medieval.Overhaul</li>
     <!-- Optional upstream MO Japanese translation: retained Agriculture crop translations take priority. -->
     <li>Lucifel.MedievalOH.JPT</li>
     <li>sucro.cropcoldtoleranceoverhaul</li>
     <li>Adaptive.PrimitiveStorage</li>
+    <li>brrainz.harmony</li>
+    <li>daily.menu.manager</li>
   </loadAfter>
-
   <description>Ancient &amp; Medieval Japan - Grains, initial release 0.1.0.
 
 Adds dry-field grains, harvesting and processing, flour milling, and basic grain foods inspired by pre-Edo Japan. Also integrates the former Crop Growth Balance's six Vanilla crop growth settings and seven MO-conditional source adjustments. Some MO crops, including lentils, are no longer available for normal sowing under Agriculture's historical crop-selection patches, although their Def identifiers remain for compatibility. A separate Crop Growth Balance Mod is no longer needed. Mixed grain meals, grain porridge and mixed flour foods can combine leftover cereals; four ingredient-specific flour dishes give a small mood and storage advantage. Brown rice is used in common grain meals and porridge, while two dedicated dishes use polished white rice. Medieval Overhaul is required and provides the wheat, flour, millstone, straw and other existing medieval foundations reused by AMJ's food crop and processing changes. AMJG-owned crop and processing settings take precedence where explicitly specified.
@@ -38,5 +47,9 @@ Ancient &amp; Medieval Japan - Grains 初回公開版0.1.0。
 
 Medieval Overhaulは必須。旧Vanilla単独用フォールバックのソースは保管するが、今後の単独リリース対応は対象外。Crop Cold Tolerance Overhaulは任意。Adaptive Primitive Storageは穀倉で穀物を大量収納できるため併用を強く推奨するが、必須ではない。元の穀倉と編み籠は干し草を使用し、MO併用時は藁で建築する別の選択肢も追加する。新しい村シナリオは別ModのAMJ Scenariosだけが提供する。Grainsには開始シナリオを含めない。
 
-公開準備状況：過去のRimWorld 1.6実ゲーム検証はVanilla・CCTO・MO構成で実施。今回のMO必須依存に変更後の最終実機受入は未実施。Grainsが変更していないMO/SYR由来の既知音声エラーは公開判定から除外。Workshopへの初回非公開アップロード、配布版確認、一般公開の最終判断は未実施。</description>
+公開準備状況：過去のRimWorld 1.6実ゲーム検証はVanilla・CCTO・MO構成で実施。今回のMO必須依存に変更後の最終実機受入は未実施。Grainsが変更していないMO/SYR由来の既知音声エラーは公開判定から除外。Workshopへの初回非公開アップロード、配布版確認、一般公開の最終判断は未実施。
+
+Dining: Harmony and Daily Menu are required. Hungry pawns combine stored staple food with available soup and a side into one meal tray. Includes the Daily Menu Supply startup compatibility fix without replacing vendor files. Generic simple-meal cooking Bills are retired; saved Def references remain. See Docs/Dining.md for setup and evidence limits.
+
+食膳：HarmonyとDaily Menuが必須。備蓄した主食に汁・副食を取り合わせて一膳にまとめる。Daily Menu配布ファイルを変更しない初期化互換処理を同梱。汎用の簡単な食事の新規調理Billは停止し、旧Defは維持する。仕様・使い方・検証範囲はDocs/Dining.mdを参照。</description>
 </ModMetaData>

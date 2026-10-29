@@ -2,6 +2,9 @@
 # Add Changenote reads the heading for the current version from About/Manifest.xml.
 
 0.1.0 - Initial grain-growing, processing and cooking release / 穀類の栽培・加工・料理の初回版
+- Adds Agriculture meal-tray serving from Daily Menu buffet stations; requires Harmony and Daily Menu. Includes a compatibility fix without replacing vendor DLLs. Retires new generic simple-meal Bills while preserving existing Def references.
+- Daily Menu餐台から主食・汁・副食を一膳へ取り合わせる機能を追加。Harmony・Daily Menu必須。配布DLLの交換を必要としない互換処理を同梱し、汎用簡単な食事の新規Billを停止する。
+
 - Adds seven ancient/medieval Japanese staple grains, including a shared dry-field rice plant, with distinct growth and soil characteristics.
 - Adds threshing and hulling, four active grain flours and a brown-rice/white-rice processing choice (paddy 10 -> brown 10 or polished white 8).
 - Adds nine grain-based dishes with eighteen single/four-serving cooking Bills. Four specialty flour foods and the two white-rice dishes have distinct eating-mood rewards.

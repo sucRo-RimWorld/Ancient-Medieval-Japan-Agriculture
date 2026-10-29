@@ -9,7 +9,7 @@
 
 ### 採用済みの料理方針と未決事項
 
-- Daily Menuを基盤に、保存した各料理を喫食時に一膳へまとめる。[Agriculture PR #281](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture/pull/281)に実装・仮想環境検証済み。PRの実装証拠とmain統合・実プレイ検証は区別する。
+- Daily Menuを基盤に、保存した各料理を喫食時に一膳へまとめる。[Agriculture PR #281](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Agriculture/pull/281)で実装。仮想環境の機能試験と通常プレイの実用性検証は区別する。
 - 役割は主食・汁・副菜・添え物。漬菜・梅干しは低栄養の少量添え物で、複数あっても品数加算は最大1品分。Daily Menuの最低栄養量による判定は要調整。
 - 塩・味噌・酢・醤油等は使用した料理への心情上の有利を担い、調味料自体は品数に数えない。加算・重複の具体値は未決定。
 - 初期の基本料理は原則研究不要。豆腐・味噌等の加工技術は研究対象にできる。出汁は初期実装不要、将来追加時は研究解禁の候補。
@@ -18,6 +18,16 @@
 - 粥は例外として穀物使用量が少ない・保存性が短い・療養向けの有利を検討する。栄養・具体効果は保留。工数や希少材料への有利も今は「調整必要」の判断までとし、数値を先に決めない。
 
 以下のV1数値・研究条件は既存実装の記録として保持し、今回の最終バランス承認とはしない。本変更は選定基準の整合であり、XML・DLL・既存セーブを変更しない。
+
+## 2026-10-28 作者決定 — 料理と取餐・一膳化はAgricultureが所有
+
+**本機能の実装OwnerはAgriculture。** 主食・汁・菜を調理・備蓄し、喫食時に取り合わせて一つの膳として食べる仕組みは、Agricultureが実装する料理と不可分なため、本Mod内で実装・分類・バランス・互換を管理する。Cultureの責務へ分離せず、Projectを実装先や実行依存にしない。Cultureの背景・身分等の既存機能は移管しない。
+
+基盤は**Daily Menu＋Agriculture側の役割選択・一膳化**。2026-10-29に通常ロード用の製品DLLとXMLを実装し、実MO＋実Agriculture料理で取餐・一膳化・喫食、中断時の回収、食べ残し、膳データの保存／再読込、看護役による給餌を仮想環境で確認した。Daily Menu配布ファイルを変更せず、Supply初期化の予約名衝突をAgriculture側で回避する。
+
+**実装正本：[Docs/Dining.md](Dining.md)。** ソースは`Source/AMJAgriculture.Dining/`、通常ロードDLLは`Assemblies/AMJAgriculture.Dining.dll`。必須依存にHarmonyとDaily Menuを追加。汎用の簡単な食事の新規調理Billを停止するが、旧Def・既存食品は保存する。主食・汁・副食の分類はXMLで管理し、種類数だけを役割の代用にしない。
+
+Core食品を用いた[旧実現性評価](Research/DailyMenuNativeAssessment-20261028.md)は履歴として保持する。現在の実行証拠と残る未検証範囲は[製品実装の検証](Dining.md#検証と限界)を参照。試作を製品DLLとして配布したものではない。Cultureへの責務移管・Projectの実行依存化は行わない。
 
 **文書状態:** GrainsからAgricultureへ開発範囲を移行中（公開表示名はGrainsのまま）。**2026-10-26以降、MOは必須依存**。2026-10-10の依存解除は履歴。最新のMO必須構成の実ゲーム受入・画像・UI・バランス検証は未完了。旧セーブ移行は別判断  
 **対象:** RimWorld 1.6  

@@ -4,3 +4,4 @@ TestResults/
 Tests/Fixtures/ScenarioOwner/
 __pycache__/
 *.pyc
+Docs/ValidationEvidence/Dining-20261029/*.log
