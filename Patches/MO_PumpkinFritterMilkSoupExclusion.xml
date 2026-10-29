@@ -5,7 +5,7 @@
     are not routine domestic food. Keep the original pumpkin crop/raw item,
     other food, kitchen buildings and research intact.
     Preserve source RecipeDef/ThingDef names for saved-game references.
-    All operations require MO; no change in standalone Agriculture.
+    All operations retain MayRequire guards; Agriculture itself requires MO.
   -->
   <Operation Class="PatchOperationSequence">
     <operations>

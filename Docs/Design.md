@@ -19,7 +19,7 @@
 
 以下のV1数値・研究条件は既存実装の記録として保持し、今回の最終バランス承認とはしない。本変更は選定基準の整合であり、XML・DLL・既存セーブを変更しない。
 
-## 2026-10-28 作者決定 — 料理と取餐・一膳化はAgricultureが所有
+## 2026-10-28 当時の一膳化所有判断（2026-10-30 Dining分離で失効・以下は履歴）
 
 **本機能の実装OwnerはAgriculture。** 主食・汁・菜を調理・備蓄し、喫食時に取り合わせて一つの膳として食べる仕組みは、Agricultureが実装する料理と不可分なため、本Mod内で実装・分類・バランス・互換を管理する。Cultureの責務へ分離せず、Projectを実装先や実行依存にしない。Cultureの背景・身分等の既存機能は移管しない。
 
@@ -53,7 +53,7 @@ Core食品を用いた[旧実現性評価](Research/DailyMenuNativeAssessment-20
 
 **2026-10-25 作者承認 — MO桑の反復収穫閾値0.40→0.55（養蚕を維持）:** MO 1.6.2.2の`DankPyon_Tree_Mulberry`はTreeBaseの`harvestMinGrowth=0.40`を継承し、`harvestAfterGrowth=0.30`との差は0.10。短い再収穫間隔による桑実と蚕の過剰供給を緩和するため、作者は桑のみ**0.55**を承認。AgricultureのMO任意フォルダ`Compatibility/MedievalOverhaul/Patches/MO_MulberryHarvestBalance.xml`は子`plant/harvestMinGrowth`に明示値を追加（MO更新版で明示済みなら置換）し、MO原本の`growDays=19.5`、収穫後Growth0.30、基礎収穫6、`MedievalOverhaul.Plant_SecondaryDrop`、副産物の蚕3個・確率1.0、桑の果実・SilkBed・Cocoa研究・取引・既存国内ワイン除外、画像とDefNameは不変。独立した最大成長上限（最適気温／毎日13h成長・収穫と植付け遅延なし・60暦日）で通常肥沃度100%は13回→5回、70%で10→4回、140%で18→7回。30暦日／肥沃度100%では5→2回。SilkBedの`capacity=25`は最大収容量であり、Processor Framework 1.6系の`SpaceLeftFor`と`AddIngredient`は最低1個から受け入れる。SilkBedの蚕→絹は`processDays=6`, `efficiency=5`なので蚕3個から絹15個の加工が可能（必ず特定日数で収穫される／常時温度適合するという保証ではない）。他Modが後からPlantの`harvestMinGrowth`を上書きし得ること、MOのC#副産物生成と実ゲーム保存・播種・Pawn技能・気象・収穫タイミング、1.7、季節経済・果実消費は未検証。検証境界と参照XMLは[MO栽培作物監査](Research/MO_CultivatedCropAudit_20261023.md#2026-10-25-桑の収穫間隔と養蚕供給の数値監査)を参照。この承認はブドウの収穫閾値や養蚕工程の他係数を変更しない。
 
-**2026-10-25 作者承認 — MO小麦の一括製粉Work600（MO任意）:** 原本MO 1.6.2.2 `DankPyon_CraftFlourBulk` は可食小麦10→MO小麦粉10、`workAmount=800`、`workSpeedStat=CookSpeed`。作者の直前提案承認により **同一MO RecipeDefの一括Workのみ800→600**、`Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Wheat.xml`で変更する。MO原本単品Work100、手挽き1個Work300、AMJ雑穀・ソバ・大麦の一括Work300、脱穀Work120/10、調理Work300/1食、製粉の10:10、投入IngredientFilter、出力・研究・設備・WorkGiver・画像・DefNameは不変。MO原本小麦粉の腐敗開始90日という旧比較は**既存AMJ適用後60日**であり、60日のまま（優位性はない）。**数値監査の受入境界:** 10粒を石臼で一括処理した場合、同一CookSpeedで従来比25%短縮。単品10回Work1000に対し一括Work600で40%減。脱穀→製粉→餺飥調理の単純Work和は1220→1020（実時間ではない）。Cooking/GeneralLaborSpeedの独立値が異なる通常・低技能・高技能の仮定評価と小麦収穫28個の端数ケースは[七穀食品チェーン監査](Balance/Crops/SevenGrainFoodChainAudit.md#2026-10-25-mo小麦一括製粉600の独立数値監査)を参照。現行Agriculture＋MO構成では`DankPyon_Cereal`は空カテゴリ化され、本Recipe材料は`AMJC_Wheat`を直接指定するが、他ModがこのRecipe自体を再利用する場合は同一Work600の影響を受けうる。Vanilla単独のWork300と完全同値にはしない。変更後のRimWorld1.6/1.7ロード、一般Pawnの所要時間、第三者併用Mod/旧セーブ・季節経済は未検証であり、バランス実機PASSではない。
+**2026-10-25 作者承認 — MO小麦の一括製粉Work600（当時のMO条件付きフォルダに実装、現行AgricultureはMO必須）:** 原本MO 1.6.2.2 `DankPyon_CraftFlourBulk` は可食小麦10→MO小麦粉10、`workAmount=800`、`workSpeedStat=CookSpeed`。作者の直前提案承認により **同一MO RecipeDefの一括Workのみ800→600**、`Compatibility/MedievalOverhaul/Patches/MedievalOverhaul_StageA_Wheat.xml`で変更する。MO原本単品Work100、手挽き1個Work300、AMJ雑穀・ソバ・大麦の一括Work300、脱穀Work120/10、調理Work300/1食、製粉の10:10、投入IngredientFilter、出力・研究・設備・WorkGiver・画像・DefNameは不変。MO原本小麦粉の腐敗開始90日という旧比較は**既存AMJ適用後60日**であり、60日のまま（優位性はない）。**数値監査の受入境界:** 10粒を石臼で一括処理した場合、同一CookSpeedで従来比25%短縮。単品10回Work1000に対し一括Work600で40%減。脱穀→製粉→餺飥調理の単純Work和は1220→1020（実時間ではない）。Cooking/GeneralLaborSpeedの独立値が異なる通常・低技能・高技能の仮定評価と小麦収穫28個の端数ケースは[七穀食品チェーン監査](Balance/Crops/SevenGrainFoodChainAudit.md#2026-10-25-mo小麦一括製粉600の独立数値監査)を参照。現行Agriculture＋MO構成では`DankPyon_Cereal`は空カテゴリ化され、本Recipe材料は`AMJC_Wheat`を直接指定するが、他ModがこのRecipe自体を再利用する場合は同一Work600の影響を受けうる。Vanilla単独のWork300と完全同値にはしない。変更後のRimWorld1.6/1.7ロード、一般Pawnの所要時間、第三者併用Mod/旧セーブ・季節経済は未検証であり、バランス実機PASSではない。
 
 **2026-10-25 作者承認 — MO和リンゴの収穫開始閾値を0.55に修正:** 旧MO 1.6.2.2 `DankPyon_Tree_Apple`は子`plant/harvestMinGrowth`を明示せず、以前の実ゲーム最終ロード値は**0.40**。収穫後Growth0.30との差が0.10しかなく、果実を頻繁に反復採取できるため、作者が提案0.55を承認した。AgricultureのMO任意フォルダ`Compatibility/MedievalOverhaul/Patches/MO_WaringoHarvestBalance.xml`が**和リンゴの当該閾値のみ0.55**へ上書きする。親から継承される場合は明示値を追加し、原本に明示値がある場合は置換する。収穫後0.30・growDays33・収穫20・肥沃度感応度0.7、果実のNutrition0.05/腐敗15日、研究・名称・テクスチャ・西洋菓子/シードル除外は不変。独立した理想13時間成長/日・最適温度・収穫遅延なしの60暦日比較では、100%土壌の収穫機会が**6→2回**、140%土壌が**9→3回**、70%土壌が**4→1回**となる。収穫時最小Growth近傍の果実数は基本20の約半量であり、季節・作業・腐敗損失は未考慮。希少な補助果実としての頻度低下を狙うが、**実ゲームの食料経済バランスPASSではない**。当該変更の数値監査と独立条件は [MO和リンゴ監査](Research/MO_AppleWaringoAudit_20261024.md) を正本とする。実ゲームの変更後1.6/1.7、MOのみ＋AgricultureでのJapanizationなし、1年当たりPawn収穫、既存セーブは未確認。別の新収穫係数・小麦Work・桑/ブドウの変更は承認していない。
 
@@ -94,7 +94,7 @@ Core食品を用いた[旧実現性評価](Research/DailyMenuNativeAssessment-20
 
 **2026-10-24 MOブドウ・桑の果実利用と国内ワイン製造の切り分け:** 古代からの桑栽培・養蚕を維持し、MO `DankPyon_Tree_Mulberry` の栽培、果実`DankPyon_RawMulberry`および `MedievalOverhaul.Plant_SecondaryDrop` による`DankPyon_Silkworm`供給を保護する。甲州ブドウの718年・1186年栽培開始説は伝承である。ただし1491年の『葡萄図』に記された葡萄棚・16世紀末『日本王国記』の果実記録から**後期室町～戦国末期の限定的な栽培可能性は根拠をもって検討できる**一方、特定地域での開始年代・全国的普及は実証されない。したがって**中世全期間の通常栽培を歴史的事実として承認しない**。`DankPyon_Plant_Grape`・支柱`DankPyon_VinePost`・果実`DankPyon_RawGrapes`は当面セーブ・既存連携維持のため現行XMLに残すが、**作物採否はHOLD**とする。栽培可否の変更は別途史料と関連機能の審査を要する。一方、MOの**ブドウ・桑からの西洋式ワイン国内生産はAMJ通常経路から除外**する。日本国内での本格的なブドウ酒製造は明治期以降で、戦国期のワイン飲用は輸入と区別する（国税庁 https://www.nta.go.jp/about/organization/osaka/sake/GIOsaka_p/pdf/07220201.pdf 、日本ワイン公式 https://jwine.net/knowledge/advanced-01/ ）。桑・養蚕の古さは埼玉県資料 https://www.pref.saitama.lg.jp/a0904/909-20091214-442.html による。桑実酒を対象時代の通常の醸造品として扱える史料は未確認のため、通常製造・一般流通から外す。
 
-`Patches/MO_FruitWineProductionExclusion.xml`はMO任意互換として(1) `DankPyon_MakeMustWine`／`DankPyon_MakeMustMulberry`の新規製造Billを停止、(2)完成前の`DankPyon_MustWine`／`DankPyon_MustWine_Mulberry`と完成桑実酒`DankPyon_Wine_Mulberry`の一般交易を停止、(3)Processor Framework の`BarrelProcessor`に元々登録される`DankPyon_MustIntoWine`／`DankPyon_MustIntoMulberryWine`を**存在時のみ**解除、(4)MO拠点戦利品にあるブドウ酒もろみ8／桑実酒もろみ1／完成桑実酒2の計11レコードを削除する。**完成ブドウ酒`DankPyon_Wine`は戦国期の輸入品として既存の交易・戦利品経路をそのまま残す**が、供給頻度・品揃えを史実上正確と承認したわけではない。果実・桑の蚕副産物・汎用醸造設備・他の酒種・共有酒造機構・関連DefNameは保持し、旧セーブと外部参照を保護する。これらのMO独自果実酒の停止はAgricultureの**作物から派生する旧MO生産経路の歴史的選別**であり、将来の日本式発酵・酒造Addonの実装や数値に介入するものではない。現行MO桑の`Cocoa`研究条件は歴史的に不適切だが、MO Japanizationの研究再編と養蚕維持を合わせて監査するまで無断変更しない。MO原本XMLのBill2、対象ThingDef3、樽登録2、戦利品11に限定した静的照合済み。実ゲーム1.6／1.7、在庫出現、既存セーブ、作物スキル・品種、研究UIは未検証。根拠と後続の所有区分は`Docs/Research/MO_CultivatedCropAudit_20261023.md`を正本とする。
+`Patches/MO_FruitWineProductionExclusion.xml`はMO用の条件付きPatchとして(1) `DankPyon_MakeMustWine`／`DankPyon_MakeMustMulberry`の新規製造Billを停止、(2)完成前の`DankPyon_MustWine`／`DankPyon_MustWine_Mulberry`と完成桑実酒`DankPyon_Wine_Mulberry`の一般交易を停止、(3)Processor Framework の`BarrelProcessor`に元々登録される`DankPyon_MustIntoWine`／`DankPyon_MustIntoMulberryWine`を**存在時のみ**解除、(4)MO拠点戦利品にあるブドウ酒もろみ8／桑実酒もろみ1／完成桑実酒2の計11レコードを削除する。**完成ブドウ酒`DankPyon_Wine`は戦国期の輸入品として既存の交易・戦利品経路をそのまま残す**が、供給頻度・品揃えを史実上正確と承認したわけではない。果実・桑の蚕副産物・汎用醸造設備・他の酒種・共有酒造機構・関連DefNameは保持し、旧セーブと外部参照を保護する。これらのMO独自果実酒の停止はAgricultureの**作物から派生する旧MO生産経路の歴史的選別**であり、将来の日本式発酵・酒造Addonの実装や数値に介入するものではない。現行MO桑の`Cocoa`研究条件は歴史的に不適切だが、MO Japanizationの研究再編と養蚕維持を合わせて監査するまで無断変更しない。MO原本XMLのBill2、対象ThingDef3、樽登録2、戦利品11に限定した静的照合済み。実ゲーム1.6／1.7、在庫出現、既存セーブ、作物スキル・品種、研究UIは未検証。根拠と後続の所有区分は`Docs/Research/MO_CultivatedCropAudit_20261023.md`を正本とする。
 
 **2026-10-24 MOリンゴ作物の採否保留と西洋菓子・シードル経路の限定停止:** 和リンゴは平安時代以後の中国由来の小型・酸味の強い果実であり（農研機構 https://www.naro.go.jp/publicity_report/season/006523.html ）、MOの`DankPyon_Tree_Apple`が説明する「甘く鮮紅色の実」や既存樹木・果実画像、`growDays=33`／`harvestYield=20`／`sowResearchPrerequisites=Cocoa`を和リンゴにそのまま適用してよいとは判断できない。**植物`DankPyon_Tree_Apple`・原料`DankPyon_RawApples`の播種可否、栽培数値、研究・名称・画像・貯蔵施設は現行MO互換のまま維持し、和リンゴとして正式採用したとは扱わない。** 栽培方針・画風・画像の形態変更や果実の数値再設計は、史実・他機能・セーブ参照と作者の採用判断を伴う後続項目とする。
 
@@ -162,7 +162,7 @@ V1の加工工程・品目・材料・歩留まり・研究条件・MO互換・�
 | 製粉 | **雑穀粉・蕎麦粉・大麦粉・小麦粉の4種**。現行MO必須構成ではMO小麦/粉と石臼を再利用。旧Base独自小麦/粉の実装は保存されるが単独リリースは非サポート | 米粉・米粉団子は通常生産しない。旧Defは参照互換保護のため維持するのみ |
 | 完成料理 | **9品/単品と4食の18調理Bill**：共通「飯・粥・粉食」3品、穀粉指定「雑穀団子・そばがき・餺飥・麦粉粥」4品、白米専用「白飯・白粥」2品。玄米は共通飯・粥を利用し、旧米飯・米粥は通常生産から外す。共通料理は単一原料/混合原料の両方に対応し、将来も維持 | 糒（ほしいい）、研究解禁のそば切り、追加の麦飯・麺食・儀礼食その他の個別料理は**初回公開に入れない**。候補のゲーム値・採否・研究は追加版で確定する |
 | 加工設備 | 現行の簡易穀物加工場所・穀物加工台、既存の燃料式/電気式調理台での暫定加工経路、および必須MOの石臼。非MO手動石臼のソースは互換履歴として保管。現行の採用/暫定画像を保護し、参照切れ等の実害は公開前に修正する | 新たな専用設備や加工Recipeの追加、工程別の設備割当再編、外観の美観修正・数量別画像拡充は公開後に評価 |
-| 依存・互換 | **Medieval Overhaul必須**。CCTO・Adaptive Primitive Storageは任意。追加DLCは必須にしない。旧Vanilla単独経路は非サポートの履歴 | 未承認の新たな必須依存は追加しない。シナリオはScenarios、人物の嗜好/心情判定は別所有 |
+| 依存・互換 | **Medieval Overhaul・Harmony・AMJ Dining必須**（DiningはDaily Menu依存）。CCTO・Adaptive Primitive Storageは任意。追加DLCは必須にしない。旧Vanilla単独経路は非サポートの履歴 | 未承認の新たな必須依存は追加しない。シナリオはScenarios、人物の嗜好/心情判定は別所有 |
 
 **公開判定は別:** 現行ソースのロード・食材加工/調理Bill・実際の喫食・画像参照・日英表示・ERRORの問題を、作者指定の通常プレイと必要最小限の最終検証で確認する。既存の1.6 Vanilla/CCTOに関する限定PASSはMO経路や最新Billの実動作の証明には転用しない。初回公開の対象を確定しても、実機未確認機能・画像を完成と記載しない。通常プレイの検証を待たずに新料理や新UIを公開条件へ追加しない。
 
@@ -391,7 +391,7 @@ AMJ各Modは、**AMJシリーズ内の別Modを理由なく必須依存にしな
 
 #### Medieval Overhaulとの関係
 
-**現行AgricultureはMO必須**（2026-10-26作者決定）。本番 `About/About.xml` は `DankPyon.Medieval.Overhaul`、旧 `About/Manifest.xml` は `MedievalOverhaul` を依存宣言する。MOの小麦・小麦粉・石臼・Straw等の実Defを再利用し、同等の資産を二重に表示しない。旧Vanilla + Grainsの単独加工経路と2026-10-10のMO依存解除は保存された実装・検証履歴であり、現在の単独リリース保証ではない。
+**現行AgricultureはMO・Harmony・AMJ Dining必須**（MOは2026-10-26決定、Diningは2026-10-30分離）。本番 `About/About.xml` は `DankPyon.Medieval.Overhaul`、旧 `About/Manifest.xml` は `MedievalOverhaul` を依存宣言する。MOの小麦・小麦粉・石臼・Straw等の実Defを再利用し、同等の資産を二重に表示しない。旧Vanilla + Grainsの単独加工経路と2026-10-10のMO依存解除は保存された実装・検証履歴であり、現在の単独リリース保証ではない。
 
 既存Base XMLに無条件MO参照を追加する必要はなく、MO固有Patchと旧フォールバックの条件付きロード構造・保存ソースは、Def/セーブ互換の別監査なしに削除・移設しない。`loadAfter` は必須依存の宣言ではなく適用順序の指定である。最新MO必須構成の実機ロード・製粉・描画・旧参照の受入は未完了で、公開可否は別のリリースゲートで判断する。
 
@@ -921,7 +921,7 @@ Grainsの現行製粉対象は**雑穀粉・蕎麦粉・大麦粉・小麦粉の
 - **既存製粉Recipeの固定数値・受入範囲:** 各Recipeは入力10→粉10、workAmount 300、作業Skill Cooking、研究不要、栄養保存、副産物なし。**現行MO必須構成**ではMO石臼のBill実行を確認し、未実行なら検証済みと記載しない。旧非MO燃料式調理台でのBill経路・旧四構成テストは履歴として残し、現在のリリース受入の必須条件にはしない。
 - **簡易穀物加工場所 / AMJC_GrainProcessingSpot:** 初期から使える低速の脱穀・殻取り設備。
 - **穀物加工台 / AMJC_GrainProcessingTable:** 同じ脱穀・殻取りRecipeを高速に処理する上位設備。BaseではMO研究・MO素材を要求しない。
-- **Grains石臼:** Baseで小麦・ソバ・雑穀・大麦・米の五種類を製粉するAMJ所有設備。最低限の製粉経路はMO研究なしで成立させる。step 3初期実装は `AMJC_ManualMillstone`、BlocksGranite 30 + WoodLog 20、WorkToBuild 500。設備・製粉Recipeに研究前提は置かないが、石材の入手はVanillaの採掘・加工・交易等に依存し、全マップで初日建設できることは保証しない。
+- **旧Vanilla単独Grains石臼（保存ソース・現行非サポート）:** Baseで小麦・ソバ・雑穀・大麦・米の五種類を製粉するAMJ所有設備。最低限の製粉経路はMO研究なしで成立させる。step 3初期実装は `AMJC_ManualMillstone`、BlocksGranite 30 + WoodLog 20、WorkToBuild 500。設備・製粉Recipeに研究前提は置かないが、石材の入手はVanillaの採掘・加工・交易等に依存し、全マップで初日建設できることは保証しない。
 - MO併用時は DankPyon_Millstone を標準石臼として使い、Grains手動石臼は重複表示しない。
 - MOのCraftingSpot手挽き等を残す場合も、未脱穀穀束から直接粉へ飛ばないようGrains工程順を維持する。
 - x10等のBulk Recipeは単品処理より作業量を減らし、大量処理時のBill/Job負荷を抑える。

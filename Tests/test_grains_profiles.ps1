@@ -141,10 +141,10 @@ try {
     [xml]$productionLoader = Get-Content -LiteralPath (Join-Path $repo 'loadFolders.xml') -Raw
     Assert ($productionLoader.loadFolders.'v1.6'.li[1].IfModActive -eq 'DankPyon.Medieval.Overhaul') 'Fixture condition leaked into production.'
     [xml]$productionAbout = Get-Content -LiteralPath (Join-Path $repo 'About/About.xml') -Raw -Encoding UTF8
-    Assert ($productionAbout.SelectNodes('/ModMetaData/modDependencies/li').Count -eq 0) 'Production Grains still declares mandatory MO/other Mod.'
-    Assert ($productionAbout.SelectNodes('/ModMetaData/loadAfter/li').Count -eq 2) 'Optional load-order hints changed.'
-    Assert ($productionAbout.SelectNodes('/ModMetaData/loadAfter/li')[0].InnerText -eq 'DankPyon.Medieval.Overhaul') 'MO optional loadAfter guard missing.'
-    Assert ($productionAbout.SelectNodes('/ModMetaData/loadAfter/li')[1].InnerText -eq 'sucro.cropcoldtoleranceoverhaul') 'CCTO optional loadAfter guard missing.'
+    $productionDeps = @($productionAbout.SelectNodes('/ModMetaData/modDependencies/li/packageId') | ForEach-Object { $_.InnerText })
+    Assert (($productionDeps -join ',') -eq 'DankPyon.Medieval.Overhaul,brrainz.harmony,sucro.ancientmedievaljapan.dining') 'Current Agriculture requires MO, Harmony and AMJ Dining.'
+    $productionOrder = @($productionAbout.SelectNodes('/ModMetaData/loadAfter/li') | ForEach-Object { $_.InnerText })
+    Assert (($productionOrder -join ',') -eq 'DankPyon.Medieval.Overhaul,Lucifel.MedievalOH.JPT,sucro.cropcoldtoleranceoverhaul,Adaptive.PrimitiveStorage,brrainz.harmony,sucro.ancientmedievaljapan.dining') 'Current Agriculture load order changed.'
     . (Join-Path $repo 'Scripts/AmjProfileXml.ps1')
     foreach ($xmlProfile in @('vanilla','mo')) {
         $projection = Get-AmjProfileXml $repo $xmlProfile

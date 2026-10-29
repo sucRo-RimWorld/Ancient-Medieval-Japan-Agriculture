@@ -56,10 +56,10 @@ AMJ_GRAPHICS = {
         "graphicData/texPath": ("Things/Item/Resource/AMJC_Wheat/Wheat", "Things/Item/Resource/AMJC_Millet/Millet"),
     },
     "AMJC_GrainProcessingSpot": {
-        "graphicData/texPath": ("Things/Building/Production/TableStonecutter", "Things/Building/Production/StonecuttingSpot"),
+        "graphicData/texPath": ("Things/Building/Production/AMJC_GrainProcessingSpot/GrainProcessingSpot", "Things/Building/Production/StonecuttingSpot"),
     },
     "AMJC_GrainProcessingTable": {
-        "graphicData/texPath": ("Things/Building/Production/TableStonecutter", "Things/Building/Production/Millstone"),
+        "graphicData/texPath": ("Things/Building/Production/AMJC_GrainProcessingTable/GrainProcessingTable", "Things/Building/Production/Millstone"),
     },
 }
 
@@ -143,10 +143,21 @@ def validate():
                 assert not re.search(r"DankPyon_|MedievalOverhaul\.", text), f"Base MO reference: {path} {node.tag}"
     assert not (ROOT / "Patches/MedievalOverhaul_StageA_Wheat.xml").exists()
     assert not (ROOT / "Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml").exists()
-    for path in (ROOT / "Patches").rglob("*.xml"):
-        assert "DankPyon_" not in path.read_text(encoding="utf-8"), f"MO patch escaped conditional load folder: {path}"
+    # Current MO-required Agriculture retains root MO crop/food patches,
+    # with every executable operation explicitly guarded by MayRequire.
+    for path in (ROOT / "Patches").glob("MO_*.xml"):
+        patch = ET.parse(path).getroot()
+        operations = patch.findall("./Operation")
+        assert operations, f"MO root patch has no operations: {path}"
+        for operation in operations:
+            leaves = operation.findall("./operations/li") if operation.attrib.get("Class") == "PatchOperationSequence" else [operation]
+            assert leaves, f"Empty MO patch sequence: {path}"
+            for leaf in leaves:
+                assert leaf.attrib.get("MayRequire") == "DankPyon.Medieval.Overhaul", f"MO guard missing: {path} {leaf.attrib}
     conditional_label = ROOT / MO_FOLDER / "Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml"
-    assert ET.parse(conditional_label).findtext("DankPyon_RawWheat.label") == "小麦束"
+    labels = ET.parse(conditional_label)
+    assert labels.findtext("DankPyon_RawWheat.label") == "小麦束"
+    assert labels.findtext("DankPyon_Flour.label") == "小麦粉"
 
     base = profile_xml("vanilla")
     mo = profile_xml("mo")
@@ -177,8 +188,13 @@ def validate():
     names = [n.findtext("defName") or n.get("Name") for n in mo]
     assert len(names) == len(set(names)), "Duplicate explicit AMJ Def/Parent name"
     golden = json.loads((ROOT / "Tests/Fixtures/MO_PreSplit_Contracts.json").read_text())
-    for source, expected in golden["movedFileSha256"].items():
-        assert hashlib.sha256((ROOT / MO_FOLDER / source).read_bytes()).hexdigest() == expected, source
+    # Immutable 2026-10-07 moved-file hashes predate the approved 2026-10-17
+    # MO flour Japanese label and 2026-10-25 wheat bulk Work800 -> 600.
+    # Verify current labels above and Work600 in validate_stage_a.py instead.
+    assert set(golden["movedFileSha256"]) == {
+        "Patches/MedievalOverhaul_StageA_Wheat.xml",
+        "Languages/Japanese/DefInjected/ThingDef/AMJC_MO_Overrides.xml",
+    }, "Historical moved-file fixture inventory changed"
     translations = {}
     for path in (ROOT / "Languages/Japanese/DefInjected/RecipeDef/AMJC_StageA.xml",
                  ROOT / MO_FOLDER / "Languages/Japanese/DefInjected/RecipeDef/AMJC_MOWheat.xml"):

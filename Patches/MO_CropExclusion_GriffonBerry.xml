@@ -4,7 +4,7 @@
     MO 1.6.2.2 Griffon Berry is a fictional crop outside ancient/medieval Japan.
     Agriculture owns its connected cultivation -> food -> must -> wine chain.
     Keep every upstream ThingDef/RecipeDef/ProcessDef for old-save/Mod references.
-    Every step is conditional on MO, which remains optional for Agriculture.
+    Every step retains a MayRequire MO guard for compatibility; Agriculture itself now requires MO.
     Processor Framework's barrel registration is optional and may not exist.
     Existing saved items/Bills, explicit custom spawns and MO Griffon animals
     are not deleted by this crop-chain patch.
