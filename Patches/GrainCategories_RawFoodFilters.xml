@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
-  <!-- Grains now displays beside MO's cereal branch under Foods. Preserve
-       previous inclusion by recipes that filter PlantFoodRaw or FoodRaw. -->
+  <!-- The storage branch AMJC_Grains includes sheaves and grain in hull.
+       Raw-food cooking recipes may only use edible, processed kernels.
+       Keep existing raw-food category permissions and add individual items. -->
   <Operation Class="PatchOperationConditional">
-    <xpath>/Defs/RecipeDef//categories[(li="PlantFoodRaw" or li="FoodRaw") and not(li="AMJC_Grains")]</xpath>
+    <xpath>/Defs/RecipeDef//*[categories/li="PlantFoodRaw" or categories/li="FoodRaw"]/thingDefs</xpath>
     <match Class="PatchOperationAdd">
-      <xpath>/Defs/RecipeDef//categories[(li="PlantFoodRaw" or li="FoodRaw") and not(li="AMJC_Grains")]</xpath>
-      <value><li>AMJC_Grains</li></value>
+      <xpath>/Defs/RecipeDef//*[categories/li="PlantFoodRaw" or categories/li="FoodRaw"]/thingDefs</xpath>
+      <value><li>AMJC_Millet</li><li>AMJC_Buckwheat</li><li>AMJC_Barley</li><li>AMJC_Wheat</li><li>RawRice</li><li>AMJC_WhiteRice</li></value>
+    </match>
+  </Operation>
+  <Operation Class="PatchOperationConditional">
+    <xpath>/Defs/RecipeDef//*[categories/li="PlantFoodRaw" or categories/li="FoodRaw"][not(thingDefs)]</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>/Defs/RecipeDef//*[categories/li="PlantFoodRaw" or categories/li="FoodRaw"][not(thingDefs)]</xpath>
+      <value><thingDefs><li>AMJC_Millet</li><li>AMJC_Buckwheat</li><li>AMJC_Barley</li><li>AMJC_Wheat</li><li>RawRice</li><li>AMJC_WhiteRice</li></thingDefs></value>
     </match>
   </Operation>
   <!-- Keep existing fixed/default storage filters (including optional storage
