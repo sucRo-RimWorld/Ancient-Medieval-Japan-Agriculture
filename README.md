@@ -6,7 +6,7 @@ The current unpublished candidate is a Medieval Overhaul-dependent grain-growing
 
 ## Dining dependency
 
-AMJ Dining is now required for meal assembly and serving. It currently requires Harmony and Daily Menu; Culture is not required. Update both Agriculture and Dining, enable Dining before Agriculture, and remove the old Agriculture-owned dining DLL by using this paired update. Food/role mappings and cooking policy remain here. See [migration](Docs/Dining.md).
+AMJ Dining is now required for meal assembly and serving. It requires Harmony; Culture is not required. Update both Agriculture and Dining, enable Dining before Agriculture, and remove the old Agriculture-owned dining DLL by using this paired update. Food/role mappings and cooking policy remain here. See [migration](Docs/Dining.md).
 
 ## Features
 
@@ -60,16 +60,16 @@ These values reflect the current source definitions. The current nine-dish food 
 
 ## Dining integration / 食膳の取り合わせ
 
-Requires **AMJ Dining + Medieval Overhaul**; Dining currently requires Harmony + Daily Menu. Cook and stock the existing Agriculture staple dishes, place them in Daily Menu buffet stations, and hungry pawns serve a staple with available soup and a side into one meal tray. The normal eating job consumes that tray. Medical feeding, interrupted serving and leftover tray data have bounded native evidence. The generic simple-meal cooking Bills are retired while saved meal/recipe identifiers remain. No vendor DLL replacement is needed. See [Dining](Docs/Dining.md) for setup, food roles and verification limits.
+Requires **AMJ Dining + Medieval Overhaul**; Dining requires Harmony only. Cook and stock the existing Agriculture staple dishes, place them in Dining serving tables, and hungry pawns serve a staple with available soup and a side into one meal tray. The normal eating job consumes that tray. Medical feeding, interrupted serving and leftover tray data have bounded native evidence. The generic simple-meal cooking Bills are retired while saved meal/recipe identifiers remain. No vendor DLL replacement is needed. See [Dining](Docs/Dining.md) for setup, food roles and verification limits.
 
-**AMJ Dining・MOが必須**（Diningは現在Harmony・Daily Menuを使用）。調理済みの飯・粥などを餐台に備蓄すると、空腹になったPawnが汁・副食を添えて一つの食膳にまとめて食べる。取餐の中断、食べ残しの保存、病人への給餌を仮想環境で確認。汎用の簡単な食事は新規調理Billを停止し、旧Defは維持する。Daily Menuのファイル交換は不要。設置方法と検証範囲は[食膳の仕様](Docs/Dining.md)を参照。
+**AMJ Dining・MOが必須**（DiningはHarmonyのみ必須）。調理済みの飯・粥などを餐台に備蓄すると、空腹になったPawnが汁・副食を添えて一つの食膳にまとめて食べる。取餐の中断、食べ残しの保存、病人への給餌を仮想環境で確認。汎用の簡単な食事は新規調理Billを停止し、旧Defは維持する。Daily Menuは不要。設置方法と検証範囲は[食膳の仕様](Docs/Dining.md)を参照。
 
 ## Dependencies and compatibility
 
 **2026-10-26 MO foundation decision:** This was an author-approved design/dependency change, not a native gameplay acceptance or public release. MO itself requires its upstream Vanilla Expanded Framework (VEF) and Processor Framework, but no VPE/More Plants content integration is being developed. MO's mulberry/fruit/silkworm/SilkBed/silk and flax/spinning-wheel/linen systems already exist; Agriculture does **not** add another silk system. Current food-crop-specific MO mulberry and fibre compatibility patches are retained, not a new AMJ-owned silk chain.
 
 
-**Required:** RimWorld 1.6, AMJ Dining (currently requiring Harmony and Daily Menu), and Medieval Overhaul (including MO's own upstream dependencies).
+**Required:** RimWorld 1.6, AMJ Dining (requiring Harmony only), and Medieval Overhaul (including MO's own upstream dependencies).
 
 **Strongly recommended (optional):** [Adaptive Primitive Storage](https://steamcommunity.com/sharedfiles/filedetails/?id=3400037215). Its existing granary can store Grains' grain sheaves, kernels and flours, including MO wheat. The original granary and woven baskets retain their Hay construction requirements. With both MO and APS active, Grains additionally offers straw-built variants in the construction menu: select either the Hay original or a variant using the same amount of MO Straw. No building requires both.
 

@@ -10,7 +10,7 @@ New features cannot enter implementation before the Project [existing-Mod audit 
 
 ## Dining ownership
 
-Meal assembly/serving runtime, tray/job Defs, translations and Daily Menu compatibility moved to the independent AMJ Dining repository. Agriculture requires Dining and owns only its food-role mappings and cooking policy. See `Docs/Dining.md`; do not reintroduce the legacy dining DLL here.
+Meal assembly/serving runtime, tray/job Defs, translations moved to the independent AMJ Dining repository. Agriculture requires Dining and owns only its food-role mappings and cooking policy. See `Docs/Dining.md`; do not reintroduce the legacy dining DLL here.
 
 ## Local task routes and stops
 
