@@ -2,8 +2,8 @@
 # Add Changenote reads the heading for the current version from About/Manifest.xml.
 
 0.1.0 - Initial grain-growing, processing and cooking release / 穀類の栽培・加工・料理の初回版
-- Moves meal-tray serving and compatibility to the required AMJ Dining mod (currently using Harmony and Daily Menu). Agriculture retains food roles and retires new generic simple-meal Bills while preserving existing Def references.
-- 一膳化・配膳・互換処理を必須ModのAMJ Diningへ移管（現在Harmony・Daily Menu使用）。料理の役割指定と汎用簡単な食事の新規Bill停止はAgricultureが維持する。
+- Moves meal-tray serving and compatibility to the required AMJ Dining mod (using Harmony only). Agriculture retains food roles and retires new generic simple-meal Bills while preserving existing Def references.
+- 一膳化・配膳・互換処理を必須ModのAMJ Diningへ移管（Harmonyのみ必須）。料理の役割指定と汎用簡単な食事の新規Bill停止はAgricultureが維持する。
 
 - Adds seven ancient/medieval Japanese staple grains, including a shared dry-field rice plant, with distinct growth and soil characteristics.
 - Adds threshing and hulling, four active grain flours and a brown-rice/white-rice processing choice (paddy 10 -> brown 10 or polished white 8).
