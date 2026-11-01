@@ -1,5 +1,12 @@
 # AMJ Grains Coordination
 
+## NEW meal-system proposal supersedes old Dining design — IMPLEMENTATION OPEN (2026-11-01)
+
+**Author decision / owner handoff:** [Dining new design](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Dining/blob/main/Docs/Design.md), [Dining PR #3](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Dining/pull/3). The earlier serving-table/assembled-meal Dining is **cancelled as the future design**. The new **single-completed-meal T1–T5** proposal assigns **meal Bills, food-role categories, ingredient nutrition, T2/T3 search, processing bonuses and dish products to Agriculture for future implementation**. It defines special independently classified pickles, seasoning and role-based scoring; read the Dining design rather than copying its numeric/specification content into this coordination log. U1 classification is next in **chat**, not approved for source work.
+
+**Current runtime remains old:** Agriculture's present Dining dependency/role patch, legacy Dining DLL and its serving features are still installed source and **have not been replaced or removed**. Older PR #281 extraction and acceptance evidence are for legacy behavior only. Independent Dining Mod survival, staged migration of XML/C#/dependencies, reference/save compatibility, and removal of legacy binaries remain **OPEN**; do not treat old AGENTS/Design statements about the current binary as authorization to keep the old design or automatically change current production. No new recipe/Def/workflow/native-test action is authorized by this handoff.
+
+
 ## Current crop and dish selection — OPEN (2026-10-29)
 
 [Design: current selection](Design.md#crop-selection-current) owns author-confirmed dining constraints and routes historical selection to Project. MO crops are also selected/excluded for period fit; old MO-overlap-first exclusions are historical. Crop adoption, concrete leafy crop and final values remain undecided. Dining runtime/source/Defs/translations and evidence moved to the independent AMJ Dining owner (2026-10-30). Agriculture requires Dining and retains food-role mappings and cooking policy. PR #281 evidence predates extraction; the separated MO-pair passed the bounded serving scenario (Dining Docs/ExtractionValidation.md); standalone and real old-save acceptance remain unverified. See Docs/Dining.md.
