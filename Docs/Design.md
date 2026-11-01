@@ -3,7 +3,9 @@
 <a id="crop-selection-current"></a>
 ## 作物・料理選定の現行基準（2026-10-29作者訂正）
 
-**作物 → 使える料理 → 大まかな全体バランス → 実装数値**の順で決める。歴史・文化による選定は[Projectの選定正本](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/FoodCultureGameplayDesignConstraints.md)に従う。MOの既存作物も中世日本への適合性で選別・除外するため、MOに同役割の作物があることや固有性能がないことだけで日本側作物を不採用にしない。既存機構・Defの再利用と、作物の文化的採否は別問題である。
+**作物 → 使える料理 → 大まかな全体バランス → 実装数値**の順で決める。歴史・文化による選定は[Agricultureの食文化・料理選定ルール](Research/FoodCultureGameplayDesignConstraints.md)に従う。MOの既存作物も中世日本への適合性で選別・除外するため、MOに同役割の作物があることや固有性能がないことだけで日本側作物を不採用にしない。既存機構・Defの再利用と、作物の文化的採否は別問題である。
+
+移管した史料・食品評価の資料一覧は[食事・食品研究資料の索引](Research/FoodResearchIndex.md)を参照する。
 
 旧Coreの差別化優先・主用途1つ・加工は別Addonという記述は当時の範囲設定の履歴であり、現行Agricultureの食用作物・料理選定を制限しない。過去の史料確認や実装値は保持するが、旧基準依存の不採用・保留は再評価する。個別作物の採用は自動確定しない。葉菜は具体的な作物を選び、荏胡麻の種実・油の記録を葉食の証拠へ転用しない。
 
