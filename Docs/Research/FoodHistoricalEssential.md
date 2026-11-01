@@ -1,0 +1,14 @@
+# 食品の歴史重要度による一次選定 — 「欠けると不自然」抽出
+
+出典：[食品の歴史重要度による一次選定](FoodHistoricalSelection.md)。原表の「文化的保持判定」が「欠けると不自然」の8評価行のみを抽出。原表の判定・記載内容は変更しない。
+
+| 評価行・元候補ID | 対象食品・経路 | 年代・地域・階層 | 庶民食での位置づけ | 根拠・確度の所在 | 欠けると失われる表現 | 文化的保持判定 | 一次選定結果・理由 | 未確認事項 |
+|---|---|---|---|---|---|---|---|---|
+| <a id="hs-01"></a>HS01：G01／B0-001 | 稲→脱穀・搗精→米→煮炊き→飯・粥 | 中世草戸等の都市民衆。全国の精白度・割合は別 | 主食の穀粒食 | [H28補足](FoodProcessingChainAudit.md#hist-commoners)、[basic](FoodProcessingChainAudit.md#hist-basic)、[ancient](FoodProcessingChainAudit.md#hist-ancient) | 米を日々煮炊きし、飯・粥として食べる基礎 | 欠けると不自然 | **候補**：民衆生活への接点があり上層だけの食品ではない | 粥の地域別頻度、強飯との使い分け、米だけを常食とする割合 |
+| <a id="hs-02"></a>HS02：G02・G03／B0-002・B0-004 | 大麦／粟・稗・黍→脱穀・搗精→飯・粥（穀種別） | 中世。麦は草戸木簡、雑穀食は概説。地域差あり | 米以外の主食・主食補助 | [H28補足](FoodProcessingChainAudit.md#hist-commoners)、[basic](FoodProcessingChainAudit.md#hist-basic) | 米一種に偏らず、雑穀を不作時だけに限定しない食生活 | 欠けると不自然 | **候補**：穀食の系統を保持。各穀種・混炊割合は確定しない | 各地の穀種、通常時と端境期の食べ方 |
+| <a id="hs-19"></a>HS19：B04／B0-009・B0-044 | 大豆・穀類・塩→麹・発酵→味噌→汁・和え物・直接調味 | 南北朝草戸周辺製造、鎌倉～室町の普及研究 | 日常調味・副食・汁 | [H28補足](FoodProcessingChainAudit.md#hist-commoners)、[tare](FoodProcessingChainAudit.md#hist-tare) | 大豆発酵による味付けと主食に添える汁 | 欠けると不自然 | **候補**：大豆売買・製造・庶民への接点を根拠とし醤油で置換しない | 地域別麹・配合、普及率、携行形態 |
+| <a id="hs-22"></a>HS22：S01／B0-043 | 海水等→濃縮・煮詰め→塩→調味・塩蔵 | 1445年備後塩の流通など中世瀬戸内 | 調味・保存の供給品 | [H28補足](FoodProcessingChainAudit.md#hist-commoners)、[basic](FoodProcessingChainAudit.md#hist-basic) | 海辺の生産と食生活・保存加工のつながり | 欠けると不自然 | **候補**：調味と保存の経路として保持 | 地域別製塩・流通と家計への流入量 |
+| <a id="hs-23"></a>HS23：S02・V16／B0-046・B1-004・B1-005・B1-006 | 米・酒系→発酵→酢→調味・酢菜 | 室町和泉の産地・行商、中世料理名 | 酸味調味と副食調製 | [H28補足](FoodProcessingChainAudit.md#hist-commoners)、[names](FoodProcessingChainAudit.md#hist-names)、[basic](FoodProcessingChainAudit.md#hist-basic) | 塩・味噌だけでは表せない酢を買い調味する生活 | 欠けると不自然：酢の調味系統 | **候補**：行商の接点を根拠に保持。各酢菜の庶民常食は未確定 | 製造詳細、果実酢、茗荷・茄子・若布の配合と階層 |
+| <a id="hs-25"></a>HS25：V01・X05・X07／B0-014・B0-016・B0-018 | 根菜・瓜・葉菜→洗浄・切る・加熱→煮菜・汁 | 中世草戸の原料と煮炊き。庭訓往来の菜は別階層 | 日常副食・季節野菜 | [H28補足](FoodProcessingChainAudit.md#hist-commoners)、[names](FoodProcessingChainAudit.md#hist-names)、[basic](FoodProcessingChainAudit.md#hist-basic) | 主食に季節の菜を煮て添える食生活 | 欠けると不自然：煮菜・汁の系統 | **候補**：高級料理名でなく食べるまでの基本経路を保持 | 各野菜の普及、人参等の同定・渡来、配合 |
+| <a id="hs-26"></a>HS26：V02・V04／B0-014・B0-016・B0-018 | 野菜→塩漬け→漬菜→副食・保存 | 古代木簡・延喜式の工程、中世食事との接続は概説を含む | 主食に添える保存副食 | [pickles](FoodProcessingChainAudit.md#hist-pickles)、[ancient](FoodProcessingChainAudit.md#hist-ancient)、[H28補足](FoodProcessingChainAudit.md#hist-commoners) | 収穫した菜を漬けて後に食べる生活 | 欠けると不自然：漬菜の系統 | **候補**：塩漬菜を保持。現代名産漬物の一括採用ではない | 地域別冬季・端境期利用、野菜・漬床の中世詳細 |
+| <a id="hs-27"></a>HS27：F05／B0-025 | 梅→塩漬け・乾燥→梅干し→副食・調味 | 鎌倉以降の庶民定着という公的概説 | 酸味・塩味の保存果実 | [pickles](FoodProcessingChainAudit.md#hist-pickles)、[H28補足](FoodProcessingChainAudit.md#hist-commoners) | 果実を甘味だけでなく保存副食に用いる文化 | 欠けると不自然：中世後半の梅利用 | **候補**：既存の庶民普及根拠を維持 | 地域・配合、紫蘇や携行形態の同時代性 |
