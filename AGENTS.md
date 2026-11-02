@@ -8,9 +8,11 @@
 
 New features cannot enter implementation before the Project [existing-Mod audit gate](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Project/blob/main/Docs/Research/ExistingModAudit.md#implementation-entry-gate) covers VE and non-VE alternatives and records why independent implementation is needed. Existing approved behavior is not redesigned by this rule audit.
 
-## Dining ownership
+## Dining ownership and migration boundary
 
-Meal assembly/serving runtime, tray/job Defs, translations moved to the independent AMJ Dining repository. Agriculture requires Dining and owns only its food-role mappings and cooking policy. See `Docs/Dining.md`; do not reintroduce the legacy dining DLL here.
+- **Existing implementation only:** The current Agriculture build still requires the independent Dining Mod for the legacy serving/tray runtime. `Docs/Dining.md` records that historical handoff and runtime evidence; do not restore the former Agriculture dining DLL or silently remove existing Def/save contracts.
+- **New design (2026-11-01, not implemented):** [Dining's current design](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Dining/blob/main/Docs/Design.md) cancels the old serving/tray model and assigns the five meal Bills, ingredient roles, nutrition, ingredient selection and meal products to **Agriculture**. Whether a separate Dining runtime survives is **undecided**. See Project `main:Docs/Coordination.md` for the cross-owner migration boundary.
+- Do not treat the legacy Dining dependency or old `Docs/Dining.md` as the new design's dependency or implementation policy. Changes to DLLs, Defs, packaging and save compatibility require a separately authorized coordinated migration; this routing correction changes no gameplay.
 
 ## Local task routes and stops
 
