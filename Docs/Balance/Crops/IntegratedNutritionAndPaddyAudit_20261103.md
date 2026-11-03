@@ -5,7 +5,7 @@
 
 ## 1. 比較対象と正本
 
-- [本リポジトリの採用七穀・生育・加工の実データ](../../Defs/ThingDefs_Plants/Plants_StageA.xml)、[陸稲上書き](../../Patches/UplandRice.xml)、[穀類加工レシピ](../../Defs/RecipeDefs/Recipes_GrainProcessing.xml)、[MO栽培の生育日数](../../Compatibility/MedievalOverhaul/Patches/MO_ExistingCropGrowthBalance.xml)、[作物と加工の旧監査](SevenGrainFoodChainAudit.md)、[肥沃度方式の現行判断](FertilityGrowthModelReview.md)を基準とする。小麦のgrowDays12/収量28・MO畑作の補助データはユーザー提供MO 1.6.2.2 `3219596926.zip` と現行Agriculture Patchに基づく。
+- [本リポジトリの採用七穀・生育・加工の実データ](../../../Defs/ThingDefs_Plants/Plants_StageA.xml)、[陸稲上書き](../../../Patches/UplandRice.xml)、[穀類加工レシピ](../../../Defs/RecipeDefs/Recipes_GrainProcessing.xml)、[MO栽培の生育日数](../../../Compatibility/MedievalOverhaul/Patches/MO_ExistingCropGrowthBalance.xml)、[作物と加工の旧監査](SevenGrainFoodChainAudit.md)、[肥沃度方式の現行判断](FertilityGrowthModelReview.md)を基準とする。小麦のgrowDays12/収量28・MO畑作の補助データはユーザー提供MO 1.6.2.2 `3219596926.zip` と現行Agriculture Patchに基づく。
 - MO作物17件は[通常作物・用途の監査](../../Research/MO_CropActiveUseAudit_20261026.md)に採否/供給状態を記録済み（この相対リンクは次節では修正済みのパスを使用）。**播種停止8件**（タマネギ、レンズ豆、結球キャベツ、栽培キノコ、サトウキビ、トマト、レモン、グリフォンベリー）を栽培可能な食料作物へ再算入しない。**播種可能9件**（小麦・ニンニク・ニンジン・料理用ハーブ・カラムシ/亜麻・ブドウ・カボチャ・リンゴ・桑）は、歴史的採用・食品価値が未確定なもの、非食用のもの、繰返し収穫する果樹を混同せず分ける。特に東洋系ニンジンは時期・採否HOLD、日本カボチャは16世紀以降の後期候補。
 - Vanilla作物（ジャガイモ・トウモロコシ等）の`growDays`変更Patchは存在するが、日本中世の**採用品目**とは同一視しない。実ロード最終Def、作物採否、料理経路を確認するまで同じ確定七穀表へ混入しない。肉・魚は畑1マスで収穫するモデルに置き換えず、料理栄養比較では別集計する。
 - Rice Cultivationの[設計正本](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Rice-Cultivation/blob/main/Docs/Design.md)によれば、水田造成・区画別自動給水は実装済みだが稲の生育・収量ボーナスは**未実装**。土壌の元Terrainと肥沃度、同じ`Plant_Rice`、Waterworks必須・Agriculture任意、非手動給水を維持する。造成`100 × セル数 + 25 × 外周`は現時点で**試作工数**であり承認済みではない。
