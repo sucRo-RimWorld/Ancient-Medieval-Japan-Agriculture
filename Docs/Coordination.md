@@ -263,6 +263,8 @@ Durable design source: `Docs/Design.md` section **Core + Environment 自動ゲ�
 
 **State:** Accepted: reuse Vanilla `Plant_Rice` across upland and future paddy, preserving shared grain post-harvest, without creating a second PlantDef. Rice Cultivation/Waterworks owns paddy/water effects. Existing implementation in `Patches/UplandRice.xml`, `Docs/Design.md §4.2.2`, `Docs/Balance/Crops/RicePostHarvestProcessing.md`. Former experiment and open test chronology archived; current in-game seasonal behavior and paddy integration OPEN.
 
+**2026-11-03 cross-owner update (goal decided, coefficients OPEN):** [Rice Cultivation owner Design §1(11)/§4.1](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Rice-Cultivation/blob/main/Docs/Design.md) now confirms the author's **trial priority of lower long-run total labor for the same edible rice Nutrition relative to upland rice**, including amortized paddy and irrigation construction, farming, hauling and grain processing; land yield improvement is secondary. [Rice PR #13](https://github.com/sucRo-RimWorld/Ancient-Medieval-Japan-Rice-Cultivation/pull/13) provides analytical +2/+3/+4 examples, **not approved coefficients or implemented bonuses**. Agriculture's edible grain Nutrition0.07 remains provisional; keep current shared `Plant_Rice`/rice processing/white-rice compatibility unchanged. Rice Cultivation owns future paddies and bonus decisions, Agriculture owns core crop/processing inputs; no other-owner implementation is authorized by this handoff.
+
 ### AMJGRAINS-LOC-APPROVAL-20261008 — accepted Japanese, paired English
 
 **Owner:** Grains descriptions/localization. **Status:** JP approved and paired EN strings committed to source; static parity regression added; runtime text load/ERROR-0 not executed.
